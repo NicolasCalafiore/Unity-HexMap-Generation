@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hex {
+    static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2;
     public readonly int Q;  //Column
     public readonly int R;  //Row
     public readonly int S;
@@ -14,7 +15,6 @@ public class Hex {
         this.R = r;
         this.S = -(q + r);
     }
-
     public void SetElevation(float elevation)
     {
         this.E = elevation;
@@ -25,7 +25,6 @@ public class Hex {
         return new Vector2(this.Q, this.R);
     }
 
-    static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2;
 
     public Vector3 GetPosition()
     {  

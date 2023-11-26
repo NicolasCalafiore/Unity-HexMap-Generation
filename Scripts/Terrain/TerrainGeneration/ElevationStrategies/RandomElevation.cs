@@ -40,7 +40,7 @@ namespace TerrainGeneration
             {
                 elevationLevels.Add(i);
             }
-
+            elevationLevels.Add(1.5f);
             return elevationLevels;
         }
     }

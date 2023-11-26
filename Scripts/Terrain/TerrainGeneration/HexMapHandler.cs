@@ -10,14 +10,19 @@ using UnityEngine.UI;
 namespace TerrainGeneration{
     public class HexMapHandler : MonoBehaviour
     {
-        [SerializeField] private GameObject hex_prefab;
+        [SerializeField] private GameObject hex_prefab_ocean;
+        [SerializeField] private GameObject hex_prefab_mountain;
+        [SerializeField] private GameObject hex_prefab_canyon;
+        [SerializeField] private GameObject hex_prefab_hill;
+        [SerializeField] private GameObject hex_prefab_flat;
         [SerializeField] public Vector2 map_size;
         [SerializeField] private int TerrainStrategy;
+        public List<Hex> HEX_LIST = new List<Hex>();
 
         void Start()
         {
             // Create a list of Hex objects
-            List<Hex> HEX_LIST = CreateHexObjects();
+            HEX_LIST = CreateHexObjects();
 
             // Elevate the terrain of the Hex objects based on the selected strategy
             ElevateHexTerrain(HEX_LIST);
@@ -29,7 +34,21 @@ namespace TerrainGeneration{
         private void SpawnTerrain(List<Hex> HEX_LIST){
             foreach (Hex hex in HEX_LIST){
                 // Instantiate a hex game object
-                GameObject hex_go = Instantiate(hex_prefab, hex.GetPosition(), Quaternion.identity, this.transform);
+               
+                GameObject hex_go = null;
+                
+                if(hex.GetPosition().y == 1.5){
+                    hex_go = Instantiate(hex_prefab_mountain, hex.GetPosition(), Quaternion.identity, this.transform);
+                }
+                else if(hex.GetPosition().y < 0){
+                    hex_go = Instantiate(hex_prefab_canyon, hex.GetPosition(), Quaternion.identity, this.transform);
+                }
+                else if(hex.GetPosition().y > 0){
+                    hex_go = Instantiate(hex_prefab_hill, hex.GetPosition(), Quaternion.identity, this.transform);
+                }
+                else{
+                    hex_go = Instantiate(hex_prefab_flat, hex.GetPosition(), Quaternion.identity, this.transform);
+                }
 
                 // Set the text of the child TextMeshPro component to the hex's column and row, and elevation
                 hex_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = string.Format("{0},{1}" , hex.GetColRow().x, hex.GetColRow().y);
