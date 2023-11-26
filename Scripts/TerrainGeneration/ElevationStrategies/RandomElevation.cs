@@ -15,12 +15,9 @@ namespace TerrainGeneration
         /// <summary>
         /// Elevates the terrain of a list of hexes with random elevation values.
         /// </summary>
-        /// <param name="HEX_LIST">The list of hexes to elevate.</param>
-        /// <param name="map_size">The size of the map.</param>
-        /// <param name="min_elevation">The minimum elevation value.</param>
-        /// <param name="max_elevation">The maximum elevation value.</param>
-        /// <param name="step_increment">The increment value for elevation levels.</param>
-        public override void ElevateHexTerrain(List<Hex> HEX_LIST, Vector2 map_size, float min_elevation = 0f, float max_elevation = 1f, float step_increment = 0.25f)
+
+        
+        public override void ElevateHexTerrain(List<Hex> HEX_LIST, Vector2 map_size)
         {
             List<float> elevationLevels = ElevationLevels(min_elevation, max_elevation, step_increment);
             foreach (Hex hex in HEX_LIST)
@@ -29,16 +26,11 @@ namespace TerrainGeneration
                 hex.SetElevation(randomValue);
 
             }
-
-            
         }
 
         /// <summary>
         /// Generates a list of elevation levels based on the specified parameters.
         /// </summary>
-        /// <param name="min_elevation">The minimum elevation value.</param>
-        /// <param name="max_elevation">The maximum elevation value.</param>
-        /// <param name="step_increment">The increment value for elevation levels.</param>
         /// <returns>A list of elevation levels.</returns>
         private List<float> ElevationLevels(float min_elevation, float max_elevation, float step_increment)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,18 +31,16 @@ namespace TerrainGeneration{
                 // Instantiate a hex game object
                 GameObject hex_go = Instantiate(hex_prefab, hex.GetPosition(), Quaternion.identity, this.transform);
 
-                // Set the text of the child TextMeshPro component to the hex's column and row
+                // Set the text of the child TextMeshPro component to the hex's column and row, and elevation
                 hex_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = string.Format("{0},{1}" , hex.GetColRow().x, hex.GetColRow().y);
-                 hex_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = string.Format("{0}" , hex.GetPosition().y);
+                hex_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = string.Format("{0}" , hex.GetPosition().y);
 
-                // Set the name of the hex game object
+                // Set the name of the hex game object for Unity
                 hex_go.name = "Hex - " + hex.GetColRow().x + "_" + hex.GetColRow().y;
 
-                // Set the parent of the hex game object
+                // Set the parent of the hex game object this empty gameobject
                 hex_go.transform.SetParent(this.transform);
 
-                // Set the isStatic property of the hex game object to true
-                hex_go.isStatic = true;
             }
         }
 
@@ -65,7 +64,7 @@ namespace TerrainGeneration{
             elevationStrategy.ElevateHexTerrain(HEX_LIST, map_size);
         }
 
-        private List<Hex> CreateHexObjects(){
+        private  List<Hex> CreateHexObjects(){
             List<Hex> HEX_LIST = new List<Hex>();
 
             // Create Hex objects for each column and row in the map
@@ -86,5 +85,6 @@ namespace TerrainGeneration{
         {
             
         }
+                
     }
 }
