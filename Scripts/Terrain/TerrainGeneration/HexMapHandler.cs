@@ -17,7 +17,10 @@ namespace TerrainGeneration{
         [SerializeField] private GameObject hex_prefab_flat;
         [SerializeField] public Vector2 map_size;
         [SerializeField] private int TerrainStrategy;
+        [SerializeField] private List<GameObject> hex_game_objects = new List<GameObject>();
         public List<Hex> HEX_LIST = new List<Hex>();
+
+
 
         void Start()
         {
@@ -29,44 +32,23 @@ namespace TerrainGeneration{
 
             // Spawn the terrain by instantiating hex game objects and setting their properties
             SpawnTerrain(HEX_LIST);
+
+
+
         }
 
         private void SpawnTerrain(List<Hex> HEX_LIST){
             foreach (Hex hex in HEX_LIST){
                 // Instantiate a hex game object
-               
                 GameObject hex_go = null;
-                
-                if(hex.GetPosition().y == 1.5){
-                    hex_go = Instantiate(hex_prefab_mountain, hex.GetPosition(), Quaternion.identity, this.transform);
-                }
-                else if(hex.GetPosition().y < 0){
-                    hex_go = Instantiate(hex_prefab_canyon, hex.GetPosition(), Quaternion.identity, this.transform);
-                }
-                else if(hex.GetPosition().y > 0){
-                    hex_go = Instantiate(hex_prefab_hill, hex.GetPosition(), Quaternion.identity, this.transform);
-                }
-                else{
-                    hex_go = Instantiate(hex_prefab_flat, hex.GetPosition(), Quaternion.identity, this.transform);
-                }
-
-                // Set the text of the child TextMeshPro component to the hex's column and row, and elevation
-                hex_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = string.Format("{0},{1}" , hex.GetColRow().x, hex.GetColRow().y);
-                hex_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = string.Format("{0}" , hex.GetPosition().y);
-
-                // Set the name of the hex game object for Unity
-                hex_go.name = "Hex - " + hex.GetColRow().x + "_" + hex.GetColRow().y;
-
-                // Set the parent of the hex game object this empty gameobject
-                hex_go.transform.SetParent(this.transform);
-
+                hex_go = SpawnHexType(hex, hex_go);
+                InitializeHexComponents(hex_go, hex);
             }
         }
 
         private void ElevateHexTerrain(List<Hex> HEX_LIST){
             ElevationStrategy elevationStrategy = null;
 
-            // Select the elevation strategy based on the TerrainStrategy value
             switch(TerrainStrategy){
                 case 2:
                     elevationStrategy = new GroupingsElevations();
@@ -78,8 +60,6 @@ namespace TerrainGeneration{
                     elevationStrategy = new RandomElevation();
                     break;
             }
-
-            // Elevate the terrain of the Hex objects using the selected elevation strategy
             elevationStrategy.ElevateHexTerrain(HEX_LIST, map_size);
         }
 
@@ -97,6 +77,40 @@ namespace TerrainGeneration{
             }
 
             return HEX_LIST;
+        }
+
+        private GameObject SpawnHexType(Hex hex, GameObject hex_go){
+            if(hex.GetPosition().y == 1.5){
+                hex_go = Instantiate(hex_prefab_mountain, hex.GetPosition(), Quaternion.identity, this.transform);
+            }
+            else if(hex.GetPosition().y < 0){
+                hex_go = Instantiate(hex_prefab_canyon, hex.GetPosition(), Quaternion.identity, this.transform);
+            }
+            else if(hex.GetPosition().y > 0){
+                hex_go = Instantiate(hex_prefab_hill, hex.GetPosition(), Quaternion.identity, this.transform);
+            }
+            else{
+                hex_go = Instantiate(hex_prefab_flat, hex.GetPosition(), Quaternion.identity, this.transform);
+            }
+
+            hex_game_objects.Add(hex_go);
+            return hex_go;
+
+        }
+
+
+        private void InitializeHexComponents(GameObject hex_go, Hex hex){
+                // Set the text of the child TextMeshPro component to the hex's column and row, and elevation
+                hex_go.isStatic = true; // Hex Empty Object 
+                hex_go.transform.GetChild(0).gameObject.isStatic = true; //3D Hex Model
+                hex_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = string.Format("{0},{1}" , hex.GetColRow().x, hex.GetColRow().y);
+                hex_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = string.Format("{0}" , hex.GetPosition().y);
+
+                // Set the name of the hex game object for Unity
+                hex_go.name = "Hex - " + hex.GetColRow().x + "_" + hex.GetColRow().y;
+
+                // Set the parent of the hex game object this empty gameobject
+                hex_go.transform.SetParent(this.transform);
         }
 
         // Update is called once per frame
