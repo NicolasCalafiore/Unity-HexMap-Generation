@@ -1,14 +1,14 @@
 using UnityEngine;
-using static TerrainGeneration.ElevationUtils;
+using Terrain;
 
-namespace TerrainGeneration{
+namespace Terrain {
     public class Hex {
         static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2;
         public readonly int Q;  //Column
         public readonly int R;  //Row
         public readonly int S;
         public float E; //Elevation
-        public HexElevationTypes elevationType;
+        public TerrainUtils.HexElevation elevation_type;
 
 
         public Hex(int q, int r)
@@ -17,10 +17,10 @@ namespace TerrainGeneration{
             this.R = r;
             this.S = -(q + r);
         }
-        public void SetElevation(float elevation, HexElevationTypes elevationType)
+        public void SetElevation(float elevation, TerrainUtils.HexElevation elevation_type)
         {
-            this.elevationType = elevationType;
-            this.E = elevation;
+            this.E = elevation / 100;
+            this.elevation_type = elevation_type;
         }
 
         public Vector2 GetColRow()
@@ -45,6 +45,10 @@ namespace TerrainGeneration{
             );
 
 
+        }
+
+        public TerrainUtils.HexElevation GetElevationType(){
+            return this.elevation_type;
         }
 
     }

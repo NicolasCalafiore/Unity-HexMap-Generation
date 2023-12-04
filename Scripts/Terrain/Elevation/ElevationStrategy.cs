@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-
-namespace TerrainGeneration
+namespace Terrain
 {
     public abstract class ElevationStrategy
     {
-        public abstract void ElevateHexTerrain(List<Hex> HEX_LIST, Vector2 map_size);
+        public abstract List<List<float>> GenerateElevationMap(List<List<float>> elevation_map, Vector2 map_size);
+
     }
 }
