@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Terrain
@@ -19,6 +17,15 @@ namespace Terrain
             Mountain = 150,
         }
 
+        public enum HexRegion{
+            Desert = 0,
+            Savannah = 1,
+            Grassland = 2,
+            Forest = 3,
+            Jungle = 4,
+
+        }
+
         public static HexElevation GetElevationType(float elevationValue)
         {
             Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>(){
@@ -31,6 +38,20 @@ namespace Terrain
             };
 
             return elevationDict[elevationValue];
+            
+        }
+
+        public static HexRegion GetRegionType(float regionValue)
+        {
+            Dictionary<float, HexRegion> regionDict = new Dictionary<float, HexRegion>(){
+                { 0, HexRegion.Desert},
+                { 1, HexRegion.Savannah},
+                { 2, HexRegion.Grassland},
+                { 3, HexRegion.Forest},
+                { 4, HexRegion.Jungle},
+            };
+
+            return regionDict[regionValue];
             
         }
         
@@ -65,6 +86,8 @@ namespace Terrain
         }
 
         public static void PrintMap(List<List<float>> map){
+
+
             for (int i = 0; i < map.Count; i++)
             {
                 string row = "";
@@ -135,10 +158,34 @@ namespace Terrain
             return new Vector2(i, j);
         }
 
+        public static void GeneratePerlinNoiseMap(List<List<float>> map, Vector2 map_size, float scale){
+            int offset = UnityEngine.Random.Range(0, 100000);
+
+            for (int i = 0; i < map_size.x; i++)
+            {
+                for (int j = 0; j < map_size.y; j++)
+                {
+                    map[i][j] = Mathf.PerlinNoise((i + offset) / map_size.x * scale, (j + offset) / map_size.y * scale);
+                }
+            }
+
+            Debug.Log("!!!");
+            for (int i = 0; i < map_size.x; i++)
+            {
+                for (int j = 0; j < map_size.y; j++)
+                {
+
+                    if(map[i][j] < .2f) map[i][j] = 0;         //DESERT
+                    else if(map[i][j] < .4f) map[i][j] = 1;     //SAVANNAH
+                    else if(map[i][j] < .6f) map[i][j] = 2;     //GRASSLAND
+                    else if(map[i][j] < .8f) map[i][j] = 3;    //FOREST
+                    else if(map[i][j] < 1f) map[i][j] = 4;      //JUNGLE
+                }
+            }
 
 
 
-
+        }
 
     }
 }

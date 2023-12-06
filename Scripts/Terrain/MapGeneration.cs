@@ -10,21 +10,27 @@ namespace Terrain {
         [SerializeField] private Vector2 map_size = new Vector2();
         [SerializeField] private int elevation_strategy;
         [SerializeField] private GameObject generic_hex;
+        [SerializeField] private float region_scale;
+
+
         void Start()
         {
             List<List<float>> elevation_map = GenerateElevationMap();
-            TerrainHandler.SpawnTerrain(map_size, generic_hex, elevation_map);
-            DebugHandler.ShowTerrainTypes(TerrainHandler.GetHexList());
-
             List<List<float>> regions_map = TerrainUtils.GenerateMap(map_size);
+            TerrainUtils.GeneratePerlinNoiseMap(regions_map, map_size, region_scale);
 
 
+            TerrainHandler.SpawnTerrain(map_size, generic_hex, elevation_map, regions_map);
+
+            foreach(Hex i in TerrainHandler.GetHexList()){
+                GameObject hex_go = TerrainHandler.hex_to_hex_go[i];
+                hex_go.transform.SetParent(this.transform);
+            }
         }
 
 
 
         private List<List<float>> GenerateElevationMap(){
-            Debug.Log("MapGeneration");
             List<List<float>> elevation_map = TerrainUtils.GenerateMap(map_size);
 
             ElevationStrategy strategy = null;
@@ -48,10 +54,12 @@ namespace Terrain {
 
 
 
+
+
+
     }
 }
 
 
 
-                // Set the parent of the hex game object this empty gameobject
-                //hex_go.transform.SetParent(this.transform);
+  

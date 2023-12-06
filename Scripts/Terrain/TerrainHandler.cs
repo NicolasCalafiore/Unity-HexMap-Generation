@@ -12,12 +12,18 @@ namespace Terrain{
         private static List<GameObject> hex_go_list = new List<GameObject>();
         public static Dictionary<Hex, GameObject> hex_to_hex_go = new Dictionary<Hex, GameObject>();
 
-        public static void SpawnTerrain(Vector2 map_size, GameObject generic_hex, List<List<float>> elevation_map){
+        public static void SpawnTerrain(Vector2 map_size, GameObject generic_hex, List<List<float>> elevation_map, List<List<float>> regions_map){
             TerrainHandler.generic_hex = generic_hex;
 
             hex_list = CreateHexObjects(map_size);
             SetHexElevation(elevation_map);
+            SetHexRegion(regions_map);
             SpawnHexTiles();
+
+            //DebugHandler.InitializeDebugHexComponents(hex_list);
+            //DebugHandler.ShowElevationTypes(GetHexList());
+            DebugHandler.ShowRegionTypes(GetHexList());
+    
         }
 
         private static List<Hex> CreateHexObjects(Vector2 map_size){
@@ -48,7 +54,6 @@ namespace Terrain{
                 GameObject hex_object = GameObject.Instantiate(generic_hex);
                 hex_object.transform.position = hex.GetPosition();
                 hex_go_list.Add(hex_object);
-                DebugHandler.InitializeDebugHexComponents(hex, hex_object);
                 hex_to_hex_go.Add(hex, hex_object);
             }
         }
@@ -56,6 +61,15 @@ namespace Terrain{
         public static List<Hex> GetHexList(){
             return hex_list;
         }
+
+        private static void SetHexRegion(List<List<float>> regions_map){
+            foreach(Hex hex in hex_list){
+                Vector2 coordinates = hex.GetColRow();
+                hex.SetRegionType(TerrainUtils.GetRegionType(regions_map[ (int) coordinates.x][ (int) coordinates.y]));
+            }
+        }
+
+
 
 
 

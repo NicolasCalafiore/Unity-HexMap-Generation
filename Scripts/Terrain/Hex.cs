@@ -9,6 +9,7 @@ namespace Terrain {
         public readonly int S;
         public float E; //Elevation
         public TerrainUtils.HexElevation elevation_type;
+        public TerrainUtils.HexRegion region_type;
 
 
         public Hex(int q, int r)
@@ -45,6 +46,14 @@ namespace Terrain {
             );
 
 
+        }
+
+        public void SetRegionType(TerrainUtils.HexRegion region_type){
+            this.region_type = region_type;
+        }
+
+        public TerrainUtils.HexRegion GetRegionType(){
+            return this.region_type;
         }
 
         public TerrainUtils.HexElevation GetElevationType(){
