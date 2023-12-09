@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Terrain;
@@ -7,23 +8,45 @@ using UnityEngine;
 namespace Terrain{
     public static class TerrainHandler
     {
-        [SerializeField] private static GameObject generic_hex;
+        private static GameObject generic_hex;
         private static List<Hex> hex_list = new List<Hex>();
         private static List<GameObject> hex_go_list = new List<GameObject>();
         public static Dictionary<Hex, GameObject> hex_to_hex_go = new Dictionary<Hex, GameObject>();
 
-        public static void SpawnTerrain(Vector2 map_size, GameObject generic_hex, List<List<float>> elevation_map, List<List<float>> regions_map){
+        public static void SpawnTerrain(Vector2 map_size, GameObject generic_hex, List<List<float>> elevation_map, List<List<float>> regions_map, List<List<float>> water_map, GameObject perlin_map_object){
+            
             TerrainHandler.generic_hex = generic_hex;
 
             hex_list = CreateHexObjects(map_size);
+
+
+
             SetHexElevation(elevation_map);
+
+
             SetHexRegion(regions_map);
+
+           
+            SetHexLand(water_map);
+            
             SpawnHexTiles();
 
             //DebugHandler.InitializeDebugHexComponents(hex_list);
             //DebugHandler.ShowElevationTypes(GetHexList());
             DebugHandler.ShowRegionTypes(GetHexList());
+            DebugHandler.ShowOceanTypes(GetHexList());
+
+
+            //DebugHandler.SpawnPerlinViewers(map_size, perlin_map_object, new List<List<List<float>>>(){elevation_map, regions_map, water_map});
     
+        }
+
+        private static void SetHexLand(List<List<float>> land_map)
+        {
+            foreach(Hex hex in hex_list){
+                Vector2 coordinates = hex.GetColRow();
+                hex.SetLandType(TerrainUtils.GetLandType(land_map[ (int) coordinates.x][ (int) coordinates.y]));
+            }
         }
 
         private static List<Hex> CreateHexObjects(Vector2 map_size){

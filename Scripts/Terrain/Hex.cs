@@ -10,7 +10,7 @@ namespace Terrain {
         public float E; //Elevation
         public TerrainUtils.HexElevation elevation_type;
         public TerrainUtils.HexRegion region_type;
-
+        public TerrainUtils.LandType land_type;
 
         public Hex(int q, int r)
         {
@@ -29,6 +29,14 @@ namespace Terrain {
             return new Vector2(this.Q, this.R);
         }
 
+        public void SetLandType(TerrainUtils.LandType land_type){
+            this.land_type = land_type;
+
+            if(land_type == TerrainUtils.LandType.Water){
+                this.E = -0.3f;
+            }
+
+        }
 
         public Vector3 GetPosition()
         {  

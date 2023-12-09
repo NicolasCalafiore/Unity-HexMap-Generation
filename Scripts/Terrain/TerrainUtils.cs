@@ -8,6 +8,12 @@ namespace Terrain
     {
         private static int utility_counter = 0;
 
+        public enum LandType{
+            Water = 0,
+            Land = 1,
+        }
+
+
         public enum HexElevation{
             Canyon = -50,
             Valley = -25,
@@ -26,6 +32,16 @@ namespace Terrain
 
         }
 
+        public static LandType GetLandType(float landValue)
+        {
+            Dictionary<float, LandType> landDict = new Dictionary<float, LandType>(){
+                { 0, LandType.Water},
+                { 1, LandType.Land},
+            };
+
+            return landDict[landValue];
+            
+        }
         public static HexElevation GetElevationType(float elevationValue)
         {
             Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>(){
@@ -43,6 +59,8 @@ namespace Terrain
 
         public static HexRegion GetRegionType(float regionValue)
         {
+            regionValue = Mathf.Round(regionValue);
+
             Dictionary<float, HexRegion> regionDict = new Dictionary<float, HexRegion>(){
                 { 0, HexRegion.Desert},
                 { 1, HexRegion.Savannah},
@@ -95,7 +113,6 @@ namespace Terrain
                 {
                     row += map[i][j] + " ";
                 }
-                Debug.Log(row);
             }
         }
 
@@ -114,7 +131,20 @@ namespace Terrain
             map[i - 1][j] = value;
             map[i + 1][j] = value;
             map[i + 1][j - 1] = value;
-            map[i - 1][j + 1] = value;
+            map[i - 1][j + 1] = value;  
+        
+        }
+
+        public static void GeneratePerlinNoiseMap(List<List<float>> map, Vector2 map_size, float scale){
+            int offset = UnityEngine.Random.Range(0, 100000);
+
+            for (int i = 0; i < map_size.x; i++)
+            {
+                for (int j = 0; j < map_size.y; j++)
+                {
+                    map[i][j] = Mathf.PerlinNoise((i + offset) / map_size.x * scale, (j + offset) / map_size.y * scale);
+                }
+            }
         }
 
         public static Vector2 LinearSpawn(int i, int j, List<List<float>> map, float value){
@@ -156,35 +186,6 @@ namespace Terrain
 
             map[i][j] = value;
             return new Vector2(i, j);
-        }
-
-        public static void GeneratePerlinNoiseMap(List<List<float>> map, Vector2 map_size, float scale){
-            int offset = UnityEngine.Random.Range(0, 100000);
-
-            for (int i = 0; i < map_size.x; i++)
-            {
-                for (int j = 0; j < map_size.y; j++)
-                {
-                    map[i][j] = Mathf.PerlinNoise((i + offset) / map_size.x * scale, (j + offset) / map_size.y * scale);
-                }
-            }
-
-            Debug.Log("!!!");
-            for (int i = 0; i < map_size.x; i++)
-            {
-                for (int j = 0; j < map_size.y; j++)
-                {
-
-                    if(map[i][j] < .2f) map[i][j] = 0;         //DESERT
-                    else if(map[i][j] < .4f) map[i][j] = 1;     //SAVANNAH
-                    else if(map[i][j] < .6f) map[i][j] = 2;     //GRASSLAND
-                    else if(map[i][j] < .8f) map[i][j] = 3;    //FOREST
-                    else if(map[i][j] < 1f) map[i][j] = 4;      //JUNGLE
-                }
-            }
-
-
-
         }
 
     }

@@ -8,7 +8,7 @@ namespace Terrain
         private float hill_modifier = 0.15f;
         private float large_hill_modifier = 0.10f;
         private float mountain_modifier = 0.02f;
-        private float canyon_modifier = 0.03f;
+        private float canyon_modifier = 0.01f;
 
         private int hill_count = 0;
         private int large_hill_count = 0;
@@ -35,11 +35,11 @@ namespace Terrain
 
             mountain_range_max = 10; // TO DO: Make this a percentage of the map size
             mountain_range_min = 3; // TO DO: Make this a percentage of the map size
-            canyon_range_max = 15; // TO DO: Make this a percentage of the map size
-            canyon_range_min = 5; // TO DO: Make this a percentage of the map size
+            canyon_range_max = 25; // TO DO: Make this a percentage of the map size
+            canyon_range_min = 10; // TO DO: Make this a percentage of the map size
 
 
-            Debug.Log("mountain_range_max: " + mountain_range_max);
+
         }
 
         private void CreateHills(List<List<float>> elevation_map, Vector2 map_size){

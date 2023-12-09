@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    float speed = .1f;
+    float speed = .075f;
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.LeftShift)){
+            speed = speed + .05f;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift)){
+            speed = speed - .05f;
+        }
+
         if(Input.GetKey(KeyCode.W)){
             transform.position += new Vector3(0, 0, speed);
         }
@@ -25,7 +32,6 @@ public class CameraMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.DownArrow)){
             transform.position += new Vector3(0, -speed, 0);
         }
-
 
     }
 }
