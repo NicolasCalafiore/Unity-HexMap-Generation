@@ -188,5 +188,21 @@ namespace Terrain
             return new Vector2(i, j);
         }
 
+
+        public static List<List<float>> CombineMapValue(List<List<float>> map1, List<List<float>> map2, Vector2 map_size, int value){
+            
+            for (int i = 0; i < map_size.x; i++)
+            {
+                for (int j = 0; j < map_size.y; j++)
+                {
+                    if(map1[i][j] == value || map2[i][j] == value){
+                        map1[i][j] = value;
+                    }
+                }
+            }
+
+            return map1;
+        }
+
     }
 }

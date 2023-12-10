@@ -11,6 +11,7 @@ using UnityEngine;
 
 public static class DebugHandler
 {
+
     public static void InitializeDebugHexComponents(List<Hex> hex_list){
 
 
@@ -139,7 +140,7 @@ public static class DebugHandler
     }
 
 
-    public static void SpawnPerlinViewers(Vector2 map_size, GameObject perlin_map_object,  List<List<float>> map, string name){
+    public static void SpawnPerlinViewers(Vector2 map_size,  List<List<float>> map, string name, GameObject perlin_map_object){
             PerlinViewer pv = new PerlinViewer(map_size, map, perlin_map_object, name);
 
     }

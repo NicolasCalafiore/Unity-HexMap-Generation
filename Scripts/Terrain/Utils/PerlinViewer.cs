@@ -24,8 +24,6 @@ namespace Strategy.Assets.Game.Scripts.Terrain
             position.x += spawn_distance;
             this.map_size = map_size;
             perlin_map_go.name = name;
-            Debug.Log("Perlin Map Created");
-            Debug.Log(perlin_map_go.gameObject.transform.position);
 
             
             Renderer renderer = perlin_map_go.transform.GetChild(0).GetComponent<Renderer>();
