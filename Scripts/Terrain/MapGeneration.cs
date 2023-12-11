@@ -42,6 +42,7 @@ namespace Terrain {
             foreach(Hex i in TerrainHandler.GetHexList()){
                 GameObject hex_go = TerrainHandler.hex_to_hex_go[i];
                 hex_go.transform.SetParent(this.transform);
+                hex_go.name = "Hex - " + i.GetColRow().x + "_" + i.GetColRow().y + " - " + i.GetRegionType() + " - " + i.GetElevationType();
             }
         }
 
@@ -53,13 +54,16 @@ namespace Terrain {
                 case 0:
                     strategy = new RegionPerlin();
                     break;
+                case 1:
+                    strategy = new MapFactor();
+                    break; 
                 default:
                     strategy = new RegionPerlin();
                     break;
             }
 
-            List<List<float>> region_map = strategy.GenerateRegionsMap(map_size);
-            DebugHandler.SpawnPerlinViewers(map_size, region_map, "region_map", perlin_map_object);
+            List<List<float>> region_map = strategy.GenerateRegionsMap(map_size, perlin_map_object);
+ 
             return region_map;
         }
         private List<List<float>> GenerateWaterMap(){

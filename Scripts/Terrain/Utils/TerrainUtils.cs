@@ -29,6 +29,8 @@ namespace Terrain
             Grassland = 2,
             Forest = 3,
             Jungle = 4,
+            Tundra = 5,
+            Swamp = 6,
 
         }
 
@@ -67,6 +69,8 @@ namespace Terrain
                 { 2, HexRegion.Grassland},
                 { 3, HexRegion.Forest},
                 { 4, HexRegion.Jungle},
+                { 5, HexRegion.Tundra},
+                { 6, HexRegion.Swamp},
             };
 
             return regionDict[regionValue];

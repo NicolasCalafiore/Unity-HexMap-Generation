@@ -19,14 +19,10 @@ namespace Terrain{
 
             hex_list = CreateHexObjects(map_size);
 
-
-
             SetHexElevation(elevation_map);
-
 
             SetHexRegion(regions_map);
 
-           
             SetHexLand(water_map);
             
             SpawnHexTiles();
@@ -35,18 +31,7 @@ namespace Terrain{
             //DebugHandler.ShowElevationTypes(GetHexList());
             DebugHandler.ShowRegionTypes(GetHexList());
             DebugHandler.ShowOceanTypes(GetHexList());
-
-
             //DebugHandler.SpawnPerlinViewers(map_size, perlin_map_object, new List<List<List<float>>>(){elevation_map, regions_map, water_map});
-    
-        }
-
-        private static void SetHexLand(List<List<float>> land_map)
-        {
-            foreach(Hex hex in hex_list){
-                Vector2 coordinates = hex.GetColRow();
-                hex.SetLandType(TerrainUtils.GetLandType(land_map[ (int) coordinates.x][ (int) coordinates.y]));
-            }
         }
 
         private static List<Hex> CreateHexObjects(Vector2 map_size){
@@ -63,6 +48,14 @@ namespace Terrain{
             }
 
             return hex_list;
+        }
+
+        private static void SetHexLand(List<List<float>> land_map)
+        {
+            foreach(Hex hex in hex_list){
+                Vector2 coordinates = hex.GetColRow();
+                hex.SetLandType(TerrainUtils.GetLandType(land_map[ (int) coordinates.x][ (int) coordinates.y]));
+            }
         }
 
         private static void SetHexElevation(List<List<float>> elevation_map){

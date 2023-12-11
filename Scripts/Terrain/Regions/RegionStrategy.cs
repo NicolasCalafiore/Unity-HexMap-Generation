@@ -8,7 +8,8 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
 {
     public abstract class RegionStrategy
     {
-        public abstract List<List<float>> GenerateRegionsMap(Vector2 map_size);
+        public float perlin_scale = 4.5f;
+        public abstract List<List<float>> GenerateRegionsMap(Vector2 map_size, GameObject perlin_map_object);
         
     }
 }

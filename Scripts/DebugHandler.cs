@@ -74,52 +74,60 @@ public static class DebugHandler
     public static void ShowRegionTypes(List<Hex> hex_list){
         foreach(Hex hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
+            if(hex.GetLandType() != TerrainUtils.LandType.Water){
+                if(hex.GetRegionType() == TerrainUtils.HexRegion.Desert){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Desert");
+                }
 
-            if(hex.GetRegionType() == TerrainUtils.HexRegion.Desert){
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(255, 190, 77, 255);
-            }
+                if(hex.GetRegionType() == TerrainUtils.HexRegion.Savannah){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Savannah");
+                }
 
-            if(hex.GetRegionType() == TerrainUtils.HexRegion.Savannah){
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(235, 203, 151, 255);
-            }
+                if(hex.GetRegionType() == TerrainUtils.HexRegion.Grassland){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Grassland");
+                }
 
-            if(hex.GetRegionType() == TerrainUtils.HexRegion.Grassland){
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(0, 255, 0, 255);
-            }
+                if(hex.GetRegionType() == TerrainUtils.HexRegion.Forest){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Forest");
+                }
 
-            if(hex.GetRegionType() == TerrainUtils.HexRegion.Forest){
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(0, 128, 0, 255);
-            }
+                if(hex.GetRegionType() == TerrainUtils.HexRegion.Jungle){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Jungle");
+                }
+                if(hex.GetRegionType() == TerrainUtils.HexRegion.Tundra){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Tundra");
+                }
+                if(hex.GetRegionType() == TerrainUtils.HexRegion.Swamp){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Swamp");
+                }
 
-            if(hex.GetRegionType() == TerrainUtils.HexRegion.Jungle){
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(0, 100, 0, 255);
-            }
 
 
+                // if(hex.GetElevationType() == TerrainUtils.HexElevation.Mountain){
+                //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                //     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * .90f, hex_go_color.g * .90f, hex_go_color.b * .90f, 255f);
+                // }
+                // if(hex.GetElevationType() == TerrainUtils.HexElevation.Large_Hill){
+                //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                //     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * .85f, hex_go_color.g * .85f, hex_go_color.b * .85f, 255);
+                // }
+                // if(hex.GetElevationType() == TerrainUtils.HexElevation.Hill){
+                //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                //     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * 0.75f, hex_go_color.g * 0.75f, hex_go_color.b * 0.75f, 255);
+                // }
+                // if(hex.GetElevationType() == TerrainUtils.HexElevation.Flatland){
+                //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                //     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * .65f, hex_go_color.g * 0.65f, hex_go_color.b * 0.65f, 255);
+                // }
+                // if(hex.GetElevationType() == TerrainUtils.HexElevation.Valley){
+                //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                //     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * 0.55f, hex_go_color.g * 0.55f, hex_go_color.b * 0.55f, 255);
+                // }
+                // if(hex.GetElevationType() == TerrainUtils.HexElevation.Canyon){
+                //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                //     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * 0.45f, hex_go_color.g * 0.45f, hex_go_color.b * 0.45f, 255);
+                // }
 
-            if(hex.GetElevationType() == TerrainUtils.HexElevation.Mountain){
-                Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * .90f, hex_go_color.g * .90f, hex_go_color.b * .90f, 255f);
-            }
-            if(hex.GetElevationType() == TerrainUtils.HexElevation.Large_Hill){
-                Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * .85f, hex_go_color.g * .85f, hex_go_color.b * .85f, 255);
-            }
-            if(hex.GetElevationType() == TerrainUtils.HexElevation.Hill){
-                Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * 0.75f, hex_go_color.g * 0.75f, hex_go_color.b * 0.75f, 255);
-            }
-            if(hex.GetElevationType() == TerrainUtils.HexElevation.Flatland){
-                Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * .65f, hex_go_color.g * 0.65f, hex_go_color.b * 0.65f, 255);
-            }
-            if(hex.GetElevationType() == TerrainUtils.HexElevation.Valley){
-                Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * 0.55f, hex_go_color.g * 0.55f, hex_go_color.b * 0.55f, 255);
-            }
-            if(hex.GetElevationType() == TerrainUtils.HexElevation.Canyon){
-                Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color(hex_go_color.r * 0.45f, hex_go_color.g * 0.45f, hex_go_color.b * 0.45f, 255);
             }
 
         }

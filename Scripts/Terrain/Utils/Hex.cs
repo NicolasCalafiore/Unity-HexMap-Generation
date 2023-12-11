@@ -68,5 +68,9 @@ namespace Terrain {
             return this.elevation_type;
         }
 
+        public TerrainUtils.LandType GetLandType(){
+            return this.land_type;
+        }
+
     }
 }
