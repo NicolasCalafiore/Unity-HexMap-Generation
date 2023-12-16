@@ -8,9 +8,10 @@ namespace Terrain {
         public readonly int R;  //Row
         public readonly int S;
         public float E; //Elevation
-        public TerrainUtils.HexElevation elevation_type;
-        public TerrainUtils.HexRegion region_type;
-        public TerrainUtils.LandType land_type;
+        public EnumHandler.HexElevation elevation_type;
+        public EnumHandler.HexRegion region_type;
+        public EnumHandler.LandType land_type;
+        public EnumHandler.HexFeatures feature_type;
 
         public Hex(int q, int r)
         {
@@ -18,10 +19,14 @@ namespace Terrain {
             this.R = r;
             this.S = -(q + r);
         }
-        public void SetElevation(float elevation, TerrainUtils.HexElevation elevation_type)
+        public void SetElevation(float elevation, EnumHandler.HexElevation elevation_type)
         {
             this.E = elevation / 100;
             this.elevation_type = elevation_type;
+        }
+
+        public void SetFeatureType(EnumHandler.HexFeatures feature_type){
+            this.feature_type = feature_type;
         }
 
         public Vector2 GetColRow()
@@ -29,10 +34,10 @@ namespace Terrain {
             return new Vector2(this.Q, this.R);
         }
 
-        public void SetLandType(TerrainUtils.LandType land_type){
+        public void SetLandType(EnumHandler.LandType land_type){
             this.land_type = land_type;
 
-            if(land_type == TerrainUtils.LandType.Water){
+            if(land_type == EnumHandler.LandType.Water){
                 this.E = -0.3f;
             }
 
@@ -56,20 +61,24 @@ namespace Terrain {
 
         }
 
-        public void SetRegionType(TerrainUtils.HexRegion region_type){
+        public void SetRegionType(EnumHandler.HexRegion region_type){
             this.region_type = region_type;
         }
 
-        public TerrainUtils.HexRegion GetRegionType(){
+        public EnumHandler.HexRegion GetRegionType(){
             return this.region_type;
         }
 
-        public TerrainUtils.HexElevation GetElevationType(){
+        public EnumHandler.HexElevation GetElevationType(){
             return this.elevation_type;
         }
 
-        public TerrainUtils.LandType GetLandType(){
+        public EnumHandler.LandType GetLandType(){
             return this.land_type;
+        }
+
+        public EnumHandler.HexFeatures GetFeatureType(){
+            return this.feature_type;
         }
 
     }

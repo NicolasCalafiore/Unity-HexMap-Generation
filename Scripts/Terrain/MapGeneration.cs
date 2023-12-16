@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Strategy.Assets.Game.Scripts.Terrain;
 using Strategy.Assets.Game.Scripts.Terrain.Water;
 using Strategy.Assets.Game.Scripts.Terrain.Regions;
@@ -20,33 +19,48 @@ namespace Terrain {
         [SerializeField] private int elevation_strategy;
         [SerializeField] private int land_strategy;
         [SerializeField] private int region_strategy;
-        [SerializeField] private GameObject generic_hex;
+        [SerializeField] private int features_strategy;
         [SerializeField] public GameObject perlin_map_object;
 
         
 
         void Start()
         {
-            List<List<float>> elevation_map = GenerateElevationMap();
-            List<List<float>> regions_map = GenerateRegionMap();
             List<List<float>> ocean_map = GenerateWaterMap();
+            List<List<float>> regions_map = GenerateRegionMap(ocean_map);
+            List<List<float>> features_map = GenerateFeaturesMap(regions_map, ocean_map);
+            List<List<float>> elevation_map = GenerateElevationMap();
 
-            TerrainHandler.SpawnTerrain(map_size, generic_hex, elevation_map, regions_map, ocean_map, perlin_map_object);
+            DebugHandler.PrintMapDebug("features_map", features_map);
 
-            SetHexAsChildren();
-            DebugHandler.SpawnPerlinViewers(map_size, elevation_map, "elevation", perlin_map_object);
-            DebugHandler.SpawnPerlinViewers(map_size, regions_map, "regions_map", perlin_map_object);
+            TerrainHandler.SpawnTerrain(map_size, elevation_map, regions_map, ocean_map, features_map);
+
+            DebugHandler.SetHexAsChildren(this);
+            DebugHandler.SpawnPerlinViewers(map_size, elevation_map, "elevation");
+            DebugHandler.SpawnPerlinViewers(map_size, regions_map, "regions_map");
         }
 
-        private void SetHexAsChildren(){
-            foreach(Hex i in TerrainHandler.GetHexList()){
-                GameObject hex_go = TerrainHandler.hex_to_hex_go[i];
-                hex_go.transform.SetParent(this.transform);
-                hex_go.name = "Hex - " + i.GetColRow().x + "_" + i.GetColRow().y + " - " + i.GetRegionType() + " - " + i.GetElevationType();
+        private List<List<float>> GenerateFeaturesMap(List<List<float>> regions_map, List<List<float>> ocean_map)
+        {
+            FeaturesStrategy strategy = null;
+            switch (features_strategy)
+            {
+                case 0:
+                    strategy = new RegionSpecificRandom();
+                    break;
+                case 1:
+                    strategy = new RegionSpecificRandom();
+                    break;
+                default:
+                    strategy = new RegionSpecificRandom();
+                    break;
             }
+
+            List<List<float>> features_map = strategy.GenerateFeaturesMap(map_size, regions_map, ocean_map);
+            return features_map;
         }
 
-        private List<List<float>> GenerateRegionMap(){
+        private List<List<float>> GenerateRegionMap(List<List<float>> ocean_map){
 
             RegionStrategy strategy = null;
 
@@ -62,10 +76,11 @@ namespace Terrain {
                     break;
             }
 
-            List<List<float>> region_map = strategy.GenerateRegionsMap(map_size, perlin_map_object);
+            List<List<float>> region_map = strategy.GenerateRegionsMap(map_size, ocean_map);
  
             return region_map;
         }
+        
         private List<List<float>> GenerateWaterMap(){
 
         WaterStrategy strategy = null;
@@ -82,14 +97,14 @@ namespace Terrain {
                     break;
             }
 
-            List<List<float>> ocean_map = strategy.GenerateWaterMap(new Vector2( .7f, .475f), map_size, "ocean");
-            List<List<float>> river_map = strategy.GenerateWaterMap(new Vector2( .75f, .65f), map_size, "river");
+            List<List<float>> ocean_map = strategy.GenerateWaterMap(map_size, "ocean");
+            List<List<float>> river_map = strategy.GenerateWaterMap(map_size, "river");
 
-            ocean_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) TerrainUtils.LandType.Water);
+            ocean_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) EnumHandler.LandType.Water);
             strategy.OceanBorder(ocean_map);
 
-            DebugHandler.SpawnPerlinViewers(map_size, river_map, "river_map", perlin_map_object);
-            DebugHandler.SpawnPerlinViewers(map_size, ocean_map, "ocean_map", perlin_map_object);
+            DebugHandler.SpawnPerlinViewers(map_size, river_map, "river_map");
+            DebugHandler.SpawnPerlinViewers(map_size, ocean_map, "ocean_map");
 
             return ocean_map;
         }
@@ -103,13 +118,13 @@ namespace Terrain {
             switch (elevation_strategy)
             {
                 case 0:
-                    strategy = new RandomStrategy();
+                    strategy = new ElevationRandom();
                     break;
                 case 1:
-                    strategy = new GroupingStrategy();
+                    strategy = new ElevationGrouping();
                     break;
                 default:
-                    strategy = new RandomStrategy();
+                    strategy = new ElevationRandom();
                     break;
             }
 

@@ -15,9 +15,9 @@ namespace Strategy.Assets.Game.Scripts.Terrain
         private static int spawn_distance = 50;
         private static Vector2 position = new Vector2(- spawn_distance, 0);
         
-        public PerlinViewer(Vector2 map_size, List<List<float>> map, GameObject perlin_map_object, string name)
+        public PerlinViewer(Vector2 map_size, List<List<float>> map, string name)
         {
-            PerlinViewer.perlin_map_object = perlin_map_object;
+            perlin_map_object = Resources.Load<GameObject>("Prefab/Perlin_Map");
             GameObject perlin_map_go = Instantiate(perlin_map_object);
             perlin_map_go.transform.eulerAngles = new Vector3(0, 90, 0);
             perlin_map_go.transform.position = new Vector3(position.x, 15, position.y - spawn_distance);

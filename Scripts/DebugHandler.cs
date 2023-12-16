@@ -37,7 +37,7 @@ public static class DebugHandler
     public static void ShowOceanTypes(List<Hex> hex_list){
         foreach(Hex hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
-            if(hex.land_type == TerrainUtils.LandType.Water){
+            if(hex.land_type == EnumHandler.LandType.Water){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(0, 0, 255, 255);
             }
         }
@@ -48,22 +48,22 @@ public static class DebugHandler
 
         foreach(Hex hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
-            if(hex.GetElevationType() == TerrainUtils.HexElevation.Canyon){
+            if(hex.GetElevationType() == EnumHandler.HexElevation.Canyon){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(195, 143, 2, 255);
             }
-            else if(hex.GetElevationType() == TerrainUtils.HexElevation.Valley){
+            else if(hex.GetElevationType() == EnumHandler.HexElevation.Valley){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(255, 209, 81, 255);
             }
-            else if(hex.GetElevationType() == TerrainUtils.HexElevation.Flatland){
+            else if(hex.GetElevationType() == EnumHandler.HexElevation.Flatland){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(21, 195, 2, 255);
             }
-            else if(hex.GetElevationType() == TerrainUtils.HexElevation.Hill){
+            else if(hex.GetElevationType() == EnumHandler.HexElevation.Hill){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(17, 155, 2, 255);
             }
-            else if(hex.GetElevationType() == TerrainUtils.HexElevation.Large_Hill){
+            else if(hex.GetElevationType() == EnumHandler.HexElevation.Large_Hill){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(11, 105, 0, 255);
             }
-            else if(hex.GetElevationType() == TerrainUtils.HexElevation.Mountain){
+            else if(hex.GetElevationType() == EnumHandler.HexElevation.Mountain){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(160, 160, 160, 255);
             }
         }
@@ -74,34 +74,22 @@ public static class DebugHandler
     public static void ShowRegionTypes(List<Hex> hex_list){
         foreach(Hex hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
-            if(hex.GetLandType() != TerrainUtils.LandType.Water){
-                if(hex.GetRegionType() == TerrainUtils.HexRegion.Desert){
+            if(hex.GetLandType() != EnumHandler.LandType.Water){
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Desert");
                 }
 
-                if(hex.GetRegionType() == TerrainUtils.HexRegion.Savannah){
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Plains){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Savannah");
                 }
 
-                if(hex.GetRegionType() == TerrainUtils.HexRegion.Grassland){
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Grassland){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Grassland");
                 }
-
-                if(hex.GetRegionType() == TerrainUtils.HexRegion.Forest){
-                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Forest");
-                }
-
-                if(hex.GetRegionType() == TerrainUtils.HexRegion.Jungle){
-                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Jungle");
-                }
-                if(hex.GetRegionType() == TerrainUtils.HexRegion.Tundra){
+                
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Tundra){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Tundra");
                 }
-                if(hex.GetRegionType() == TerrainUtils.HexRegion.Swamp){
-                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Swamp");
-                }
-
-
 
                 // if(hex.GetElevationType() == TerrainUtils.HexElevation.Mountain){
                 //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
@@ -148,9 +136,17 @@ public static class DebugHandler
     }
 
 
-    public static void SpawnPerlinViewers(Vector2 map_size,  List<List<float>> map, string name, GameObject perlin_map_object){
-            PerlinViewer pv = new PerlinViewer(map_size, map, perlin_map_object, name);
+    public static void SpawnPerlinViewers(Vector2 map_size,  List<List<float>> map, string name){
+            PerlinViewer pv = new PerlinViewer(map_size, map, name);
 
+    }
+
+    public static void SetHexAsChildren(MapGeneration map_generation){
+    foreach(Hex i in TerrainHandler.GetHexList()){
+        GameObject hex_go = TerrainHandler.hex_to_hex_go[i];
+        hex_go.transform.SetParent(map_generation.transform);
+        hex_go.name = "Hex - " + i.GetColRow().x + "_" + i.GetColRow().y + " - " + i.GetRegionType() + " - " + i.GetElevationType();
+        }   
     }
 
 }

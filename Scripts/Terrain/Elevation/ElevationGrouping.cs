@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Terrain
 {
-    public class GroupingStrategy : ElevationStrategy
+    public class ElevationGrouping : ElevationStrategy
     {
         private float hill_modifier = 0.15f;
         private float large_hill_modifier = 0.10f;
         private float mountain_modifier = 0.02f;
-        private float canyon_modifier = 0.01f;
+        private float canyon_modifier = 0.02f;
 
         private int hill_count = 0;
         private int large_hill_count = 0;
@@ -21,9 +21,9 @@ namespace Terrain
         {
             InitializeMonumentParameters(map_size);
             CreateLargeHills(elevation_map, map_size);
+            CreateHills(elevation_map, map_size);
             CreateMountainRanges(elevation_map, map_size);
             CreateCanyons(elevation_map, map_size);
-            CreateHills(elevation_map, map_size);
             return elevation_map;
         }
 
@@ -44,26 +44,26 @@ namespace Terrain
 
         private void CreateHills(List<List<float>> elevation_map, Vector2 map_size){
             for(int i = 0; i < hill_count; i++){
-                TerrainUtils.RandomSpawn(map_size, elevation_map, (float) TerrainUtils.HexElevation.Hill);
+                TerrainUtils.RandomSpawn(map_size, elevation_map, (float) EnumHandler.HexElevation.Hill);
             }
         }
 
         private void CreateLargeHills(List<List<float>> elevation_map, Vector2 map_size){
             for(int i = 0; i < large_hill_count; i++){
-                Vector2 coord = TerrainUtils.RandomSpawn(map_size, elevation_map, (float) TerrainUtils.HexElevation.Large_Hill, 1, 1);
-                TerrainUtils.CircularSpawn((int) coord.x, (int) coord.y, elevation_map, (float) TerrainUtils.HexElevation.Hill);
+                Vector2 coord = TerrainUtils.RandomSpawn(map_size, elevation_map, (float) EnumHandler.HexElevation.Large_Hill, 1, 1);
+                TerrainUtils.CircularSpawn((int) coord.x, (int) coord.y, elevation_map, (float) EnumHandler.HexElevation.Hill);
             }
         }
 
         private void CreateMountainRanges(List<List<float>> elevation_map, Vector2 map_size){
             for(int i = 0; i < mountain_count; i++){
 
-                Vector2 coord = TerrainUtils.RandomSpawn(map_size, elevation_map, (float) TerrainUtils.HexElevation.Mountain);
+                Vector2 coord = TerrainUtils.RandomSpawn(map_size, elevation_map, (float) EnumHandler.HexElevation.Mountain);
                 for(int j = 0; j < UnityEngine.Random.Range(mountain_range_min, mountain_range_max); j++){
 
-                    float elevation = Random.Range(0, 101) < 25 ? (int) TerrainUtils.HexElevation.Mountain : 0;
+                    float elevation = Random.Range(0, 101) < 25 ? (int) EnumHandler.HexElevation.Mountain : 0;
 
-                    coord = TerrainUtils.LinearSpawn((int) coord.x, (int) coord.y, elevation_map, (float) TerrainUtils.HexElevation.Mountain);
+                    coord = TerrainUtils.LinearSpawn((int) coord.x, (int) coord.y, elevation_map, (float) EnumHandler.HexElevation.Mountain);
                 }
 
             }
@@ -71,10 +71,10 @@ namespace Terrain
         
         private void CreateCanyons(List<List<float>> elevation_map, Vector2 map_size){
             for(int i = 0; i < canyon_count; i++){
-                Vector2 coord = TerrainUtils.RandomSpawn(map_size, elevation_map, (float) TerrainUtils.HexElevation.Canyon);
+                Vector2 coord = TerrainUtils.RandomSpawn(map_size, elevation_map, (float) EnumHandler.HexElevation.Canyon);
                 for(int j = 0; j < Random.Range(canyon_range_min, canyon_range_max); j++){
 
-                    float elevation = Random.Range(0, 101) < 25 ? (int) TerrainUtils.HexElevation.Canyon : (int) TerrainUtils.HexElevation.Valley;
+                    float elevation = Random.Range(0, 101) < 25 ? (int) EnumHandler.HexElevation.Canyon : (int) EnumHandler.HexElevation.Valley;
 
                     coord = TerrainUtils.LinearSpawn((int) coord.x, (int) coord.y, elevation_map, (float) elevation);
                 }

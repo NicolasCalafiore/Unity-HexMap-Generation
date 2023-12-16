@@ -8,44 +8,25 @@ using UnityEngine;
 
 namespace Strategy.Assets.Game.Scripts.Terrain.Regions
 {
+    
     public class MapFactor : RegionStrategy
     {
+        public float perlin_scale = 3.5f;
 
-        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, GameObject perlin_map_object)
+        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map)
         {
-            return GenerateMapFactors(map_size, perlin_map_object);
-        }
+            List<List<float>> rain_map = GenerateRainMap(map_size);
+            List<List<float>> temperature_map = GenerateTemperatureMap(map_size);
 
-        private List<List<float>> GenerateMapFactors(Vector2 map_size, GameObject perlin_map_object){
-            List<List<float>> rain_map = GenerateRainMap(map_size, perlin_map_object);
-            List<List<float>> temperature_map = GenerateTemperatureMap(map_size, perlin_map_object);
+            TerrainUtils.NormalizePerlinMap(rain_map);
 
-            // Normalize rain_map
-            float rainMax = rain_map.SelectMany(x => x).Max();
-            float rainMin = rain_map.SelectMany(x => x).Min();
-            float rainRange = rainMax - rainMin;
+            TerrainUtils.NormalizePerlinMap(temperature_map);
 
-            for(int i = 0; i < rain_map.Count; i++){
-                for(int j = 0; j < rain_map[i].Count; j++){
-                    rain_map[i][j] = (rain_map[i][j] - rainMin) / rainRange;
-                }
-            }
+            DebugHandler.SpawnPerlinViewers(map_size, temperature_map, "temperature_map");
+            DebugHandler.SpawnPerlinViewers(map_size, rain_map, "rain_map");
 
-            // Normalize temperature_map
-            float tempMax = temperature_map.SelectMany(x => x).Max();
-            float tempMin = temperature_map.SelectMany(x => x).Min();
-            float tempRange = tempMax - tempMin;
+            List<List<float>> map_factors = CombineRegionFactors(rain_map, temperature_map, map_size, ocean_map);
 
-            for(int i = 0; i < temperature_map.Count; i++){
-                for(int j = 0; j < temperature_map[i].Count; j++){
-                    temperature_map[i][j] = (temperature_map[i][j] - tempMin) / tempRange;
-                }
-            }
-
-            List<List<float>> map_factors = CombineFactorMaps(rain_map, temperature_map, map_size);
-
-            DebugHandler.PrintMapDebug("rain_map", rain_map);
-            DebugHandler.PrintMapDebug("temperature_map", temperature_map);
             DebugHandler.PrintMapDebug("map_factors", map_factors);
 
 
@@ -54,45 +35,60 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
             return map_factors;
         }
 
-        private List<List<float>> CombineFactorMaps(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size){
+        private List<List<float>> CombineRegionFactors(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size, List<List<float>> ocean_map){
             List<List<float>> map_factors = TerrainUtils.GenerateMap(map_size);
-            for(int i = 0; i < rain_map.Count; i++){
-                for(int j = 0; j < rain_map[i].Count; j++){
-                    map_factors[i][j] = (int) TerrainUtils.HexRegion.Grassland;
 
-                    if(rain_map[i][j] <= .34f && temperature_map[i][j] <= 1f) map_factors[i][j] = (int) TerrainUtils.HexRegion.Desert; 
-                    if(rain_map[i][j] <= .34f && temperature_map[i][j] <= .56f) map_factors[i][j] = (int) TerrainUtils.HexRegion.Savannah; 
-                    if(rain_map[i][j] <= .34f && temperature_map[i][j] <= .32f) map_factors[i][j] = (int) TerrainUtils.HexRegion.Tundra;
+            for(int i = 0; i < map_size.x; i++){
+                for(int j = 0; j < map_size.y; j++){
 
-                    if(rain_map[i][j] <= .76f && rain_map[i][j] > .34f && temperature_map[i][j] <= .4f) map_factors[i][j] = (int) TerrainUtils.HexRegion.Forest; 
-                    if(rain_map[i][j] <= .58f && rain_map[i][j] > .34f && temperature_map[i][j] >= .74f) map_factors[i][j] = (int) TerrainUtils.HexRegion.Swamp; 
-                    if(rain_map[i][j] > .58f && rain_map[i][j] > .34f && temperature_map[i][j] >= .74f) map_factors[i][j] = (int) TerrainUtils.HexRegion.Jungle;
+                    if(ocean_map[i][j] == (int) EnumHandler.LandType.Water){
+                        map_factors[i][j] = (float) EnumHandler.HexRegion.Ocean;
+                        continue;
+                    }
 
-                    if(rain_map[i][j] > .76f && temperature_map[i][j] <= .28f) map_factors[i][j] = (int) TerrainUtils.HexRegion.Tundra;
-                    if(rain_map[i][j] > .76f && temperature_map[i][j] <= .74f && temperature_map[i][j] > .28 ) map_factors[i][j] = (int) TerrainUtils.HexRegion.Forest;
+                    if(rain_map[i][j] <= 1f){
+                        if(temperature_map[i][j] < 0.3f){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Tundra;
+                        }
+                        else{
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Grassland;
+                        }
+                    }
 
+                    if(rain_map[i][j] < 0.6f){
+                        if(temperature_map[i][j] < 0.6f){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Grassland;
+                        }
+                        else{
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Desert;
+                        }
+                    }
                     
+                    if(rain_map[i][j] < 0.3f){
+                        if(temperature_map[i][j] < 0.3f){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Tundra;
+                        }else if(temperature_map[i][j] < 0.6f){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Plains;
+                        }
+                        else{
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Desert;
+                        }
+                    }
                 }
             }
-            
+        
             return map_factors;
         }
 
-        private List<List<float>> GenerateRainMap(Vector2 map_size, GameObject perlin_map_object){
+        private List<List<float>> GenerateRainMap(Vector2 map_size){
             List<List<float>> rain_map = TerrainUtils.GenerateMap(map_size);
             TerrainUtils.GeneratePerlinNoiseMap(rain_map, map_size, perlin_scale);
-
-            DebugHandler.SpawnPerlinViewers(map_size, rain_map, "rain_map", perlin_map_object);
-
              return rain_map;
         }
 
-        private List<List<float>> GenerateTemperatureMap(Vector2 map_size, GameObject perlin_map_object){
+        private List<List<float>> GenerateTemperatureMap(Vector2 map_size ){
             List<List<float>> temperature_map = TerrainUtils.GenerateMap(map_size);
             TerrainUtils.GeneratePerlinNoiseMap(temperature_map, map_size, perlin_scale);
-
-            DebugHandler.SpawnPerlinViewers(map_size, temperature_map, "temperature_map", perlin_map_object);
-
             return temperature_map;
 
     }

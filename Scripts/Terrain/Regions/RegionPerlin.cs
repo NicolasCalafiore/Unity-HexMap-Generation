@@ -11,7 +11,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
     public class RegionPerlin : RegionStrategy
     {
         float scale = 6.5f;
-        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, GameObject perlin_map_object)
+        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map)
         {
             List<List<float>> regions_map = TerrainUtils.GenerateMap(map_size);
             TerrainUtils.GeneratePerlinNoiseMap(regions_map, map_size, scale);
@@ -27,11 +27,10 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                 for (int j = 0; j < map_size.y; j++)
                 {
 
-                    if(map[i][j] < .325f) map[i][j] = (int) TerrainUtils.HexRegion.Desert;         //DESERT
-                    else if(map[i][j] < .4f) map[i][j] = (int) TerrainUtils.HexRegion.Savannah;     //SAVANNAH
-                    else if(map[i][j] < .6f) map[i][j] = (int) TerrainUtils.HexRegion.Grassland;     //GRASSLAND
-                    else if(map[i][j] < .925f) map[i][j] = (int) TerrainUtils.HexRegion.Forest;    //FOREST
-                    else if(map[i][j] < 1f) map[i][j] = (int) TerrainUtils.HexRegion.Jungle;      //JUNGLE
+                    if(map[i][j] < .325f) map[i][j] = (int) EnumHandler.HexRegion.Desert;         //DESERT
+                    else if(map[i][j] < .4f) map[i][j] = (int) EnumHandler.HexRegion.Plains;     //SAVANNAH
+                    else if(map[i][j] < .6f) map[i][j] = (int) EnumHandler.HexRegion.Grassland;     //GRASSLAND
+                    else if(map[i][j] < .925f) map[i][j] = (int) EnumHandler.HexRegion.Tundra;    //FOREST
                 }
             }   
         }

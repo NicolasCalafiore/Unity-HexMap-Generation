@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Terrain
 {
-    public class RandomStrategy : ElevationStrategy
+    public class ElevationRandom : ElevationStrategy
     {
         public override List<List<float>> GenerateElevationMap(List<List<float>> map, Vector2 map_size)
         {

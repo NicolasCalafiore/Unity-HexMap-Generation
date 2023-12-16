@@ -1,84 +1,43 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
 
 namespace Terrain
 {
     public static class TerrainUtils
     {
         private static int utility_counter = 0;
+        public static void NormalizePerlinMap(List<List<float>> map){
+            float max = map.SelectMany(x => x).Max();
+            float min = map.SelectMany(x => x).Min();
+            float range = max - min;
 
-        public enum LandType{
-            Water = 0,
-            Land = 1,
-        }
-
-
-        public enum HexElevation{
-            Canyon = -50,
-            Valley = -25,
-            Flatland = 0,
-            Hill = 25,
-            Large_Hill = 50,
-            Mountain = 150,
-        }
-
-        public enum HexRegion{
-            Desert = 0,
-            Savannah = 1,
-            Grassland = 2,
-            Forest = 3,
-            Jungle = 4,
-            Tundra = 5,
-            Swamp = 6,
-
-        }
-
-        public static LandType GetLandType(float landValue)
-        {
-            Dictionary<float, LandType> landDict = new Dictionary<float, LandType>(){
-                { 0, LandType.Water},
-                { 1, LandType.Land},
-            };
-
-            return landDict[landValue];
-            
-        }
-        public static HexElevation GetElevationType(float elevationValue)
-        {
-            Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>(){
-                { -50, HexElevation.Canyon},
-                { -25, HexElevation.Valley},
-                { 0, HexElevation.Flatland},
-                { 25, HexElevation.Hill},
-                { 50, HexElevation.Large_Hill},
-                { 150, HexElevation.Mountain},
-            };
-
-            return elevationDict[elevationValue];
-            
-        }
-
-        public static HexRegion GetRegionType(float regionValue)
-        {
-            regionValue = Mathf.Round(regionValue);
-
-            Dictionary<float, HexRegion> regionDict = new Dictionary<float, HexRegion>(){
-                { 0, HexRegion.Desert},
-                { 1, HexRegion.Savannah},
-                { 2, HexRegion.Grassland},
-                { 3, HexRegion.Forest},
-                { 4, HexRegion.Jungle},
-                { 5, HexRegion.Tundra},
-                { 6, HexRegion.Swamp},
-            };
-
-            return regionDict[regionValue];
-            
+            for(int i = 0; i < map.Count; i++){
+                for(int j = 0; j < map[i].Count; j++){
+                    map[i][j] = (map[i][j] - min) / range;
+                }
+            }
         }
         
         public static float[] GetElevationValues(){
-            Array enumValues = Enum.GetValues(typeof(HexElevation));
+            Array enumValues = Enum.GetValues(typeof(EnumHandler.HexElevation));
+
+            // Create a float array to store the float values
+            float[] floatValues = new float[enumValues.Length];
+
+            // Convert each enum value to float and store in the floatValues array
+            int index = 0;
+            foreach (var value in enumValues) {
+                floatValues[index++] = (int) value;
+            }
+
+            return floatValues;
+        }
+
+        public static float[] GetFeaturesValues(){
+            Array enumValues = Enum.GetValues(typeof(EnumHandler.HexFeatures));
 
             // Create a float array to store the float values
             float[] floatValues = new float[enumValues.Length];
@@ -140,13 +99,17 @@ namespace Terrain
         }
 
         public static void GeneratePerlinNoiseMap(List<List<float>> map, Vector2 map_size, float scale){
-            int offset = UnityEngine.Random.Range(0, 100000);
+            int offsetX = UnityEngine.Random.Range(0, 100000);
+            int offsetY = UnityEngine.Random.Range(0, 100000);
 
             for (int i = 0; i < map_size.x; i++)
             {
                 for (int j = 0; j < map_size.y; j++)
                 {
-                    map[i][j] = Mathf.PerlinNoise((i + offset) / map_size.x * scale, (j + offset) / map_size.y * scale);
+                    float xCoord = (float) i / map_size.x * scale + offsetX;
+                    float yCoord = (float) j / map_size.y * scale + offsetY;
+
+                    map[i][j] = Mathf.PerlinNoise(xCoord, yCoord);
                 }
             }
         }
