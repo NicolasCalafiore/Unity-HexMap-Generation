@@ -31,13 +31,16 @@ namespace Terrain {
             List<List<float>> features_map = GenerateFeaturesMap(regions_map, ocean_map);
             List<List<float>> elevation_map = GenerateElevationMap();
 
-            DebugHandler.PrintMapDebug("features_map", features_map);
-
             TerrainHandler.SpawnTerrain(map_size, elevation_map, regions_map, ocean_map, features_map);
 
             DebugHandler.SetHexAsChildren(this);
             DebugHandler.SpawnPerlinViewers(map_size, elevation_map, "elevation");
             DebugHandler.SpawnPerlinViewers(map_size, regions_map, "regions_map");
+
+            DebugHandler.PrintMapDebug("ocean_map", ocean_map);
+            DebugHandler.PrintMapDebug("regions_map", regions_map);
+            DebugHandler.PrintMapDebug("features_map", features_map);
+            DebugHandler.PrintMapDebug("elevation_map", elevation_map);
         }
 
         private List<List<float>> GenerateFeaturesMap(List<List<float>> regions_map, List<List<float>> ocean_map)

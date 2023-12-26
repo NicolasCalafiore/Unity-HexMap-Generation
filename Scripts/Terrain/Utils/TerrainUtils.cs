@@ -66,20 +66,6 @@ namespace Terrain
 
         }
 
-        public static void PrintMap(List<List<float>> map){
-
-
-            for (int i = 0; i < map.Count; i++)
-            {
-                string row = "";
-                for (int j = 0; j < map[i].Count; j++)
-                {
-                    row += map[i][j] + " ";
-                }
-            }
-        }
-
-
         public static Vector2 RandomSpawn(Vector2 map_size, List<List<float>> elevation_map, float value, int min = 0, int limiter = 0){
             int i, j = 0;
             i = UnityEngine.Random.Range(min, (int) map_size.x - limiter);
@@ -170,6 +156,18 @@ namespace Terrain
 
             return map1;
         }
+
+
+        public static void DetectMapBodies(List<List<float>> map,  int target){
+            List<List<float>> bodies = new List<List<float>>();
+
+
+        }
+
+
+
+
+
 
     }
 }

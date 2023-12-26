@@ -30,16 +30,19 @@ namespace Terrain
             Plains = 2,
             Grassland = 3,
             Tundra = 4,
+            Highlands = 5,
+            Jungle = 6,
+            Swamp = 7,
 
         }
 
         public enum HexFeatures{   //Make sure to update getter function if you add more feature types
             Ocean = 0,
             Forest = 1,
-            Jungle = 2,
-            Swamp = 3,
-            Savanna = 4,
-            Oasis = 5,
+            Oasis = 2,
+            WheatField = 3,
+            Rocks = 4,
+            Jungle = 5,
         }
 
         public static LandType GetLandType(float landValue){
@@ -76,7 +79,11 @@ namespace Terrain
                 { 2, HexRegion.Plains},
                 { 3, HexRegion.Grassland},
                 { 4, HexRegion.Tundra},
+                { 5, HexRegion.Highlands},
+                { 6, HexRegion.Jungle},
+                { 7, HexRegion.Swamp},
             };
+
 
             return regionDict[regionValue];
             
@@ -89,10 +96,10 @@ namespace Terrain
             Dictionary<float, HexFeatures> featureDict = new Dictionary<float, HexFeatures>(){
                 { 0, HexFeatures.Ocean},
                 { 1, HexFeatures.Forest},
-                { 2, HexFeatures.Jungle},
-                { 3, HexFeatures.Swamp},
-                { 4, HexFeatures.Savanna},
-                { 5, HexFeatures.Oasis},
+                { 2, HexFeatures.Oasis},
+                { 3, HexFeatures.WheatField},
+                { 4, HexFeatures.Rocks},
+                { 5, HexFeatures.Jungle},
             };
 
             return featureDict[featureValue];

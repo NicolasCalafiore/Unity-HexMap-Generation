@@ -91,6 +91,24 @@ namespace Terrain{
                     float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
                     forest.transform.localPosition = new Vector3(0, local_position_y, 0);
                 }
+                if(hex.GetFeatureType() == EnumHandler.HexFeatures.WheatField){
+                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Wheat"));
+                    forest.transform.SetParent(hex_object.transform);
+                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
+                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
+                }
+                if(hex.GetFeatureType() == EnumHandler.HexFeatures.Rocks){
+                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Rocks"));
+                    forest.transform.SetParent(hex_object.transform);
+                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
+                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
+                }
+                if(hex.GetFeatureType() == EnumHandler.HexFeatures.Jungle){
+                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Jungle"));
+                    forest.transform.SetParent(hex_object.transform);
+                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
+                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
+                }
 
 
                 hex_go_list.Add(hex_object);

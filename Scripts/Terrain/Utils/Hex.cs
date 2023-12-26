@@ -29,18 +29,25 @@ namespace Terrain {
             this.feature_type = feature_type;
         }
 
-        public Vector2 GetColRow()
-        {
-            return new Vector2(this.Q, this.R);
-        }
-
         public void SetLandType(EnumHandler.LandType land_type){
             this.land_type = land_type;
 
             if(land_type == EnumHandler.LandType.Water){
-                this.E = -0.3f;
+                this.E = 0;
             }
 
+        }
+        public void SetRegionType(EnumHandler.HexRegion region_type){
+            this.region_type = region_type;
+
+            if(region_type == EnumHandler.HexRegion.Plains){
+                this.E = 0;
+            }
+        }
+
+        public Vector2 GetColRow()
+        {
+            return new Vector2(this.Q, this.R);
         }
 
         public Vector3 GetPosition()
@@ -59,10 +66,6 @@ namespace Terrain {
             );
 
 
-        }
-
-        public void SetRegionType(EnumHandler.HexRegion region_type){
-            this.region_type = region_type;
         }
 
         public EnumHandler.HexRegion GetRegionType(){

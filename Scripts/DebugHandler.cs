@@ -90,6 +90,16 @@ public static class DebugHandler
                 if(hex.GetRegionType() == EnumHandler.HexRegion.Tundra){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Tundra");
                 }
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Highlands){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Highlands");
+                }
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Jungle){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Jungle");
+                }
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Swamp");
+                }
+
 
                 // if(hex.GetElevationType() == TerrainUtils.HexElevation.Mountain){
                 //     Color hex_go_color = hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;

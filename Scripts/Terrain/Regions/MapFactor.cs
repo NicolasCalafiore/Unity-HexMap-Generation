@@ -11,7 +11,8 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
     
     public class MapFactor : RegionStrategy
     {
-        public float perlin_scale = 3.5f;
+        public float perlin_scale = 4.5f;
+        private static int counter = 0;
 
         public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map)
         {
@@ -22,17 +23,58 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
 
             TerrainUtils.NormalizePerlinMap(temperature_map);
 
-            DebugHandler.SpawnPerlinViewers(map_size, temperature_map, "temperature_map");
-            DebugHandler.SpawnPerlinViewers(map_size, rain_map, "rain_map");
-
             List<List<float>> map_factors = CombineRegionFactors(rain_map, temperature_map, map_size, ocean_map);
 
-            DebugHandler.PrintMapDebug("map_factors", map_factors);
+            DebugHandler.SpawnPerlinViewers(map_size, map_factors, "map_factors");
+
+            if(MeetsRegionRequirements(map_factors, map_size) || counter > 500){
+                if(counter > 500){
+                    Debug.Log("Forced Map Generation");
+                }
+                return map_factors;
+            }
+            else{
+                return GenerateRegionsMap(map_size, ocean_map);
+            }
+        }
+
+        private bool MeetsRegionRequirements(List<List<float>> map_factors, Vector2 map_size){
+
+            float desert_count = 0;
+            float tundra_count = 0;
+            float grassland_count = 0;
+            float plains_count = 0;
+            float ocean_count = 0;
+            float highlands_count = 0;
+            float jungle_count = 0;
+            float swamp_count = 0;
 
 
- 
+            foreach(List<float> row in map_factors){
+                foreach(float factor in row){
+                    if(factor == (float) EnumHandler.HexRegion.Desert) desert_count++;
+                    if(factor == (float) EnumHandler.HexRegion.Tundra) tundra_count++;
+                    if(factor == (float) EnumHandler.HexRegion.Grassland) grassland_count++;
+                    if(factor == (float) EnumHandler.HexRegion.Plains) plains_count++;
+                    if(factor == (float) EnumHandler.HexRegion.Ocean) ocean_count++;
+                    if(factor == (float) EnumHandler.HexRegion.Highlands) highlands_count++;
+                    if(factor == (float) EnumHandler.HexRegion.Jungle) jungle_count++;
+                    if(factor == (float) EnumHandler.HexRegion.Swamp) swamp_count++;
+                }
+            }
 
-            return map_factors;
+            desert_count =  (desert_count / (map_size.x * map_size.y) * 100);
+            tundra_count = (tundra_count / (map_size.x * map_size.y) * 100);
+            grassland_count = (grassland_count / (map_size.x * map_size.y) * 100);
+            plains_count = (plains_count / (map_size.x * map_size.y) * 100);
+            ocean_count = (ocean_count / (map_size.x * map_size.y) * 100);
+            highlands_count = (highlands_count / (map_size.x * map_size.y) * 100);
+            jungle_count = (jungle_count / (map_size.x * map_size.y) * 100);
+            swamp_count = swamp_count / (map_size.x * map_size.y) * 100;
+            
+            if(desert_count < 0.5f || tundra_count < 0.5f || plains_count < 0.5f || grassland_count < 0.5f || highlands_count < 0.5f || jungle_count < 0.5f || swamp_count < 0.5f ) return false;     //TO:DO
+
+            return true;
         }
 
         private List<List<float>> CombineRegionFactors(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size, List<List<float>> ocean_map){
@@ -46,34 +88,56 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                         continue;
                     }
 
-                    if(rain_map[i][j] <= 1f){
-                        if(temperature_map[i][j] < 0.3f){
+                    if(rain_map[i][j] <= .35){
+                        if(temperature_map[i][j] <= .2){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Tundra;
                         }
-                        else{
+                        else if(temperature_map[i][j] <= .35){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Highlands;
+                        }
+                        else if(temperature_map[i][j] <= .5){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Grassland;
+                        }
+                        else if(temperature_map[i][j] <= .6){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Plains;
+                        }
+                        else if(temperature_map[i][j] <= 1){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Desert;
                         }
                     }
 
-                    if(rain_map[i][j] < 0.6f){
-                        if(temperature_map[i][j] < 0.6f){
+
+                    else if(rain_map[i][j] <= .75){
+                        if(temperature_map[i][j] <= .3 && rain_map[i][j] <= .45){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Highlands;
+                        }
+                        else if(temperature_map[i][j] >= .7 && rain_map[i][j] <= .55){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Desert;
+                        }
+                        else if(temperature_map[i][j] <= .7){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Grassland;
                         }
-                        else{
-                            map_factors[i][j] = (float) EnumHandler.HexRegion.Desert;
-                        }
-                    }
-                    
-                    if(rain_map[i][j] < 0.3f){
-                        if(temperature_map[i][j] < 0.3f){
-                            map_factors[i][j] = (float) EnumHandler.HexRegion.Tundra;
-                        }else if(temperature_map[i][j] < 0.6f){
+                        else if(temperature_map[i][j] <= 1 && rain_map[i][j] <= .65){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Plains;
                         }
-                        else{
-                            map_factors[i][j] = (float) EnumHandler.HexRegion.Desert;
+                        else if(temperature_map[i][j] <= 1 && rain_map[i][j] <= .75){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Jungle;
                         }
                     }
+
+                    else if(rain_map[i][j] <= 1){
+                        if(temperature_map[i][j] <= .6){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Swamp;
+                        }
+                        else if(temperature_map[i][j] <= 1f){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Jungle;
+                        }
+                    }
+
+
+
+
+
                 }
             }
         

@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &708753441707987900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5879333764454802628}
+  m_Layer: 0
+  m_Name: WheatStrand (11)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5879333764454802628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708753441707987900}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.3458069, z: -0, w: 0.93830574}
+  m_LocalPosition: {x: 0.18642378, y: 0, z: -0.30568287}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2212899670792416985}
+  m_LocalEulerAnglesHint: {x: 0, y: -40.462, z: 0}
+--- !u!1 &2020842306903249388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4818450302380108673}
+  m_Layer: 0
+  m_Name: WheatStrand (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4818450302380108673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020842306903249388}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.86925584, z: -0, w: 0.4943626}
+  m_LocalPosition: {x: 0.17211002, y: 0, z: -0.10688643}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2212899670792416985}
+  m_LocalEulerAnglesHint: {x: 0, y: 120.745, z: 0}
+--- !u!1 &2817868686426955964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7936927299343386340}
+  m_Layer: 0
+  m_Name: WheatStrand (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7936927299343386340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2817868686426955964}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.8681089, z: -0, w: 0.4963739}
+  m_LocalPosition: {x: 0.021, y: 0, z: -0.116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2212899670792416985}
+  m_LocalEulerAnglesHint: {x: 0, y: -120.479, z: 0}
+--- !u!1 &6332405772967289621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7675962632800833962}
+  m_Layer: 0
+  m_Name: WheatStrand (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7675962632800833962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332405772967289621}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.4238589, z: -0, w: 0.9057282}
+  m_LocalPosition: {x: -0.019809194, y: 0, z: -0.23609996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2212899670792416985}
+  m_LocalEulerAnglesHint: {x: 0, y: 50.157, z: 0}
+--- !u!1 &6722378589762743340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2212899670792416985}
+  m_Layer: 0
+  m_Name: Rocks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2212899670792416985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722378589762743340}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7675962632800833962}
+  - {fileID: 7936927299343386340}
+  - {fileID: 4818450302380108673}
+  - {fileID: 5879333764454802628}
+  - {fileID: 497906292506740141}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &497285428911611797
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2212899670792416985}
+    m_Modifications:
+    - target: {fileID: 1300946392728048, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_Name
+      value: GlaciersOnWater
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1991
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+--- !u!4 &497906292506740141 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4043269026273848, guid: f6b25dc160247b8459d39a1a4101788e, type: 3}
+  m_PrefabInstance: {fileID: 497285428911611797}
+  m_PrefabAsset: {fileID: 0}
