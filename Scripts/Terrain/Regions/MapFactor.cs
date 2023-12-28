@@ -63,13 +63,13 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                 }
             }
 
-            desert_count =  (desert_count / (map_size.x * map_size.y) * 100);
-            tundra_count = (tundra_count / (map_size.x * map_size.y) * 100);
-            grassland_count = (grassland_count / (map_size.x * map_size.y) * 100);
-            plains_count = (plains_count / (map_size.x * map_size.y) * 100);
-            ocean_count = (ocean_count / (map_size.x * map_size.y) * 100);
-            highlands_count = (highlands_count / (map_size.x * map_size.y) * 100);
-            jungle_count = (jungle_count / (map_size.x * map_size.y) * 100);
+            desert_count =  desert_count / (map_size.x * map_size.y) * 100;
+            tundra_count = tundra_count / (map_size.x * map_size.y) * 100;
+            grassland_count = grassland_count / (map_size.x * map_size.y) * 100;
+            plains_count = plains_count / (map_size.x * map_size.y) * 100;
+            ocean_count = ocean_count / (map_size.x * map_size.y) * 100;
+            highlands_count = highlands_count / (map_size.x * map_size.y) * 100;
+            jungle_count = jungle_count / (map_size.x * map_size.y) * 100;
             swamp_count = swamp_count / (map_size.x * map_size.y) * 100;
             
             if(desert_count < 0.5f || tundra_count < 0.5f || plains_count < 0.5f || grassland_count < 0.5f || highlands_count < 0.5f || jungle_count < 0.5f || swamp_count < 0.5f ) return false;     //TO:DO
@@ -95,7 +95,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                         else if(temperature_map[i][j] <= .35){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Highlands;
                         }
-                        else if(temperature_map[i][j] <= .5){
+                        else if(temperature_map[i][j] <= .4){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Grassland;
                         }
                         else if(temperature_map[i][j] <= .6){
@@ -114,7 +114,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                         else if(temperature_map[i][j] >= .7 && rain_map[i][j] <= .55){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Desert;
                         }
-                        else if(temperature_map[i][j] <= .7){
+                        else if(temperature_map[i][j] <= .6){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Grassland;
                         }
                         else if(temperature_map[i][j] <= 1 && rain_map[i][j] <= .65){
@@ -133,11 +133,6 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Jungle;
                         }
                     }
-
-
-
-
-
                 }
             }
         

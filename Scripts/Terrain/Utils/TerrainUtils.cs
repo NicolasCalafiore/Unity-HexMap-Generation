@@ -37,7 +37,7 @@ namespace Terrain
         }
 
         public static float[] GetFeaturesValues(){
-            Array enumValues = Enum.GetValues(typeof(EnumHandler.HexFeatures));
+            Array enumValues = Enum.GetValues(typeof(EnumHandler.HexNaturalFeature));
 
             // Create a float array to store the float values
             float[] floatValues = new float[enumValues.Length];

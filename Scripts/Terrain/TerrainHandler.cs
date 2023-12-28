@@ -24,14 +24,19 @@ namespace Terrain{
             SetHexRegion(regions_map);
 
             SetHexLand(water_map);
+            
             SetHexFeatures(features_map);
             
             SpawnHexTiles();
 
-            //DebugHandler.InitializeDebugHexComponents(hex_list);
-            //DebugHandler.ShowElevationTypes(GetHexList());
+            InitializeDebugComponents();
+        }
+
+        private static void InitializeDebugComponents(){
             DebugHandler.ShowRegionTypes(GetHexList());
             DebugHandler.ShowOceanTypes(GetHexList());
+            //DebugHandler.InitializeDebugHexComponents(hex_list);
+            //DebugHandler.ShowElevationTypes(GetHexList());
             //DebugHandler.SpawnPerlinViewers(map_size, perlin_map_object, new List<List<List<float>>>(){elevation_map, regions_map, water_map});
         }
 
@@ -78,42 +83,37 @@ namespace Terrain{
             foreach(Hex hex in hex_list){
                 GameObject hex_object = GameObject.Instantiate(generic_hex);
                 hex_object.transform.position = hex.GetPosition();
-
-                if(hex.GetFeatureType() == EnumHandler.HexFeatures.Forest){
-                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Forest"));
-                    forest.transform.SetParent(hex_object.transform);
-                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
-                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexFeatures.Oasis){
-                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Oasis"));
-                    forest.transform.SetParent(hex_object.transform);
-                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
-                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexFeatures.WheatField){
-                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Wheat"));
-                    forest.transform.SetParent(hex_object.transform);
-                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
-                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexFeatures.Rocks){
-                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Rocks"));
-                    forest.transform.SetParent(hex_object.transform);
-                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
-                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexFeatures.Jungle){
-                    GameObject forest = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Jungle"));
-                    forest.transform.SetParent(hex_object.transform);
-                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
-                    forest.transform.localPosition = new Vector3(0, local_position_y, 0);
-                }
-
-
+                SpawnHexFeature(hex, hex_object);
                 hex_go_list.Add(hex_object);
                 hex_to_hex_go.Add(hex, hex_object);
             }
+        }
+
+        private static void SpawnHexFeature(Hex hex, GameObject hex_object){
+
+                GameObject feature = null;
+
+                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Forest"));
+                }
+                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Oasis){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Oasis"));
+                }
+                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.WheatField){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Wheat"));
+                }
+                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Rocks){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Rocks"));
+                }
+                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Jungle){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Jungle"));
+                }
+                if(feature != null){
+                    feature.transform.SetParent(hex_object.transform);
+                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
+                    feature.transform.localPosition = new Vector3(0, local_position_y, 0);
+                }
+
         }
 
         public static List<Hex> GetHexList(){

@@ -21,19 +21,19 @@ namespace Terrain
                 for(int j = 0; j < map_size.y; j++){
                     
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Grassland){
-                        if(Random.Range(0, 100) < forest_chance) features_map[i][j] = (int) EnumHandler.HexFeatures.Forest;
+                        if(Random.Range(0, 100) < forest_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Forest;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert){
-                        if(Random.Range(0, 100) < oasis_chance) features_map[i][j] = (int) EnumHandler.HexFeatures.Oasis;
+                        if(Random.Range(0, 100) < oasis_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Oasis;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plains){
-                        if(Random.Range(0, 100) < wheat_field_chance) features_map[i][j] = (int) EnumHandler.HexFeatures.WheatField;
+                        if(Random.Range(0, 100) < wheat_field_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.WheatField;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highlands || regions_map[i][j] == (int) EnumHandler.HexRegion.Tundra){
-                        if(Random.Range(0, 100) < rock_chance) features_map[i][j] = (int) EnumHandler.HexFeatures.Rocks;
+                        if(Random.Range(0, 100) < rock_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Rocks;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle){
-                       if(Random.Range(0, 100) < jungle_chance) features_map[i][j] = (int) EnumHandler.HexFeatures.Jungle;
+                       if(Random.Range(0, 100) < jungle_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Jungle;
                     }
 
                 }

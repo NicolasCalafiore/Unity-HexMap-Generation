@@ -36,7 +36,7 @@ namespace Terrain
 
         }
 
-        public enum HexFeatures{   //Make sure to update getter function if you add more feature types
+        public enum HexNaturalFeature{   //Make sure to update getter function if you add more feature types
             Ocean = 0,
             Forest = 1,
             Oasis = 2,
@@ -89,17 +89,17 @@ namespace Terrain
             
         }
 
-        public static HexFeatures GetFeatureType(float featureValue)
+        public static HexNaturalFeature GetFeatureType(float featureValue)
         {
             featureValue = Mathf.Round(featureValue);
 
-            Dictionary<float, HexFeatures> featureDict = new Dictionary<float, HexFeatures>(){
-                { 0, HexFeatures.Ocean},
-                { 1, HexFeatures.Forest},
-                { 2, HexFeatures.Oasis},
-                { 3, HexFeatures.WheatField},
-                { 4, HexFeatures.Rocks},
-                { 5, HexFeatures.Jungle},
+            Dictionary<float, HexNaturalFeature> featureDict = new Dictionary<float, HexNaturalFeature>(){
+                { 0, HexNaturalFeature.Ocean},
+                { 1, HexNaturalFeature.Forest},
+                { 2, HexNaturalFeature.Oasis},
+                { 3, HexNaturalFeature.WheatField},
+                { 4, HexNaturalFeature.Rocks},
+                { 5, HexNaturalFeature.Jungle},
             };
 
             return featureDict[featureValue];

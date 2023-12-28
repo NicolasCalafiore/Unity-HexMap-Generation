@@ -33,6 +33,11 @@ namespace Terrain {
 
             TerrainHandler.SpawnTerrain(map_size, elevation_map, regions_map, ocean_map, features_map);
 
+            InitializeDebugComponents(elevation_map, regions_map, features_map, ocean_map);
+
+        }
+
+        private void InitializeDebugComponents(List<List<float>> elevation_map, List<List<float>> regions_map, List<List<float>> features_map, List<List<float>> ocean_map){
             DebugHandler.SetHexAsChildren(this);
             DebugHandler.SpawnPerlinViewers(map_size, elevation_map, "elevation");
             DebugHandler.SpawnPerlinViewers(map_size, regions_map, "regions_map");

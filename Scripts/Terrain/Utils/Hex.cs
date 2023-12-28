@@ -11,7 +11,7 @@ namespace Terrain {
         public EnumHandler.HexElevation elevation_type;
         public EnumHandler.HexRegion region_type;
         public EnumHandler.LandType land_type;
-        public EnumHandler.HexFeatures feature_type;
+        public EnumHandler.HexNaturalFeature feature_type;
 
         public Hex(int q, int r)
         {
@@ -25,7 +25,7 @@ namespace Terrain {
             this.elevation_type = elevation_type;
         }
 
-        public void SetFeatureType(EnumHandler.HexFeatures feature_type){
+        public void SetFeatureType(EnumHandler.HexNaturalFeature feature_type){
             this.feature_type = feature_type;
         }
 
@@ -80,7 +80,7 @@ namespace Terrain {
             return this.land_type;
         }
 
-        public EnumHandler.HexFeatures GetFeatureType(){
+        public EnumHandler.HexNaturalFeature GetFeatureType(){
             return this.feature_type;
         }
 
