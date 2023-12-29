@@ -12,10 +12,10 @@ using UnityEngine;
 public static class DebugHandler
 {
 
-    public static void InitializeDebugHexComponents(List<Hex> hex_list){
+    public static void InitializeDebugHexComponents(List<HexTile> hex_list){
 
 
-        foreach(Hex hex in hex_list){
+        foreach(HexTile hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
             hex_go.isStatic = true; // Hex Empty Object 
             foreach (Transform child in hex_go.transform)
@@ -34,8 +34,8 @@ public static class DebugHandler
         }    
     }
 
-    public static void ShowOceanTypes(List<Hex> hex_list){
-        foreach(Hex hex in hex_list){
+    public static void ShowOceanTypes(List<HexTile> hex_list){
+        foreach(HexTile hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
             if(hex.land_type == EnumHandler.LandType.Water){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(0, 0, 255, 255);
@@ -44,9 +44,23 @@ public static class DebugHandler
         
     }
 
-    public static void ShowElevationTypes(List<Hex> hex_list){
+        public static void GetHexFromInput(GameObject gameObject){
+            string MESSAGE = "";
+            GameObject hex_go = gameObject.transform.parent.gameObject;
+            HexTile hex = TerrainHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
+            MESSAGE += "Hex: " + hex.GetColRow().x + " " + hex.GetColRow().y + "\n";
+            MESSAGE += "Elevation: " + hex.GetPosition().y  + "\n";
+            MESSAGE += "Elevation Type: " + hex.GetElevationType()  + "\n";
+            MESSAGE += "Region Type: " + hex.GetRegionType()  + "\n";
+            MESSAGE += "Land Type: " + hex.GetLandType() + "\n";
+            MESSAGE += "Feature Type: " + hex.GetFeatureType() + "\n";
+            MESSAGE += "Movement Speed:" + hex.MovementCost + "\n";
+            Debug.Log(MESSAGE);
+        }
 
-        foreach(Hex hex in hex_list){
+    public static void ShowElevationTypes(List<HexTile> hex_list){
+
+        foreach(HexTile hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
             if(hex.GetElevationType() == EnumHandler.HexElevation.Canyon){
                 hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(195, 143, 2, 255);
@@ -71,8 +85,8 @@ public static class DebugHandler
     }
 
 
-    public static void ShowRegionTypes(List<Hex> hex_list){
-        foreach(Hex hex in hex_list){
+    public static void ShowRegionTypes(List<HexTile> hex_list){
+        foreach(HexTile hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
             if(hex.GetLandType() != EnumHandler.LandType.Water){
                 if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
@@ -152,7 +166,7 @@ public static class DebugHandler
     }
 
     public static void SetHexAsChildren(MapGeneration map_generation){
-    foreach(Hex i in TerrainHandler.GetHexList()){
+    foreach(HexTile i in TerrainHandler.GetHexList()){
         GameObject hex_go = TerrainHandler.hex_to_hex_go[i];
         hex_go.transform.SetParent(map_generation.transform);
         hex_go.name = "Hex - " + i.GetColRow().x + "_" + i.GetColRow().y + " - " + i.GetRegionType() + " - " + i.GetElevationType();

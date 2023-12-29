@@ -2,7 +2,7 @@ using UnityEngine;
 using Terrain;
 
 namespace Terrain {
-    public class Hex {
+    public class HexTile {
         static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2;
         public readonly int Q;  //Column
         public readonly int R;  //Row
@@ -12,8 +12,9 @@ namespace Terrain {
         public EnumHandler.HexRegion region_type;
         public EnumHandler.LandType land_type;
         public EnumHandler.HexNaturalFeature feature_type;
+        public virtual float MovementCost { get; set; } = 1.0f; // Default movement cost
 
-        public Hex(int q, int r)
+        public HexTile(int q, int r)
         {
             this.Q = q;
             this.R = r;
