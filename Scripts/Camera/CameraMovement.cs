@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Terrain;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
     float speed = .075f;
+    void Start(){
+        transform.position = new Vector3(100, 5, 100);
+    }
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.LeftShift)){
