@@ -8,7 +8,7 @@ namespace Terrain
 {
     public class ElevationRandom : ElevationStrategy
     {
-        public override List<List<float>> GenerateElevationMap(List<List<float>> map, Vector2 map_size)
+        public override List<List<float>> GenerateElevationMap(List<List<float>> map, Vector2 map_size, List<List<float>> regions_map)
         {
             float[] values = TerrainUtils.GetElevationValues();
 

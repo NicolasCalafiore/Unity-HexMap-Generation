@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terrain;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Terrain{
@@ -14,7 +15,7 @@ namespace Terrain{
         public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>();
 
         public static void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){
-            
+        
             generic_hex = Resources.Load<GameObject>("Prefab/Hex_Generic_No_TMP");
             
             SpawnHexTiles(hex_list);
@@ -32,7 +33,6 @@ namespace Terrain{
             }
         }
 
-
         private static void InitializeDebugComponents( List<HexTile> hex_list){
             DebugHandler.ShowRegionTypes(hex_list);
             DebugHandler.ShowOceanTypes(hex_list);
@@ -40,30 +40,27 @@ namespace Terrain{
             //DebugHandler.ShowElevationTypes(GetHexList());
             //DebugHandler.SpawnPerlinViewers(map_size, perlin_map_object, new List<List<List<float>>>(){elevation_map, regions_map, water_map});
         }
-
-      
-
         private static void SpawnHexFeature(HexTile hex, GameObject hex_object){
 
                 GameObject feature = null;
 
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Forest"));
-                    hex = new ForestDecorator(hex);
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Forest"));
                 }
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Oasis){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Oasis"));
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Oasis"));
                 }
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.WheatField){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Wheat"));
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Wheat"));
                 }
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Rocks){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Rocks"));
-                    hex = new RockDecorator(hex);
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Rocks"));
                 }
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Jungle){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Jungle"));
-                    hex = new JungleDecorator(hex);
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Jungle"));
+                }
+                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Swamp"));
                 }
                 if(feature != null){
                     feature.transform.SetParent(hex_object.transform);

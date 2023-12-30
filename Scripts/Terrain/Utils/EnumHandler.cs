@@ -9,11 +9,6 @@ namespace Terrain
 {
     public static class EnumHandler
     {
-        public enum LandType{   //Make sure to update getter function if you add more land types
-            Water = 0,
-            Land = 1,
-        }
-
 
         public enum HexElevation{   //Make sure to update getter function if you add more elevation types
             Canyon = -50,
@@ -37,18 +32,24 @@ namespace Terrain
         }
 
         public enum HexNaturalFeature{   //Make sure to update getter function if you add more feature types
-            Ocean = 0,
+            None = 0,
             Forest = 1,
             Oasis = 2,
             WheatField = 3,
             Rocks = 4,
             Jungle = 5,
+            Swamp = 6,
+        }
+
+        public enum LandType{   //Make sure to update getter function if you add more land types
+            Water = 0,
+            Land = 1,
         }
 
         public static LandType GetLandType(float landValue){
             Dictionary<float, LandType> landDict = new Dictionary<float, LandType>(){
-                { 0, LandType.Water},
-                { 1, LandType.Land},
+                { (int) LandType.Water, LandType.Water},
+                { (int) LandType.Land, LandType.Land},
             };
 
             return landDict[landValue];
@@ -57,12 +58,12 @@ namespace Terrain
         public static HexElevation GetElevationType(float elevationValue)
         {
             Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>(){
-                { -50, HexElevation.Canyon},
-                { -25, HexElevation.Valley},
-                { 0, HexElevation.Flatland},
-                { 25, HexElevation.Hill},
-                { 50, HexElevation.Large_Hill},
-                { 150, HexElevation.Mountain},
+                { (int) HexElevation.Canyon, HexElevation.Canyon},
+                { (int) HexElevation.Valley, HexElevation.Valley},
+                { (int) HexElevation.Flatland, HexElevation.Flatland},
+                { (int) HexElevation.Hill, HexElevation.Hill},
+                { (int) HexElevation.Large_Hill, HexElevation.Large_Hill},
+                { (int) HexElevation.Mountain, HexElevation.Mountain},
             };
 
             return elevationDict[elevationValue];
@@ -74,14 +75,14 @@ namespace Terrain
             regionValue = Mathf.Round(regionValue);
 
             Dictionary<float, HexRegion> regionDict = new Dictionary<float, HexRegion>(){
-                { 0, HexRegion.Ocean},
-                { 1, HexRegion.Desert},
-                { 2, HexRegion.Plains},
-                { 3, HexRegion.Grassland},
-                { 4, HexRegion.Tundra},
-                { 5, HexRegion.Highlands},
-                { 6, HexRegion.Jungle},
-                { 7, HexRegion.Swamp},
+                { (int) HexRegion.Ocean, HexRegion.Ocean},
+                { (int) HexRegion.Desert, HexRegion.Desert},
+                { (int) HexRegion.Plains, HexRegion.Plains},
+                { (int) HexRegion.Grassland, HexRegion.Grassland},
+                { (int) HexRegion.Tundra, HexRegion.Tundra},
+                { (int) HexRegion.Highlands, HexRegion.Highlands},
+                { (int) HexRegion.Jungle, HexRegion.Jungle},
+                { (int) HexRegion.Swamp, HexRegion.Swamp},
             };
 
 
@@ -94,12 +95,13 @@ namespace Terrain
             featureValue = Mathf.Round(featureValue);
 
             Dictionary<float, HexNaturalFeature> featureDict = new Dictionary<float, HexNaturalFeature>(){
-                { 0, HexNaturalFeature.Ocean},
-                { 1, HexNaturalFeature.Forest},
-                { 2, HexNaturalFeature.Oasis},
-                { 3, HexNaturalFeature.WheatField},
-                { 4, HexNaturalFeature.Rocks},
-                { 5, HexNaturalFeature.Jungle},
+                { (int) HexNaturalFeature.None, HexNaturalFeature.None},
+                { (int) HexNaturalFeature.Forest, HexNaturalFeature.Forest},
+                { (int) HexNaturalFeature.Oasis, HexNaturalFeature.Oasis},
+                { (int) HexNaturalFeature.WheatField, HexNaturalFeature.WheatField},
+                { (int) HexNaturalFeature.Rocks, HexNaturalFeature.Rocks},
+                { (int) HexNaturalFeature.Jungle, HexNaturalFeature.Jungle},
+                { (int) HexNaturalFeature.Swamp, HexNaturalFeature.Swamp},
             };
 
             return featureDict[featureValue];

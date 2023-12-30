@@ -13,6 +13,7 @@ namespace Terrain
         int wheat_field_chance = 35;
         int rock_chance = 15;
         int jungle_chance = 80;
+        int swamp_chance = 75;
         public override List<List<float>> GenerateFeaturesMap(Vector2 map_size, List<List<float>> regions_map, List<List<float>> ocean_map)
         {
             List<List<float>> features_map = TerrainUtils.GenerateMap(map_size);
@@ -23,19 +24,21 @@ namespace Terrain
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Grassland){
                         if(Random.Range(0, 100) < forest_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Forest;
                     }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert){
+                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert){
                         if(Random.Range(0, 100) < oasis_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Oasis;
                     }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plains){
+                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plains){
                         if(Random.Range(0, 100) < wheat_field_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.WheatField;
                     }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highlands || regions_map[i][j] == (int) EnumHandler.HexRegion.Tundra){
+                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highlands || regions_map[i][j] == (int) EnumHandler.HexRegion.Tundra){
                         if(Random.Range(0, 100) < rock_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Rocks;
                     }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle){
+                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle){
                        if(Random.Range(0, 100) < jungle_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Jungle;
                     }
-
+                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Swamp){
+                       if(Random.Range(0, 100) < swamp_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Swamp;
+                    }
                 }
             }
         

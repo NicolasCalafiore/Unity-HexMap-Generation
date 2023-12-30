@@ -8,7 +8,7 @@ namespace Terrain
 {
     public abstract class ElevationStrategy
     {
-        public abstract List<List<float>> GenerateElevationMap(List<List<float>> elevation_map, Vector2 map_size);
+        public abstract List<List<float>> GenerateElevationMap(List<List<float>> elevation_map, Vector2 map_size, List<List<float>> regions_map);
 
     }
 }

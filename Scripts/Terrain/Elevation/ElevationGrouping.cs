@@ -17,7 +17,7 @@ namespace Terrain
 
         private int mountain_range_max, mountain_range_min = 0;
         private int canyon_range_max, canyon_range_min = 0;
-        public override List<List<float>> GenerateElevationMap(List<List<float>> elevation_map, Vector2 map_size)
+        public override List<List<float>> GenerateElevationMap(List<List<float>> elevation_map, Vector2 map_size, List<List<float>> regions_map)
         {
             InitializeMonumentParameters(map_size);
             CreateLargeHills(elevation_map, map_size);

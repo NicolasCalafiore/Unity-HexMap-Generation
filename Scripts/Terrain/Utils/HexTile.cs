@@ -8,7 +8,7 @@ namespace Terrain {
         public readonly int R;  //Row
         public readonly int S;
         public float E; //Elevation
-        public EnumHandler.HexElevation elevation_type;
+        public EnumHandler.HexElevation elevation_type { get; set;}
         public EnumHandler.HexRegion region_type;
         public EnumHandler.LandType land_type;
         public EnumHandler.HexNaturalFeature feature_type;
@@ -32,18 +32,9 @@ namespace Terrain {
 
         public void SetLandType(EnumHandler.LandType land_type){
             this.land_type = land_type;
-
-            if(land_type == EnumHandler.LandType.Water){
-                this.E = 0;
-            }
-
         }
         public void SetRegionType(EnumHandler.HexRegion region_type){
             this.region_type = region_type;
-
-            if(region_type == EnumHandler.HexRegion.Plains){
-                this.E = 0;
-            }
         }
 
         public Vector2 GetColRow()

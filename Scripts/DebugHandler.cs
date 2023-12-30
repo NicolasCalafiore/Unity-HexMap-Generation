@@ -165,12 +165,12 @@ public static class DebugHandler
 
     }
 
-    // public static void SetHexAsChildren(MapGeneration map_generation){
-    // foreach(HexTile i in TerrainHandler.GetHexList()){
-    //     GameObject hex_go = TerrainHandler.hex_to_hex_go[i];
-    //     hex_go.transform.SetParent(map_generation.transform);
-    //     hex_go.name = "Hex - " + i.GetColRow().x + "_" + i.GetColRow().y + " - " + i.GetRegionType() + " - " + i.GetElevationType();
-    //     }   
-    // }
+    public static void SetHexAsChildren(MapGeneration map_generation){
+    foreach(HexTile i in map_generation.GetHexList()){
+        GameObject hex_go = TerrainHandler.hex_to_hex_go[i];
+        hex_go.transform.SetParent(map_generation.transform);
+        hex_go.name = "Hex - " + i.GetColRow().x + "_" + i.GetColRow().y + " - " + i.GetRegionType() + " - " + i.GetElevationType();
+        }   
+    }
 
 }

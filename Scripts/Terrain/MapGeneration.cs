@@ -30,13 +30,15 @@ namespace Terrain {
             hex_list = CreateHexObjects(map_size);
             List<List<float>> ocean_map = GenerateWaterMap();
             List<List<float>> regions_map = GenerateRegionMap(ocean_map);
+            List<List<float>> elevation_map = GenerateElevationMap(regions_map);
             List<List<float>> features_map = GenerateFeaturesMap(regions_map, ocean_map);
-            List<List<float>> elevation_map = GenerateElevationMap();
 
             SetHexElevation(elevation_map);
             SetHexRegion(regions_map);
             SetHexLand(ocean_map);
             SetHexFeatures(features_map);
+
+            SetHexFactors(hex_list);
 
             TerrainHandler.SpawnTerrain(map_size, hex_list);
 
@@ -44,10 +46,74 @@ namespace Terrain {
 
         }
 
+        private static void SetHexFactors(List<HexTile> hex_list){
+            foreach(HexTile hex in hex_list){
+                SetFeatureFactor(hex);
+                SetLandDecorator(hex);
+                SetRegionDecorator(hex);
+            }
+        }
+
+        private static void SetRegionDecorator(HexTile hex)
+        {
+            if(hex.GetRegionType() == EnumHandler.HexRegion.Plains){
+                hex = new PlainDecorator(hex);
+            }
+            if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
+                hex = new DesertDecorator(hex);
+            }
+            if(hex.GetRegionType() == EnumHandler.HexRegion.Grassland){
+                hex = new GrasslandDecorator(hex);
+            }
+            if(hex.GetRegionType() == EnumHandler.HexRegion.Highlands){
+                hex = new HighlandsDecorator(hex);
+            }
+            if(hex.GetRegionType() == EnumHandler.HexRegion.Jungle){
+                hex = new JungleDecorator(hex);
+            }
+            if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
+                hex = new SwampDecorator(hex);
+            }
+            if(hex.GetRegionType() == EnumHandler.HexRegion.Tundra){
+                hex = new TundraDecorator(hex);
+            }
+
+        }
+
+        private static void SetLandDecorator(HexTile hex)
+        {
+            if(hex.GetLandType() == EnumHandler.LandType.Water){
+                hex = new WaterDecorator(hex);
+            }
+            if(hex.GetLandType() == EnumHandler.LandType.Land){
+                hex = new LandDecorator(hex);
+            }
+        }
+
+        private static void SetFeatureFactor(HexTile hex){
+
+            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
+                hex = new ForestDecorator(hex);
+            }
+            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Rocks){
+                hex = new RockDecorator(hex);
+            }
+            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Jungle){
+                hex = new JungleDecorator(hex);
+            }
+            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Oasis){
+                hex = new OasisDecorator(hex);
+            }
+            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
+                hex = new SwampDecorator(hex);
+            }
+        }
+
+
         
 
         private void InitializeDebugComponents(List<List<float>> elevation_map, List<List<float>> regions_map, List<List<float>> features_map, List<List<float>> ocean_map){
-            //DebugHandler.SetHexAsChildren(this);
+            DebugHandler.SetHexAsChildren(this);
             DebugHandler.SpawnPerlinViewers(map_size, elevation_map, "elevation");
             DebugHandler.SpawnPerlinViewers(map_size, regions_map, "regions_map");
 
@@ -144,7 +210,7 @@ namespace Terrain {
 
 
 
-        private List<List<float>> GenerateElevationMap(){
+        private List<List<float>> GenerateElevationMap(List<List<float>> regions_map){
             List<List<float>> elevation_map = TerrainUtils.GenerateMap(map_size);
 
             ElevationStrategy strategy = null;
@@ -161,7 +227,7 @@ namespace Terrain {
                     break;
             }
 
-            strategy.GenerateElevationMap(elevation_map, map_size);
+            strategy.GenerateElevationMap(elevation_map, map_size, regions_map);
             return elevation_map;
         }
 
@@ -173,9 +239,9 @@ namespace Terrain {
 
         private void SetHexFeatures(List<List<float>> features_map)
         {
-            foreach(HexTile hex in hex_list){
-                Vector2 coordinates = hex.GetColRow();
-                hex.SetFeatureType(EnumHandler.GetFeatureType(features_map[ (int) coordinates.x][ (int) coordinates.y]));
+            for(int i = 0; i < hex_list.Count; i++){
+                Vector2 coordinates = hex_list[i].GetColRow();
+                hex_list[i].SetFeatureType(EnumHandler.GetFeatureType(features_map[ (int) coordinates.x][ (int) coordinates.y]));
             }
         }
 
@@ -193,16 +259,15 @@ namespace Terrain {
                 hex.SetElevation(elevation_map[ (int) coordinates.x][ (int) coordinates.y], EnumHandler.GetElevationType(elevation_map[ (int) coordinates.x][ (int) coordinates.y]));
             }
         }
-
-        public List<HexTile> GetHexList(){
-            return hex_list;
-        }
-
         private void SetHexRegion(List<List<float>> regions_map){
             foreach(HexTile hex in hex_list){
                 Vector2 coordinates = hex.GetColRow();
                 hex.SetRegionType(EnumHandler.GetRegionType(regions_map[ (int) coordinates.x][ (int) coordinates.y]));
             }
+        }
+
+        public List<HexTile> GetHexList(){
+            return hex_list;
         }
 
     }
