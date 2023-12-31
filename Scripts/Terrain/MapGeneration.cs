@@ -26,21 +26,26 @@ namespace Terrain {
         void Start()
         {
             hex_list = HexTileUtils.CreateHexObjects(map_size);
-            List<List<float>> ocean_map = GenerateWaterMap();
-            List<List<float>> regions_map = GenerateRegionMap(ocean_map);
+
+            (List<List<float>>, List<List<float>>) map_tuple = GenerateWaterMap();
+            List<List<float>> ocean_map = map_tuple.Item1;
+            List<List<float>> river_map = map_tuple.Item2;
+            List<List<float>> regions_map = GenerateRegionMap(ocean_map, river_map);
+            List<List<float>> water_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) EnumHandler.LandType.Water);
+
             List<List<float>> elevation_map = GenerateElevationMap(regions_map);
-            List<List<float>> features_map = GenerateFeaturesMap(regions_map, ocean_map);
+            List<List<float>> features_map = GenerateFeaturesMap(regions_map, water_map);
 
             HexTileUtils.SetHexElevation(elevation_map, hex_list);
             HexTileUtils.SetHexRegion(regions_map, hex_list);
-            HexTileUtils.SetHexLand(ocean_map, hex_list);
+            HexTileUtils.SetHexLand(water_map, hex_list);
             HexTileUtils.SetHexFeatures(features_map, hex_list);
 
             SetHexDecorators(hex_list);
 
             TerrainHandler.SpawnTerrain(map_size, hex_list);
 
-            InitializeDebugComponents(elevation_map, regions_map, features_map, ocean_map);
+            InitializeDebugComponents(elevation_map, regions_map, features_map, water_map);
 
         }
 
@@ -141,7 +146,7 @@ namespace Terrain {
             return features_map;
         }
 
-        private List<List<float>> GenerateRegionMap(List<List<float>> ocean_map){
+        private List<List<float>> GenerateRegionMap(List<List<float>> ocean_map, List<List<float>> river_map){
 
             RegionStrategy strategy = null;
 
@@ -157,12 +162,14 @@ namespace Terrain {
                     break;
             }
 
-            List<List<float>> region_map = strategy.GenerateRegionsMap(map_size, ocean_map);
+            DebugHandler.PrintMapDebug("ocean_map_m", ocean_map);
+            DebugHandler.PrintMapDebug("river_map_m", river_map);
+            List<List<float>> region_map = strategy.GenerateRegionsMap(map_size, ocean_map, river_map);
  
             return region_map;
         }
         
-        private List<List<float>> GenerateWaterMap(){
+        private (List<List<float>>, List<List<float>>) GenerateWaterMap(){
 
         WaterStrategy strategy = null;
             switch (land_strategy)
@@ -180,17 +187,9 @@ namespace Terrain {
 
             List<List<float>> ocean_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.Ocean, hex_list);
             List<List<float>> river_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.River, hex_list);
-
-            
-            
-
-            ocean_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) EnumHandler.LandType.Water);
             strategy.OceanBorder(ocean_map);
 
-            DebugHandler.SpawnPerlinViewers(map_size, river_map, "river_map");
-            DebugHandler.SpawnPerlinViewers(map_size, ocean_map, "ocean_map");
-
-            return ocean_map;
+            return (ocean_map, river_map);
         }
 
 

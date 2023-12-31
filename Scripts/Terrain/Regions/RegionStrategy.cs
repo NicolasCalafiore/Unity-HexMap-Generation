@@ -8,7 +8,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
 {
     public abstract class RegionStrategy
     {
-        public abstract List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map);
+        public abstract List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map);
         
     }
 }

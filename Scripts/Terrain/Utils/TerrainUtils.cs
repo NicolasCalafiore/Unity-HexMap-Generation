@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -143,18 +144,21 @@ namespace Terrain
 
 
         public static List<List<float>> CombineMapValue(List<List<float>> map1, List<List<float>> map2, Vector2 map_size, int value){
-            
-            for (int i = 0; i < map_size.x; i++)
-            {
-                for (int j = 0; j < map_size.y; j++)
-                {
-                    if(map1[i][j] == value || map2[i][j] == value){
-                        map1[i][j] = value;
-                    }
-                }
-            }
+            List<List<float>> map = new List<List<float>>();
 
-            return map1;
+                for (int i = 0; i < map_size.x; i++)
+                {
+                    List<float> row = new List<float>();
+                    for (int j = 0; j < map_size.y; j++)
+                    {
+                        // Initialize with 0 or the specified value based on the condition
+                        float cellValue = (map1[i][j] == value || map2[i][j] == value) ? value : 1;
+                        row.Add(cellValue);
+                    }
+                    map.Add(row); // Add the row to the map
+                }
+
+                return map;
         }
 
 

@@ -14,7 +14,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
         public float perlin_scale = 4.5f;
         private static int counter = 0;
 
-        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map)
+        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map)
         {
             List<List<float>> rain_map = GenerateRainMap(map_size);
             List<List<float>> temperature_map = GenerateTemperatureMap(map_size);
@@ -23,7 +23,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
 
             TerrainUtils.NormalizePerlinMap(temperature_map);
 
-            List<List<float>> map_factors = CombineRegionFactors(rain_map, temperature_map, map_size, ocean_map);
+            List<List<float>> map_factors = CombineRegionFactors(rain_map, temperature_map, map_size, ocean_map, river_map);
 
             DebugHandler.SpawnPerlinViewers(map_size, map_factors, "map_factors");
 
@@ -34,7 +34,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                 return map_factors;
             }
             else{
-                return GenerateRegionsMap(map_size, ocean_map);
+                return GenerateRegionsMap(map_size, ocean_map, river_map);
             }
         }
 
@@ -67,7 +67,6 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
             tundra_count = tundra_count / (map_size.x * map_size.y) * 100;
             grassland_count = grassland_count / (map_size.x * map_size.y) * 100;
             plains_count = plains_count / (map_size.x * map_size.y) * 100;
-            ocean_count = ocean_count / (map_size.x * map_size.y) * 100;
             highlands_count = highlands_count / (map_size.x * map_size.y) * 100;
             jungle_count = jungle_count / (map_size.x * map_size.y) * 100;
             swamp_count = swamp_count / (map_size.x * map_size.y) * 100;
@@ -77,16 +76,29 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
             return true;
         }
 
-        private List<List<float>> CombineRegionFactors(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size, List<List<float>> ocean_map){
+        private List<List<float>> CombineRegionFactors(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map){
             List<List<float>> map_factors = TerrainUtils.GenerateMap(map_size);
+
+                    
+            DebugHandler.PrintMapDebug("river_map_tt", river_map);
+                           
+            DebugHandler.PrintMapDebug("ocean_map_tt", ocean_map);
 
             for(int i = 0; i < map_size.x; i++){
                 for(int j = 0; j < map_size.y; j++){
 
-                    if(ocean_map[i][j] == (int) EnumHandler.LandType.Water)
+                    if(ocean_map[i][j] == (int) EnumHandler.LandType.Water || river_map[i][j] == (int) EnumHandler.LandType.Water){
+                        if(ocean_map[i][j] == (int) EnumHandler.LandType.Water){
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.Ocean;
+                        }
+                        else{
+                            map_factors[i][j] = (float) EnumHandler.HexRegion.River;
+                        }
                         continue;
-                    
+                    }
 
+
+                
                     if(rain_map[i][j] <= .35){
                         if(temperature_map[i][j] <= .2){
                             map_factors[i][j] = (float) EnumHandler.HexRegion.Tundra;

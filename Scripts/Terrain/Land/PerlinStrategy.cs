@@ -22,6 +22,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
             if(region_type == EnumHandler.HexRegion.River){
                 TerrainUtils.GeneratePerlinNoiseMap(map, map_size, river_scale);
                 FilterPerlinMap(map, map_size, river_max_min, region_type);
+                HexTileUtils.SetHexRegion(map, hex_list);
             }
             else if(region_type == EnumHandler.HexRegion.Ocean){
                 TerrainUtils.GeneratePerlinNoiseMap(map, map_size, ocean_scale);
@@ -29,11 +30,6 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
             }
 
             SetLand(map, region_type);
-
-            if(region_type == EnumHandler.HexRegion.River){
-                 HexTileUtils.SetHexRegion(map, hex_list);
-            }
-
             return map;
         }
         public static void SetLand(List<List<float>> map, EnumHandler.HexRegion region_type)

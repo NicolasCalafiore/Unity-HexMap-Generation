@@ -37,9 +37,13 @@ public static class DebugHandler
     public static void ShowOceanTypes(List<HexTile> hex_list){
         foreach(HexTile hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
-            if(hex.land_type == EnumHandler.LandType.Water){
-                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = new Color32(0, 0, 255, 255);
+            if(hex.region_type == EnumHandler.HexRegion.Ocean){
+                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Ocean");
             }
+            else if(hex.region_type == EnumHandler.HexRegion.River){
+                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/River");
+            }
+
         }
         
     }
@@ -113,6 +117,7 @@ public static class DebugHandler
                 if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Swamp");
                 }
+                
 
 
                 // if(hex.GetElevationType() == TerrainUtils.HexElevation.Mountain){

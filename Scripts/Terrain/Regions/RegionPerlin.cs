@@ -11,7 +11,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
     public class RegionPerlin : RegionStrategy
     {
         float scale = 6.5f;
-        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map)
+        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map)
         {
             List<List<float>> regions_map = TerrainUtils.GenerateMap(map_size);
             TerrainUtils.GeneratePerlinNoiseMap(regions_map, map_size, scale);

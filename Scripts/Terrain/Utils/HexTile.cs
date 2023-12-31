@@ -34,7 +34,7 @@ namespace Terrain {
             this.land_type = land_type;
         }
         public void SetRegionType(EnumHandler.HexRegion region_type){
-            this.region_type = region_type;
+                this.region_type = region_type;
         }
 
         public Vector2 GetColRow()
