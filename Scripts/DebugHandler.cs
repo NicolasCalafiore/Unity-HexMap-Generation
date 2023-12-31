@@ -22,6 +22,7 @@ public static class DebugHandler
             MESSAGE += "Region Type: " + hex.GetRegionType()  + "\n";
             MESSAGE += "Land Type: " + hex.GetLandType() + "\n";
             MESSAGE += "Feature Type: " + hex.GetFeatureType() + "\n";
+            MESSAGE += "Resource Type: " + hex.GetResourceType() + "\n";
             MESSAGE += "Movement Cost:" + hex.MovementCost + "\n";
             Debug.Log(MESSAGE);
         }

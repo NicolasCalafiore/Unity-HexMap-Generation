@@ -36,11 +36,14 @@ namespace Terrain {
 
             List<List<float>> elevation_map = GenerateElevationMap(regions_map);
             List<List<float>> features_map = GenerateFeaturesMap(regions_map, water_map);
+            List<List<float>> resource_map = GenerateResourceMap(ocean_map, river_map, regions_map);
+            DebugHandler.PrintMapDebug("resource_map", resource_map);
 
             HexTileUtils.SetHexElevation(elevation_map, hex_list);
             HexTileUtils.SetHexRegion(regions_map, hex_list);
             HexTileUtils.SetHexLand(water_map, hex_list);
             HexTileUtils.SetHexFeatures(features_map, hex_list);
+            HexTileUtils.SetHexResource(resource_map, hex_list);
 
             DecoratorHandler.SetHexDecorators(hex_list);
             TerrainHandler.SpawnTerrain(map_size, hex_list);
@@ -65,6 +68,26 @@ namespace Terrain {
 
             List<List<float>> features_map = strategy.GenerateFeaturesMap(map_size, regions_map, ocean_map);
             return features_map;
+        }
+
+        private List<List<float>> GenerateResourceMap(List<List<float>> ocean_map, List<List<float>> river_map, List<List<float>> regions_map)
+        {
+            ResourceStrategy strategy = null;
+            switch (features_strategy)
+            {
+                case 0:
+                    strategy = new ResourceRandom();
+                    break;
+                case 1:
+                    strategy = new ResourceRandom();
+                    break;
+                default:
+                    strategy = new ResourceRandom();
+                    break;
+            }
+
+            List<List<float>> resource_map = strategy.GenerateResourceMap(map_size, ocean_map, river_map, regions_map);
+            return resource_map;
         }
 
         private List<List<float>> GenerateRegionMap(List<List<float>> ocean_map, List<List<float>> river_map){
@@ -120,13 +143,13 @@ namespace Terrain {
             switch (elevation_strategy)
             {
                 case 0:
-                    strategy = new ElevationRandom();
+                    strategy = new ElevationGrouping();
                     break;
                 case 1:
                     strategy = new ElevationGrouping();
                     break;
                 default:
-                    strategy = new ElevationRandom();
+                    strategy = new ElevationGrouping();
                     break;
             }
 

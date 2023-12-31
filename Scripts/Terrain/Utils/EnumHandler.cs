@@ -47,6 +47,21 @@ namespace Terrain
             Land,
         }
 
+        public enum HexResource{
+            None,
+            Iron,
+        }
+
+        public static HexResource GetResourceType(float resourceValue){
+            Dictionary<float, HexResource> resourceDict = new Dictionary<float, HexResource>(){
+                { (int) HexResource.None, HexResource.None},
+                { (int) HexResource.Iron, HexResource.Iron},
+            };
+
+            return resourceDict[resourceValue];
+    
+        }
+
         public static LandType GetLandType(float landValue){
             Dictionary<float, LandType> landDict = new Dictionary<float, LandType>(){
                 { (int) LandType.Water, LandType.Water},

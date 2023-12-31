@@ -52,5 +52,12 @@ namespace Terrain
             }
         }
 
+        public static void SetHexResource(List<List<float>> resource_map, List<HexTile> hex_list){
+            foreach(HexTile hex in hex_list){
+                Vector2 coordinates = hex.GetColRow();
+                hex.SetResourceType(EnumHandler.GetResourceType(resource_map[ (int) coordinates.x][ (int) coordinates.y]));
+            }
+        }
+
     }
 }

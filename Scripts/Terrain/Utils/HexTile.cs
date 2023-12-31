@@ -12,6 +12,7 @@ namespace Terrain {
         public EnumHandler.HexRegion region_type;
         public EnumHandler.LandType land_type;
         public EnumHandler.HexNaturalFeature feature_type;
+        public EnumHandler.HexResource resource_type;
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
         public HexTile(int q, int r)
@@ -35,6 +36,10 @@ namespace Terrain {
         }
         public void SetRegionType(EnumHandler.HexRegion region_type){
                 this.region_type = region_type;
+        }
+
+        public void SetResourceType(EnumHandler.HexResource resource_type){
+            this.resource_type = resource_type;
         }
 
         public Vector2 GetColRow()
@@ -62,6 +67,10 @@ namespace Terrain {
 
         public EnumHandler.HexRegion GetRegionType(){
             return this.region_type;
+        }
+
+        public EnumHandler.HexResource GetResourceType(){
+            return this.resource_type;
         }
 
         public EnumHandler.HexElevation GetElevationType(){

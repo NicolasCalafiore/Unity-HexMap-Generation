@@ -28,6 +28,7 @@ namespace Terrain{
                 GameObject hex_object = GameObject.Instantiate(generic_hex);
                 hex_object.transform.position = hex.GetPosition();
                 SpawnHexFeature(hex, hex_object);
+                SpawnHexResource(hex, hex_object);
                 hex_go_list.Add(hex_object);
                 hex_to_hex_go.Add(hex, hex_object);
             }
@@ -68,6 +69,21 @@ namespace Terrain{
                 }
 
         }
+
+    private static void SpawnHexResource(HexTile hex, GameObject hex_object){
+        GameObject resource = null;
+
+        if(hex.GetResourceType() == EnumHandler.HexResource.Iron){
+            resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Iron"));
+        }
+
+        if(resource != null){
+            resource.transform.SetParent(hex_object.transform);
+            float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
+            resource.transform.localPosition = new Vector3(0, local_position_y, 0);
+        }
+
+    }
 
 
     public static void ShowRegionTypes(List<HexTile> hex_list){
