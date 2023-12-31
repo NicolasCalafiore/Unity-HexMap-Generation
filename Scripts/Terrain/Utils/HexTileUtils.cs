@@ -48,9 +48,6 @@ namespace Terrain
         public static void SetHexRegion(List<List<float>> regions_map, List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
                 Vector2 coordinates = hex.GetColRow();
-                if(hex.GetRegionType() == EnumHandler.HexRegion.River){
-                    //hex.SetRegionType(EnumHandler.HexRegion.River);
-                }
                 hex.SetRegionType(EnumHandler.GetRegionType(regions_map[ (int) coordinates.x][ (int) coordinates.y]));
             }
         }

@@ -27,11 +27,12 @@ namespace Terrain {
         {
             hex_list = HexTileUtils.CreateHexObjects(map_size);
 
-            (List<List<float>>, List<List<float>>) map_tuple = GenerateWaterMap();
-            List<List<float>> ocean_map = map_tuple.Item1;
-            List<List<float>> river_map = map_tuple.Item2;
-            List<List<float>> regions_map = GenerateRegionMap(ocean_map, river_map);
+            (List<List<float>>, List<List<float>>) water_tuple = GenerateWaterMap();
+            List<List<float>> ocean_map = water_tuple.Item1;
+            List<List<float>> river_map = water_tuple.Item2;
             List<List<float>> water_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) EnumHandler.LandType.Water);
+
+            List<List<float>> regions_map = GenerateRegionMap(ocean_map, river_map);
 
             List<List<float>> elevation_map = GenerateElevationMap(regions_map);
             List<List<float>> features_map = GenerateFeaturesMap(regions_map, water_map);
@@ -41,91 +42,11 @@ namespace Terrain {
             HexTileUtils.SetHexLand(water_map, hex_list);
             HexTileUtils.SetHexFeatures(features_map, hex_list);
 
-            SetHexDecorators(hex_list);
-
+            DecoratorHandler.SetHexDecorators(hex_list);
             TerrainHandler.SpawnTerrain(map_size, hex_list);
-
             InitializeDebugComponents(elevation_map, regions_map, features_map, water_map);
 
         }
-
-        private static void SetHexDecorators(List<HexTile> hex_list){
-            foreach(HexTile hex in hex_list){
-                SetFeatureDecorators(hex);
-                SetLandDecorator(hex);
-                SetRegionDecorator(hex);
-            }
-        }
-
-        private static void SetRegionDecorator(HexTile hex)
-        {
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Plains){
-                hex = new PlainDecorator(hex);
-            }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
-                hex = new DesertDecorator(hex);
-            }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Grassland){
-                hex = new GrasslandDecorator(hex);
-            }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Highlands){
-                hex = new HighlandsDecorator(hex);
-            }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Jungle){
-                hex = new JungleDecorator(hex);
-            }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
-                hex = new SwampDecorator(hex);
-            }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Tundra){
-                hex = new TundraDecorator(hex);
-            }
-
-        }
-
-        private static void SetLandDecorator(HexTile hex)
-        {
-            if(hex.GetLandType() == EnumHandler.LandType.Water){
-                hex = new WaterDecorator(hex);
-            }
-            if(hex.GetLandType() == EnumHandler.LandType.Land){
-                hex = new LandDecorator(hex);
-            }
-        }
-
-        private static void SetFeatureDecorators(HexTile hex){
-
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
-                hex = new ForestDecorator(hex);
-            }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Rocks){
-                hex = new RockDecorator(hex);
-            }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Jungle){
-                hex = new JungleDecorator(hex);
-            }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Oasis){
-                hex = new OasisDecorator(hex);
-            }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
-                hex = new SwampDecorator(hex);
-            }
-        }
-
-
-        
-
-        private void InitializeDebugComponents(List<List<float>> elevation_map, List<List<float>> regions_map, List<List<float>> features_map, List<List<float>> ocean_map){
-            DebugHandler.SetHexAsChildren(this);
-            DebugHandler.SpawnPerlinViewers(map_size, elevation_map, "elevation");
-            DebugHandler.SpawnPerlinViewers(map_size, regions_map, "regions_map");
-
-            DebugHandler.PrintMapDebug("ocean_map", ocean_map);
-            DebugHandler.PrintMapDebug("regions_map", regions_map);
-            DebugHandler.PrintMapDebug("features_map", features_map);
-            DebugHandler.PrintMapDebug("elevation_map", elevation_map);
-        }
-
         private List<List<float>> GenerateFeaturesMap(List<List<float>> regions_map, List<List<float>> ocean_map)
         {
             FeaturesStrategy strategy = null;
@@ -162,8 +83,6 @@ namespace Terrain {
                     break;
             }
 
-            DebugHandler.PrintMapDebug("ocean_map_m", ocean_map);
-            DebugHandler.PrintMapDebug("river_map_m", river_map);
             List<List<float>> region_map = strategy.GenerateRegionsMap(map_size, ocean_map, river_map);
  
             return region_map;
@@ -175,13 +94,13 @@ namespace Terrain {
             switch (land_strategy)
             {
                 case 0:
-                    strategy = new PerlinStrategy();
+                    strategy = new PerlinWaterStrategy();
                     break;
                 case 1:
-                    strategy = new PerlinStrategy();
+                    strategy = new PerlinWaterStrategy();
                     break;
                 default:
-                    strategy = new PerlinStrategy();
+                    strategy = new PerlinWaterStrategy();
                     break;
             }
 
@@ -215,14 +134,19 @@ namespace Terrain {
             return elevation_map;
         }
 
-
-
-        public Vector2 GetMapSize(){
-            return map_size;
-        }
-
         public List<HexTile> GetHexList(){
             return hex_list;
+        }
+
+        private void InitializeDebugComponents(List<List<float>> elevation_map, List<List<float>> regions_map, List<List<float>> features_map, List<List<float>> ocean_map){
+            DebugHandler.SetHexAsChildren(this);
+            DebugHandler.SpawnPerlinViewers(map_size, elevation_map, "elevation");
+            DebugHandler.SpawnPerlinViewers(map_size, regions_map, "regions_map");
+
+            DebugHandler.PrintMapDebug("ocean_map", ocean_map);
+            DebugHandler.PrintMapDebug("regions_map", regions_map);
+            DebugHandler.PrintMapDebug("features_map", features_map);
+            DebugHandler.PrintMapDebug("elevation_map", elevation_map);
         }
 
     }

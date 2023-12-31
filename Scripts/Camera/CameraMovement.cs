@@ -11,6 +11,7 @@ public class CameraMovement : MonoBehaviour
     }
     void Update()
     {
+
         if(transform.position.y < .4f){
             transform.position = new Vector3(transform.position.x, .4f, transform.position.z);
         }

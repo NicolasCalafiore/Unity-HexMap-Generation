@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Strategy.Assets.Game.Scripts.Terrain.Water
 {
-    public class PerlinStrategy : WaterStrategy
+    public class PerlinWaterStrategy : WaterStrategy
     {
         private float river_scale = 4f;
         private float ocean_scale = 5f;
@@ -22,7 +22,6 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
             if(region_type == EnumHandler.HexRegion.River){
                 TerrainUtils.GeneratePerlinNoiseMap(map, map_size, river_scale);
                 FilterPerlinMap(map, map_size, river_max_min, region_type);
-                HexTileUtils.SetHexRegion(map, hex_list);
             }
             else if(region_type == EnumHandler.HexRegion.Ocean){
                 TerrainUtils.GeneratePerlinNoiseMap(map, map_size, ocean_scale);

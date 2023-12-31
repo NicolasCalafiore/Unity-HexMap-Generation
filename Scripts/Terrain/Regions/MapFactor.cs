@@ -79,11 +79,6 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
         private List<List<float>> CombineRegionFactors(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map){
             List<List<float>> map_factors = TerrainUtils.GenerateMap(map_size);
 
-                    
-            DebugHandler.PrintMapDebug("river_map_tt", river_map);
-                           
-            DebugHandler.PrintMapDebug("ocean_map_tt", ocean_map);
-
             for(int i = 0; i < map_size.x; i++){
                 for(int j = 0; j < map_size.y; j++){
 

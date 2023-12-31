@@ -20,7 +20,7 @@ namespace Terrain{
             
             SpawnHexTiles(hex_list);
 
-            InitializeDebugComponents(hex_list);
+            InitializeVisuals(hex_list);
         }
 
         private static void SpawnHexTiles(List<HexTile> hex_list){
@@ -33,12 +33,10 @@ namespace Terrain{
             }
         }
 
-        private static void InitializeDebugComponents( List<HexTile> hex_list){
-            DebugHandler.ShowRegionTypes(hex_list);
-            DebugHandler.ShowOceanTypes(hex_list);
-            //DebugHandler.InitializeDebugHexComponents(hex_list);
-            //DebugHandler.ShowElevationTypes(GetHexList());
-            //DebugHandler.SpawnPerlinViewers(map_size, perlin_map_object, new List<List<List<float>>>(){elevation_map, regions_map, water_map});
+        private static void InitializeVisuals( List<HexTile> hex_list){
+            ShowRegionTypes(hex_list);
+            ShowOceanTypes(hex_list);
+
         }
         private static void SpawnHexFeature(HexTile hex, GameObject hex_object){
 
@@ -72,7 +70,53 @@ namespace Terrain{
         }
 
 
+    public static void ShowRegionTypes(List<HexTile> hex_list){
+        foreach(HexTile hex in hex_list){
+            GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
+            if(hex.GetLandType() != EnumHandler.LandType.Water){
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Desert");
+                }
 
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Plains){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Savannah");
+                }
+
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Grassland){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Grassland");
+                }
+                
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Tundra){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Tundra");
+                }
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Highlands){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Highlands");
+                }
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Jungle){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Jungle");
+                }
+                if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Swamp");
+                }
+                
+            }
+
+        }
+    }
+
+        public static void ShowOceanTypes(List<HexTile> hex_list){
+        foreach(HexTile hex in hex_list){
+            GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
+            if(hex.region_type == EnumHandler.HexRegion.Ocean){
+                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Ocean");
+            }
+            else if(hex.region_type == EnumHandler.HexRegion.River){
+                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/River");
+            }
+
+        }
+        
+    }
 
 
 
