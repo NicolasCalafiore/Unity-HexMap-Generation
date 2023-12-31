@@ -83,10 +83,9 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
             for(int i = 0; i < map_size.x; i++){
                 for(int j = 0; j < map_size.y; j++){
 
-                    if(ocean_map[i][j] == (int) EnumHandler.LandType.Water){
-                        map_factors[i][j] = (float) EnumHandler.HexRegion.Ocean;
+                    if(ocean_map[i][j] == (int) EnumHandler.LandType.Water)
                         continue;
-                    }
+                    
 
                     if(rain_map[i][j] <= .35){
                         if(temperature_map[i][j] <= .2){

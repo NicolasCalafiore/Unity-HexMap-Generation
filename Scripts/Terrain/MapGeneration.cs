@@ -23,22 +23,20 @@ namespace Terrain {
         [SerializeField] public GameObject perlin_map_object;
         private List<HexTile> hex_list = new List<HexTile>();   
 
-        
-
         void Start()
         {
-            hex_list = CreateHexObjects(map_size);
+            hex_list = HexTileUtils.CreateHexObjects(map_size);
             List<List<float>> ocean_map = GenerateWaterMap();
             List<List<float>> regions_map = GenerateRegionMap(ocean_map);
             List<List<float>> elevation_map = GenerateElevationMap(regions_map);
             List<List<float>> features_map = GenerateFeaturesMap(regions_map, ocean_map);
 
-            SetHexElevation(elevation_map);
-            SetHexRegion(regions_map);
-            SetHexLand(ocean_map);
-            SetHexFeatures(features_map);
+            HexTileUtils.SetHexElevation(elevation_map, hex_list);
+            HexTileUtils.SetHexRegion(regions_map, hex_list);
+            HexTileUtils.SetHexLand(ocean_map, hex_list);
+            HexTileUtils.SetHexFeatures(features_map, hex_list);
 
-            SetHexFactors(hex_list);
+            SetHexDecorators(hex_list);
 
             TerrainHandler.SpawnTerrain(map_size, hex_list);
 
@@ -46,9 +44,9 @@ namespace Terrain {
 
         }
 
-        private static void SetHexFactors(List<HexTile> hex_list){
+        private static void SetHexDecorators(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
-                SetFeatureFactor(hex);
+                SetFeatureDecorators(hex);
                 SetLandDecorator(hex);
                 SetRegionDecorator(hex);
             }
@@ -90,7 +88,7 @@ namespace Terrain {
             }
         }
 
-        private static void SetFeatureFactor(HexTile hex){
+        private static void SetFeatureDecorators(HexTile hex){
 
             if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
                 hex = new ForestDecorator(hex);
@@ -121,22 +119,6 @@ namespace Terrain {
             DebugHandler.PrintMapDebug("regions_map", regions_map);
             DebugHandler.PrintMapDebug("features_map", features_map);
             DebugHandler.PrintMapDebug("elevation_map", elevation_map);
-        }
-
-            private List<HexTile> CreateHexObjects(Vector2 map_size){
-            List<HexTile> hex_list = new List<HexTile>();
-
-            // Create Hex objects for each column and row in the map
-            for(int column = 0; column < map_size.x; column++)
-            {
-                for(int row = 0; row < map_size.y; row++)
-                {
-                    HexTile hex = new HexTile(column, row);
-                    hex_list.Add(hex);
-                }
-            }
-
-            return hex_list;
         }
 
         private List<List<float>> GenerateFeaturesMap(List<List<float>> regions_map, List<List<float>> ocean_map)
@@ -196,8 +178,11 @@ namespace Terrain {
                     break;
             }
 
-            List<List<float>> ocean_map = strategy.GenerateWaterMap(map_size, "ocean");
-            List<List<float>> river_map = strategy.GenerateWaterMap(map_size, "river");
+            List<List<float>> ocean_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.Ocean, hex_list);
+            List<List<float>> river_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.River, hex_list);
+
+            
+            
 
             ocean_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) EnumHandler.LandType.Water);
             strategy.OceanBorder(ocean_map);
@@ -235,35 +220,6 @@ namespace Terrain {
 
         public Vector2 GetMapSize(){
             return map_size;
-        }
-
-        private void SetHexFeatures(List<List<float>> features_map)
-        {
-            for(int i = 0; i < hex_list.Count; i++){
-                Vector2 coordinates = hex_list[i].GetColRow();
-                hex_list[i].SetFeatureType(EnumHandler.GetFeatureType(features_map[ (int) coordinates.x][ (int) coordinates.y]));
-            }
-        }
-
-        private void SetHexLand(List<List<float>> land_map)
-        {
-            foreach(HexTile hex in hex_list){
-                Vector2 coordinates = hex.GetColRow();
-                hex.SetLandType(EnumHandler.GetLandType(land_map[ (int) coordinates.x][ (int) coordinates.y]));
-            }
-        }
-
-        private void SetHexElevation(List<List<float>> elevation_map){
-            foreach(HexTile hex in hex_list){
-                Vector2 coordinates = hex.GetColRow();
-                hex.SetElevation(elevation_map[ (int) coordinates.x][ (int) coordinates.y], EnumHandler.GetElevationType(elevation_map[ (int) coordinates.x][ (int) coordinates.y]));
-            }
-        }
-        private void SetHexRegion(List<List<float>> regions_map){
-            foreach(HexTile hex in hex_list){
-                Vector2 coordinates = hex.GetColRow();
-                hex.SetRegionType(EnumHandler.GetRegionType(regions_map[ (int) coordinates.x][ (int) coordinates.y]));
-            }
         }
 
         public List<HexTile> GetHexList(){

@@ -9,7 +9,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
 {
     public abstract class WaterStrategy
     {
-        public abstract List<List<float>> GenerateWaterMap(Vector2 map_size, string type);
+        public abstract List<List<float>> GenerateWaterMap(Vector2 map_size, EnumHandler.HexRegion region_type, List<HexTile> hex_list);
         private int padding = 5;
 
         public void OceanBorder(List<List<float>> ocean_map){

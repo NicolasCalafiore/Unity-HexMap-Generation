@@ -62,6 +62,7 @@ namespace Terrain{
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
                     feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Swamp"));
                 }
+
                 if(feature != null){
                     feature.transform.SetParent(hex_object.transform);
                     float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;

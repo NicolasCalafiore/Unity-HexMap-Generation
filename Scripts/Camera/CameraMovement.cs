@@ -11,11 +11,20 @@ public class CameraMovement : MonoBehaviour
     }
     void Update()
     {
+        if(transform.position.y < .4f){
+            transform.position = new Vector3(transform.position.x, .4f, transform.position.z);
+        }
         if(Input.GetKeyDown(KeyCode.LeftShift)){
             speed = speed + .05f;
         }
         if(Input.GetKeyUp(KeyCode.LeftShift)){
             speed = speed - .05f;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftControl)){
+            speed = speed - .15f;
+        }
+        if(Input.GetKeyDown(KeyCode.LeftControl)){
+            speed = speed + .15f;
         }
 
         if(Input.GetKey(KeyCode.W)){
