@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Terrain;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Terrain
@@ -15,7 +16,57 @@ namespace Terrain
                 SetFeatureDecorators(hex);
                 SetLandDecorator(hex);
                 SetRegionDecorator(hex);
+                SetResourceDecorator(hex);
+                SetElevationDecorator(hex);
             }
+        }
+
+        private static void SetElevationDecorator(HexTile hex)
+        {
+            if(hex.GetElevationType() == EnumHandler.HexElevation.Mountain){
+                hex = new MountainDecorator(hex);
+            }
+            if(hex.GetElevationType() == EnumHandler.HexElevation.Small_Hill){
+                hex = new SmallHillDecorator(hex);
+            }
+            if(hex.GetElevationType() == EnumHandler.HexElevation.Canyon){
+                hex = new CanyonDecorator(hex);
+            }
+            if(hex.GetElevationType() == EnumHandler.HexElevation.Valley){
+                hex = new ValleyDecorator(hex);
+            }
+            if(hex.GetElevationType() == EnumHandler.HexElevation.Large_Hill){
+                hex = new LargeHillDecorator(hex);
+            }
+            if(hex.GetElevationType() == EnumHandler.HexElevation.Flatland){
+                hex = new FlatlandDecorator(hex);
+            }
+
+        }
+
+        private static void SetResourceDecorator(HexTile hex)
+        {
+            if(hex.GetResourceType() == EnumHandler.HexResource.Bananas){
+                hex = new BananasDecorator(hex);
+            }
+            if(hex.GetResourceType() == EnumHandler.HexResource.Cattle){
+                hex = new CattleDecorator(hex);
+            }
+            if(hex.GetResourceType() == EnumHandler.HexResource.Gems){
+                hex = new GemsDecorator(hex);
+            }
+            if(hex.GetResourceType() == EnumHandler.HexResource.Incense){
+                hex = new IncenseDecorator(hex);
+            }
+            if(hex.GetResourceType() == EnumHandler.HexResource.Iron){
+                hex = new IronDecorator(hex);
+            }
+            if(hex.GetResourceType() == EnumHandler.HexResource.Stone){
+                hex = new StoneDecorator(hex);
+            }
+            
+
+
         }
 
         private static void SetRegionDecorator(HexTile hex)
@@ -70,6 +121,9 @@ namespace Terrain
             }
             if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
                 hex = new SwampDecorator(hex);
+            }
+            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.WheatField){
+                hex = new WheatDecorator(hex);
             }
         }
 

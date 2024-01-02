@@ -44,14 +44,14 @@ namespace Terrain
 
         private void CreateHills(List<List<float>> elevation_map, Vector2 map_size, List<List<float>> regions_map){
             for(int i = 0; i < hill_count; i++){
-                TerrainUtils.RandomSpawn(map_size, elevation_map, (float) EnumHandler.HexElevation.Hill);
+                TerrainUtils.RandomSpawn(map_size, elevation_map, (float) EnumHandler.HexElevation.Small_Hill);
             }
         }
 
         private void CreateLargeHills(List<List<float>> elevation_map, Vector2 map_size, List<List<float>> regions_map){
             for(int i = 0; i < large_hill_count; i++){
                 Vector2 coord = TerrainUtils.RandomSpawn(map_size, elevation_map, (float) EnumHandler.HexElevation.Large_Hill, 1, 1);
-                TerrainUtils.CircularSpawn((int) coord.x, (int) coord.y, elevation_map, (float) EnumHandler.HexElevation.Hill);
+                TerrainUtils.CircularSpawn((int) coord.x, (int) coord.y, elevation_map, (float) EnumHandler.HexElevation.Small_Hill);
             }
         }
 

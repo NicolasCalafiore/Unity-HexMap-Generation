@@ -14,7 +14,7 @@ namespace Terrain
             Canyon = -50,
             Valley = -25,
             Flatland = 0,
-            Hill = 25,
+            Small_Hill = 25,
             Large_Hill = 50,
             Mountain = 150,
         }
@@ -91,7 +91,7 @@ namespace Terrain
                 { (int) HexElevation.Canyon, HexElevation.Canyon},
                 { (int) HexElevation.Valley, HexElevation.Valley},
                 { (int) HexElevation.Flatland, HexElevation.Flatland},
-                { (int) HexElevation.Hill, HexElevation.Hill},
+                { (int) HexElevation.Small_Hill, HexElevation.Small_Hill},
                 { (int) HexElevation.Large_Hill, HexElevation.Large_Hill},
                 { (int) HexElevation.Mountain, HexElevation.Mountain},
             };

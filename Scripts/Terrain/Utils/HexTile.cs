@@ -8,6 +8,11 @@ namespace Terrain {
         public readonly int R;  //Row
         public readonly int S;
         public float E; //Elevation
+        public float food { get; set; }
+
+        public float production { get; set; }
+
+
         public EnumHandler.HexElevation elevation_type { get; set;}
         public EnumHandler.HexRegion region_type;
         public EnumHandler.LandType land_type;
