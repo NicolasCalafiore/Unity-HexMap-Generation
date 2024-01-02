@@ -36,7 +36,7 @@ namespace Terrain {
 
             List<List<float>> elevation_map = GenerateElevationMap(regions_map);
             List<List<float>> features_map = GenerateFeaturesMap(regions_map, water_map);
-            List<List<float>> resource_map = GenerateResourceMap(ocean_map, river_map, regions_map);
+            List<List<float>> resource_map = GenerateResourceMap(ocean_map, river_map, regions_map, features_map);
             DebugHandler.PrintMapDebug("resource_map", resource_map);
 
             HexTileUtils.SetHexElevation(elevation_map, hex_list);
@@ -70,7 +70,7 @@ namespace Terrain {
             return features_map;
         }
 
-        private List<List<float>> GenerateResourceMap(List<List<float>> ocean_map, List<List<float>> river_map, List<List<float>> regions_map)
+        private List<List<float>> GenerateResourceMap(List<List<float>> ocean_map, List<List<float>> river_map, List<List<float>> regions_map, List<List<float>> features_map)
         {
             ResourceStrategy strategy = null;
             switch (features_strategy)
@@ -86,7 +86,7 @@ namespace Terrain {
                     break;
             }
 
-            List<List<float>> resource_map = strategy.GenerateResourceMap(map_size, ocean_map, river_map, regions_map);
+            List<List<float>> resource_map = strategy.GenerateResourceMap(map_size, ocean_map, river_map, regions_map, features_map);
             return resource_map;
         }
 

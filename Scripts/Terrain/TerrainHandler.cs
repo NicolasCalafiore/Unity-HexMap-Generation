@@ -76,6 +76,21 @@ namespace Terrain{
         if(hex.GetResourceType() == EnumHandler.HexResource.Iron){
             resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Iron"));
         }
+        if(hex.GetResourceType() == EnumHandler.HexResource.Cattle){
+            resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Cattle"));
+        }
+        if(hex.GetResourceType() == EnumHandler.HexResource.Gems){
+            resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Gems"));
+        }
+        if(hex.GetResourceType() == EnumHandler.HexResource.Stone){
+            resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Stone"));
+        }
+        if(hex.GetResourceType() == EnumHandler.HexResource.Bananas){
+            resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Bananas"));
+        }
+        if(hex.GetResourceType() == EnumHandler.HexResource.Incense){
+            resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Incense"));
+        }
 
         if(resource != null){
             resource.transform.SetParent(hex_object.transform);

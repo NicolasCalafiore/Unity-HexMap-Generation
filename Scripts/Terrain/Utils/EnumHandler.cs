@@ -50,12 +50,26 @@ namespace Terrain
         public enum HexResource{
             None,
             Iron,
+            Cattle,
+            Gems,
+            Stone,
+            Bananas,
+            Incense,
+
+
         }
 
         public static HexResource GetResourceType(float resourceValue){
             Dictionary<float, HexResource> resourceDict = new Dictionary<float, HexResource>(){
                 { (int) HexResource.None, HexResource.None},
                 { (int) HexResource.Iron, HexResource.Iron},
+                { (int) HexResource.Cattle, HexResource.Cattle},
+                { (int) HexResource.Gems, HexResource.Gems},
+                { (int) HexResource.Stone, HexResource.Stone},
+                { (int) HexResource.Bananas, HexResource.Bananas},
+                { (int) HexResource.Incense, HexResource.Incense},
+
+
             };
 
             return resourceDict[resourceValue];
