@@ -59,6 +59,21 @@ namespace Terrain
 
         }
 
+        public enum StructureType{
+            None,
+            Capital,
+        }
+
+        public static StructureType GetStructureType(float structureValue){
+            Dictionary<float, StructureType> structureDict = new Dictionary<float, StructureType>(){
+                { (int) StructureType.None, StructureType.None},
+                { (int) StructureType.Capital, StructureType.Capital},
+            };
+
+            return structureDict[structureValue];
+    
+        }
+
         public static HexResource GetResourceType(float resourceValue){
             Dictionary<float, HexResource> resourceDict = new Dictionary<float, HexResource>(){
                 { (int) HexResource.None, HexResource.None},

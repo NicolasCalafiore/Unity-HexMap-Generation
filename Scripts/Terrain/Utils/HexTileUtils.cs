@@ -59,5 +59,12 @@ namespace Terrain
             }
         }
 
+        public static void SetStructureType(List<List<float>> structures_map, List<HexTile> hex_list){
+            foreach(HexTile hex in hex_list){
+                 Vector2 coordinates = hex.GetColRow();
+                hex.SetStructureType(EnumHandler.GetStructureType(structures_map[(int) coordinates.x][(int) coordinates.y]));
+            }
+        }
+
     }
 }

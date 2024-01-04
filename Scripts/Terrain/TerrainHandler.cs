@@ -2,44 +2,80 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Players;
 using Terrain;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Terrain{
-    public static class TerrainHandler
+    public class TerrainHandler
     {
+        // public delegate void TerrainSpawnedEventHandler(object sender, EventArgs e);
+        // public event TerrainSpawnedEventHandler TerrainSpawned;
+
         private static GameObject generic_hex;
         private static List<GameObject> hex_go_list = new List<GameObject>();
         public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>();
 
-        public static void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){
+        public void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list, List<List<float>> city_map){
         
             generic_hex = Resources.Load<GameObject>("Prefab/Hex_Generic_No_TMP");
             
             SpawnHexTiles(hex_list);
 
             InitializeVisuals(hex_list);
+        
+
+            //OnTerrainSpawned();
+
+
         }
 
-        private static void SpawnHexTiles(List<HexTile> hex_list){
+        private void SpawnStructure(HexTile hex, GameObject hex_object)
+        {
+            GameObject structure_go = null;
+
+            if(hex.GetStructureType() == EnumHandler.StructureType.Capital){
+                structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
+            }
+            if(structure_go != null){
+                structure_go.transform.SetParent(hex_object.transform);
+                float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
+                structure_go.transform.localPosition = new Vector3(0, 0, 0);
+            }
+
+        }
+
+        // protected virtual void OnTerrainSpawned()
+        // {
+        //     if(TerrainSpawned != null){
+        //         TerrainSpawned(this, EventArgs.Empty);
+        //     }
+        //     else{
+        //         Debug.Log("Event is null");
+        //     }
+
+        // }
+
+        private void SpawnHexTiles(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
                 GameObject hex_object = GameObject.Instantiate(generic_hex);
                 hex_object.transform.position = hex.GetPosition();
                 SpawnHexFeature(hex, hex_object);
                 SpawnHexResource(hex, hex_object);
+                SpawnStructure(hex, hex_object);
                 hex_go_list.Add(hex_object);
                 hex_to_hex_go.Add(hex, hex_object);
             }
         }
 
-        private static void InitializeVisuals( List<HexTile> hex_list){
+        private void InitializeVisuals( List<HexTile> hex_list){
             ShowRegionTypes(hex_list);
             ShowOceanTypes(hex_list);
 
         }
-        private static void SpawnHexFeature(HexTile hex, GameObject hex_object){
+        private void SpawnHexFeature(HexTile hex, GameObject hex_object){
 
                 GameObject feature = null;
 
@@ -70,7 +106,7 @@ namespace Terrain{
 
         }
 
-    private static void SpawnHexResource(HexTile hex, GameObject hex_object){
+    private void SpawnHexResource(HexTile hex, GameObject hex_object){
         GameObject resource = null;
 
         if(hex.GetResourceType() == EnumHandler.HexResource.Iron){
@@ -101,7 +137,7 @@ namespace Terrain{
     }
 
 
-    public static void ShowRegionTypes(List<HexTile> hex_list){
+    public void ShowRegionTypes(List<HexTile> hex_list){
         foreach(HexTile hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
             if(hex.GetLandType() != EnumHandler.LandType.Water){
@@ -135,7 +171,7 @@ namespace Terrain{
         }
     }
 
-        public static void ShowOceanTypes(List<HexTile> hex_list){
+    public void ShowOceanTypes(List<HexTile> hex_list){
         foreach(HexTile hex in hex_list){
             GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
             if(hex.region_type == EnumHandler.HexRegion.Ocean){
@@ -149,11 +185,9 @@ namespace Terrain{
         
     }
 
-
-
-
-
-
+    public static void SpawnObject(GameObject game_object, Vector3 location){
+        GameObject.Instantiate(game_object, location, Quaternion.identity);
+    }
 
 
 

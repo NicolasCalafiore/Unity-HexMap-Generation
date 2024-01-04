@@ -15,5 +15,9 @@ namespace Terrain {
     public class TurnManager : MonoBehaviour
     {
 
+        public void EndTurn(){
+            Debug.Log("End Turn");
+        }
+
     }
 }

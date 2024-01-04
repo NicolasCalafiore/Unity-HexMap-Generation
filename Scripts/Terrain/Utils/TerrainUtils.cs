@@ -75,6 +75,13 @@ namespace Terrain
             return new Vector2(i, j);
         }
 
+        public static Vector3 RandomVector3(Vector2 map_size){
+            int i, j = 0;
+            i = UnityEngine.Random.Range(0, (int) map_size.x);
+            j = UnityEngine.Random.Range(0, (int) map_size.y);
+            return new Vector3(i, 0, j);
+        }
+
         public static void CircularSpawn(int i, int j, List<List<float>> map, float value){
             map[i][j - 1] = value;
             map[i][j + 1] = value;

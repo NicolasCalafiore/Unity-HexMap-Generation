@@ -6,24 +6,33 @@ using Strategy.Assets.Game.Scripts.Terrain.Water;
 using Strategy.Assets.Game.Scripts.Terrain.Regions;
 using Unity.VisualScripting;
 using UnityEngine;
+using Players;
 
 
 
 
 namespace Terrain {
 
-    public class MapGeneration : MonoBehaviour
+    public class MapGeneration
     {
-
-        [SerializeField] private Vector2 map_size = new Vector2();
-        [SerializeField] private int elevation_strategy;
-        [SerializeField] private int land_strategy;
-        [SerializeField] private int region_strategy;
-        [SerializeField] private int features_strategy;
-        [SerializeField] public GameObject perlin_map_object;
         private List<HexTile> hex_list = new List<HexTile>();   
+        private Vector2 map_size;
+        private int elevation_strategy;
+        private int land_strategy;
+        private int region_strategy;
+        private int features_strategy;
+        public TerrainHandler terrain_handler;
 
-        void Start()
+        public MapGeneration(Vector2 map_size, int elevation_strategy, int land_strategy, int region_strategy, int features_strategy, TerrainHandler terrain_handler){
+            this.map_size = map_size;
+            this.elevation_strategy = elevation_strategy;
+            this.land_strategy = land_strategy;
+            this.region_strategy = region_strategy;
+            this.features_strategy = features_strategy;
+            this.terrain_handler = terrain_handler;
+        }
+
+        public void GenerateTerrain(List<Player> player_list)
         {
             hex_list = HexTileUtils.CreateHexObjects(map_size);
 
@@ -37,19 +46,40 @@ namespace Terrain {
             List<List<float>> elevation_map = GenerateElevationMap(regions_map);
             List<List<float>> features_map = GenerateFeaturesMap(regions_map, water_map);
             List<List<float>> resource_map = GenerateResourceMap(ocean_map, river_map, regions_map, features_map);
-            DebugHandler.PrintMapDebug("resource_map", resource_map);
+            List<List<float>> city_map = GenerateCityMap(water_map, player_list, features_map);
+            DebugHandler.PrintMapDebug("city_map", city_map);
 
             HexTileUtils.SetHexElevation(elevation_map, hex_list);
             HexTileUtils.SetHexRegion(regions_map, hex_list);
             HexTileUtils.SetHexLand(water_map, hex_list);
             HexTileUtils.SetHexFeatures(features_map, hex_list);
             HexTileUtils.SetHexResource(resource_map, hex_list);
+            HexTileUtils.SetStructureType(city_map, hex_list);
 
             DecoratorHandler.SetHexDecorators(hex_list);
-            TerrainHandler.SpawnTerrain(map_size, hex_list);
-            InitializeDebugComponents(elevation_map, regions_map, features_map, water_map);
+        
+            terrain_handler.SpawnTerrain(map_size, hex_list, city_map);
+            //InitializeDebugComponents(elevation_map, regions_map, features_map, water_map);
+
+
+
 
         }
+
+        private List<List<float>> GenerateCityMap(List<List<float>> water_map, List<Player> player_list, List<List<float>> features_map)
+        {
+            List<List<float>> city_map = TerrainUtils.GenerateMap(map_size);
+            foreach(Player player in player_list){
+                Vector3 random_coor = TerrainUtils.RandomVector3(map_size);
+                while(water_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.LandType.Water || features_map[(int) random_coor.x][(int) random_coor.z] != (int) EnumHandler.HexNaturalFeature.None){
+                    random_coor = TerrainUtils.RandomVector3(map_size);
+                }
+                city_map[ (int) random_coor.x][ (int) random_coor.z] = (int) EnumHandler.StructureType.Capital;
+            }
+
+            return city_map;
+        }
+
         private List<List<float>> GenerateFeaturesMap(List<List<float>> regions_map, List<List<float>> ocean_map)
         {
             FeaturesStrategy strategy = null;

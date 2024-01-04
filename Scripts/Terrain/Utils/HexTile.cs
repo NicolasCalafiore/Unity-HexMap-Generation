@@ -18,6 +18,7 @@ namespace Terrain {
         public EnumHandler.LandType land_type;
         public EnumHandler.HexNaturalFeature feature_type;
         public EnumHandler.HexResource resource_type;
+        public EnumHandler.StructureType structure_type;
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
         public HexTile(int q, int r)
@@ -30,6 +31,10 @@ namespace Terrain {
         {
             this.E = (float) elevation_type / 100;
             this.elevation_type = elevation_type;
+        }
+
+        public void SetStructureType(EnumHandler.StructureType structure_type){
+            this.structure_type = structure_type;
         }
 
         public void SetFeatureType(EnumHandler.HexNaturalFeature feature_type){
@@ -84,6 +89,10 @@ namespace Terrain {
 
         public EnumHandler.LandType GetLandType(){
             return this.land_type;
+        }
+
+        public EnumHandler.StructureType GetStructureType(){
+            return this.structure_type;
         }
 
         public EnumHandler.HexNaturalFeature GetFeatureType(){
