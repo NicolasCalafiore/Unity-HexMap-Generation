@@ -11,10 +11,14 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
     
     public class MapFactor : RegionStrategy
     {
-        public float perlin_scale = 4.5f;
-        private static int counter = 0;
+        /*
+            MapFactor is used to generate regions on the map, respective to a rain and temperature list.
+        */
+        public float perlin_scale = 4.5f;   // Higher --> more random
+        private static int counter = 0;     // Used to force map generation if requirements are not met after X iterations
+        private static int max_iterations = 500; // Max iterations before forced map generation
 
-        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map)
+        public override List<List<float>> GenerateRegionsMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map)    //Called from MapGeneration.GenerateRegions
         {
             List<List<float>> rain_map = GenerateRainMap(map_size);
             List<List<float>> temperature_map = GenerateTemperatureMap(map_size);
@@ -23,22 +27,15 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
 
             TerrainUtils.NormalizePerlinMap(temperature_map);
 
-            List<List<float>> map_factors = CombineRegionFactors(rain_map, temperature_map, map_size, ocean_map, river_map);
+            List<List<float>> map_factors = CombineRegionFactors(rain_map, temperature_map, map_size, ocean_map, river_map);    // Combine rain_map and temperature_map into unique map
 
-            DebugHandler.SpawnPerlinViewers(map_size, map_factors, "map_factors");
-
-            if(MeetsRegionRequirements(map_factors, map_size) || counter > 500){
-                if(counter > 500){
-                    Debug.Log("Forced Map Generation");
-                }
-                return map_factors;
-            }
-            else{
-                return GenerateRegionsMap(map_size, ocean_map, river_map);
-            }
+            if(MeetsRegionRequirements(map_factors, map_size) || counter > 500)  return map_factors; // If map meets requirements, return map
+            
+            else return GenerateRegionsMap(map_size, ocean_map, river_map);  // Else, generate new map
+            
         }
 
-        private bool MeetsRegionRequirements(List<List<float>> map_factors, Vector2 map_size){
+        private bool MeetsRegionRequirements(List<List<float>> map_factors, Vector2 map_size){  // Checks if map meets region requirements
 
             float desert_count = 0;
             float tundra_count = 0;
@@ -63,7 +60,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
                 }
             }
 
-            desert_count =  desert_count / (map_size.x * map_size.y) * 100;
+            desert_count =  desert_count / (map_size.x * map_size.y) * 100;  // Calculate percentage of each region
             tundra_count = tundra_count / (map_size.x * map_size.y) * 100;
             grassland_count = grassland_count / (map_size.x * map_size.y) * 100;
             plains_count = plains_count / (map_size.x * map_size.y) * 100;

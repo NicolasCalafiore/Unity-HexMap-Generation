@@ -5,6 +5,11 @@ namespace Terrain
 {
     public class ElevationGrouping : ElevationStrategy
     {
+        /*
+            ElevationGrouping is used to generate elevation on the map - concrete class
+            ElevationGrouping is used to group together the different elevation types
+        */
+
         private float hill_modifier = 0.15f;
         private float large_hill_modifier = 0.10f;
         private float mountain_modifier = 0.02f;
@@ -17,10 +22,10 @@ namespace Terrain
 
         private int mountain_range_max, mountain_range_min = 0;
         private int canyon_range_max, canyon_range_min = 0;
-        public override List<List<float>> GenerateElevationMap(List<List<float>> elevation_map, Vector2 map_size, List<List<float>> regions_map)
+        public override List<List<float>> GenerateElevationMap(List<List<float>> elevation_map, Vector2 map_size, List<List<float>> regions_map) //Called from MapGeneration.cs
         {
-            InitializeMonumentParameters(map_size);
-            CreateLargeHills(elevation_map, map_size, regions_map);     //TO DO: LINK REGION MAP TO ELEVATION MAP
+            InitializeMonumentParameters(map_size); // Sets the parameters for the monuments
+            CreateLargeHills(elevation_map, map_size, regions_map); // All functions apply to List<List<float>> map
             CreateHills(elevation_map, map_size, regions_map);
             CreateMountainRanges(elevation_map, map_size, regions_map);
             CreateCanyons(elevation_map, map_size, regions_map);
@@ -37,9 +42,6 @@ namespace Terrain
             mountain_range_min = 3; // TO DO: Make this a percentage of the map size
             canyon_range_max = 25; // TO DO: Make this a percentage of the map size
             canyon_range_min = 10; // TO DO: Make this a percentage of the map size
-
-
-
         }
 
         private void CreateHills(List<List<float>> elevation_map, Vector2 map_size, List<List<float>> regions_map){
@@ -81,16 +83,5 @@ namespace Terrain
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }

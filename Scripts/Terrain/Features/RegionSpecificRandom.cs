@@ -8,13 +8,19 @@ namespace Terrain
 {
     public class RegionSpecificRandom : FeaturesStrategy
     {
+        /*
+            RegionSpecificRandom is used to generate features on the map - concrete class
+            Features are things like Forests/Oasis's - Natural Features
+            This class generates features based on the region type
+        */
+
         int forest_chance = 50;
         int oasis_chance = 2;
         int wheat_field_chance = 35;
         int rock_chance = 15;
         int jungle_chance = 80;
         int swamp_chance = 75;
-        public override List<List<float>> GenerateFeaturesMap(Vector2 map_size, List<List<float>> regions_map, List<List<float>> ocean_map)
+        public override List<List<float>> GenerateFeaturesMap(Vector2 map_size, List<List<float>> regions_map, List<List<float>> ocean_map) //Called from MapGeneration.cs
         {
             List<List<float>> features_map = TerrainUtils.GenerateMap(map_size);
 

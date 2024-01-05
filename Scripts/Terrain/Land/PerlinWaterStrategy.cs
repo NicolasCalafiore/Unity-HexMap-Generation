@@ -9,23 +9,25 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
 {
     public class PerlinWaterStrategy : WaterStrategy
     {
-        private float river_scale = 4f;
-        private float ocean_scale = 5f;
-        private Vector2 river_max_min = new Vector2( .5f, .46f);
-        private Vector2 ocean_max_min = new Vector2( .7f, .45f);
+        /*
+            PerlinWaterStrategy is used to generate water on the map using slices of perlin noise
+        */
+        private float river_scale = 4f; // Higher --> More Linear & Skinnier
+        private float ocean_scale = 5f; // Higher --> More Linear & Skinnier
+        private Vector2 river_max_min = new Vector2( .5f, .46f);    // Greater Range --> Thicker/Wider river
+        private Vector2 ocean_max_min = new Vector2( .7f, .45f);    // Greater Range --> Thicker/Wider ocean
 
-        public override List<List<float>> GenerateWaterMap(Vector2 map_size, EnumHandler.HexRegion region_type, List<HexTile> hex_list)
+        public override List<List<float>> GenerateWaterMap(Vector2 map_size, EnumHandler.HexRegion region_type, List<HexTile> hex_list)   //Called from MapGeneration.GenerateWater
         {
             List<List<float>> map = TerrainUtils.GenerateMap(map_size);
-            TerrainUtils.NormalizePerlinMap(map);
         
             if(region_type == EnumHandler.HexRegion.River){
                 TerrainUtils.GeneratePerlinNoiseMap(map, map_size, river_scale);
-                FilterPerlinMap(map, map_size, river_max_min, region_type);
+                FilterPerlinMap(map, map_size, river_max_min, region_type); //Filter map to only include values within max_min range
             }
             else if(region_type == EnumHandler.HexRegion.Ocean){
                 TerrainUtils.GeneratePerlinNoiseMap(map, map_size, ocean_scale);
-                FilterPerlinMap(map, map_size, ocean_max_min, region_type);
+                FilterPerlinMap(map, map_size, ocean_max_min, region_type); //Filter map to only include values within max_min range
             }
 
             SetLand(map, region_type);

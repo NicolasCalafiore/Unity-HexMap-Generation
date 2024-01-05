@@ -9,8 +9,14 @@ namespace Terrain
 {
     public static class TerrainUtils
     {
-        private static int utility_counter = 0;
-        public static void NormalizePerlinMap(List<List<float>> map){
+        /*
+            Contains all functions used for general terrain manipulation
+            Used to generate all List<List<float>> maps
+            Used to normalize all List<List<float>> maps
+            Used to generate all Vector2 spawn locations
+        */
+
+        public static void NormalizePerlinMap(List<List<float>> map){   // Normalizes Perlin Noise Map
             float max = map.SelectMany(x => x).Max();
             float min = map.SelectMany(x => x).Min();
             float range = max - min;
@@ -21,38 +27,7 @@ namespace Terrain
                 }
             }
         }
-        
-        public static float[] GetElevationValues(){
-            Array enumValues = Enum.GetValues(typeof(EnumHandler.HexElevation));
-
-            // Create a float array to store the float values
-            float[] floatValues = new float[enumValues.Length];
-
-            // Convert each enum value to float and store in the floatValues array
-            int index = 0;
-            foreach (var value in enumValues) {
-                floatValues[index++] = (int) value;
-            }
-
-            return floatValues;
-        }
-
-        public static float[] GetFeaturesValues(){
-            Array enumValues = Enum.GetValues(typeof(EnumHandler.HexNaturalFeature));
-
-            // Create a float array to store the float values
-            float[] floatValues = new float[enumValues.Length];
-
-            // Convert each enum value to float and store in the floatValues array
-            int index = 0;
-            foreach (var value in enumValues) {
-                floatValues[index++] = (int) value;
-            }
-
-            return floatValues;
-        }
-
-        public static List<List<float>> GenerateMap(Vector2 map_size){
+        public static List<List<float>> GenerateMap(Vector2 map_size){  // Generates List<List<float>> map with 0 values
             List<List<float>> map = new List<List<float>>();
             for (int i = 0; i < map_size.x; i++)
             {
@@ -67,7 +42,7 @@ namespace Terrain
 
         }
 
-        public static Vector2 RandomSpawn(Vector2 map_size, List<List<float>> elevation_map, float value, int min = 0, int limiter = 0){
+        public static Vector2 RandomSpawn(Vector2 map_size, List<List<float>> elevation_map, float value, int min = 0, int limiter = 0){    // Coordinate value at random location on map
             int i, j = 0;
             i = UnityEngine.Random.Range(min, (int) map_size.x - limiter);
             j = UnityEngine.Random.Range(min, (int) map_size.y - limiter);
@@ -75,14 +50,14 @@ namespace Terrain
             return new Vector2(i, j);
         }
 
-        public static Vector3 RandomVector3(Vector2 map_size){
+        public static Vector3 RandomVector3(Vector2 map_size){  // Coordinate value at random location on map
             int i, j = 0;
             i = UnityEngine.Random.Range(0, (int) map_size.x);
             j = UnityEngine.Random.Range(0, (int) map_size.y);
             return new Vector3(i, 0, j);
         }
 
-        public static void CircularSpawn(int i, int j, List<List<float>> map, float value){
+        public static void CircularSpawn(int i, int j, List<List<float>> map, float value){ // Sets map value at coordinate and surrounding coordinates
             map[i][j - 1] = value;
             map[i][j + 1] = value;
             map[i - 1][j] = value;
@@ -92,7 +67,7 @@ namespace Terrain
         
         }
 
-        public static void GeneratePerlinNoiseMap(List<List<float>> map, Vector2 map_size, float scale){
+        public static void GeneratePerlinNoiseMap(List<List<float>> map, Vector2 map_size, float scale){    // Generates Perlin Noise Map
             int offsetX = UnityEngine.Random.Range(0, 100000);
             int offsetY = UnityEngine.Random.Range(0, 100000);
 
@@ -108,7 +83,7 @@ namespace Terrain
             }
         }
 
-        public static Vector2 LinearSpawn(int i, int j, List<List<float>> map, float value){
+        public static Vector2 LinearSpawn(int i, int j, List<List<float>> map, float value){    // Sets map value at coordinate and successive randomly-linear coordinates
 
             if(UnityEngine.Random.Range(0, 101) < 50){
                 i = i;
@@ -150,7 +125,7 @@ namespace Terrain
         }
 
 
-        public static List<List<float>> CombineMapValue(List<List<float>> map1, List<List<float>> map2, Vector2 map_size, int value){
+        public static List<List<float>> CombineMapValue(List<List<float>> map1, List<List<float>> map2, Vector2 map_size, int value){   // Combines two List<List<float>> maps into one List<List<float>> map
             List<List<float>> map = new List<List<float>>();
 
                 for (int i = 0; i < map_size.x; i++)
@@ -167,18 +142,5 @@ namespace Terrain
 
                 return map;
         }
-
-
-        public static void DetectMapBodies(List<List<float>> map,  int target){
-            List<List<float>> bodies = new List<List<float>>();
-
-
-        }
-
-
-
-
-
-
     }
 }

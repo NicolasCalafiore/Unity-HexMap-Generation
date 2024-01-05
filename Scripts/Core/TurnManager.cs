@@ -14,6 +14,9 @@ namespace Terrain {
 
     public class TurnManager : MonoBehaviour
     {
+        /*
+            TurnManager is used to manage the turns of the game
+        */
 
         public void EndTurn(){
             Debug.Log("End Turn");

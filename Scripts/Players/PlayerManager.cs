@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class PlayerManager
 {
+    /*
+        PlayerManager is used to manipulate the players in the game
+    */
     public delegate void PlayersCreatedEventHandler(object sender, EventArgs e);
     public event PlayersCreatedEventHandler PlayersCreated;
 

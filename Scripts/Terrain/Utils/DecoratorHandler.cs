@@ -10,8 +10,11 @@ namespace Terrain
 {
     public static class DecoratorHandler
     {
+        /*
+            DecoratorHandler is used to set HexTile decorators for each HexTile
+        */
 
-        public static void SetHexDecorators(List<HexTile> hex_list){
+        public static void SetHexDecorators(List<HexTile> hex_list){    // Wraps each Hex Object with a Decorator Object for each HexTile - called from MapGeneration
             foreach(HexTile hex in hex_list){
                 SetFeatureDecorators(hex);
                 SetLandDecorator(hex);
@@ -21,7 +24,7 @@ namespace Terrain
             }
         }
 
-        private static void SetElevationDecorator(HexTile hex)
+        private static void SetElevationDecorator(HexTile hex)  // Sets Elevation Decorator
         {
             if(hex.GetElevationType() == EnumHandler.HexElevation.Mountain){
                 hex = new MountainDecorator(hex);
@@ -44,7 +47,7 @@ namespace Terrain
 
         }
 
-        private static void SetResourceDecorator(HexTile hex)
+        private static void SetResourceDecorator(HexTile hex)   // Sets Resource Decorator
         {
             if(hex.GetResourceType() == EnumHandler.HexResource.Bananas){
                 hex = new BananasDecorator(hex);
@@ -69,7 +72,7 @@ namespace Terrain
 
         }
 
-        private static void SetRegionDecorator(HexTile hex)
+        private static void SetRegionDecorator(HexTile hex) // Sets Region Decorator
         {
             if(hex.GetRegionType() == EnumHandler.HexRegion.Plains){
                 hex = new PlainDecorator(hex);
@@ -95,7 +98,7 @@ namespace Terrain
 
         }
 
-        private static void SetLandDecorator(HexTile hex)
+        private static void SetLandDecorator(HexTile hex)   // Sets Land Decorator
         {
             if(hex.GetLandType() == EnumHandler.LandType.Water){
                 hex = new WaterDecorator(hex);
@@ -105,7 +108,7 @@ namespace Terrain
             }
         }
 
-        private static void SetFeatureDecorators(HexTile hex){
+        private static void SetFeatureDecorators(HexTile hex){  // Sets Feature Decorator
 
             if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
                 hex = new ForestDecorator(hex);

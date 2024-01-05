@@ -9,6 +9,10 @@ namespace Terrain
 {
     public class ResourceRandom : ResourceStrategy
     {
+        /*
+            ResourceRandom is used to generate resources randomly on the map, respective to regions.
+        */
+
         int iron_chance = 5;
         int cattle_chance = 3;
         int gems_chance = 1;

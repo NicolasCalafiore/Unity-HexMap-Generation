@@ -8,10 +8,16 @@ namespace Terrain
 {
     public static class HexTileUtils
     {
+
+        /*
+            Contains all functions used for general hex manipulation
+            Used to set all HexTile properties
+            Used to create HexTile objects
+        */
         public static List<HexTile> CreateHexObjects(Vector2 map_size){
             List<HexTile> hex_list = new List<HexTile>();
 
-            // Create Hex objects for each column and row in the map
+            // Create Hex objects for each column and row representative of the map
             for(int column = 0; column < map_size.x; column++)
             {
                 for(int row = 0; row < map_size.y; row++)
@@ -27,7 +33,7 @@ namespace Terrain
         {
             for(int i = 0; i < hex_list.Count; i++){
                 Vector2 coordinates = hex_list[i].GetColRow();
-                hex_list[i].SetFeatureType(EnumHandler.GetFeatureType(features_map[ (int) coordinates.x][ (int) coordinates.y]));
+                hex_list[i].SetFeatureType(EnumHandler.GetNaturalFeatureType(features_map[ (int) coordinates.x][ (int) coordinates.y]));
             }
         }
 

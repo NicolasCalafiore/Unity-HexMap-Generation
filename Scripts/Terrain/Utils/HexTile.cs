@@ -1,35 +1,43 @@
 using UnityEngine;
 using Terrain;
+using Strategy.Assets.Scripts.Objects;
+using System;
 
 namespace Terrain {
     public class HexTile {
-        static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2;
-        public readonly int Q;  //Column
-        public readonly int R;  //Row
-        public readonly int S;
-        public float E; //Elevation
+
+        /*
+            Used to store all HexTile properties
+            Is wrap around any HexTile decorators
+        */
+
+        static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2; // Used to calculate HexTile position
         public float food { get; set; }
 
         public float production { get; set; }
+        public readonly int column;  //Column
+        public readonly int row;  //Row
+        private readonly int S;  // -(column + row)
+        public float elevation; //Elevation
 
 
-        public EnumHandler.HexElevation elevation_type { get; set;}
-        public EnumHandler.HexRegion region_type;
-        public EnumHandler.LandType land_type;
-        public EnumHandler.HexNaturalFeature feature_type;
-        public EnumHandler.HexResource resource_type;
-        public EnumHandler.StructureType structure_type;
+        private EnumHandler.HexElevation elevation_type { get; set;}
+        private EnumHandler.HexRegion region_type;  //Region
+        private EnumHandler.LandType land_type; //Land or Water
+        private EnumHandler.HexNaturalFeature feature_type; //Natural Feature
+        private EnumHandler.HexResource resource_type;  //Resource
+        private EnumHandler.StructureType structure_type;   //Structures
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
-        public HexTile(int q, int r)
+        public HexTile(int column, int row)
         {
-            this.Q = q;
-            this.R = r;
-            this.S = -(q + r);
+            this.column = column;
+            this.row = row;
+            this.S = -(column + row);
         }
         public void SetElevation(EnumHandler.HexElevation elevation_type)
         {
-            this.E = (float) elevation_type / 100;
+            this.elevation = (float) elevation_type / 100;
             this.elevation_type = elevation_type;
         }
 
@@ -52,9 +60,13 @@ namespace Terrain {
             this.resource_type = resource_type;
         }
 
+
+
+
+
         public Vector2 GetColRow()
         {
-            return new Vector2(this.Q, this.R);
+            return new Vector2(this.column, this.row);
         }
 
         public Vector3 GetPosition()
@@ -67,12 +79,10 @@ namespace Terrain {
             float horiz = width;
 
             return new Vector3(
-                horiz * (this.Q + this.R/2f),
-                E,
-                vert * this.R
+                horiz * (this.column + this.row/2f),
+                elevation,
+                vert * this.row
             );
-
-
         }
 
         public EnumHandler.HexRegion GetRegionType(){
@@ -99,5 +109,9 @@ namespace Terrain {
             return this.feature_type;
         }
 
+        internal City GetCity(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

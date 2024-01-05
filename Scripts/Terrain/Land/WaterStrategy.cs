@@ -9,6 +9,9 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
 {
     public abstract class WaterStrategy
     {
+        /*
+            WaterStrategy is used to generate water on the map - abstract class
+        */
         public abstract List<List<float>> GenerateWaterMap(Vector2 map_size, EnumHandler.HexRegion region_type, List<HexTile> hex_list);
         private int padding = 5;
 

@@ -18,6 +18,11 @@ public class MouseInput : MonoBehaviour
                     DebugHandler.GetHexFromInput(hex_go);
      
                 }
+                if(hit.transform.gameObject.tag.Contains("City")){  
+                    GameObject city = hit.transform.gameObject;
+                    DebugHandler.GetTeamInformation(city);
+     
+                }
             }
         }
         
