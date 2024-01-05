@@ -28,6 +28,9 @@ namespace Terrain{
         public void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){ // Called from MapGeneration
         
             generic_hex = Resources.Load<GameObject>("Prefab/Hex_Generic_No_TMP"); 
+
+            Debug.Log(hex_list);
+            Debug.Log("Spawn Terrain Called");
             
             SpawnHexTiles(hex_list);    // Spawn all generic_hex GameObjects into GameWorld
 

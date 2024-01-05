@@ -11,7 +11,7 @@ using UnityEngine;
 public class GameManager: MonoBehaviour{
 
     /*
-        GameManager is used to manage the game
+        GameManager is used to manage the game - Main entrypoint for all scripts.
     */
     [SerializeField] private Vector2 map_size = new Vector2();
     [SerializeField] private int elevation_strategy;
@@ -28,31 +28,39 @@ public class GameManager: MonoBehaviour{
     CityManager city_manager;
 
     void Start(){
+
+        InitializeCoreComponents(); // Initializes TerrainHandler.cs, PlayerManager.cs, CityManager.cs, MapGeneration.cs +
+
+        GameGeneration();   // Generates all maps, hex_list, and cities in List<List<float>> format
+
+        HexTraitsInitializaiton();  // Sets all HexTile properties based off of List<List<float>> maps
+
+        SpawnGameObjects(); // Spawns all GameObjects into GameWorld
+    }
+
+
+    void InitializeCoreComponents(){
         terrain_handler = new TerrainHandler();
         player_manager = new PlayerManager();
         city_manager = new CityManager();
+        map_generation = new MapGeneration(map_size, elevation_strategy, land_strategy, region_strategy, features_strategy);
+    }
 
-        map_generation = new MapGeneration(map_size, elevation_strategy, land_strategy, region_strategy, features_strategy, terrain_handler);
-        //terrain_handler.TerrainSpawned += OnTerrainSpawned;
-
+    void GameGeneration(){
         player_manager.GeneratePlayers(player_count);
-        map_generation.GenerateTerrain(player_manager.player_list);
-        city_manager.GenerateCityMap(map_generation.water_map, player_manager.player_list, map_generation.features_map, map_size);
-        city_manager.SetCapitalCities(player_manager.player_list, map_generation.hex_list);
+        map_generation.GenerateTerrain();
+        city_manager.GenerateCityMap(map_generation.water_map, player_manager.player_list, map_size, map_generation.features_map, map_generation.resource_map);
 
     }
 
-
-    static List<string> ReadXml(string filePath, string region)
-    {
-        XDocument doc = XDocument.Load(filePath);
-        List<string> cityNames = doc.Descendants("Region")
-                                    .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
-                                    .Descendants("City")
-                                    .Select(c => c.Value)
-                                    .ToList();
-
-        return cityNames;
+    void HexTraitsInitializaiton(){
+        city_manager.InitializeCapitalCities(player_manager.player_list, map_generation.hex_list);
+        map_generation.ApplyHexCharacteristics();
+        DecoratorHandler.SetHexDecorators(map_generation.hex_list);   
     }
 
+    void SpawnGameObjects(){
+        terrain_handler.SpawnTerrain(map_size, map_generation.hex_list);
+        city_manager.SpawnCapitals(map_generation.hex_list);
+    }
 }

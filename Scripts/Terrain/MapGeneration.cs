@@ -28,7 +28,6 @@ namespace Terrain {
         private int land_strategy;
         private int region_strategy;
         private int features_strategy;
-        public TerrainHandler terrain_handler;                   // TerrainHandler object - used to spawn terrain GameObjects
         public List<List<float>> ocean_map = new List<List<float>>();
         public List<List<float>> river_map = new List<List<float>>();
         public List<List<float>> water_map = new List<List<float>>();
@@ -39,16 +38,15 @@ namespace Terrain {
         public List<List<float>> features_map = new List<List<float>>();
         public List<List<float>> resource_map = new List<List<float>>();
 
-        public MapGeneration(Vector2 map_size, int elevation_strategy, int land_strategy, int region_strategy, int features_strategy, TerrainHandler terrain_handler){
+        public MapGeneration(Vector2 map_size, int elevation_strategy, int land_strategy, int region_strategy, int features_strategy){
             this.map_size = map_size;
             this.elevation_strategy = elevation_strategy;
             this.land_strategy = land_strategy;
             this.region_strategy = region_strategy;
             this.features_strategy = features_strategy;
-            this.terrain_handler = terrain_handler;
         }
 
-        public void GenerateTerrain(List<Player> player_list)
+        public void GenerateTerrain()
         {
             hex_list = HexTileUtils.CreateHexObjects(map_size); // Create HexTile objects List
 
@@ -62,21 +60,6 @@ namespace Terrain {
             elevation_map = GenerateElevationMap(regions_map);
             features_map = GenerateFeaturesMap(regions_map, water_map);
             resource_map = GenerateResourceMap(ocean_map, river_map, regions_map, features_map);
-
-            HexTileUtils.SetHexElevation(elevation_map, hex_list);  // Set HexTile Properties
-            HexTileUtils.SetHexRegion(regions_map, hex_list);
-            HexTileUtils.SetHexLand(water_map, hex_list);
-            HexTileUtils.SetHexFeatures(features_map, hex_list);
-            HexTileUtils.SetHexResource(resource_map, hex_list);
-
-            DecoratorHandler.SetHexDecorators(hex_list);    // Set HexTile Decorators Objects
-        
-            terrain_handler.SpawnTerrain(map_size, hex_list);
-            //InitializeDebugComponents(elevation_map, regions_map, features_map, water_map);
-
-
-
-
         }
         private List<List<float>> GenerateFeaturesMap(List<List<float>> regions_map, List<List<float>> ocean_map)
         {
@@ -195,6 +178,14 @@ namespace Terrain {
             DebugHandler.PrintMapDebug("regions_map", regions_map);
             DebugHandler.PrintMapDebug("features_map", features_map);
             DebugHandler.PrintMapDebug("elevation_map", elevation_map);
+        }
+
+        public void ApplyHexCharacteristics(){
+            HexTileUtils.SetHexElevation(elevation_map, hex_list);  // Set HexTile Properties
+            HexTileUtils.SetHexRegion(regions_map, hex_list);
+            HexTileUtils.SetHexLand(water_map, hex_list);
+            HexTileUtils.SetHexFeatures(features_map, hex_list);
+            HexTileUtils.SetHexResource(resource_map, hex_list);
         }
 
     }

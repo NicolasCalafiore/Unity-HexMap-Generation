@@ -21,6 +21,14 @@ namespace Terrain
                 SetRegionDecorator(hex);
                 SetResourceDecorator(hex);
                 SetElevationDecorator(hex);
+                SetStructureDecorator(hex);
+            }
+        }
+
+        private static void SetStructureDecorator(HexTile hex)
+        {
+            if(hex.GetStructureType() == EnumHandler.StructureType.Capital){
+                hex = new CapitalDecorator(hex);
             }
         }
 
