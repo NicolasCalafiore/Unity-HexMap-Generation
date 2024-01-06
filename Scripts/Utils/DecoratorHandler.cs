@@ -133,7 +133,7 @@ namespace Terrain
             if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
                 hex = new SwampDecorator(hex);
             }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.WheatField){
+            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Heavy_Vegetation){
                 hex = new WheatDecorator(hex);
             }
         }

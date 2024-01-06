@@ -19,6 +19,7 @@ namespace Terrain
         int stone_chance = 3;
         int bananas_chance = 2;
         int incense_chance = 1;
+        int wheat_chance = 10;
 
 
         public override List<List<float>> GenerateResourceMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map, List<List<float>> regions_map, List<List<float>> features_map){
@@ -44,6 +45,9 @@ namespace Terrain
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < incense_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Incense;}
+                    }
+                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plains){
+                        if(Random.Range(0, 100) < wheat_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Wheat;}
                     }
 
 

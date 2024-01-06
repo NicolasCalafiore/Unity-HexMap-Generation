@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Players;
+using Strategy.Assets.Scripts.Objects;
 using Terrain;
 using TMPro;
 using Unity.VisualScripting;
@@ -24,6 +25,7 @@ namespace Terrain{
         private static GameObject generic_hex;  //Grey Empty Hex-Object - No Region/Feature/Resource/Elevation Type
         private static List<GameObject> hex_go_list = new List<GameObject>();   // List of all Hex-Objects
         public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); // Given Hex gives Hex-Object
+            public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>(); // Given City gives City-Game-Object
 
         public void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){ // Called from MapGeneration
         
@@ -78,8 +80,8 @@ namespace Terrain{
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Oasis){
                     feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Oasis"));
                 }
-                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.WheatField){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Wheat"));
+                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Heavy_Vegetation){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Heavy_Vegetation"));
                 }
                 if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Rocks){
                     feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Rocks"));
@@ -93,8 +95,7 @@ namespace Terrain{
 
                 if(feature != null){
                     feature.transform.SetParent(hex_object.transform);
-                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
-                    feature.transform.localPosition = new Vector3(0, local_position_y, 0);
+                    feature.transform.localPosition = new Vector3(0, 0, 0);
                 }
             }
         }
@@ -122,11 +123,13 @@ namespace Terrain{
                 if(hex.GetResourceType() == EnumHandler.HexResource.Incense){
                     resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Incense"));
                 }
+                if(hex.GetResourceType() == EnumHandler.HexResource.Wheat){
+                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Wheat"));
+                }
 
                 if(resource != null){
                     resource.transform.SetParent(hex_object.transform);
-                    float local_position_y = hex_object.transform.GetChild(0).transform.localPosition.y;
-                    resource.transform.localPosition = new Vector3(0, local_position_y, 0);
+                    resource.transform.localPosition = new Vector3(0, 0, 0);
                 }
             }
 
@@ -180,6 +183,67 @@ namespace Terrain{
             }
             
         }
+
+    public void SpawnCapitals(List<HexTile> hex_list, List<City> capitals_list, CityManager city_manager)   // Spawns all capitals into GameWorld
+    {
+        int counter = 0;
+        
+        foreach(HexTile hex in hex_list){
+
+            GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];  // Get hex GameObject from hex_to_hex_go Dictionary
+            GameObject structure_go = null; // GameObject to be spawned (Capital)
+
+            if(hex.GetStructureType() == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital
+                structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
+                city_go_to_city.Add(structure_go, capitals_list[counter]);
+                counter++;
+            }
+            if(structure_go != null){   // If structure_go is not null, spawn structure_go
+                city_go_to_city[structure_go].SetName(city_manager.GenerateCityName(hex)); // Set city name
+
+                structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
+                structure_go.transform.localPosition = new Vector3(0, 0, 0);
+                structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
+                structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
+                
+            }
+        
+        }
+    }
+
+
+
+        // public void SpawnObjectOnTile(List<HexTile> hex_list, GameObject object_to_spawn, EnumHandler.StructureType structure_type){
+
+        //     foreach(HexTile hex in hex_list){
+
+        //         GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];  // Get hex GameObject from hex_to_hex_go Dictionary
+        //         GameObject structure_go = null; // GameObject to be spawned (Capital)
+
+        //         if(hex.GetStructureType() == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital
+        //             structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
+        //             city_go_to_city.Add(structure_go, capitals_list[counter]);
+        //             counter++;
+        //         }
+        //         if(structure_go != null){   // If structure_go is not null, spawn structure_go
+        //             city_go_to_city[structure_go].SetName(GetCityName(hex)); // Set city name
+
+        //             structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
+        //             structure_go.transform.localPosition = new Vector3(0, 0, 0);
+        //             structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
+        //             structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
+                    
+        //         }
+            
+        //     }
+
+        //     //Capital cities, Regular cities, features, resources, 
+
+
+
+
+
+        // }
 
     }
 }

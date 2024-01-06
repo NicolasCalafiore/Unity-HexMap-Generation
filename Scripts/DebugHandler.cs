@@ -61,7 +61,7 @@ public static class DebugHandler
     {
         string MESSAGE = "";
         GameObject city_go = city_collider.transform.parent.gameObject;
-        City city = CityManager.city_go_to_city[city_go];
+        City city = TerrainHandler.city_go_to_city[city_go];
         MESSAGE += "City Name: " + city.GetName() + "\n";
         MESSAGE += "Owner: " + GameManager.player_id_to_player[city.GetPlayerId()].GetName() + "\n";
         Debug.Log(MESSAGE);
@@ -73,7 +73,7 @@ public static class DebugHandler
     {
         string MESSAGE = "";
         GameObject city_go = city_collider.transform.parent.gameObject;
-        City city = CityManager.city_go_to_city[city_go];
+        City city = TerrainHandler.city_go_to_city[city_go];
         MESSAGE += "Player State: " +  GameManager.player_id_to_player[city.GetPlayerId()].GetOfficialName() + "\n";
         MESSAGE += "Government Type: " + GameManager.player_id_to_player[city.GetPlayerId()].GetGovernmentType() + "\n";
         Debug.Log(MESSAGE);

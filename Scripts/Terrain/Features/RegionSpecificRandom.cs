@@ -16,7 +16,8 @@ namespace Terrain
 
         int forest_chance = 50;
         int oasis_chance = 2;
-        int wheat_field_chance = 35;
+        int heavy_vegetation_chance = 35;
+        int wheat_chance = 10;
         int rock_chance = 15;
         int jungle_chance = 80;
         int swamp_chance = 75;
@@ -34,7 +35,7 @@ namespace Terrain
                         if(Random.Range(0, 100) < oasis_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Oasis;
                     }
                     else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plains){
-                        if(Random.Range(0, 100) < wheat_field_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.WheatField;
+                        if(Random.Range(0, 100) < heavy_vegetation_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Heavy_Vegetation;
                     }
                     else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highlands || regions_map[i][j] == (int) EnumHandler.HexRegion.Tundra){
                         if(Random.Range(0, 100) < rock_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Rocks;

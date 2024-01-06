@@ -87,7 +87,7 @@ namespace Terrain
             None,
             Forest,
             Oasis,
-            WheatField,
+            Heavy_Vegetation,
             Rocks,
             Jungle,
             Swamp,
@@ -101,7 +101,7 @@ namespace Terrain
                 { (int) HexNaturalFeature.None, HexNaturalFeature.None},
                 { (int) HexNaturalFeature.Forest, HexNaturalFeature.Forest},
                 { (int) HexNaturalFeature.Oasis, HexNaturalFeature.Oasis},
-                { (int) HexNaturalFeature.WheatField, HexNaturalFeature.WheatField},
+                { (int) HexNaturalFeature.Heavy_Vegetation, HexNaturalFeature.Heavy_Vegetation},
                 { (int) HexNaturalFeature.Rocks, HexNaturalFeature.Rocks},
                 { (int) HexNaturalFeature.Jungle, HexNaturalFeature.Jungle},
                 { (int) HexNaturalFeature.Swamp, HexNaturalFeature.Swamp},
@@ -142,6 +142,7 @@ namespace Terrain
             Stone,
             Bananas,
             Incense,
+            Wheat,
 
 
         }
@@ -155,6 +156,7 @@ namespace Terrain
                 { (int) HexResource.Stone, HexResource.Stone},
                 { (int) HexResource.Bananas, HexResource.Bananas},
                 { (int) HexResource.Incense, HexResource.Incense},
+                { (int) HexResource.Wheat, HexResource.Wheat},
 
 
             };

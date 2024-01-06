@@ -2,6 +2,7 @@ using UnityEngine;
 using Terrain;
 using Strategy.Assets.Scripts.Objects;
 using System;
+using Players;
 
 namespace Terrain {
     public class HexTile {
@@ -27,6 +28,7 @@ namespace Terrain {
         private EnumHandler.HexNaturalFeature feature_type; //Natural Feature
         private EnumHandler.HexResource resource_type;  //Resource
         private EnumHandler.StructureType structure_type;   //Structures
+        private Player owner;   
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
         public HexTile(int column, int row)
