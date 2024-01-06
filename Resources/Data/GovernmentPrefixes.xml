@@ -1,0 +1,37 @@
+<World>
+    <Government name="Democracy">
+        <Prefix>Democratatic Republic of </Prefix>
+        <Prefix>Democratic State of </Prefix>
+        <Prefix>Democratic Union of </Prefix>
+        <Prefix>Democratic Federation of </Prefix>
+    </Government>
+    <Government name="Monarchy">
+        <Prefix>Kingdom of </Prefix>
+        <Prefix>Royal Kingdom of </Prefix>
+        <Prefix>United Kingdom of </Prefix>
+        <Prefix>Sovereign Kingdom of </Prefix>
+    </Government>
+    <Government name="Dictatorship">
+        <Prefix>Facist </Prefix>
+        <Prefix>The One Party State of </Prefix>
+        <Prefix>The Autocratic Republic of </Prefix>
+        <Prefix>The Totalitarian State of </Prefix>
+        <Prefix>The Military State of </Prefix>
+    </Government>
+    <Government name="Theocracy">
+        <Prefix>Holy State of </Prefix>
+        <Prefix>Religious State of </Prefix>
+        <Prefix>Divine State of </Prefix>
+        <Prefix>Sacred Realm of </Prefix>
+        <Prefix>Spiritual Dominion of </Prefix>
+        <Prefix>Clerical Kingdom of </Prefix>
+    </Government>
+    <Government name="Tribalism">
+        <Prefix>Tribal State of </Prefix>
+        <Prefix>Clan State of </Prefix>
+        <Prefix>Tribe of </Prefix>
+        <Prefix>Clan of </Prefix>
+    </Government>
+
+
+</World>

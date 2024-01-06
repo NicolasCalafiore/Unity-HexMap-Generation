@@ -1,0 +1,29 @@
+<World>
+    <States name="Names">
+        <name>Zarnovia</name>
+        <name>Kalithra</name>
+        <name>Boravia</name>
+        <name>Estolad</name>
+        <name>Gruntera</name>
+        <name>Valderon</name>
+        <name>Marnopia</name>
+        <name>Torvaska</name>
+        <name>Ferunia</name>
+        <name>Yulvania</name>
+        <name>Quinara</name>
+        <name>Rivendora</name>
+        <name>Alaroth</name>
+        <name>Wexylia</name>
+        <name>Porvencia</name>
+        <name>Sylthara</name>
+        <name>Vindelar</name>
+        <name>Ostobor</name>
+        <name>Lunoria</name>
+        <name>Zyphendal</name>
+        <name>Thalorak</name>
+        <name>Narvaxus</name>
+        <name>Velanor</name>
+        <name>Ekrund</name>
+        <name>Dranoria</name>
+    </States>
+</World>

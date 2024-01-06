@@ -181,5 +181,34 @@ namespace Terrain
             return structureDict[structureValue];
     
         }
+
+
+
+
+
+        public enum GovernmentType{
+            None,
+            Democracy,
+            Monarchy,
+            Dictatorship,
+            Theocracy,
+            Tribalism,
+
+        }
+
+        public static GovernmentType GetGovernmentType(float governmentValue){
+            Dictionary<float, GovernmentType> governmentDict = new Dictionary<float, GovernmentType>(){
+                { (int) GovernmentType.None, GovernmentType.None},
+                { (int) GovernmentType.Democracy, GovernmentType.Democracy},
+                { (int) GovernmentType.Monarchy, GovernmentType.Monarchy},
+                { (int) GovernmentType.Dictatorship, GovernmentType.Dictatorship},
+                { (int) GovernmentType.Theocracy, GovernmentType.Theocracy},
+                { (int) GovernmentType.Tribalism, GovernmentType.Tribalism},
+
+            };
+
+            return governmentDict[governmentValue];
+    
+        }
     }
 }

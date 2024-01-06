@@ -85,6 +85,8 @@ public class CityManager
                 structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
                 structure_go.transform.localPosition = new Vector3(0, 0, 0);
                 structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
+                structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
+                
             }
         
         }
@@ -92,7 +94,7 @@ public class CityManager
 
 
     private string GetCityName(HexTile hex){
-        List<string> cityNames = IOHandler.ReadXml("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CityNames.xml", hex.GetRegionType().ToString());
+        List<string> cityNames = IOHandler.ReadCityNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CityNames.xml", hex.GetRegionType().ToString());
         int random_pick = UnityEngine.Random.Range(0, cityNames.Count);
         string name = cityNames[random_pick];
         return name;

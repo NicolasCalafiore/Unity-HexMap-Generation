@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Players;
 using Strategy.Assets.Game.Scripts.Terrain;
 using Strategy.Assets.Scripts.Objects;
 using Terrain;
@@ -19,7 +20,7 @@ public static class DebugHandler
     */
 
 
-    public static void GetHexFromInput(GameObject gameObject){  // Used to read HexTile object from GameObject from MouseInputHandler
+    public static void GetHexInformation(GameObject gameObject){  // Used to read HexTile object from GameObject from MouseInputHandler
         string MESSAGE = "";
         GameObject hex_go = gameObject.transform.parent.gameObject;
         HexTile hex = TerrainHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
@@ -56,7 +57,7 @@ public static class DebugHandler
         }   
     }
 
-    internal static void GetTeamInformation(GameObject city_collider)
+    internal static void GetCityInformation(GameObject city_collider)
     {
         string MESSAGE = "";
         GameObject city_go = city_collider.transform.parent.gameObject;
@@ -64,5 +65,19 @@ public static class DebugHandler
         MESSAGE += "City Name: " + city.GetName() + "\n";
         MESSAGE += "Owner: " + GameManager.player_id_to_player[city.GetPlayerId()].GetName() + "\n";
         Debug.Log(MESSAGE);
+
+        GetStateInformation(city_collider);
     }
+
+    internal static void GetStateInformation(GameObject city_collider)
+    {
+        string MESSAGE = "";
+        GameObject city_go = city_collider.transform.parent.gameObject;
+        City city = CityManager.city_go_to_city[city_go];
+        MESSAGE += "Player State: " +  GameManager.player_id_to_player[city.GetPlayerId()].GetOfficialName() + "\n";
+        MESSAGE += "Government Type: " + GameManager.player_id_to_player[city.GetPlayerId()].GetGovernmentType() + "\n";
+        Debug.Log(MESSAGE);
+    }
+
+
 }
