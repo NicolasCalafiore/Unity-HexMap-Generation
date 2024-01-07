@@ -18,6 +18,7 @@ public class GameManager: MonoBehaviour{
     [SerializeField] public PlayerManager player_manager;
     [SerializeField] public CityManager city_manager;
     [SerializeField] public MapGeneration map_generation;
+    [SerializeField] public TerritoryManager territory_manager;
     [SerializeField] public GameObject perlin_map_object;
     [SerializeField] public Vector2 map_size;
     public static Dictionary<float, Player> player_id_to_player = new Dictionary<float, Player>();
@@ -39,12 +40,12 @@ public class GameManager: MonoBehaviour{
     }
 
 
-    (TerrainHandler, PlayerManager, CityManager, MapGeneration) InitializeCoreComponents(){
+    void InitializeCoreComponents(){
         terrain_manager = new TerrainHandler();
         player_manager = new PlayerManager();
         city_manager = new CityManager();
         map_generation = new MapGeneration(map_size, elevation_strategy, land_strategy, region_strategy, features_strategy);
-        return (terrain_manager, player_manager, city_manager, map_generation);
+        territory_manager = new TerritoryManager();
     }
 
     void GameGeneration(PlayerManager player_manager, MapGeneration map_generation, CityManager city_manager, TerrainHandler terrain_manager){
@@ -55,6 +56,7 @@ public class GameManager: MonoBehaviour{
 
     void HexTraitsInitializaiton(CityManager city_manager, MapGeneration map_generation, PlayerManager player_manager){
         city_manager.InitializeCapitalCityObjects(player_manager.player_list, map_generation.hex_list);
+        territory_manager.GenerateCapitalTerritory(city_manager.city_map, player_manager.player_list);
         map_generation.ApplyHexCharacteristics();
         DecoratorHandler.SetHexDecorators(map_generation.hex_list);   
     }

@@ -3,6 +3,7 @@ using Terrain;
 using Strategy.Assets.Scripts.Objects;
 using System.Collections.Generic;
 using System;
+using Random = UnityEngine.Random;
 
 namespace Players {
     public class Player {
@@ -12,15 +13,21 @@ namespace Players {
 
         private string state_prefix;
         private string name;
-        private Color color;
+        private Color team_color;
         private int id;
         List<City> cities = new List<City>();
         EnumHandler.GovernmentType government_type;
 
-        public Player(string state_prefix, string name, Color color, int id){
+        public Player(string state_prefix, string name, int id){
             this.state_prefix = state_prefix;
             this.name = name;
-            this.color = color;
+
+            // float r = Random.Range(0f, 1f);
+            // float g = Random.Range(0f, 1f);
+            // float b = Random.Range(0f, 1f);
+
+             this.team_color = new Color(Random.Range(0f, 1f),Random.Range(0f, 1f),Random.Range(0f, 1f));
+
             this.id = id;
 
             GameManager.player_id_to_player.Add(id, this);
@@ -65,6 +72,10 @@ namespace Players {
 
         public void SetStateName(string name){
             this.name = name;
+        }
+
+        public Color GetColor(){
+            return team_color;
         }
     }
 }

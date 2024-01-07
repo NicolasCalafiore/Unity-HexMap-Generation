@@ -60,7 +60,49 @@ namespace Terrain {
             elevation_map = GenerateElevationMap(regions_map);
             features_map = GenerateFeaturesMap(regions_map, water_map);
             resource_map = GenerateResourceMap(ocean_map, river_map, regions_map, features_map);
+            SetBorderElevation(TerrainUtils.FindBorderOnes(ocean_map, 1, 0), (float) EnumHandler.HexElevation.Flatland, false, (float) EnumHandler.HexElevation.Flatland);
+            SetBorderRegion(TerrainUtils.FindBorderOnes(ocean_map, 0, 1), (float) EnumHandler.HexRegion.Ocean, (float) EnumHandler.HexRegion.Shore);
         }
+
+        private void SetBorderElevation(List<Tuple<int, int>> tuples, float conditional_value, bool is_higher, float set_value){
+            foreach(Tuple<int, int> tuple in tuples){
+                foreach(HexTile hex in hex_list){
+                    if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
+                        if(is_higher){
+
+                            if( (float) hex.GetElevationType() > conditional_value)
+                                elevation_map[tuple.Item1][tuple.Item2] = set_value;
+                        }
+
+                        else{
+                                elevation_map[tuple.Item1][tuple.Item2] = set_value;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void SetBorderRegion(List<Tuple<int, int>> tuples, float conditional_value, float set_value){
+            foreach(Tuple<int, int> tuple in tuples){
+                foreach(HexTile hex in hex_list){
+                    if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
+                        
+                            if( (float) hex.GetElevationType() == conditional_value)
+                                regions_map[tuple.Item1][tuple.Item2] = set_value;
+
+
+                        else{
+                                regions_map[tuple.Item1][tuple.Item2] = set_value;
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+
         private List<List<float>> GenerateFeaturesMap(List<List<float>> regions_map, List<List<float>> ocean_map)
         {
             FeaturesStrategy strategy = null;
@@ -186,6 +228,7 @@ namespace Terrain {
             HexTileUtils.SetHexLand(water_map, hex_list);
             HexTileUtils.SetHexFeatures(features_map, hex_list);
             HexTileUtils.SetHexResource(resource_map, hex_list);
+            HexTileUtils.SetTerritoryType(TerritoryManager.territory_map, hex_list);
         }
 
     }

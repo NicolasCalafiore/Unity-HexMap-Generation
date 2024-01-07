@@ -72,5 +72,21 @@ namespace Terrain
             }
         }
 
+        public static void SetTerritoryType(List<List<float>> territory_map, List<HexTile> hex_list){
+            foreach(HexTile hex in hex_list){
+                Vector2 coordinates = hex.GetColRow();
+                if((int) territory_map[(int) coordinates.x][(int) coordinates.y] == -1){
+                    hex.SetOwnerPlayer(null);
+                }
+                else{
+                    hex.SetOwnerPlayer(GameManager.player_id_to_player[(int) territory_map[(int) coordinates.x][(int) coordinates.y]]);
+                }
+            }
+        }
+
+
+
+        
+
     }
 }

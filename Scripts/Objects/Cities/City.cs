@@ -14,10 +14,13 @@ namespace Strategy.Assets.Scripts.Objects
         public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>(); // Given Hex gives Hex-Object
         private string name;
         private int player_id;
-        public City(string name, int player_id)
+        Vector2 col_row;
+
+        public City(string name, int player_id, Vector2 col_row)
         {
             this.name = name;
             this.player_id = player_id;
+            this.col_row = col_row;
         }
 
         public string GetName()
@@ -33,6 +36,11 @@ namespace Strategy.Assets.Scripts.Objects
         public void SetName(string name)
         {
             this.name = name;
+        }
+
+        public Vector2 GetColRow()
+        {
+            return col_row;
         }
     }
 }

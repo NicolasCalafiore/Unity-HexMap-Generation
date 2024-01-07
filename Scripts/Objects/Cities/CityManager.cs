@@ -18,7 +18,7 @@ public class CityManager
     */
 
     public static List<City> capitals_list = new List<City>();
-    private List<List<float>> city_map = new List<List<float>>();
+    public List<List<float>> city_map = new List<List<float>>();
     public CityManager(){
 
     }
@@ -54,7 +54,7 @@ public class CityManager
             for(int j = 0; j < city_map.Count; j++){
 
                 if(city_map[i][j] == (int) EnumHandler.StructureType.Capital){
-                    City city = new City("Error", player_list[player_index].GetId());
+                    City city = new City("Error", player_list[player_index].GetId(), new Vector2(i,j));
                     capitals_list.Add(city);
                     player_list[player_index].AddCity(city); // Add city to player
                     player_index++;

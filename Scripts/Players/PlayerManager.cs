@@ -6,6 +6,7 @@ using Players;
 using Terrain;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = System.Random;
 
 public class PlayerManager
 {
@@ -21,8 +22,9 @@ public class PlayerManager
     }
 
     public void GeneratePlayers(int num_players){
+        
         for(int i = 0; i < num_players; i++){
-            player_list.Add(new Player("player", "Player " + i, Color.red, i));
+            player_list.Add(new Player("player", "Player " + i, i));
         }
 
         SetGovernmentTypes();

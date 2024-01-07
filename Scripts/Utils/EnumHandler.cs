@@ -54,6 +54,7 @@ namespace Terrain
             Highlands,
             Jungle,
             Swamp,
+            Shore,
 
         }
 
@@ -71,6 +72,8 @@ namespace Terrain
                 { (int) HexRegion.Highlands, HexRegion.Highlands},
                 { (int) HexRegion.Jungle, HexRegion.Jungle},
                 { (int) HexRegion.Swamp, HexRegion.Swamp},
+                { (int) HexRegion.Shore, HexRegion.Shore},
+
             };
 
 

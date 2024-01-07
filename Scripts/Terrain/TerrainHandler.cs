@@ -37,21 +37,12 @@ namespace Terrain{
             SpawnHexTiles(hex_list);    // Spawn all generic_hex GameObjects into GameWorld
 
             InitializeVisuals(hex_list); // Spawns all GameObjects that are not HexTile objects (Region/Feature/Resource/Elevation)
+
         
 
-            //OnTerrainSpawned();
         }
 
-        // protected virtual void OnTerrainSpawned()
-        // {
-        //     if(TerrainSpawned != null){
-        //         TerrainSpawned(this, EventArgs.Empty);
-        //     }
-        //     else{
-        //         Debug.Log("Event is null");
-        //     }
 
-        // }
 
         private void SpawnHexTiles(List<HexTile> hex_list){                     // Spawns all generic_hex GameObjects into GameWorld    
             foreach(HexTile hex in hex_list){
@@ -66,7 +57,8 @@ namespace Terrain{
             ShowRegionTypes(hex_list);                                          // Set Region Types
             ShowOceanTypes(hex_list);                                           // Set Ocean Types 
             SpawnHexFeature(hex_list);                                          // Spawn Features
-            SpawnHexResource(hex_list);                                         // Spawn Resources                                           // Spawn Capitals
+            SpawnHexResource(hex_list);                                         // Spawn Resources    
+            SpawnTerritoryFlags(hex_list);                                       // Spawn Capitals
 
         }
         private void SpawnHexFeature(List<HexTile> hex_list){
@@ -139,7 +131,7 @@ namespace Terrain{
         public void ShowRegionTypes(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
                 GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
-                if(hex.GetLandType() != EnumHandler.LandType.Water){
+                if(hex.GetRegionType() != EnumHandler.HexRegion.Ocean){
                     if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
                         hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Desert");
                     }
@@ -163,6 +155,9 @@ namespace Terrain{
                     }
                     if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
                         hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Swamp");
+                    }
+                    if(hex.GetRegionType() == EnumHandler.HexRegion.Shore){
+                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Shore");
                     }
                     
                 }
@@ -206,8 +201,24 @@ namespace Terrain{
                 structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
                 structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
                 
+                structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetColor();
             }
         
+        }
+    }
+
+    public void SpawnTerritoryFlags(List<HexTile> hex_list){
+        foreach(HexTile hex in hex_list){
+            GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
+            GameObject territory_flag = null;
+
+            if(hex.GetOwnerPlayer() != null){
+                territory_flag = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Territory_Flag"));
+                territory_flag.transform.SetParent(hex_object.transform);
+                territory_flag.transform.localPosition = new Vector3(0, 0, 0);
+                territory_flag.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex.GetOwnerPlayer().GetColor(); 
+
+            }
         }
     }
 

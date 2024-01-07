@@ -28,7 +28,7 @@ namespace Terrain {
         private EnumHandler.HexNaturalFeature feature_type; //Natural Feature
         private EnumHandler.HexResource resource_type;  //Resource
         private EnumHandler.StructureType structure_type;   //Structures
-        private Player owner;   
+        private Player owner_player;   
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
         public HexTile(int column, int row)
@@ -114,6 +114,14 @@ namespace Terrain {
         internal City GetCity(int v)
         {
             throw new NotImplementedException();
+        }
+
+        public Player GetOwnerPlayer(){
+            return this.owner_player;
+        }
+
+        public void SetOwnerPlayer(Player owner_player){
+            this.owner_player = owner_player;
         }
     }
 }

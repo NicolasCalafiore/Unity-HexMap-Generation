@@ -9,7 +9,7 @@ namespace Terrain
 {
     public static class TerrainUtils
     {
-        /*
+       /*
             Contains all functions used for general terrain manipulation
             Used to generate all List<List<float>> maps
             Used to normalize all List<List<float>> maps
@@ -27,14 +27,14 @@ namespace Terrain
                 }
             }
         }
-        public static List<List<float>> GenerateMap(Vector2 map_size){  // Generates List<List<float>> map with 0 values
+        public static List<List<float>> GenerateMap(Vector2 map_size, float value = 0){  // Generates List<List<float>> map with 0 values
             List<List<float>> map = new List<List<float>>();
             for (int i = 0; i < map_size.x; i++)
             {
                 List<float> row = new List<float>();
                 for (int j = 0; j < map_size.y; j++)
                 {
-                    row.Add(0);
+                    row.Add(value);
                 }
                 map.Add(row);
             }
@@ -141,6 +141,48 @@ namespace Terrain
                 }
 
                 return map;
+        }
+
+        public static List<Tuple<int, int>> FindBorderOnes(List<List<float>> matrix, int target_value, int border_value)
+        {
+            var borderOnes = new List<Tuple<int, int>>();
+            int rows = matrix.Count;
+            int cols = matrix[0].Count;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (matrix[i][j] == target_value && IsBordering(matrix, i, j, border_value))
+                    {
+                        borderOnes.Add(new Tuple<int, int>(i, j));
+                    }
+                }
+            }
+
+            return borderOnes;
+        }
+
+        static bool IsBordering(List<List<float>> matrix, int row, int col, int border_value)
+        {
+            int rows = matrix.Count;
+            int cols = matrix[0].Count;
+
+            // Check above
+            if (row > 0 && matrix[row - 1][col] == border_value) return true;
+            // Check below
+            if (row < rows - 1 && matrix[row + 1][col] == border_value) return true;
+            // Check left
+            if (col > 0 && matrix[row][col - 1] == border_value) return true;
+            // Check right
+            if (col < cols - 1 && matrix[row][col + 1] == border_value) return true;
+
+            if(row > 0 && col < cols - 1 && matrix[row - 1][col + 1] == border_value) return true;
+
+            if(row < rows - 1 && col > 0 && matrix[row + 1][col - 1] == border_value) return true;      
+        
+
+            return false;
         }
 
 

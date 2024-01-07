@@ -35,6 +35,13 @@ public static class DebugHandler
         MESSAGE += "Food: " + hex.food + "\n";
         MESSAGE += "Production: " + hex.production + "\n";
         MESSAGE += "Movement Cost:" + hex.MovementCost + "\n";
+
+        if(hex.GetOwnerPlayer() != null){
+            MESSAGE += "Owner: " + hex.GetOwnerPlayer().GetName() + "\n";
+        }
+        else{
+            MESSAGE += "Owner: None\n";
+        }
         Debug.Log(MESSAGE);
     }
 
