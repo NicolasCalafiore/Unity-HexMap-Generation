@@ -1,22 +1,47 @@
 <World>
     <Government name="Democracy">
-        <Prefix>Democratatic Republic of </Prefix>
+<Prefix>Democratic Republic of </Prefix>
         <Prefix>Democratic State of </Prefix>
         <Prefix>Democratic Union of </Prefix>
         <Prefix>Democratic Federation of </Prefix>
+        <Prefix>Federal Democracy of </Prefix>
+        <Prefix>People's Democracy of </Prefix>
+        <Prefix>Democratic Commonwealth of </Prefix>
+        <Prefix>Democratic Nation of </Prefix>
+        <Prefix>Democratic Community of </Prefix>
+        <Prefix>Democratic Alliance of </Prefix>
+        <Prefix>Democratic Confederation of </Prefix>
+        <Prefix>Democratic Collective of </Prefix>
+        <Prefix>Democratic Assembly of </Prefix>
     </Government>
     <Government name="Monarchy">
         <Prefix>Kingdom of </Prefix>
         <Prefix>Royal Kingdom of </Prefix>
         <Prefix>United Kingdom of </Prefix>
         <Prefix>Sovereign Kingdom of </Prefix>
+        <Prefix>Imperial Kingdom of </Prefix>
+        <Prefix>Grand Kingdom of </Prefix>
+        <Prefix>Crowned Republic of </Prefix>
+        <Prefix>Princely State of </Prefix>
+        <Prefix>Monarchical Federation of </Prefix>
+        <Prefix>Regal Dominion of </Prefix>
+        <Prefix>Royal Federation of </Prefix>
+        <Prefix>Royal Commonwealth of </Prefix>
+        <Prefix>Imperial Dominion of </Prefix>
     </Government>
     <Government name="Dictatorship">
-        <Prefix>Facist </Prefix>
+        <Prefix>Fascist </Prefix>
         <Prefix>The One Party State of </Prefix>
         <Prefix>The Autocratic Republic of </Prefix>
         <Prefix>The Totalitarian State of </Prefix>
         <Prefix>The Military State of </Prefix>
+        <Prefix>Dictatorial Regime of </Prefix>
+        <Prefix>Authoritarian State of </Prefix>
+        <Prefix>Centralized State of </Prefix>
+        <Prefix>Supreme Rule of </Prefix>
+        <Prefix>Iron Republic of </Prefix>
+        <Prefix>Single Leader State of </Prefix>
+        <Prefix>Controlled State of </Prefix>
     </Government>
     <Government name="Theocracy">
         <Prefix>Holy State of </Prefix>
@@ -25,12 +50,28 @@
         <Prefix>Sacred Realm of </Prefix>
         <Prefix>Spiritual Dominion of </Prefix>
         <Prefix>Clerical Kingdom of </Prefix>
+        <Prefix>Divine Kingdom of </Prefix>
+        <Prefix>Sacred Federation of </Prefix>
+        <Prefix>Religious Republic of </Prefix>
+        <Prefix>Holy Nation of </Prefix>
+        <Prefix>Spiritual Commonwealth of </Prefix>
+        <Prefix>Divine Empire of </Prefix>
+        <Prefix>Sacred Union of </Prefix>
     </Government>
     <Government name="Tribalism">
         <Prefix>Tribal State of </Prefix>
         <Prefix>Clan State of </Prefix>
         <Prefix>Tribe of </Prefix>
         <Prefix>Clan of </Prefix>
+        <Prefix>Tribal Federation of </Prefix>
+        <Prefix>Tribal Union of </Prefix>
+        <Prefix>Tribal Confederation of </Prefix>
+        <Prefix>Clan Alliance of </Prefix>
+        <Prefix>Indigenous State of </Prefix>
+        <Prefix>Native Union of </Prefix>
+        <Prefix>Tribal Commonwealth of </Prefix>
+        <Prefix>Clan Dominion of </Prefix>
+        <Prefix>Tribal Territory of </Prefix>
     </Government>
 
 

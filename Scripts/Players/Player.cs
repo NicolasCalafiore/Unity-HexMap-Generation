@@ -16,7 +16,9 @@ namespace Players {
         private Color team_color;
         private int id;
         List<City> cities = new List<City>();
+        List<List<float>> fog_of_war_map;
         EnumHandler.GovernmentType government_type;
+        
 
         public Player(string state_prefix, string name, int id){
             this.state_prefix = state_prefix;
@@ -46,8 +48,20 @@ namespace Players {
             return cities[index];
         }
 
+        public List<City> GetAllCities(){
+            return cities;
+        }
+
         public int GetId(){
             return id;
+        }
+
+        public void SetFogOfWarMap(List<List<float>> fog_of_war_map){
+            this.fog_of_war_map = fog_of_war_map;
+        }
+
+        public List<List<float>> GetFogOfWarMap(){
+            return fog_of_war_map;
         }
 
         public void SetGovernmentType(EnumHandler.GovernmentType government_type){

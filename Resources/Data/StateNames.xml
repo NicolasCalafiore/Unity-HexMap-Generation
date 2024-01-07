@@ -1,29 +1,383 @@
 <World>
-    <States name="Names">
-        <name>Zarnovia</name>
-        <name>Kalithra</name>
-        <name>Boravia</name>
-        <name>Estolad</name>
-        <name>Gruntera</name>
-        <name>Valderon</name>
-        <name>Marnopia</name>
-        <name>Torvaska</name>
-        <name>Ferunia</name>
-        <name>Yulvania</name>
-        <name>Quinara</name>
-        <name>Rivendora</name>
-        <name>Alaroth</name>
-        <name>Wexylia</name>
-        <name>Porvencia</name>
-        <name>Sylthara</name>
-        <name>Vindelar</name>
-        <name>Ostobor</name>
-        <name>Lunoria</name>
-        <name>Zyphendal</name>
-        <name>Thalorak</name>
-        <name>Narvaxus</name>
-        <name>Velanor</name>
-        <name>Ekrund</name>
-        <name>Dranoria</name>
-    </States>
+    <Regions name="Desert">
+        <Country>Azharistan</Country>
+        <Country>Khalidora</Country>
+        <Country>Zafarabad</Country>
+        <Country>Marzoukia</Country>
+        <Country>Qasimia</Country>
+        <Country>Jamalpur</Country>
+        <Country>Yusufia</Country>
+        <Country>Faroukstan</Country>
+        <Country>Nadirabad</Country>
+        <Country>Imrania</Country>
+        <Country>Rashidstan</Country>
+        <Country>Suleiman</Country>
+        <Country>Al Zahra</Country>
+        <Country>Bashirabad</Country>
+        <Country>Amiria</Country>
+        <Country>Salahuddin</Country>
+        <Country>Tariqstan</Country>
+        <Country>Mustafa's Land</Country>
+        <Country>Al-Fayoum</Country>
+        <Country>Harounia</Country>
+        <Country>Ibrahimia</Country>
+        <Country>Karimabad</Country>
+        <Country>Al Noor</Country>
+        <Country>Samiristan</Country>
+        <Country>Yaqubia</Country>
+        <Country>Adnanpur</Country>
+        <Country>Faisalabad</Country>
+        <Country>Rafiqstan</Country>
+        <Country>Al Tariq</Country>
+        <Country>Mahmoudia</Country>
+        <Country>Al-Rashad</Country>
+        <Country>Basirabad</Country>
+        <Country>Al-Mansur</Country>
+        <Country>Sharafabad</Country>
+        <Country>Ziyad </Country>
+        <Country>Al-Hakim</Country>
+        <Country>Wahidpur</Country>
+        <Country>Al-Qadir</Country>
+        <Country>Najibabad</Country>
+        <Country>Al-Mu'tasim</Country>
+        <Country>Al-Aziz</Country>
+        <Country>Al-Farouq</Country>
+        <Country>Al-Majid</Country>
+        <Country>Al-Salim</Country>
+        <Country>Al-Yasir</Country>
+        <Country>Al-Hassan</Country>
+        <Country>Al-Amir</Country>
+        <Country>Al-Rahman</Country>
+    </Regions>
+
+    <Regions name="Swamp">
+        <Country>Amaruca</Country>
+        <Country>Verdezia</Country>
+        <Country>Rio Sol</Country>
+        <Country>Montañara</Country>
+        <Country>Estrellia</Country>
+        <Country>Mariposa</Country>
+        <Country>Valle Luna</Country>
+        <Country>Selva Dorada</Country>
+        <Country>Costa Luz</Country>
+        <Country>Sierra Azul</Country>
+        <Country>Playa Sol</Country>
+        <Country>Palmera</Country>
+        <Country>Isla Viento</Country>
+        <Country>Florana</Country>
+        <Country>Monte Verde</Country>
+        <Country>Arroyo Claro</Country>
+        <Country>Cañon Rojo</Country>
+        <Country>Lago Espejo</Country>
+        <Country>Bosque Nublado</Country>
+        <Country>Pradera Sol</Country>
+        <Country>Colina Alta</Country>
+        <Country>Cerro Paz</Country>
+        <Country>Rio Cantar</Country>
+        <Country>Costa Serena</Country>
+        <Country>Valle Escondido</Country>
+        <Country>Isla del Fuego</Country>
+        <Country>Mar de Sueños</Country>
+        <Country>Estrella del Sur</Country>
+        <Country>Playa del Oro</Country>
+        <Country>Sierra Clara</Country>
+        <Country>Alto Refugio</Country>
+        <Country>Sendero Luz</Country>
+        <Country>Monte Azul</Country>
+        <Country>Rio Profundo</Country>
+        <Country>Costa Brava</Country>
+        <Country>Valle Sagrado</Country>
+        <Country>Isla del Eco</Country>
+        <Country>Mariposa Real</Country>
+        <Country>Estrella Marina</Country>
+        <Country>Playa Esmeralda</Country>
+        <Country>Sierra Roja</Country>
+        <Country>Alto Viento</Country>
+        <Country>Sendero del Sol</Country>
+        <Country>Monte Dorado</Country>
+        <Country>Rio Tranquilo</Country>
+        <Country>Costa Mística</Country>
+        <Country>Valle de Luz</Country>
+        <Country>Isla del Sol</Country>
+        <Country>Mar de Cristal</Country>
+    </Regions>
+
+    <Regions name="Jungle">
+        <Country>Chimayo</Country>
+        <Country>Takoda</Country>
+        <Country>Wakanda</Country>
+        <Country>Shenandoah</Country>
+        <Country>Manitou</Country>
+        <Country>Tallulah</Country>
+        <Country>Chenoa</Country>
+        <Country>Kiowa</Country>
+        <Country>Yuma</Country>
+        <Country>Nanticoke</Country>
+        <Country>Osceola</Country>
+        <Country>Sequoyah</Country>
+        <Country>Winona</Country>
+        <Country>Yanisin</Country>
+        <Country>Aiyana</Country>
+        <Country>Kachina</Country>
+        <Country>Minnehaha</Country>
+        <Country>Onida</Country>
+        <Country>Sakari</Country>
+        <Country>Talise</Country>
+        <Country>Yokut</Country>
+        <Country>Zuni</Country>
+        <Country>Alawa</Country>
+        <Country>Chayton</Country>
+        <Country>Dyami</Country>
+        <Country>Eyota</Country>
+        <Country>Hania</Country>
+        <Country>Kele</Country>
+        <Country>Makya</Country>
+        <Country>Nodin</Country>
+        <Country>Ohiyesa</Country>
+        <Country>Paytah</Country>
+        <Country>Quanah</Country>
+        <Country>Shilah</Country>
+        <Country>Takchawee</Country>
+        <Country>Wapi</Country>
+        <Country>Yansa</Country>
+        <Country>Aponi</Country>
+        <Country>Catori</Country>
+        <Country>Elu</Country>
+        <Country>Halona</Country>
+        <Country>Imala</Country>
+        <Country>Kiona</Country>
+        <Country>Lomasi</Country>
+        <Country>Mika</Country>
+        <Country>Namid</Country>
+        <Country>Orenda</Country>
+        <Country>Pavati</Country>
+        <Country>Shimasani</Country>
+        <Country>Taima</Country>
+        <Country>Wicapi</Country>
+        <Country>Yoki</Country>
+    </Regions>
+
+    <Regions name="Highlands">
+        <Country>Taigaria</Country>
+        <Country>Yeniseisk</Country>
+        <Country>Kolymara</Country>
+        <Country>Altayana</Country>
+        <Country>Sayanora</Country>
+        <Country>Tunguska</Country>
+        <Country>Uralia</Country>
+        <Country>Novosibirskia</Country>
+        <Country>Chukotka</Country>
+        <Country>Kamchatka</Country>
+        <Country>Verkhoyansk</Country>
+        <Country>Anadyria</Country>
+        <Country>Yakutskoye</Country>
+        <Country>Amuristan</Country>
+        <Country>Severnyi</Country>
+        <Country>Oymyakon</Country>
+        <Country>Magadan</Country>
+        <Country>Vostok</Country>
+        <Country>Krasnoyarsk</Country>
+        <Country>Irtysh</Country>
+        <Country>Obistan</Country>
+        <Country>Tomskia</Country>
+        <Country>Taymyria</Country>
+        <Country>Khanty</Country>
+        <Country>Mansiysk</Country>
+        <Country>Nenetsia</Country>
+        <Country>Evenkia</Country>
+        <Country>Sakhalin</Country>
+        <Country>Shoria</Country>
+        <Country>Yenisei</Country>
+        <Country>Angara</Country>
+        <Country>Arktika</Country>
+        <Country>Baikalia</Country>
+        <Country>Chita</Country>
+        <Country>Dauria</Country>
+        <Country>Evenk</Country>
+        <Country>Gornaya</Country>
+        <Country>Khakassia</Country>
+        <Country>Koryak</Country>
+        <Country>Krasnoyaria</Country>
+        <Country>Lena</Country>
+        <Country>Norilsk</Country>
+        <Country>Omulyakh</Country>
+        <Country>Pechora</Country>
+        <Country>Siberia</Country>
+        <Country>Taimyr</Country>
+        <Country>Transbaikalia</Country>
+        <Country>Ust-Orda</Country>
+        <Country>Vilyuy</Country>
+        <Country>Yamalia</Country>
+        <Country>Zabaykalsk</Country>
+    </Regions>
+
+    <Regions name="Tundra">
+        <Country>Rostovia</Country>
+        <Country>Moskovsk</Country>
+        <Country>Vladimira</Country>
+        <Country>Ivanovsk</Country>
+        <Country>Petrogradia</Country>
+        <Country>Kirovia</Country>
+        <Country>Yaroslavl</Country>
+        <Country>Nizhnyaya</Country>
+        <Country>Novgorodsk</Country>
+        <Country>Kazania</Country>
+        <Country>Samarskoye</Country>
+        <Country>Uralov</Country>
+        <Country>Siberinsk</Country>
+        <Country>Volgograd</Country>
+        <Country>Krasnoyarsk</Country>
+        <Country>Permisk</Country>
+        <Country>Omskaya</Country>
+        <Country>Chelyabina</Country>
+        <Country>Tyumenia</Country>
+        <Country>Yekaterina</Country>
+        <Country>Arkhangelsk</Country>
+        <Country>Murmanskoy</Country>
+        <Country>Voronezh</Country>
+        <Country>Saratovia</Country>
+        <Country>Tula</Country>
+        <Country>Kaliningrad</Country>
+        <Country>Smolenskoy</Country>
+        <Country>Amursk</Country>
+        <Country>Khabarovia</Country>
+        <Country>Magadansk</Country>
+        <Country>Sakhalinsk</Country>
+        <Country>Kamchatka</Country>
+        <Country>Yakutia</Country>
+        <Country>Krasnodaria</Country>
+        <Country>Volga</Country>
+        <Country>Donetsk</Country>
+        <Country>Kuban</Country>
+        <Country>Tver</Country>
+        <Country>Belgorod</Country>
+        <Country>Ryazan</Country>
+        <Country>Lipetsk</Country>
+        <Country>Kursk</Country>
+        <Country>Orenburg</Country>
+        <Country>Ufa</Country>
+        <Country>Kaluga</Country>
+        <Country>Tambov</Country>
+        <Country>Astrakhan</Country>
+        <Country>Penza</Country>
+        <Country>Kirov</Country>
+        <Country>Novosibirsk</Country>
+        <Country>Tomsk</Country>
+        <Country>Kemerovo</Country>
+    </Regions>
+
+    <Regions name="Grassland">
+<Country>Aldoria</Country>
+        <Country>Brunwald</Country>
+        <Country>Castellia</Country>
+        <Country>Danubia</Country>
+        <Country>Eurovania</Country>
+        <Country>Franzia</Country>
+        <Country>Gallia</Country>
+        <Country>Hiberna</Country>
+        <Country>Ivernia</Country>
+        <Country>Jorland</Country>
+        <Country>Karnia</Country>
+        <Country>Loravia</Country>
+        <Country>Montara</Country>
+        <Country>Norvania</Country>
+        <Country>Ostria</Country>
+        <Country>Pannonia</Country>
+        <Country>Quintalia</Country>
+        <Country>Riviera</Country>
+        <Country>Saxonia</Country>
+        <Country>Thalassia</Country>
+        <Country>Ulvania</Country>
+        <Country>Vesperia</Country>
+        <Country>Westphalia</Country>
+        <Country>Xanthia</Country>
+        <Country>Yslandia</Country>
+        <Country>Zephyria</Country>
+        <Country>Alpenrose</Country>
+        <Country>Baltica</Country>
+        <Country>Corinthia</Country>
+        <Country>Dravida</Country>
+        <Country>Elysium</Country>
+        <Country>Fjordland</Country>
+        <Country>Glacia</Country>
+        <Country>Helvetia</Country>
+        <Country>Isolda</Country>
+        <Country>Jutland</Country>
+        <Country>Kaledonia</Country>
+        <Country>Lotharingia</Country>
+        <Country>Moravia</Country>
+        <Country>Nordica</Country>
+        <Country>Orkadia</Country>
+        <Country>Polaria</Country>
+        <Country>Quercia</Country>
+        <Country>Rhodania</Country>
+        <Country>Sylvania</Country>
+        <Country>Tyrolia</Country>
+        <Country>Umbria</Country>
+        <Country>Vindobona</Country>
+        <Country>Waldoria</Country>
+        <Country>Xanadu</Country>
+        <Country>Yggdrasia</Country>
+        <Country>Zamoria</Country>
+    </Regions>
+
+    <Regions name="Plains">
+<Country>Kilimara</Country>
+        <Country>Zambeziana</Country>
+        <Country>Safariland</Country>
+        <Country>Nilea</Country>
+        <Country>Serengetia</Country>
+        <Country>Masailand</Country>
+        <Country>Kalaharia</Country>
+        <Country>Timbuktia</Country>
+        <Country>Sahelia</Country>
+        <Country>Mombasana</Country>
+        <Country>Zululand</Country>
+        <Country>Madibaville</Country>
+        <Country>Kenyatta</Country>
+        <Country>Tanganyika</Country>
+        <Country>Okavango</Country>
+        <Country>Swahililand</Country>
+        <Country>Drakensberg</Country>
+        <Country>Maravi</Country>
+        <Country>Simbabwe</Country>
+        <Country>Wakandia</Country>
+        <Country>Asanteland</Country>
+        <Country>Bantu Bay</Country>
+        <Country>Congolesa</Country>
+        <Country>Dahomey</Country>
+        <Country>Eritrea</Country>
+        <Country>Fulani Fields</Country>
+        <Country>Gaborone</Country>
+        <Country>Hausaland</Country>
+        <Country>Ivoria</Country>
+        <Country>Jubaland</Country>
+        <Country>Kikuyuland</Country>
+        <Country>Limpopo</Country>
+        <Country>Mandinka</Country>
+        <Country>Namibiana</Country>
+        <Country>Obudu</Country>
+        <Country>Pemba</Country>
+        <Country>Quelimane</Country>
+        <Country>Rift Valley</Country>
+        <Country>Somalia</Country>
+        <Country>Tuareg</Country>
+        <Country>Ugandia</Country>
+        <Country>Vendaland</Country>
+        <Country>Wollo</Country>
+        <Country>Xhosa</Country>
+        <Country>Yorubaland</Country>
+        <Country>Zanzibar</Country>
+        <Country>Abyssinia</Country>
+        <Country>Bamako</Country>
+        <Country>Chadland</Country>
+        <Country>Djibouti</Country>
+        <Country>Ethiopia</Country>
+        <Country>Fouta Djallon</Country>
+        <Country>Ghana</Country>
+        <Country>Harare</Country>
+        <Country>Ife</Country>
+        <Country>Jinja</Country>
+    </Regions>
+
 </World>

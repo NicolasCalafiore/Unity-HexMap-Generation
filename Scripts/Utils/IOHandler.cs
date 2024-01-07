@@ -31,14 +31,14 @@ public static class IOHandler{
 
     public static List<string> ReadStateNames(string filePath, string region)
     {
-       XDocument doc = XDocument.Load(filePath);
-        List<string> cityNames = doc.Descendants("States")
-                                    .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
-                                    .Descendants("name")
-                                    .Select(c => c.Value)
-                                    .ToList();
+    XDocument doc = XDocument.Load(filePath);
+    List<string> countryNames = doc.Descendants("Regions")
+                                   .FirstOrDefault(r => r.Attribute("name")?.Value.Equals(region, StringComparison.OrdinalIgnoreCase) == true)
+                                   ?.Descendants("Country")
+                                   .Select(c => c.Value)
+                                   .ToList();
 
-        return cityNames;
+    return countryNames ?? new List<string>(); // Return an empty list if the region is not found
     }
 
     

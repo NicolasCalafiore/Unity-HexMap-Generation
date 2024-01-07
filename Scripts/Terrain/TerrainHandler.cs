@@ -222,6 +222,42 @@ namespace Terrain{
         }
     }
 
+    public void ShowFogOfWar(Player player, Vector2 map_size){
+        List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
+        DebugHandler.PrintMapDebug("Fog of War Map", fog_of_war_map);
+
+        for(int i = 0; i < fog_of_war_map.Count; i++){
+            for(int j = 0; j < fog_of_war_map[i].Count; j++){
+                if(fog_of_war_map[i][j] == 0){
+                   DespawnHexTile(new Vector2(i,j), map_size);
+                }
+                else{
+                    SpawnHexTile(new Vector2(i,j), map_size);
+                }
+            }
+        }
+    }
+
+        public void SpawnHexTile(Vector2 vector2, Vector2 map_size)
+        {
+            GameObject hex_go = hex_go_list[(int) vector2.x * (int) map_size.y + (int) vector2.y];
+            hex_go.SetActive(true);
+        }
+
+        public void DespawnHexTile(Vector2 coordinates, Vector2 map_size){
+
+        GameObject hex_go = hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
+        hex_go.SetActive(false);
+    }
+
+        internal void DestroyFog()
+        {
+            foreach(GameObject hex_go in hex_go_list){
+                hex_go.SetActive(true);
+            }
+        }
+
+
 
 
         // public void SpawnObjectOnTile(List<HexTile> hex_list, GameObject object_to_spawn, EnumHandler.StructureType structure_type){
@@ -243,9 +279,9 @@ namespace Terrain{
         //             structure_go.transform.localPosition = new Vector3(0, 0, 0);
         //             structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
         //             structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
-                    
+
         //         }
-            
+
         //     }
 
         //     //Capital cities, Regular cities, features, resources, 

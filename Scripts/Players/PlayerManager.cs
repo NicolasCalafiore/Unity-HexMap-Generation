@@ -49,14 +49,16 @@ public class PlayerManager
             string state_prefix = state_prefixes[random_index];
             player.SetStatePrefix(state_prefix);
         }
-
-        SetStateName();
     }
 
-    private void SetStateName()
+    public void SetStateName(List<HexTile> hex_list)
     {
         foreach(Player player in player_list){
-            List<string> state_names = IOHandler.ReadStateNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\StateNames.xml", "names");
+            Vector2 capital_coordinates = player.GetCity(0).GetColRow();
+            HexTile capital_hex = hex_list.FirstOrDefault(x => x.GetColRow() == capital_coordinates);
+            EnumHandler.HexRegion hex_region = capital_hex.GetRegionType();
+
+            List<string> state_names = IOHandler.ReadStateNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\StateNames.xml", hex_region.ToString());
             int random_index = UnityEngine.Random.Range(0, state_names.Count);
             string state_name = state_names[random_index];
             player.SetStateName(state_name);

@@ -34,8 +34,12 @@ namespace Terrain {
                     if(capital_map[i][j] == (int) EnumHandler.StructureType.Capital)
                     {
                         foreach(Player player in player_list){
-                            if(player.GetCity(0).GetColRow() == new Vector2(i,j)){
-                                TerrainUtils.CircularSpawn(i, j, territory_map, player.GetId());
+                            try{
+                                if(player.GetCity(0).GetColRow() == new Vector2(i,j)){
+                                    TerrainUtils.CircularSpawn(i, j, territory_map, player.GetId());
+                                }
+                            }catch(Exception e){
+                                Debug.Log(e);
                             }
                         }
                         

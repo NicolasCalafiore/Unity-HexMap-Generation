@@ -57,14 +57,39 @@ namespace Terrain
             return new Vector3(i, 0, j);
         }
 
-        public static void CircularSpawn(int i, int j, List<List<float>> map, float value){ // Sets map value at coordinate and surrounding coordinates
-            map[i][j - 1] = value;
-            map[i][j + 1] = value;
-            map[i - 1][j] = value;
-            map[i + 1][j] = value;
-            map[i + 1][j - 1] = value;
-            map[i - 1][j + 1] = value;  
-        
+        public static void CircularSpawn(int i, int j, List<List<float>> map, float value, int iterations = 1)
+        {
+            int mapSizeX = map.Count;
+            int mapSizeY = map[0].Count;
+
+            if (j - 1 >= 0 && j - 1 < mapSizeY)
+                map[i][j - 1] = value;
+            if (j + 1 >= 0 && j + 1 < mapSizeY)
+                map[i][j + 1] = value;
+            if (i - 1 >= 0 && i - 1 < mapSizeX)
+                map[i - 1][j] = value;
+            if (i + 1 >= 0 && i + 1 < mapSizeX)
+                map[i + 1][j] = value;
+            if (i + 1 >= 0 && i + 1 < mapSizeX && j - 1 >= 0 && j - 1 < mapSizeY)
+                map[i + 1][j - 1] = value;
+            if (i - 1 >= 0 && i - 1 < mapSizeX && j + 1 >= 0 && j + 1 < mapSizeY)
+                map[i - 1][j + 1] = value;
+
+            if (iterations > 1)
+            {
+                if (j - 1 >= 0 && j - 1 < mapSizeY)
+                    CircularSpawn(i, j - 1, map, value, iterations - 1);
+                if (j + 1 >= 0 && j + 1 < mapSizeY)
+                    CircularSpawn(i, j + 1, map, value, iterations - 1);
+                if (i - 1 >= 0 && i - 1 < mapSizeX)
+                    CircularSpawn(i - 1, j, map, value, iterations - 1);
+                if (i + 1 >= 0 && i + 1 < mapSizeX)
+                    CircularSpawn(i + 1, j, map, value, iterations - 1);
+                if (i + 1 >= 0 && i + 1 < mapSizeX && j - 1 >= 0 && j - 1 < mapSizeY)
+                    CircularSpawn(i + 1, j - 1, map, value, iterations - 1);
+                if (i - 1 >= 0 && i - 1 < mapSizeX && j + 1 >= 0 && j + 1 < mapSizeY)
+                    CircularSpawn(i - 1, j + 1, map, value, iterations - 1);
+            }
         }
 
         public static void GeneratePerlinNoiseMap(List<List<float>> map, Vector2 map_size, float scale){    // Generates Perlin Noise Map

@@ -1,121 +1,365 @@
 <World>
     <Region name="Desert">
-        <City>Qasr Al-Sahra</City>
-        <City>Tarimah</City>
-        <City>Zahara</City>
-        <City>Aridu</City>
-        <City>Saharaville</City>
-        <City>Marzouk</City>
-        <City>Ramlah</City>
-        <City>Shamsabad</City>
-        <City>Wadiyat</City>
-        <City>Khamsin</City>
-        <City>Siqara</City>
-        <City>Barakat</City>
-        <City>Samawah</City>
-        <City>Najid</City>
-        <City>Yammah</City>
+      <City>Al-Zahara</City>
+        <City>Qasr Al-Amir</City>
+        <City>Maridin</City>
+        <City>Basharabad</City>
+        <City>Jamal City</City>
+        <City>Nuristan</City>
+        <City>Farahani</City>
+        <City>Rashidun</City>
+        <City>Yusufiyah</City>
+        <City>Samirah</City>
+        <City>Al-Khalil</City>
+        <City>Tariqabad</City>
+        <City>Imranville</City>
+        <City>Zafarani</City>
+        <City>Khalidora</City>
+        <City>Azharabad</City>
+        <City>Salah Town</City>
+        <City>Mustafapur</City>
+        <City>Al-Fayha</City>
+        <City>Harun City</City>
+        <City>Ibrahimabad</City>
+        <City>Karim City</City>
+        <City>Al-Noor</City>
+        <City>Yaqubabad</City>
+        <City>Adnanville</City>
+        <City>Faisal City</City>
+        <City>Rafiqabad</City>
+        <City>Al-Tariq</City>
+        <City>Mahmoudabad</City>
+        <City>Al-Rashad</City>
+        <City>Basir City</City>
+        <City>Al-Mansura</City>
+        <City>Sharafabad</City>
+        <City>Ziyad Town</City>
+        <City>Al-Hakim</City>
+        <City>Wahid City</City>
+        <City>Al-Qadir</City>
+        <City>Najibabad</City>
+        <City>Al-Mu'tasim</City>
+        <City>Al-Aziz</City>
+        <City>Al-Farouq</City>
+        <City>Al-Majid</City>
+        <City>Al-Salim</City>
+        <City>Al-Yasir</City>
+        <City>Al-Hassan</City>
+        <City>Al-Amir</City>
+        <City>Al-Rahman</City>
+        <City>Suleiman City</City>
+        <City>Al Zahra</City>
     </Region>
     <Region name="Plains">
-        <City>Graslandia</City>
-        <City>Praderas</City>
-        <City>Steppenstadt</City>
-        <City>Veldtville</City>
-        <City>Champara</City>
-        <City>Pampas</City>
-        <City>Savannen</City>
-        <City>Preria</City>
-        <City>Planura</City>
-        <City>Alfold</City>
-        <City>Llanura</City>
-        <City>Campina</City>
-        <City>Plainfield</City>
-        <City>Vallegrande</City>
-        <City>Meadowmere</City>
+        <City>Kilimara</City>
+        <City>Zambeziana</City>
+        <City>Safaritown</City>
+        <City>Nilea</City>
+        <City>Serengeti</City>
+        <City>Masai City</City>
+        <City>Kalahari</City>
+        <City>Timbuktu</City>
+        <City>Sahelia</City>
+        <City>Mombasa</City>
+        <City>Zulutown</City>
+        <City>Madibaville</City>
+        <City>Kenyatta</City>
+        <City>Tanganyika</City>
+        <City>Okavango</City>
+        <City>Swahiliville</City>
+        <City>Drakensberg</City>
+        <City>Maravi</City>
+        <City>Simbabwe</City>
+        <City>Wakandia</City>
+        <City>Asantetown</City>
+        <City>Bantu Bay</City>
+        <City>Congolesa</City>
+        <City>Dahomey</City>
+        <City>Eritrea</City>
+        <City>Fulani Fields</City>
+        <City>Gaborone</City>
+        <City>Hausaland</City>
+        <City>Ivoria</City>
+        <City>Jubaland</City>
+        <City>Kikuyuland</City>
+        <City>Limpopo</City>
+        <City>Mandinka</City>
+        <City>Namibiana</City>
+        <City>Obudu</City>
+        <City>Pemba</City>
+        <City>Quelimane</City>
+        <City>Rift Valley</City>
+        <City>Somalia</City>
+        <City>Tuareg</City>
+        <City>Ugandia</City>
+        <City>Vendaland</City>
+        <City>Wollo</City>
+        <City>Xhosa</City>
+        <City>Yorubaland</City>
+        <City>Zanzibar</City>
+        <City>Abyssinia</City>
+        <City>Bamako</City>
+        <City>Chadland</City>
+        <City>Djibouti</City>
+        <City>Ethiopia</City>
+        <City>Fouta Djallon</City>
+        <City>Ghana</City>
+        <City>Harare</City>
+        <City>Ife</City>
+        <City>Jinja</City>
     </Region>
     <Region name="Grassland">
-        <City>Savannar</City>
-        <City>Herbea</City>
-        <City>Grünweide</City>
-        <City>Verdura</City>
-        <City>Prairia</City>
-        <City>Erbafield</City>
-        <City>Wiesenstadt</City>
-        <City>Grastown</City>
-        <City>Verdezza</City>
-        <City>Herbosa</City>
-        <City>Grünfeld</City>
-        <City>Prato</City>
-        <City>Leafton</City>
-        <City>Greenmere</City>
-        <City>Bladestad</City>
+         <City>Aldorburgh</City>
+        <City>Brunnthal</City>
+        <City>Castelvania</City>
+        <City>Danuberg</City>
+        <City>Eurovia</City>
+        <City>Franzstadt</City>
+        <City>Gallaton</City>
+        <City>Hibernia</City>
+        <City>Iverton</City>
+        <City>Jorburg</City>
+        <City>Karnstadt</City>
+        <City>Loraville</City>
+        <City>Montarosa</City>
+        <City>Norvania</City>
+        <City>Ostria</City>
+        <City>Pannon</City>
+        <City>Quintalia</City>
+        <City>Rivertown</City>
+        <City>Saxonburg</City>
+        <City>Thalassia</City>
+        <City>Ulvania</City>
+        <City>Vespera</City>
+        <City>Westphal</City>
+        <City>Xanthia</City>
+        <City>Ysland</City>
+        <City>Zephyrville</City>
+        <City>Alpenrose</City>
+        <City>Baltica</City>
+        <City>Corinth</City>
+        <City>Dravida</City>
+        <City>Elysium</City>
+        <City>Fjordstadt</City>
+        <City>Glacia</City>
+        <City>Helvetia</City>
+        <City>Isolda</City>
+        <City>Jutland</City>
+        <City>Kaledon</City>
+        <City>Lotharing</City>
+        <City>Moravia</City>
+        <City>Nordica</City>
+        <City>Orkadia</City>
+        <City>Polaris</City>
+        <City>Quercia</City>
+        <City>Rhodania</City>
+        <City>Sylvan</City>
+        <City>Tyrol</City>
+        <City>Umbria</City>
+        <City>Vindobona</City>
+        <City>Waldoria</City>
+        <City>Xanadu</City>
+        <City>Yggdras</City>
+        <City>Zamoria</City>
     </Region>
     <Region name="Tundra">
-        <City>Frostgard</City>
-        <City>Kylmä</City>
-        <City>Snjórby</City>
-        <City>Iskyla</City>
-        <City>Glaciara</City>
-        <City>Frystad</City>
-        <City>Yukiguni</City>
-        <City>Himaville</City>
-        <City>Chionopolis</City>
-        <City>Permarus</City>
-        <City>Arktika</City>
-        <City>Snjórborg</City>
-        <City>Frostholm</City>
-        <City>Ymerstad</City>
-        <City>Glaciala</City>
+        <City>Rostovgrad</City>
+        <City>Moskovia</City>
+        <City>Vladimirov</City>
+        <City>Ivanovsk</City>
+        <City>Petrovsk</City>
+        <City>Kirovsk</City>
+        <City>Yaroslav</City>
+        <City>Nizhniy</City>
+        <City>Novgorodsk</City>
+        <City>Kazanov</City>
+        <City>Samarsk</City>
+        <City>Uralovsk</City>
+        <City>Siberinsk</City>
+        <City>Volgogradsk</City>
+        <City>Krasnoyarskoy</City>
+        <City>Permisk</City>
+        <City>Omskaya</City>
+        <City>Chelyabinsk</City>
+        <City>Tyumenov</City>
+        <City>Yekaterinburg</City>
+        <City>Arkhangelskoy</City>
+        <City>Murmanskaya</City>
+        <City>Voronezhsk</City>
+        <City>Saratovia</City>
+        <City>Tulsk</City>
+        <City>Kaliningradsk</City>
+        <City>Smolenskoy</City>
+        <City>Amursk</City>
+        <City>Khabarovsk</City>
+        <City>Magadansk</City>
+        <City>Sakhalinsk</City>
+        <City>Kamchatsk</City>
+        <City>Yakutsk</City>
+        <City>Krasnodarsk</City>
+        <City>Volgask</City>
+        <City>Donetskoy</City>
+        <City>Kubansk</City>
+        <City>Tverskoy</City>
+        <City>Belgorodsk</City>
+        <City>Ryazansk</City>
+        <City>Lipetskoy</City>
+        <City>Kurskoy</City>
+        <City>Orenburgsk</City>
+        <City>Ufimsk</City>
+        <City>Kalugansk</City>
+        <City>Tambovsk</City>
+        <City>Astrakhansk</City>
+        <City>Penzensk</City>
+        <City>Kirovskoy</City>
+        <City>Novosibirskoy</City>
+        <City>Tomskoy</City>
+        <City>Kemerovsk</City>
     </Region>
     <Region name="Highlands">
-        <City>Altura</City>
-        <City>Montara</City>
-        <City>Hochstadt</City>
-        <City>Sierraville</City>
-        <City>Collina</City>
-        <City>Bergenstad</City>
-        <City>Altiplano</City>
-        <City>Hautesville</City>
-        <City>Montaña</City>
-        <City>Alpenstadt</City>
-        <City>Highlandia</City>
-        <City>Sierraton</City>
-        <City>Montealto</City>
-        <City>Colline</City>
-        <City>Altstadt</City>
+     <City>Ulaanbaatar</City>
+        <City>Erdenet</City>
+        <City>Darkhan</City>
+        <City>Choibalsan</City>
+        <City>Ölgii</City>
+        <City>Khovd</City>
+        <City>Uliastai</City>
+        <City>Bayankhongor</City>
+        <City>Arvaikheer</City>
+        <City>Sükhbaatar</City>
+        <City>Baruun-Urt</City>
+        <City>Dalanzadgad</City>
+        <City>Tsetserleg</City>
+        <City>Zuunmod</City>
+        <City>Altai</City>
+        <City>Mandalgovi</City>
+        <City>Öndörkhaan</City>
+        <City>Bayanhongor</City>
+        <City>Bulgan</City>
+        <City>Ulaangom</City>
+        <City>Mörön</City>
+        <City>Sainshand</City>
+        <City>Kharkhorin</City>
+        <City>Nalaikh</City>
+        <City>Sharyngol</City>
+        <City>Baganuur</City>
+        <City>Bayan-Öndör</City>
+        <City>Bayan-Ovoo</City>
+        <City>Bugat</City>
+        <City>Bulgan</City>
+        <City>Choir</City>
+        <City>Delgerkhaan</City>
+        <City>Erdenebulgan</City>
+        <City>Erdene</City>
+        <City>Galt</City>
+        <City>Govisümber</City>
+        <City>Jargalant</City>
+        <City>Khatgal</City>
+        <City>Khushaat</City>
     </Region>
     <Region name="Jungle">
-        <City>Selvaria</City>
-        <City>Jungala</City>
-        <City>Verdantis</City>
-        <City>Canopica</City>
-        <City>Tropica</City>
-        <City>Vihreäsoi</City>
-        <City>Urwaldstadt</City>
-        <City>Amazonia</City>
-        <City>Verdegrande</City>
-        <City>Regnskov</City>
-        <City>Yungas</City>
-        <City>Luontopolis</City>
-        <City>Forestara</City>
-        <City>Arborea</City>
-        <City>Greenwild</City>
+        <City>Chimayo</City>
+        <City>Takoda</City>
+        <City>Wakanda</City>
+        <City>Shenandoah</City>
+        <City>Manitou</City>
+        <City>Tallulah</City>
+        <City>Chenoa</City>
+        <City>Kiowa</City>
+        <City>Yuma</City>
+        <City>Nanticoke</City>
+        <City>Osceola</City>
+        <City>Sequoyah</City>
+        <City>Winona</City>
+        <City>Yanisin</City>
+        <City>Aiyana</City>
+        <City>Kachina</City>
+        <City>Minnehaha</City>
+        <City>Onida</City>
+        <City>Sakari</City>
+        <City>Talise</City>
+        <City>Yokut</City>
+        <City>Zuni</City>
+        <City>Alawa</City>
+        <City>Chayton</City>
+        <City>Dyami</City>
+        <City>Eyota</City>
+        <City>Hania</City>
+        <City>Kele</City>
+        <City>Makya</City>
+        <City>Nodin</City>
+        <City>Ohiyesa</City>
+        <City>Paytah</City>
+        <City>Quanah</City>
+        <City>Shilah</City>
+        <City>Takchawee</City>
+        <City>Wapi</City>
+        <City>Yansa</City>
+        <City>Aponi</City>
+        <City>Catori</City>
+        <City>Elu</City>
+        <City>Halona</City>
+        <City>Imala</City>
+        <City>Kiona</City>
+        <City>Lomasi</City>
+        <City>Mika</City>
+        <City>Namid</City>
+        <City>Orenda</City>
+        <City>Pavati</City>
+        <City>Shimasani</City>
+        <City>Taima</City>
+        <City>Wicapi</City>
+        <City>Yoki</City>
     </Region>
     <Region name="Swamp">
-        <City>Marshara</City>
-        <City>Swamptown</City>
-        <City>Moeras</City>
-        <City>Palude</City>
-        <City>Bogland</City>
-        <City>Fennville</City>
-        <City>Sumpfstadt</City>
-        <City>Laguna</City>
-        <City>Pantano</City>
-        <City>Neblina</City>
-        <City>Wetlandia</City>
-        <City>Moorfeld</City>
-        <City>Marshfield</City>
-        <City>Delta</City>
-        <City>Sloughborough</City>
+        <City>Amaruca</City>
+        <City>Verdezia</City>
+        <City>Rio Sol</City>
+        <City>Montañara</City>
+        <City>Estrellia</City>
+        <City>Mariposa</City>
+        <City>Valle Luna</City>
+        <City>Selva Dorada</City>
+        <City>Costa Luz</City>
+        <City>Sierra Azul</City>
+        <City>Playa Sol</City>
+        <City>Palmera</City>
+        <City>Isla Viento</City>
+        <City>Florana</City>
+        <City>Monte Verde</City>
+        <City>Arroyo Claro</City>
+        <City>Cañon Rojo</City>
+        <City>Lago Espejo</City>
+        <City>Bosque Nublado</City>
+        <City>Pradera Sol</City>
+        <City>Colina Alta</City>
+        <City>Cerro Paz</City>
+        <City>Rio Cantar</City>
+        <City>Costa Serena</City>
+        <City>Valle Escondido</City>
+        <City>Isla del Fuego</City>
+        <City>Mar de Sueños</City>
+        <City>Estrella del Sur</City>
+        <City>Playa del Oro</City>
+        <City>Sierra Clara</City>
+        <City>Alto Refugio</City>
+        <City>Sendero Luz</City>
+        <City>Monte Azul</City>
+        <City>Rio Profundo</City>
+        <City>Costa Brava</City>
+        <City>Valle Sagrado</City>
+        <City>Isla del Eco</City>
+        <City>Mariposa Real</City>
+        <City>Estrella Marina</City>
+        <City>Playa Esmeralda</City>
+        <City>Sierra Roja</City>
+        <City>Alto Viento</City>
+        <City>Sendero del Sol</City>
+        <City>Monte Dorado</City>
+        <City>Rio Tranquilo</City>
+        <City>Costa Mística</City>
+        <City>Valle de Luz</City>
+        <City>Isla del Sol</City>
+        <City>Mar de Cristal</City>
     </Region>
 </World>

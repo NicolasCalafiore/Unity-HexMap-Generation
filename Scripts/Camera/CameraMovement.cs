@@ -5,27 +5,28 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    float speed = .075f;
+    float speed = .01f;
     void Start(){
         transform.position = new Vector3(100, 5, 100);
     }
     void Update()
     {
 
-        if(transform.position.y < .4f){
-            transform.position = new Vector3(transform.position.x, .4f, transform.position.z);
+        if(transform.position.y < .5f){
+            transform.position = new Vector3(transform.position.x, .5f, transform.position.z);
         }
         if(Input.GetKeyDown(KeyCode.LeftShift)){
-            speed = speed + .05f;
+            speed = speed + .025f;
         }
         if(Input.GetKeyUp(KeyCode.LeftShift)){
-            speed = speed - .05f;
+            speed = speed - .025f;
         }
+
         if(Input.GetKeyUp(KeyCode.LeftControl)){
-            speed = speed - .15f;
+            speed = speed - .085f;
         }
         if(Input.GetKeyDown(KeyCode.LeftControl)){
-            speed = speed + .15f;
+            speed = speed + .085f;
         }
 
         if(Input.GetKey(KeyCode.W)){
@@ -47,5 +48,10 @@ public class CameraMovement : MonoBehaviour
             transform.position += new Vector3(0, -speed, 0);
         }
 
+    }
+
+
+    public static void MoveCameraTo(Vector3 position){
+        Camera.main.transform.position = position;
     }
 }
