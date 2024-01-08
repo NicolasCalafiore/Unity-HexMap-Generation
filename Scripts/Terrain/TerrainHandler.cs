@@ -29,10 +29,7 @@ namespace Terrain{
 
         public void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){ // Called from MapGeneration
         
-            generic_hex = Resources.Load<GameObject>("Prefab/Hex_Generic_No_TMP"); 
-
-            Debug.Log(hex_list);
-            Debug.Log("Spawn Terrain Called");
+            generic_hex = Resources.Load<GameObject>("Prefab/Core/Hex_Generic_No_TMP"); 
             
             SpawnHexTiles(hex_list);    // Spawn all generic_hex GameObjects into GameWorld
 
@@ -66,23 +63,8 @@ namespace Terrain{
                 GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
                 GameObject feature = null;
 
-                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Forest"));
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Oasis){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Oasis"));
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Heavy_Vegetation){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Heavy_Vegetation"));
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Rocks){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Rocks"));
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Jungle){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Jungle"));
-                }
-                if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Features/Swamp"));
+                if(hex.GetFeatureType() != EnumHandler.HexNaturalFeature.None){
+                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Natural_Features/" + hex.GetFeatureType().ToString()));
                 }
 
                 if(feature != null){
@@ -97,26 +79,8 @@ namespace Terrain{
                 GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
                 GameObject resource = null;
 
-                if(hex.GetResourceType() == EnumHandler.HexResource.Iron){
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Iron"));
-                }
-                if(hex.GetResourceType() == EnumHandler.HexResource.Cattle){
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Cattle"));
-                }
-                if(hex.GetResourceType() == EnumHandler.HexResource.Gems){
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Gems"));
-                }
-                if(hex.GetResourceType() == EnumHandler.HexResource.Stone){
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Stone"));
-                }
-                if(hex.GetResourceType() == EnumHandler.HexResource.Bananas){
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Bananas"));
-                }
-                if(hex.GetResourceType() == EnumHandler.HexResource.Incense){
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Incense"));
-                }
-                if(hex.GetResourceType() == EnumHandler.HexResource.Wheat){
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/Wheat"));
+                if(hex.GetResourceType() != EnumHandler.HexResource.None){
+                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/" + hex.GetResourceType().ToString()));
                 }
 
                 if(resource != null){
@@ -131,35 +95,8 @@ namespace Terrain{
         public void ShowRegionTypes(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
                 GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
-                if(hex.GetRegionType() != EnumHandler.HexRegion.Ocean){
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Desert");
-                    }
-
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Plains){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Savannah");
-                    }
-
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Grassland){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Grassland");
-                    }
-                    
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Tundra){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Tundra");
-                    }
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Highlands){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Highlands");
-                    }
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Jungle){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Jungle");
-                    }
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Swamp");
-                    }
-                    if(hex.GetRegionType() == EnumHandler.HexRegion.Shore){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Shore");
-                    }
-                    
+                if(hex.GetLandType() != EnumHandler.LandType.Water){
+                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.GetRegionType().ToString());
                 }
 
             }
@@ -168,75 +105,70 @@ namespace Terrain{
         public void ShowOceanTypes(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
                 GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
-                if(hex.GetRegionType() == EnumHandler.HexRegion.Ocean){
-                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Ocean");
-                }
-                else if(hex.GetRegionType() == EnumHandler.HexRegion.River){
-                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/River");
+                if(hex.GetLandType() == EnumHandler.LandType.Water){
+                    hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.GetRegionType().ToString());
                 }
 
             }
             
         }
 
-    public void SpawnCapitals(List<HexTile> hex_list, List<City> capitals_list, CityManager city_manager)   // Spawns all capitals into GameWorld
-    {
-        int counter = 0;
-        
-        foreach(HexTile hex in hex_list){
+        public void SpawnCapitals(List<HexTile> hex_list, List<City> capitals_list, CityManager city_manager)   // Spawns all capitals into GameWorld
+        {
+            int counter = 0;
+            
+            foreach(HexTile hex in hex_list){
 
-            GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];  // Get hex GameObject from hex_to_hex_go Dictionary
-            GameObject structure_go = null; // GameObject to be spawned (Capital)
+                GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];  // Get hex GameObject from hex_to_hex_go Dictionary
+                GameObject structure_go = null; // GameObject to be spawned (Capital)
 
-            if(hex.GetStructureType() == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital
-                structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
-                city_go_to_city.Add(structure_go, capitals_list[counter]);
-                counter++;
-            }
-            if(structure_go != null){   // If structure_go is not null, spawn structure_go
-                city_go_to_city[structure_go].SetName(city_manager.GenerateCityName(hex)); // Set city name
-
-                structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
-                structure_go.transform.localPosition = new Vector3(0, 0, 0);
-                structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
-                structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
-                
-                structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetColor();
-            }
-        
-        }
-    }
-
-    public void SpawnTerritoryFlags(List<HexTile> hex_list){
-        foreach(HexTile hex in hex_list){
-            GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
-            GameObject territory_flag = null;
-
-            if(hex.GetOwnerPlayer() != null){
-                territory_flag = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Territory_Flag"));
-                territory_flag.transform.SetParent(hex_object.transform);
-                territory_flag.transform.localPosition = new Vector3(0, 0, 0);
-                territory_flag.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex.GetOwnerPlayer().GetColor(); 
-
-            }
-        }
-    }
-
-    public void ShowFogOfWar(Player player, Vector2 map_size){
-        List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
-        DebugHandler.PrintMapDebug("Fog of War Map", fog_of_war_map);
-
-        for(int i = 0; i < fog_of_war_map.Count; i++){
-            for(int j = 0; j < fog_of_war_map[i].Count; j++){
-                if(fog_of_war_map[i][j] == 0){
-                   DespawnHexTile(new Vector2(i,j), map_size);
+                if(hex.GetStructureType() == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital
+                    structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
+                    city_go_to_city.Add(structure_go, capitals_list[counter]);
+                    counter++;
                 }
-                else{
-                    SpawnHexTile(new Vector2(i,j), map_size);
+                if(structure_go != null){   // If structure_go is not null, spawn structure_go
+                    city_go_to_city[structure_go].SetName(city_manager.GenerateCityName(hex)); // Set city name
+
+                    structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
+                    structure_go.transform.localPosition = new Vector3(0, 0, 0);
+                    structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
+                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
+                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetColor();
+                }
+            
+            }
+        }
+
+        public void SpawnTerritoryFlags(List<HexTile> hex_list){
+            foreach(HexTile hex in hex_list){
+                GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
+                GameObject territory_flag = null;
+
+                if(hex.GetOwnerPlayer() != null){
+                    territory_flag = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Territory_Flag"));
+                    territory_flag.transform.SetParent(hex_object.transform);
+                    territory_flag.transform.localPosition = new Vector3(0, 0, 0);
+                    territory_flag.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex.GetOwnerPlayer().GetColor(); 
+
                 }
             }
         }
-    }
+
+        public void ShowFogOfWar(Player player, Vector2 map_size){
+            List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
+
+            for(int i = 0; i < fog_of_war_map.Count; i++){
+                for(int j = 0; j < fog_of_war_map[i].Count; j++){
+                    if(fog_of_war_map[i][j] == 0){
+                        DespawnHexTile(new Vector2(i,j), map_size);
+                    }
+                    else{
+                        SpawnHexTile(new Vector2(i,j), map_size);
+                    }
+                }
+            }
+        }
 
         public void SpawnHexTile(Vector2 vector2, Vector2 map_size)
         {
@@ -245,12 +177,11 @@ namespace Terrain{
         }
 
         public void DespawnHexTile(Vector2 coordinates, Vector2 map_size){
+            GameObject hex_go = hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
+            hex_go.SetActive(false);
+        }
 
-        GameObject hex_go = hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
-        hex_go.SetActive(false);
-    }
-
-        internal void DestroyFog()
+        public void DestroyFog()
         {
             foreach(GameObject hex_go in hex_go_list){
                 hex_go.SetActive(true);
@@ -259,38 +190,6 @@ namespace Terrain{
 
 
 
-
-        // public void SpawnObjectOnTile(List<HexTile> hex_list, GameObject object_to_spawn, EnumHandler.StructureType structure_type){
-
-        //     foreach(HexTile hex in hex_list){
-
-        //         GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];  // Get hex GameObject from hex_to_hex_go Dictionary
-        //         GameObject structure_go = null; // GameObject to be spawned (Capital)
-
-        //         if(hex.GetStructureType() == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital
-        //             structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
-        //             city_go_to_city.Add(structure_go, capitals_list[counter]);
-        //             counter++;
-        //         }
-        //         if(structure_go != null){   // If structure_go is not null, spawn structure_go
-        //             city_go_to_city[structure_go].SetName(GetCityName(hex)); // Set city name
-
-        //             structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
-        //             structure_go.transform.localPosition = new Vector3(0, 0, 0);
-        //             structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
-        //             structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
-
-        //         }
-
-        //     }
-
-        //     //Capital cities, Regular cities, features, resources, 
-
-
-
-
-
-        // }
 
     }
 }

@@ -29,6 +29,7 @@ namespace Terrain {
         private EnumHandler.HexResource resource_type;  //Resource
         private EnumHandler.StructureType structure_type;   //Structures
         private Player owner_player;   
+        public bool is_coast = false;
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
         public HexTile(int column, int row)

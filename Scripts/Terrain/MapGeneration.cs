@@ -60,23 +60,29 @@ namespace Terrain {
             elevation_map = GenerateElevationMap(regions_map);
             features_map = GenerateFeaturesMap(regions_map, water_map);
             resource_map = GenerateResourceMap(ocean_map, river_map, regions_map, features_map);
-            SetBorderElevation(TerrainUtils.FindBorderOnes(ocean_map, 1, 0), (float) EnumHandler.HexElevation.Flatland, false, (float) EnumHandler.HexElevation.Flatland);
-            SetBorderRegion(TerrainUtils.FindBorderOnes(ocean_map, 0, 1), (float) EnumHandler.HexRegion.Ocean, (float) EnumHandler.HexRegion.Shore);
+
         }
 
-        private void SetBorderElevation(List<Tuple<int, int>> tuples, float conditional_value, bool is_higher, float set_value){
-            foreach(Tuple<int, int> tuple in tuples){
+        public void InitializeBorderEffects(){
+            List<Tuple<int, int>> land_border = TerrainUtils.CompareValueBorder(water_map, 1, 0);
+            SetBorderElevation(land_border, (float) EnumHandler.HexElevation.Flatland, (float) EnumHandler.HexElevation.Flatland);  // Sets all coasts to 0 if < 0
+            //             coor of border tiles               conditional value                  set value
+            
+            List<System.Tuple<int, int>> land_ocean_border = TerrainUtils.CompareValueBorder(ocean_map, 0, 1);
+            SetBorderRegion(land_ocean_border, (float) EnumHandler.HexRegion.Ocean, (float) EnumHandler.HexRegion.Shore);   //Makes Shores
+
+            List<System.Tuple<int, int>> shore_river_borders = TerrainUtils.CompareValueBorder(regions_map, (int) EnumHandler.HexRegion.Shore, (int) EnumHandler.HexRegion.River);
+            SetBorderRegion(shore_river_borders, (float) EnumHandler.HexRegion.Shore, (float) EnumHandler.HexRegion.Ocean); // Destroys shores that are touching rivers
+
+        }
+
+        private void SetBorderElevation( List<Tuple<int, int>> land_border, float conditional_value, float set_value){
+            foreach(Tuple<int, int> tuple in land_border){
                 foreach(HexTile hex in hex_list){
                     if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
-                        if(is_higher){
-
-                            if( (float) hex.GetElevationType() > conditional_value)
+                            if( (float) hex.GetElevationType() <= conditional_value)
                                 elevation_map[tuple.Item1][tuple.Item2] = set_value;
-                        }
-
-                        else{
-                                elevation_map[tuple.Item1][tuple.Item2] = set_value;
-                        }
+                                hex.is_coast = true;
                     }
                 }
             }
@@ -92,9 +98,9 @@ namespace Terrain {
                                 regions_map[tuple.Item1][tuple.Item2] = set_value;
 
 
-                        else{
+                            else{
                                 regions_map[tuple.Item1][tuple.Item2] = set_value;
-                        }
+                            }
                     }
                 }
             }

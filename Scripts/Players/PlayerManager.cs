@@ -54,6 +54,7 @@ public class PlayerManager
     public void SetStateName(List<HexTile> hex_list)
     {
         foreach(Player player in player_list){
+            try{
             Vector2 capital_coordinates = player.GetCity(0).GetColRow();
             HexTile capital_hex = hex_list.FirstOrDefault(x => x.GetColRow() == capital_coordinates);
             EnumHandler.HexRegion hex_region = capital_hex.GetRegionType();
@@ -62,6 +63,10 @@ public class PlayerManager
             int random_index = UnityEngine.Random.Range(0, state_names.Count);
             string state_name = state_names[random_index];
             player.SetStateName(state_name);
+            }catch(Exception e){
+                Debug.Log(e);
+                Debug.Log("Tried to get city from: " + player.GetName() + " but failed");
+            }
         }
     }
 }

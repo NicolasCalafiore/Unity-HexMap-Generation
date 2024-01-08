@@ -14,9 +14,9 @@ using Strategy.Assets.Scripts.Objects;
 
 namespace Terrain {
 
-    public class FogOfWar
+    public class FogManager
     {
-        public FogOfWar(Vector2 map_size){
+        public FogManager(Vector2 map_size){
 
         }
 

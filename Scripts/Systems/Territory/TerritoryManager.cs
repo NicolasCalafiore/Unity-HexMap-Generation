@@ -24,8 +24,7 @@ namespace Terrain {
 
         public void GenerateCapitalTerritory(List<List<float>> capital_map, List<Player> player_list)
         {
-            List<List<float>> territory_map = new List<List<float>>();
-            territory_map = TerrainUtils.GenerateMap(new Vector2(capital_map.Count, capital_map[0].Count), -1);
+            List<List<float>> territory_map = TerrainUtils.GenerateMap(new Vector2(capital_map.Count, capital_map[0].Count), -1);
 
             for(int i = 0; i < capital_map.Count; i++)
             {
@@ -48,7 +47,6 @@ namespace Terrain {
             }
 
             TerritoryManager.territory_map = territory_map;
-            DebugHandler.PrintMapDebug("Territory Map", territory_map);
         }
 
     }

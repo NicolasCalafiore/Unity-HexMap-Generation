@@ -12,7 +12,7 @@ namespace Terrain
                 
                 Vector3 random_coor = TerrainUtils.RandomVector3(map_size);
 
-                while(water_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.LandType.Water){ // If random_coor is water, generate new random_coor
+                while(water_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.LandType.Water || city_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.StructureType.Capital){ // If random_coor is water, generate new random_coor
                     random_coor = TerrainUtils.RandomVector3(map_size);
                 }
 
@@ -26,6 +26,5 @@ namespace Terrain
             feature_map[ (int) random_coor.x][ (int) random_coor.z] = (int) EnumHandler.HexNaturalFeature.None;
             resource_map[ (int) random_coor.x][ (int) random_coor.z] = (int) EnumHandler.HexResource.None;
         }
-
     }
 }

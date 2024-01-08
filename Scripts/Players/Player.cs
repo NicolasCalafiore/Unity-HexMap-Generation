@@ -45,7 +45,15 @@ namespace Players {
         }
 
         public City GetCity(int index){
-            return cities[index];
+            try{
+                return cities[index];
+            }
+            catch(Exception e){
+                Debug.Log(e);
+                Debug.Log("Player: " + name + " does not have a city at index: " + index);
+            }
+            return null;
+
         }
 
         public List<City> GetAllCities(){
