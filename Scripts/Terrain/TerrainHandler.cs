@@ -23,7 +23,7 @@ namespace Terrain{
         // public event TerrainSpawnedEventHandler TerrainSpawned;
 
         private static GameObject generic_hex;  //Grey Empty Hex-Object - No Region/Feature/Resource/Elevation Type
-        private static List<GameObject> hex_go_list = new List<GameObject>();   // List of all Hex-Objects
+        public static List<GameObject> hex_go_list = new List<GameObject>();   // List of all Hex-Objects
         public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); // Given Hex gives Hex-Object
             public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>(); // Given City gives City-Game-Object
 
@@ -113,7 +113,7 @@ namespace Terrain{
             
         }
 
-        public void SpawnCapitals(List<HexTile> hex_list, List<City> capitals_list, CityManager city_manager)   // Spawns all capitals into GameWorld
+        public void SpawnStructures(List<HexTile> hex_list, List<City> capitals_list, CityManager city_manager)   // Spawns all capitals into GameWorld
         {
             int counter = 0;
             
@@ -154,42 +154,6 @@ namespace Terrain{
                 }
             }
         }
-
-        public void ShowFogOfWar(Player player, Vector2 map_size){
-            List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
-
-            for(int i = 0; i < fog_of_war_map.Count; i++){
-                for(int j = 0; j < fog_of_war_map[i].Count; j++){
-                    if(fog_of_war_map[i][j] == 0){
-                        DespawnHexTile(new Vector2(i,j), map_size);
-                    }
-                    else{
-                        SpawnHexTile(new Vector2(i,j), map_size);
-                    }
-                }
-            }
-        }
-
-        public void SpawnHexTile(Vector2 vector2, Vector2 map_size)
-        {
-            GameObject hex_go = hex_go_list[(int) vector2.x * (int) map_size.y + (int) vector2.y];
-            hex_go.SetActive(true);
-        }
-
-        public void DespawnHexTile(Vector2 coordinates, Vector2 map_size){
-            GameObject hex_go = hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
-            hex_go.SetActive(false);
-        }
-
-        public void DestroyFog()
-        {
-            foreach(GameObject hex_go in hex_go_list){
-                hex_go.SetActive(true);
-            }
-        }
-
-
-
 
     }
 }

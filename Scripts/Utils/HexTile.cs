@@ -63,6 +63,10 @@ namespace Terrain {
             this.resource_type = resource_type;
         }
 
+        public void SetOwnerPlayer(Player owner_player){
+            this.owner_player = owner_player;
+        }
+
 
 
 
@@ -121,8 +125,5 @@ namespace Terrain {
             return this.owner_player;
         }
 
-        public void SetOwnerPlayer(Player owner_player){
-            this.owner_player = owner_player;
-        }
     }
 }

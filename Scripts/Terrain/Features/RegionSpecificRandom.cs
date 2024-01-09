@@ -17,7 +17,6 @@ namespace Terrain
         int forest_chance = 50;
         int oasis_chance = 2;
         int heavy_vegetation_chance = 35;
-        int wheat_chance = 10;
         int rock_chance = 15;
         int jungle_chance = 80;
         int swamp_chance = 75;

@@ -36,10 +36,38 @@ namespace Terrain {
 
         }
 
-        public void DestoryAllFog(TerrainHandler terrain_handler){
-            terrain_handler.DestroyFog();
+        public void DestroyFog()
+        {
+            foreach(GameObject hex_go in TerrainHandler.hex_go_list){
+                hex_go.SetActive(true);
+            }
         }
 
+        public void ShowFogOfWar(Player player, Vector2 map_size){
+            List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
+
+            for(int i = 0; i < fog_of_war_map.Count; i++){
+                for(int j = 0; j < fog_of_war_map[i].Count; j++){
+                    if(fog_of_war_map[i][j] == 0){
+                        DespawnHexTile(new Vector2(i,j), map_size);
+                    }
+                    else{
+                        SpawnHexTile(new Vector2(i,j), map_size);
+                    }
+                }
+            }
+        }
+
+        public void SpawnHexTile(Vector2 vector2, Vector2 map_size)
+        {
+            GameObject hex_go = TerrainHandler.hex_go_list[(int) vector2.x * (int) map_size.y + (int) vector2.y];
+            hex_go.SetActive(true);
+        }
+
+        public void DespawnHexTile(Vector2 coordinates, Vector2 map_size){
+            GameObject hex_go = TerrainHandler.hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
+            hex_go.SetActive(false);
+        }
 
 
 

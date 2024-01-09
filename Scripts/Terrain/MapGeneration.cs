@@ -22,7 +22,6 @@ namespace Terrain {
             Sets all HexTile properties
             Calls TerrainHandler to spawn terrain
         */
-        public List<HexTile> hex_list = new List<HexTile>();   // All HexTile objects
         private Vector2 map_size;                               // Map size
         private int elevation_strategy;                         
         private int land_strategy;
@@ -46,10 +45,8 @@ namespace Terrain {
             this.features_strategy = features_strategy;
         }
 
-        public void GenerateTerrain()
+        public void GenerateTerrainMap()
         {
-            hex_list = HexTileUtils.CreateHexObjects(map_size); // Create HexTile objects List
-
             (List<List<float>>, List<List<float>>) water_tuple = GenerateWaterMap();    // Returns Perlin (ocean_map, river_map)
             ocean_map = water_tuple.Item1;
             river_map = water_tuple.Item2;
@@ -63,20 +60,20 @@ namespace Terrain {
 
         }
 
-        public void InitializeBorderEffects(){
+        public void InitializeBorderEffects(List<HexTile> hex_list){
             List<Tuple<int, int>> land_border = TerrainUtils.CompareValueBorder(water_map, 1, 0);
-            SetBorderElevation(land_border, (float) EnumHandler.HexElevation.Flatland, (float) EnumHandler.HexElevation.Flatland);  // Sets all coasts to 0 if < 0
+            SetBorderElevation(land_border, (float) EnumHandler.HexElevation.Flatland, (float) EnumHandler.HexElevation.Flatland, hex_list);  // Sets all coasts to 0 if < 0
             //             coor of border tiles               conditional value                  set value
             
             List<System.Tuple<int, int>> land_ocean_border = TerrainUtils.CompareValueBorder(ocean_map, 0, 1);
-            SetBorderRegion(land_ocean_border, (float) EnumHandler.HexRegion.Ocean, (float) EnumHandler.HexRegion.Shore);   //Makes Shores
+            SetBorderRegion(land_ocean_border, (float) EnumHandler.HexRegion.Ocean, (float) EnumHandler.HexRegion.Shore, hex_list);   //Makes Shores
 
             List<System.Tuple<int, int>> shore_river_borders = TerrainUtils.CompareValueBorder(regions_map, (int) EnumHandler.HexRegion.Shore, (int) EnumHandler.HexRegion.River);
-            SetBorderRegion(shore_river_borders, (float) EnumHandler.HexRegion.Shore, (float) EnumHandler.HexRegion.Ocean); // Destroys shores that are touching rivers
+            SetBorderRegion(shore_river_borders, (float) EnumHandler.HexRegion.Shore, (float) EnumHandler.HexRegion.Ocean, hex_list); // Destroys shores that are touching rivers
 
         }
 
-        private void SetBorderElevation( List<Tuple<int, int>> land_border, float conditional_value, float set_value){
+        private void SetBorderElevation( List<Tuple<int, int>> land_border, float conditional_value, float set_value, List<HexTile> hex_list){
             foreach(Tuple<int, int> tuple in land_border){
                 foreach(HexTile hex in hex_list){
                     if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
@@ -89,7 +86,7 @@ namespace Terrain {
 
         }
 
-        private void SetBorderRegion(List<Tuple<int, int>> tuples, float conditional_value, float set_value){
+        private void SetBorderRegion(List<Tuple<int, int>> tuples, float conditional_value, float set_value, List<HexTile> hex_list){
             foreach(Tuple<int, int> tuple in tuples){
                 foreach(HexTile hex in hex_list){
                     if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
@@ -186,8 +183,8 @@ namespace Terrain {
                     break;
             }
 
-            List<List<float>> ocean_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.Ocean, hex_list);
-            List<List<float>> river_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.River, hex_list);
+            List<List<float>> ocean_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.Ocean);
+            List<List<float>> river_map = strategy.GenerateWaterMap(map_size, EnumHandler.HexRegion.River);
             strategy.OceanBorder(ocean_map);
 
             return (ocean_map, river_map);
@@ -216,27 +213,16 @@ namespace Terrain {
             return elevation_map;
         }
 
-        public List<HexTile> GetHexList(){
+        public List<HexTile> GetHexList(List<HexTile> hex_list){
             return hex_list;
         }
 
         private void InitializeDebugComponents(List<List<float>> elevation_map, List<List<float>> regions_map, List<List<float>> features_map, List<List<float>> ocean_map){
-            DebugHandler.SetHexAsChildren(this);
             DebugHandler.PrintMapDebug("ocean_map", ocean_map);
             DebugHandler.PrintMapDebug("regions_map", regions_map);
             DebugHandler.PrintMapDebug("features_map", features_map);
             DebugHandler.PrintMapDebug("elevation_map", elevation_map);
         }
-
-        public void ApplyHexCharacteristics(){
-            HexTileUtils.SetHexElevation(elevation_map, hex_list);  // Set HexTile Properties
-            HexTileUtils.SetHexRegion(regions_map, hex_list);
-            HexTileUtils.SetHexLand(water_map, hex_list);
-            HexTileUtils.SetHexFeatures(features_map, hex_list);
-            HexTileUtils.SetHexResource(resource_map, hex_list);
-            HexTileUtils.SetTerritoryType(TerritoryManager.territory_map, hex_list);
-        }
-
     }
 }
 

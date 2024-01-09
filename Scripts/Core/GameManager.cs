@@ -31,16 +31,21 @@ public class GameManager: MonoBehaviour{
     public static MapGeneration map_generation;
     public static TerritoryManager territory_manager;
     public static FogManager fog_manager;
+    public static HexFactory hex_factory;
     public static int player_view;
+    public static List<HexTile> hex_list = new List<HexTile>();   // All HexTile objects
+
     void Start(){
 
         InitializeCoreComponents(); // Initializes TerrainHandler.cs, PlayerManager.cs, CityManager.cs, MapGeneration.cs +
 
-        GameGeneration(player_manager, map_generation, city_manager, terrain_manager);   // Generates all maps, hex_list, and cities in List<List<float>> format
+        GameGeneration();   // Generates all maps, hex_list, and cities in List<List<float>> format
 
-        HexTraitsInitializaiton(city_manager, map_generation, player_manager);  // Sets all HexTile properties based off of List<List<float>> maps
+        MapDependanHextInitialization();  // Sets all HexTile properties based off of List<List<float>> maps
 
-        SpawnGameObjects(terrain_manager, city_manager, map_generation); // Spawns all GameObjects into GameWorld
+        HexDependantHexInitialization();
+
+        SpawnGameObjects(); // Spawns all GameObjects into GameWorld
     }
 
 
@@ -51,28 +56,35 @@ public class GameManager: MonoBehaviour{
         map_generation = new MapGeneration(map_size, elevation_strategy, land_strategy, region_strategy, features_strategy);
         territory_manager = new TerritoryManager();
         fog_manager = new FogManager(map_size); 
+        hex_factory = new HexFactory();
     }
 
-    void GameGeneration(PlayerManager player_manager, MapGeneration map_generation, CityManager city_manager, TerrainHandler terrain_manager){
+    void GameGeneration(){
         player_manager.GeneratePlayers(player_count);
-        map_generation.GenerateTerrain();
-        city_manager.GenerateCityMap(map_generation.water_map, player_manager.player_list, map_size, map_generation.features_map, map_generation.resource_map, capital_strategy);
+        map_generation.GenerateTerrainMap();
+        city_manager.GenerateStructureMap(map_generation.water_map, player_manager.player_list, map_size, map_generation.features_map, map_generation.resource_map, capital_strategy);
     }
 
-    void HexTraitsInitializaiton(CityManager city_manager, MapGeneration map_generation, PlayerManager player_manager){
-        city_manager.InitializeCapitalCityObjects(player_manager.player_list, map_generation.hex_list);
+    void MapDependanHextInitialization(){
+        city_manager.InitializeCapitalCityObjects(player_manager.player_list);
         fog_manager.InitializePlayerFogOfWar(player_manager.player_list, map_size); 
-        territory_manager.GenerateCapitalTerritory(city_manager.city_map, player_manager.player_list); // Needs City-Objects to be instantiated first to be generated ^
-        map_generation.InitializeBorderEffects();
-        map_generation.ApplyHexCharacteristics();
-        player_manager.SetStateName(map_generation.hex_list); // Needs Characteristics to be applied to apply region-based names
-        DecoratorHandler.SetHexDecorators(map_generation.hex_list);   
+        territory_manager.GenerateCapitalTerritory(city_manager.structure_map, player_manager.player_list); // Needs City-Objects to be instantiated first to be generated ^
+
+        hex_list = HexTileUtils.GenerateHexList(map_size, map_generation, city_manager, territory_manager, hex_factory);
+
+
     }
 
-    void SpawnGameObjects(TerrainHandler terrain_manager, CityManager city_manager, MapGeneration map_generation ){
-        terrain_manager.SpawnTerrain(map_size, map_generation.hex_list);
-        terrain_manager.SpawnCapitals(map_generation.hex_list, CityManager.capitals_list, city_manager);
-        terrain_manager.ShowFogOfWar(player_manager.player_list[player_view], map_size);
+    void HexDependantHexInitialization(){
+        map_generation.InitializeBorderEffects(hex_list);
+        player_manager.SetStateName(hex_list); // Needs Characteristics to be applied to apply region-based names
+        DecoratorHandler.SetHexDecorators(hex_list);
+    }
+
+    void SpawnGameObjects(){
+        terrain_manager.SpawnTerrain(map_size, hex_list);
+        terrain_manager.SpawnStructures(hex_list, CityManager.capitals_list, city_manager);
+        fog_manager.ShowFogOfWar(player_manager.player_list[player_view], map_size);
     }
 
 

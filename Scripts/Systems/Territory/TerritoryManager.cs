@@ -15,7 +15,7 @@ namespace Terrain {
 
     public class TerritoryManager
     {
-        public static List<List<float>> territory_map = new List<List<float>>();
+        public List<List<float>> territory_map = new List<List<float>>();
         public TerritoryManager()
         {
 
@@ -46,7 +46,7 @@ namespace Terrain {
                 }
             }
 
-            TerritoryManager.territory_map = territory_map;
+            this.territory_map = territory_map;
         }
 
     }

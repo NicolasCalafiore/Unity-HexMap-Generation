@@ -18,14 +18,14 @@ public class CityManager
     */
 
     public static List<City> capitals_list = new List<City>();
-    public List<List<float>> city_map = new List<List<float>>();
+    public List<List<float>> structure_map = new List<List<float>>();
     public CityManager(){
 
     }
 
-    public List<List<float>> GenerateCityMap(List<List<float>> water_map, List<Player> player_list, Vector2 map_size, List<List<float>> feature_map, List<List<float>> resource_map, int capital_strategy)
+    public List<List<float>> GenerateStructureMap(List<List<float>> water_map, List<Player> player_list, Vector2 map_size, List<List<float>> feature_map, List<List<float>> resource_map, int capital_strategy)
     {
-        List<List<float>> city_map = TerrainUtils.GenerateMap(map_size);
+        List<List<float>> structure_map = TerrainUtils.GenerateMap(map_size);
 
         CapitalSpawnStrategy strategy = null;
         switch (capital_strategy)
@@ -41,29 +41,26 @@ public class CityManager
                 break;
         }
 
-        city_map = strategy.GenerateCapitalMap(water_map, player_list, map_size, feature_map, resource_map, city_map);
+        structure_map = strategy.GenerateCapitalMap(water_map, player_list, map_size, feature_map, resource_map, structure_map);
         
-        this.city_map = city_map;
-        return city_map;
+        this.structure_map = structure_map;
+        return structure_map;
     }
 
+    public void InitializeCapitalCityObjects(List<Player> player_list){ 
+        int PLAYER_INDEX = 0;
+        for(int i = 0; i < structure_map.Count; i++){
+            for(int j = 0; j < structure_map.Count; j++){
 
-    public void InitializeCapitalCityObjects(List<Player> player_list, List<HexTile> hex_list){  //Creates City objects, assigns city object to player object
-        int player_index = 0;
-        for(int i = 0; i < city_map.Count; i++){
-            for(int j = 0; j < city_map.Count; j++){
-
-                if(city_map[i][j] == (int) EnumHandler.StructureType.Capital){
-                    City city = new City("Error", player_list[player_index].GetId(), new Vector2(i,j));
+                if(structure_map[i][j] == (int) EnumHandler.StructureType.Capital){
+                    City city = new City("Error", player_list[PLAYER_INDEX].GetId(), new Vector2(i,j));
                     capitals_list.Add(city);
-                    player_list[player_index].AddCity(city); // Add city to player
-                    player_index++;
+                    player_list[PLAYER_INDEX].AddCity(city); // Add city to player
+                    PLAYER_INDEX++;
                 }
                 
             }
         }
-
-        HexTileUtils.SetStructureType(city_map, hex_list);
     }
 
     public string GenerateCityName(HexTile hex){

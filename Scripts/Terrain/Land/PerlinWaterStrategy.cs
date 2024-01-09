@@ -17,7 +17,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
         private Vector2 river_max_min = new Vector2( .5f, .46f);    // Greater Range --> Thicker/Wider river
         private Vector2 ocean_max_min = new Vector2( .7f, .45f);    // Greater Range --> Thicker/Wider ocean
 
-        public override List<List<float>> GenerateWaterMap(Vector2 map_size, EnumHandler.HexRegion region_type, List<HexTile> hex_list)   //Called from MapGeneration.GenerateWater
+        public override List<List<float>> GenerateWaterMap(Vector2 map_size, EnumHandler.HexRegion region_type)   //Called from MapGeneration.GenerateWater
         {
             List<List<float>> map = TerrainUtils.GenerateMap(map_size);
         
