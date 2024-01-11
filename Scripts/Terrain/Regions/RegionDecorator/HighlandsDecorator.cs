@@ -4,7 +4,7 @@ namespace Terrain{
     public class HighlandsDecorator : TileDecorator {
         public HighlandsDecorator(HexTile tile) : base(tile) {
             this.MovementCost *= 1.25f;
-            this.tile.production += 1;
+            this.tile.construction += 1;
         }
 
     }

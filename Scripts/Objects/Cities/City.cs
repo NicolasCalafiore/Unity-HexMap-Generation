@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Terrain;
 using UnityEngine;
 
 namespace Strategy.Assets.Scripts.Objects
@@ -15,6 +16,10 @@ namespace Strategy.Assets.Scripts.Objects
         private string name;
         private int player_id;
         Vector2 col_row;
+        int inhabitants = 1;
+        int stability = 50;
+        int nourishment = 3;
+        List<HexTile> hex_territory_list = new List<HexTile>();
 
         public City(string name, int player_id, Vector2 col_row)
         {

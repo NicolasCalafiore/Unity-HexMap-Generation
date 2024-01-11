@@ -3,7 +3,7 @@ namespace Terrain{
 
     public class OasisDecorator : TileDecorator {
         public OasisDecorator(HexTile tile) : base(tile) {
-            this.tile.food += 1;
+            this.tile.nourishment += 1;
         }
 
     }

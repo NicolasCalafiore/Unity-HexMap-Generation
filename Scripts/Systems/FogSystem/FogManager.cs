@@ -24,7 +24,7 @@ namespace Terrain {
             foreach(Player player in player_list){
                 List<List<float>> player_fog_of_war_map = TerrainUtils.GenerateMap(map_size, 0);
 
-                List<City> city_list = player.GetAllCities();
+                List<City> city_list = player.cities;
                 foreach(City city in city_list){
                     Vector2 city_col_row = city.GetColRow();
                     player_fog_of_war_map[(int) city_col_row.x][(int) city_col_row.y] = 1;
@@ -44,7 +44,7 @@ namespace Terrain {
         }
 
         public void ShowFogOfWar(Player player, Vector2 map_size){
-            List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
+            List<List<float>> fog_of_war_map = player.fog_of_war_map;
 
             for(int i = 0; i < fog_of_war_map.Count; i++){
                 for(int j = 0; j < fog_of_war_map[i].Count; j++){

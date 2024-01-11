@@ -7,6 +7,7 @@ using Strategy.Assets.Game.Scripts.Terrain.Regions;
 using Unity.VisualScripting;
 using UnityEngine;
 using Players;
+using Strategy.Assets.Scripts.Objects;
 
 
 
@@ -34,8 +35,8 @@ namespace Terrain {
                     {
                         foreach(Player player in player_list){
                             try{
-                                if(player.GetCity(0).GetColRow() == new Vector2(i,j)){
-                                    TerrainUtils.CircularSpawn(i, j, territory_map, player.GetId());
+                                if(player.GetCityByIndex(0).GetColRow() == new Vector2(i,j)){
+                                    TerrainUtils.CircularSpawn(i, j, territory_map, player.id);
                                 }
                             }catch(Exception e){
                                 Debug.Log(e);
@@ -48,6 +49,32 @@ namespace Terrain {
 
             this.territory_map = territory_map;
         }
+
+        public void AddHexTileTerritoryToCities(List<HexTile> hex_list, City city){
+            
+        }
+
+        public void CalculateCityNourishment(City city){
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

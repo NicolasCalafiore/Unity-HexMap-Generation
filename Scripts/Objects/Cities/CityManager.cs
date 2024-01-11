@@ -53,7 +53,7 @@ public class CityManager
             for(int j = 0; j < structure_map.Count; j++){
 
                 if(structure_map[i][j] == (int) EnumHandler.StructureType.Capital){
-                    City city = new City("Error", player_list[PLAYER_INDEX].GetId(), new Vector2(i,j));
+                    City city = new City("Error", player_list[PLAYER_INDEX].id, new Vector2(i,j));
                     capitals_list.Add(city);
                     player_list[PLAYER_INDEX].AddCity(city); // Add city to player
                     PLAYER_INDEX++;
@@ -64,7 +64,7 @@ public class CityManager
     }
 
     public string GenerateCityName(HexTile hex){
-        List<string> cityNames = IOHandler.ReadCityNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CityNames.xml", hex.GetRegionType().ToString());
+        List<string> cityNames = IOHandler.ReadCityNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CityNames.xml", hex.region_type.ToString());
         int random_pick = UnityEngine.Random.Range(0, cityNames.Count);
         string name = cityNames[random_pick];
         return name;

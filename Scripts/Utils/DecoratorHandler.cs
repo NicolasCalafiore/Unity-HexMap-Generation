@@ -27,29 +27,29 @@ namespace Terrain
 
         private static void SetStructureDecorator(HexTile hex)
         {
-            if(hex.GetStructureType() == EnumHandler.StructureType.Capital){
+            if(hex.structure_type == EnumHandler.StructureType.Capital){
                 hex = new CapitalDecorator(hex);
             }
         }
 
         private static void SetElevationDecorator(HexTile hex)  // Sets Elevation Decorator
         {
-            if(hex.GetElevationType() == EnumHandler.HexElevation.Mountain){
+            if(hex.elevation_type == EnumHandler.HexElevation.Mountain){
                 hex = new MountainDecorator(hex);
             }
-            if(hex.GetElevationType() == EnumHandler.HexElevation.Small_Hill){
+            if(hex.elevation_type == EnumHandler.HexElevation.Small_Hill){
                 hex = new SmallHillDecorator(hex);
             }
-            if(hex.GetElevationType() == EnumHandler.HexElevation.Canyon){
+            if(hex.elevation_type == EnumHandler.HexElevation.Canyon){
                 hex = new CanyonDecorator(hex);
             }
-            if(hex.GetElevationType() == EnumHandler.HexElevation.Valley){
+            if(hex.elevation_type == EnumHandler.HexElevation.Valley){
                 hex = new ValleyDecorator(hex);
             }
-            if(hex.GetElevationType() == EnumHandler.HexElevation.Large_Hill){
+            if(hex.elevation_type == EnumHandler.HexElevation.Large_Hill){
                 hex = new LargeHillDecorator(hex);
             }
-            if(hex.GetElevationType() == EnumHandler.HexElevation.Flatland){
+            if(hex.elevation_type == EnumHandler.HexElevation.Flatland){
                 hex = new FlatlandDecorator(hex);
             }
 
@@ -57,22 +57,22 @@ namespace Terrain
 
         private static void SetResourceDecorator(HexTile hex)   // Sets Resource Decorator
         {
-            if(hex.GetResourceType() == EnumHandler.HexResource.Bananas){
+            if(hex.resource_type == EnumHandler.HexResource.Bananas){
                 hex = new BananasDecorator(hex);
             }
-            if(hex.GetResourceType() == EnumHandler.HexResource.Cattle){
+            if(hex.resource_type == EnumHandler.HexResource.Cattle){
                 hex = new CattleDecorator(hex);
             }
-            if(hex.GetResourceType() == EnumHandler.HexResource.Gems){
+            if(hex.resource_type == EnumHandler.HexResource.Gems){
                 hex = new GemsDecorator(hex);
             }
-            if(hex.GetResourceType() == EnumHandler.HexResource.Incense){
+            if(hex.resource_type == EnumHandler.HexResource.Incense){
                 hex = new IncenseDecorator(hex);
             }
-            if(hex.GetResourceType() == EnumHandler.HexResource.Iron){
+            if(hex.resource_type == EnumHandler.HexResource.Iron){
                 hex = new IronDecorator(hex);
             }
-            if(hex.GetResourceType() == EnumHandler.HexResource.Stone){
+            if(hex.resource_type == EnumHandler.HexResource.Stone){
                 hex = new StoneDecorator(hex);
             }
             
@@ -82,25 +82,25 @@ namespace Terrain
 
         private static void SetRegionDecorator(HexTile hex) // Sets Region Decorator
         {
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Plains){
+            if(hex.region_type == EnumHandler.HexRegion.Plains){
                 hex = new PlainDecorator(hex);
             }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Desert){
+            if(hex.region_type == EnumHandler.HexRegion.Desert){
                 hex = new DesertDecorator(hex);
             }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Grassland){
+            if(hex.region_type == EnumHandler.HexRegion.Grassland){
                 hex = new GrasslandDecorator(hex);
             }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Highlands){
+            if(hex.region_type == EnumHandler.HexRegion.Highlands){
                 hex = new HighlandsDecorator(hex);
             }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Jungle){
+            if(hex.region_type == EnumHandler.HexRegion.Jungle){
                 hex = new JungleDecorator(hex);
             }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Swamp){
+            if(hex.region_type == EnumHandler.HexRegion.Swamp){
                 hex = new SwampDecorator(hex);
             }
-            if(hex.GetRegionType() == EnumHandler.HexRegion.Tundra){
+            if(hex.region_type == EnumHandler.HexRegion.Tundra){
                 hex = new TundraDecorator(hex);
             }
 
@@ -108,32 +108,32 @@ namespace Terrain
 
         private static void SetLandDecorator(HexTile hex)   // Sets Land Decorator
         {
-            if(hex.GetLandType() == EnumHandler.LandType.Water){
+            if(hex.land_type == EnumHandler.LandType.Water){
                 hex = new WaterDecorator(hex);
             }
-            if(hex.GetLandType() == EnumHandler.LandType.Land){
+            if(hex.land_type == EnumHandler.LandType.Land){
                 hex = new LandDecorator(hex);
             }
         }
 
         private static void SetFeatureDecorators(HexTile hex){  // Sets Feature Decorator
 
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Forest){
+            if(hex.feature_type == EnumHandler.HexNaturalFeature.Forest){
                 hex = new ForestDecorator(hex);
             }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Rocks){
+            if(hex.feature_type == EnumHandler.HexNaturalFeature.Rocks){
                 hex = new RockDecorator(hex);
             }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Jungle){
+            if(hex.feature_type == EnumHandler.HexNaturalFeature.Jungle){
                 hex = new JungleDecorator(hex);
             }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Oasis){
+            if(hex.feature_type == EnumHandler.HexNaturalFeature.Oasis){
                 hex = new OasisDecorator(hex);
             }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Swamp){
+            if(hex.feature_type == EnumHandler.HexNaturalFeature.Swamp){
                 hex = new SwampDecorator(hex);
             }
-            if(hex.GetFeatureType() == EnumHandler.HexNaturalFeature.Heavy_Vegetation){
+            if(hex.feature_type == EnumHandler.HexNaturalFeature.Heavy_Vegetation){
                 hex = new WheatDecorator(hex);
             }
         }

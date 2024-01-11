@@ -71,8 +71,6 @@ public class GameManager: MonoBehaviour{
         territory_manager.GenerateCapitalTerritory(city_manager.structure_map, player_manager.player_list); // Needs City-Objects to be instantiated first to be generated ^
 
         hex_list = HexTileUtils.GenerateHexList(map_size, map_generation, city_manager, territory_manager, hex_factory);
-
-
     }
 
     void HexDependantHexInitialization(){

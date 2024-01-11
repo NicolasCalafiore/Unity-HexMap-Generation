@@ -6,7 +6,7 @@ namespace Terrain{
             this.tile.elevation = 0f;
             this.tile.elevation = (int) EnumHandler.HexElevation.Flatland;
             this.MovementCost *= 2f;
-            this.tile.food += 1;
+            this.tile.nourishment += 1;
         }
 
     }

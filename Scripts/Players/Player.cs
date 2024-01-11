@@ -11,22 +11,25 @@ namespace Players {
             Player class is used to store information about the player
         */
 
-        private string state_prefix;
-        private string name;
-        private Color team_color;
-        private int id;
-        List<City> cities = new List<City>();
-        List<List<float>> fog_of_war_map;
-        EnumHandler.GovernmentType government_type;
+        public string state_prefix;
+        public string name;
+        public Color team_color;
+        public int id;
+        public List<City> cities = new List<City>();
+        public List<List<float>> fog_of_war_map;
+        public EnumHandler.GovernmentType government_type;
+        public float wealth = 1000;
+        public int knowledge_points = 0;
+        public int heritage_points = 0;
+        public int belief_points = 0;
+        public int construction_points = 0;
+        public int nourishment_points = 0;
         
 
         public Player(string state_prefix, string name, int id){
             this.state_prefix = state_prefix;
             this.name = name;
 
-            // float r = Random.Range(0f, 1f);
-            // float g = Random.Range(0f, 1f);
-            // float b = Random.Range(0f, 1f);
 
              this.team_color = new Color(Random.Range(0f, 1f),Random.Range(0f, 1f),Random.Range(0f, 1f));
 
@@ -40,64 +43,29 @@ namespace Players {
             cities.Add(city);
         }
 
-        public string GetName(){
-            return name;
-        }
-
-        public City GetCity(int index){
-            try{
-                return cities[index];
-            }
-            catch(Exception e){
-                Debug.Log(e);
-                Debug.Log("Player: " + name + " does not have a city at index: " + index);
-            }
-            return null;
-
-        }
-
-        public List<City> GetAllCities(){
-            return cities;
-        }
-
-        public int GetId(){
-            return id;
-        }
-
         public void SetFogOfWarMap(List<List<float>> fog_of_war_map){
             this.fog_of_war_map = fog_of_war_map;
-        }
-
-        public List<List<float>> GetFogOfWarMap(){
-            return fog_of_war_map;
-        }
-
-        public void SetGovernmentType(EnumHandler.GovernmentType government_type){
-            this.government_type = government_type;
         }
 
         public void SetStatePrefix(string state_prefix){
             this.state_prefix = state_prefix;
         }
 
-        public EnumHandler.GovernmentType GetGovernmentType(){
-            return government_type;
-        }
-
-        public string GetOfficialName(){
-            return state_prefix + name;
-        }
-
-        public EnumHandler.GovernmentType GetGovernmentType(string government_type){
-            return (EnumHandler.GovernmentType) Enum.Parse(typeof(EnumHandler.GovernmentType), government_type);
-        }
-
         public void SetStateName(string name){
             this.name = name;
         }
 
-        public Color GetColor(){
-            return team_color;
+        public string GetOfficialName(){
+            return state_prefix + " " + name;
+        }
+
+        internal void SetGovernmentType(EnumHandler.GovernmentType governmentType)
+        {
+            this.government_type = governmentType;
+        }
+
+        public City GetCityByIndex(int index){
+            return cities[index];
         }
     }
 }

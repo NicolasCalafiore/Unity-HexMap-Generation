@@ -26,18 +26,18 @@ public static class DebugHandler
         HexTile hex = TerrainHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
         MESSAGE += "Hex: " + hex.GetColRow().x + " " + hex.GetColRow().y + "\n";
         MESSAGE += "Elevation: " + hex.GetPosition().y  + "\n";
-        MESSAGE += "Elevation Type: " + hex.GetElevationType()  + "\n";
-        MESSAGE += "Region Type: " + hex.GetRegionType()  + "\n";
-        MESSAGE += "Land Type: " + hex.GetLandType() + "\n";
-        MESSAGE += "Feature Type: " + hex.GetFeatureType() + "\n";
-        MESSAGE += "Resource Type: " + hex.GetResourceType() + "\n";
-        MESSAGE += "Structure Type: " + hex.GetStructureType() + "\n";
-        MESSAGE += "Food: " + hex.food + "\n";
-        MESSAGE += "Production: " + hex.production + "\n";
+        MESSAGE += "Elevation Type: " + hex.elevation_type  + "\n";
+        MESSAGE += "Region Type: " + hex.region_type  + "\n";
+        MESSAGE += "Land Type: " + hex.land_type + "\n";
+        MESSAGE += "Feature Type: " + hex.feature_type + "\n";
+        MESSAGE += "Resource Type: " + hex.resource_type + "\n";
+        MESSAGE += "Structure Type: " + hex.structure_type + "\n";
+        MESSAGE += "Nourishment: " + hex.nourishment + "\n";
+        MESSAGE += "Construction: " + hex.construction + "\n";
         MESSAGE += "Movement Cost:" + hex.MovementCost + "\n";
 
-        if(hex.GetOwnerPlayer() != null){
-            MESSAGE += "Owner: " + hex.GetOwnerPlayer().GetName() + "\n";
+        if(hex.owner_player != null){
+            MESSAGE += "Owner: " + hex.owner_player.name + "\n";
         }
         else{
             MESSAGE += "Owner: None\n";
@@ -70,7 +70,7 @@ public static class DebugHandler
         GameObject city_go = city_collider.transform.parent.gameObject;
         City city = TerrainHandler.city_go_to_city[city_go];
         MESSAGE += "City Name: " + city.GetName() + "\n";
-        MESSAGE += "Owner: " + GameManager.player_id_to_player[city.GetPlayerId()].GetName() + "\n";
+        MESSAGE += "Owner: " + GameManager.player_id_to_player[city.GetPlayerId()].name + "\n";
         Debug.Log(MESSAGE);
 
         GetStateInformation(city_collider);
@@ -82,7 +82,7 @@ public static class DebugHandler
         GameObject city_go = city_collider.transform.parent.gameObject;
         City city = TerrainHandler.city_go_to_city[city_go];
         MESSAGE += "Player State: " +  GameManager.player_id_to_player[city.GetPlayerId()].GetOfficialName() + "\n";
-        MESSAGE += "Government Type: " + GameManager.player_id_to_player[city.GetPlayerId()].GetGovernmentType() + "\n";
+        MESSAGE += "Government Type: " + GameManager.player_id_to_player[city.GetPlayerId()].government_type + "\n";
         Debug.Log(MESSAGE);
     }
 

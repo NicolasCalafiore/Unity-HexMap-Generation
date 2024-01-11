@@ -13,22 +13,26 @@ namespace Terrain {
         */
 
         static readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2; // Used to calculate HexTile position
-        public float food { get; set; }
+        public float nourishment { get; set; }
 
-        public float production { get; set; }
+        public float construction { get; set; }
+
+
+
         public readonly int column;  //Column
         public readonly int row;  //Row
         private readonly int S;  // -(column + row)
         public float elevation; //Elevation
 
 
-        private EnumHandler.HexElevation elevation_type { get; set;}
-        private EnumHandler.HexRegion region_type;  //Region
-        private EnumHandler.LandType land_type; //Land or Water
-        private EnumHandler.HexNaturalFeature feature_type; //Natural Feature
-        private EnumHandler.HexResource resource_type;  //Resource
-        private EnumHandler.StructureType structure_type;   //Structures
-        private Player owner_player;   
+        public EnumHandler.HexElevation elevation_type { get; set;}
+        public EnumHandler.HexRegion region_type;  //Region
+        public EnumHandler.LandType land_type; //Land or Water
+        public EnumHandler.HexNaturalFeature feature_type; //Natural Feature
+        public EnumHandler.HexResource resource_type;  //Resource
+        public EnumHandler.StructureType structure_type;   //Structures
+        public Player owner_player;   
+        public City owner_city;
         public bool is_coast = false;
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
@@ -66,6 +70,9 @@ namespace Terrain {
         public void SetOwnerPlayer(Player owner_player){
             this.owner_player = owner_player;
         }
+        public void SetOwnerCity(City owner_city){
+            this.owner_city = owner_city;
+        }
 
 
 
@@ -90,39 +97,6 @@ namespace Terrain {
                 elevation,
                 vert * this.row
             );
-        }
-
-        public EnumHandler.HexRegion GetRegionType(){
-            return this.region_type;
-        }
-
-        public EnumHandler.HexResource GetResourceType(){
-            return this.resource_type;
-        }
-
-        public EnumHandler.HexElevation GetElevationType(){
-            return this.elevation_type;
-        }
-
-        public EnumHandler.LandType GetLandType(){
-            return this.land_type;
-        }
-
-        public EnumHandler.StructureType GetStructureType(){
-            return this.structure_type;
-        }
-
-        public EnumHandler.HexNaturalFeature GetFeatureType(){
-            return this.feature_type;
-        }
-
-        internal City GetCity(int v)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Player GetOwnerPlayer(){
-            return this.owner_player;
         }
 
     }
