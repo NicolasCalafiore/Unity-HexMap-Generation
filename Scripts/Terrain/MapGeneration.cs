@@ -91,12 +91,13 @@ namespace Terrain {
                 foreach(HexTile hex in hex_list){
                     if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
                         
-                            if( (float) hex.elevation_type == conditional_value)
+                            if( (float) hex.elevation_type == conditional_value){
                                 regions_map[tuple.Item1][tuple.Item2] = set_value;
-
-
+                                hex.SetRegionType(EnumHandler.GetRegionType(set_value));
+                            }
                             else{
                                 regions_map[tuple.Item1][tuple.Item2] = set_value;
+                                hex.SetRegionType(EnumHandler.GetRegionType(set_value));
                             }
                     }
                 }

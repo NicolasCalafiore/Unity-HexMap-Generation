@@ -60,6 +60,10 @@ namespace Terrain {
             this.land_type = land_type;
         }
         public void SetRegionType(EnumHandler.HexRegion region_type){
+                if(region_type == EnumHandler.HexRegion.Shore){
+                    Debug.Log("HexTile: SetRegionType: " + region_type);
+                    Debug.Log("Coor: " + this.column + " " + this.row);
+                }
                 this.region_type = region_type;
         }
 
