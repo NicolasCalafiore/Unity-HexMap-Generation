@@ -32,6 +32,7 @@ public class GameManager: MonoBehaviour{
     public static TerritoryManager territory_manager;
     public static FogManager fog_manager;
     public static HexFactory hex_factory;
+    public static UIManager ui_manager;
     public static int player_view;
     public static List<HexTile> hex_list = new List<HexTile>();   // All HexTile objects
 
@@ -46,6 +47,12 @@ public class GameManager: MonoBehaviour{
         HexDependantHexInitialization();
 
         SpawnGameObjects(); // Spawns all GameObjects into GameWorld
+
+        CameraMovement.CenterCamera();
+
+        
+
+
     }
 
 
@@ -57,6 +64,7 @@ public class GameManager: MonoBehaviour{
         territory_manager = new TerritoryManager();
         fog_manager = new FogManager(map_size); 
         hex_factory = new HexFactory();
+        ui_manager = new UIManager();
     }
 
     void GameGeneration(){
@@ -77,6 +85,7 @@ public class GameManager: MonoBehaviour{
         map_generation.InitializeBorderEffects(hex_list);
         player_manager.SetStateName(hex_list); // Needs Characteristics to be applied to apply region-based names
         DecoratorHandler.SetHexDecorators(hex_list);
+        city_manager.SetCityTerritory(territory_manager, hex_list);
     }
 
     void SpawnGameObjects(){
@@ -84,6 +93,7 @@ public class GameManager: MonoBehaviour{
         terrain_manager.SpawnStructures(hex_list, CityManager.capitals_list, city_manager);
         fog_manager.ShowFogOfWar(player_manager.player_list[player_view], map_size);
     }
+
 
 
     void Update(){

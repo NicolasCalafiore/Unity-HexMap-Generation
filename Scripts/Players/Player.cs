@@ -22,9 +22,6 @@ namespace Players {
         public int knowledge_points = 0;
         public int heritage_points = 0;
         public int belief_points = 0;
-        public int construction_points = 0;
-        public int nourishment_points = 0;
-        
 
         public Player(string state_prefix, string name, int id){
             this.state_prefix = state_prefix;

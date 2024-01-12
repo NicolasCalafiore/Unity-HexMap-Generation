@@ -21,7 +21,7 @@ public static class DebugHandler
 
 
     public static void GetHexInformation(GameObject gameObject){  // Used to read HexTile object from GameObject from MouseInputHandler
-        string MESSAGE = "";
+        string MESSAGE = "Hex Information: \n";
         GameObject hex_go = gameObject.transform.parent.gameObject;
         HexTile hex = TerrainHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
         MESSAGE += "Hex: " + hex.GetColRow().x + " " + hex.GetColRow().y + "\n";
@@ -37,10 +37,17 @@ public static class DebugHandler
         MESSAGE += "Movement Cost:" + hex.MovementCost + "\n";
 
         if(hex.owner_player != null){
-            MESSAGE += "Owner: " + hex.owner_player.name + "\n";
+            MESSAGE += "Player Owner: " + hex.owner_player.name + "\n";
         }
         else{
-            MESSAGE += "Owner: None\n";
+            MESSAGE += "Player Owner: None\n";
+        }
+
+        if(hex.owner_city != null){
+            MESSAGE += "City Owner: " + hex.owner_city.GetName() + "\n";
+        }
+        else{
+            MESSAGE += "City Owner: None\n";
         }
         Debug.Log(MESSAGE);
     }
@@ -64,25 +71,22 @@ public static class DebugHandler
     //     }   
     // }
 
-    internal static void GetCityInformation(GameObject city_collider)
+
+    internal static void GetPlayerInformation(GameObject city_collider)
     {
-        string MESSAGE = "";
+        string MESSAGE = "Player Information: \n";
         GameObject city_go = city_collider.transform.parent.gameObject;
         City city = TerrainHandler.city_go_to_city[city_go];
-        MESSAGE += "City Name: " + city.GetName() + "\n";
-        MESSAGE += "Owner: " + GameManager.player_id_to_player[city.GetPlayerId()].name + "\n";
-        Debug.Log(MESSAGE);
-
-        GetStateInformation(city_collider);
-    }
-
-    internal static void GetStateInformation(GameObject city_collider)
-    {
-        string MESSAGE = "";
-        GameObject city_go = city_collider.transform.parent.gameObject;
-        City city = TerrainHandler.city_go_to_city[city_go];
-        MESSAGE += "Player State: " +  GameManager.player_id_to_player[city.GetPlayerId()].GetOfficialName() + "\n";
-        MESSAGE += "Government Type: " + GameManager.player_id_to_player[city.GetPlayerId()].government_type + "\n";
+        Player player = GameManager.player_id_to_player[city.GetPlayerId()];
+        MESSAGE += "Player State: " +  player.GetOfficialName() + "\n";
+        MESSAGE += "Government Type: " + player.government_type + "\n";
+        MESSAGE += "Color: " + player.team_color + "\n";
+        MESSAGE += "Cities: " + player.cities.Count + "\n";
+        MESSAGE += "Wealth: " + player.wealth + "\n";
+        MESSAGE += "Knowledge: " + player.knowledge_points + "\n";
+        MESSAGE += "Heritage: " + player.heritage_points + "\n";
+        MESSAGE += "Belief: " + player.belief_points + "\n";
+                
         Debug.Log(MESSAGE);
     }
 

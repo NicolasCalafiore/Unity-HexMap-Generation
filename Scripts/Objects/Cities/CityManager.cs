@@ -70,4 +70,10 @@ public class CityManager
         return name;
     }
 
+    public void SetCityTerritory(TerritoryManager territory_manager, List<HexTile> hex_list){
+        foreach(City city in capitals_list){
+            city.AddHexTileTerritory(territory_manager, hex_list);
+        }
+    }
+
 }

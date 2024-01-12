@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Players;
 using Strategy.Assets.Scripts.Objects;
+using System.Linq;
 
 
 
@@ -51,14 +52,54 @@ namespace Terrain {
         }
 
         public void AddHexTileTerritoryToCities(List<HexTile> hex_list, City city){
-            
+
+            Vector2 col_row = city.GetColRow();
+            foreach(HexTile hex in hex_list){
+                if(hex.GetColRow() == new Vector2(col_row.x, col_row.y - 1)){
+                    city.hex_territory_list.Add(hex);
+                    hex.owner_city = city;
+                }
+                if(hex.GetColRow() == new Vector2(col_row.x, col_row.y + 1)){
+                    city.hex_territory_list.Add(hex);
+                    hex.owner_city = city;
+                }
+                if(hex.GetColRow() == new Vector2(col_row.x - 1, col_row.y)){
+                    city.hex_territory_list.Add(hex);
+                    hex.owner_city = city;
+                }
+                if(hex.GetColRow() == new Vector2(col_row.x + 1, col_row.y)){
+                    city.hex_territory_list.Add(hex);
+                    hex.owner_city = city;
+                }
+                if(hex.GetColRow() == new Vector2(col_row.x + 1, col_row.y - 1)){
+                    city.hex_territory_list.Add(hex);
+                    hex.owner_city = city;
+                }
+                if(hex.GetColRow() == new Vector2(col_row.x - 1, col_row.y + 1)){
+                    city.hex_territory_list.Add(hex);
+                    hex.owner_city = city;
+                }
+
+            }
+
         }
 
-        public void CalculateCityNourishment(City city){
+        public float CalculateCityNourishment(City city){
 
+            float nourishment = 0;
+            foreach(HexTile hex in city.hex_territory_list){
+                nourishment += hex.nourishment;
+            }
+            return nourishment;
+        }
 
+        public float CalculateCityConstruction(City city){
 
-
+            float construction = 0;
+            foreach(HexTile hex in city.hex_territory_list){
+                construction += hex.construction;
+            }
+            return construction;
         }
 
 
