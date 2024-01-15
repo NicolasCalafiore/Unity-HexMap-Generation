@@ -12,12 +12,13 @@ namespace Terrain
                 
                 Vector3 random_coor = TerrainUtils.RandomVector3(map_size);
 
-                while(water_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.LandType.Water || city_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.StructureType.Capital){ // If random_coor is water, generate new random_coor
+                while(isInvalidCoordinate(random_coor, water_map, city_map)){
                     random_coor = TerrainUtils.RandomVector3(map_size);
                 }
 
                 ClearSpaceForCapital(random_coor, city_map, feature_map, resource_map); // Clear space for capital
             }
+
             return city_map;
         }
 

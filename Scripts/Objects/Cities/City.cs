@@ -37,11 +37,6 @@ namespace Strategy.Assets.Scripts.Objects
             this.construction += territory_manager.CalculateCityConstruction(this);
         }
 
-        public void AddHexTileTerritory(TerritoryManager territory_manager, List<HexTile> hex_list)
-        {
-            territory_manager.AddHexTileTerritoryToCities(hex_list , this);
-        }
-
         public string GetName()
         {
             return name;

@@ -24,26 +24,7 @@ namespace Terrain
             Mountain = 150,
         }
 
-        public static HexElevation GetElevationType(float elevationValue)
-        {
-            Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>(){
-                { (int) HexElevation.Canyon, HexElevation.Canyon},
-                { (int) HexElevation.Valley, HexElevation.Valley},
-                { (int) HexElevation.Flatland, HexElevation.Flatland},
-                { (int) HexElevation.Small_Hill, HexElevation.Small_Hill},
-                { (int) HexElevation.Large_Hill, HexElevation.Large_Hill},
-                { (int) HexElevation.Mountain, HexElevation.Mountain},
-            };
-
-            return elevationDict[elevationValue];
-            
-        }
-
-
-
-
-
-
+        
         public enum HexRegion{   //Make sure to update getter function if you add more region types
             Ocean ,
             River,
@@ -58,34 +39,7 @@ namespace Terrain
 
         }
 
-        public static HexRegion GetRegionType(float regionValue)
-        {
-            regionValue = Mathf.Round(regionValue);
-
-            Dictionary<float, HexRegion> regionDict = new Dictionary<float, HexRegion>(){
-                { (int) HexRegion.Ocean, HexRegion.Ocean},
-                { (int) HexRegion.River, HexRegion.River},
-                { (int) HexRegion.Desert, HexRegion.Desert},
-                { (int) HexRegion.Plains, HexRegion.Plains},
-                { (int) HexRegion.Grassland, HexRegion.Grassland},
-                { (int) HexRegion.Tundra, HexRegion.Tundra},
-                { (int) HexRegion.Highlands, HexRegion.Highlands},
-                { (int) HexRegion.Jungle, HexRegion.Jungle},
-                { (int) HexRegion.Swamp, HexRegion.Swamp},
-                { (int) HexRegion.Shore, HexRegion.Shore},
-
-            };
-
-
-            return regionDict[regionValue];
-            
-        }
-
-
-
-
-
-
+      
         public enum HexNaturalFeature{   //Make sure to update getter function if you add more feature types
             None,
             Forest,
@@ -96,46 +50,13 @@ namespace Terrain
             Swamp,
         }
 
-        public static HexNaturalFeature GetNaturalFeatureType(float featureValue)
-        {
-            featureValue = Mathf.Round(featureValue);
-
-            Dictionary<float, HexNaturalFeature> featureDict = new Dictionary<float, HexNaturalFeature>(){
-                { (int) HexNaturalFeature.None, HexNaturalFeature.None},
-                { (int) HexNaturalFeature.Forest, HexNaturalFeature.Forest},
-                { (int) HexNaturalFeature.Oasis, HexNaturalFeature.Oasis},
-                { (int) HexNaturalFeature.Heavy_Vegetation, HexNaturalFeature.Heavy_Vegetation},
-                { (int) HexNaturalFeature.Rocks, HexNaturalFeature.Rocks},
-                { (int) HexNaturalFeature.Jungle, HexNaturalFeature.Jungle},
-                { (int) HexNaturalFeature.Swamp, HexNaturalFeature.Swamp},
-            };
-
-            return featureDict[featureValue];
-            
-        }
-
-
-
-
-
+       
         public enum LandType{   //Make sure to update getter function if you add more land types
             Water,
             Land,
         }
 
-        public static LandType GetLandType(float landValue){
-            Dictionary<float, LandType> landDict = new Dictionary<float, LandType>(){
-                { (int) LandType.Water, LandType.Water},
-                { (int) LandType.Land, LandType.Land},
-            };
-
-            return landDict[landValue];
     
-        }
-
-
-
-
 
         public enum HexResource{
             None,
@@ -150,45 +71,11 @@ namespace Terrain
 
         }
 
-        public static HexResource GetResourceType(float resourceValue){
-            Dictionary<float, HexResource> resourceDict = new Dictionary<float, HexResource>(){
-                { (int) HexResource.None, HexResource.None},
-                { (int) HexResource.Iron, HexResource.Iron},
-                { (int) HexResource.Cattle, HexResource.Cattle},
-                { (int) HexResource.Gems, HexResource.Gems},
-                { (int) HexResource.Stone, HexResource.Stone},
-                { (int) HexResource.Bananas, HexResource.Bananas},
-                { (int) HexResource.Incense, HexResource.Incense},
-                { (int) HexResource.Wheat, HexResource.Wheat},
-
-
-            };
-
-            return resourceDict[resourceValue];
     
-        }
-
-
-
-
-        
         public enum StructureType{
             None,
             Capital,
         }
-
-        public static StructureType GetStructureType(float structureValue){
-            Dictionary<float, StructureType> structureDict = new Dictionary<float, StructureType>(){
-                { (int) StructureType.None, StructureType.None},
-                { (int) StructureType.Capital, StructureType.Capital},
-            };
-
-            return structureDict[structureValue];
-    
-        }
-
-
-
 
 
         public enum GovernmentType{
@@ -201,19 +88,110 @@ namespace Terrain
 
         }
 
-        public static GovernmentType GetGovernmentType(float governmentValue){
-            Dictionary<float, GovernmentType> governmentDict = new Dictionary<float, GovernmentType>(){
-                { (int) GovernmentType.None, GovernmentType.None},
-                { (int) GovernmentType.Democracy, GovernmentType.Democracy},
-                { (int) GovernmentType.Monarchy, GovernmentType.Monarchy},
-                { (int) GovernmentType.Dictatorship, GovernmentType.Dictatorship},
-                { (int) GovernmentType.Theocracy, GovernmentType.Theocracy},
-                { (int) GovernmentType.Tribalism, GovernmentType.Tribalism},
+         private static readonly Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>
+        {
+            { (int) HexElevation.Canyon, HexElevation.Canyon },
+            { (int) HexElevation.Valley, HexElevation.Valley },
+            { (int) HexElevation.Flatland, HexElevation.Flatland },
+            { (int) HexElevation.Small_Hill, HexElevation.Small_Hill },
+            { (int) HexElevation.Large_Hill, HexElevation.Large_Hill },
+            { (int) HexElevation.Mountain, HexElevation.Mountain },
+        };
 
-            };
+        private static readonly Dictionary<float, HexRegion> regionDict = new Dictionary<float, HexRegion>
+        {
+            { (int) HexRegion.Ocean, HexRegion.Ocean },
+            { (int) HexRegion.River, HexRegion.River },
+            { (int) HexRegion.Desert, HexRegion.Desert },
+            { (int) HexRegion.Plains, HexRegion.Plains },
+            { (int) HexRegion.Grassland, HexRegion.Grassland },
+            { (int) HexRegion.Tundra, HexRegion.Tundra },
+            { (int) HexRegion.Highlands, HexRegion.Highlands },
+            { (int) HexRegion.Jungle, HexRegion.Jungle },
+            { (int) HexRegion.Swamp, HexRegion.Swamp },
+            { (int) HexRegion.Shore, HexRegion.Shore },
+        };
 
-            return governmentDict[governmentValue];
-    
+        private static readonly Dictionary<float, HexNaturalFeature> featureDict = new Dictionary<float, HexNaturalFeature>
+        {
+            { (int) HexNaturalFeature.None, HexNaturalFeature.None },
+            { (int) HexNaturalFeature.Forest, HexNaturalFeature.Forest },
+            { (int) HexNaturalFeature.Oasis, HexNaturalFeature.Oasis },
+            { (int) HexNaturalFeature.Heavy_Vegetation, HexNaturalFeature.Heavy_Vegetation },
+            { (int) HexNaturalFeature.Rocks, HexNaturalFeature.Rocks },
+            { (int) HexNaturalFeature.Jungle, HexNaturalFeature.Jungle },
+            { (int) HexNaturalFeature.Swamp, HexNaturalFeature.Swamp },
+        };
+
+        private static readonly Dictionary<float, LandType> landDict = new Dictionary<float, LandType>
+        {
+            { (int) LandType.Water, LandType.Water },
+            { (int) LandType.Land, LandType.Land },
+        };
+
+        private static readonly Dictionary<float, HexResource> resourceDict = new Dictionary<float, HexResource>
+        {
+            { (int) HexResource.None, HexResource.None },
+            { (int) HexResource.Iron, HexResource.Iron },
+            { (int) HexResource.Cattle, HexResource.Cattle },
+            { (int) HexResource.Gems, HexResource.Gems },
+            { (int) HexResource.Stone, HexResource.Stone },
+            { (int) HexResource.Bananas, HexResource.Bananas },
+            { (int) HexResource.Incense, HexResource.Incense },
+            { (int) HexResource.Wheat, HexResource.Wheat },
+        };
+
+        private static readonly Dictionary<float, StructureType> structureDict = new Dictionary<float, StructureType>
+        {
+            { (int) StructureType.None, StructureType.None },
+            { (int) StructureType.Capital, StructureType.Capital },
+        };
+
+        private static readonly Dictionary<float, GovernmentType> governmentDict = new Dictionary<float, GovernmentType>
+        {
+            { (int) GovernmentType.None, GovernmentType.None },
+            { (int) GovernmentType.Democracy, GovernmentType.Democracy },
+            { (int) GovernmentType.Monarchy, GovernmentType.Monarchy },
+            { (int) GovernmentType.Dictatorship, GovernmentType.Dictatorship },
+            { (int) GovernmentType.Theocracy, GovernmentType.Theocracy },
+            { (int) GovernmentType.Tribalism, GovernmentType.Tribalism },
+        };
+
+        public static HexElevation GetElevationType(float elevationValue)
+        {
+            return elevationDict.TryGetValue(elevationValue, out var elevation) ? elevation : default;
+        }
+
+        public static HexRegion GetRegionType(float regionValue)
+        {
+            regionValue = Mathf.Round(regionValue);
+            return regionDict.TryGetValue(regionValue, out var region) ? region : default;
+        }
+
+        public static HexNaturalFeature GetNaturalFeatureType(float featureValue)
+        {
+            featureValue = Mathf.Round(featureValue);
+            return featureDict.TryGetValue(featureValue, out var feature) ? feature : default;
+        }
+
+        public static LandType GetLandType(float landValue)
+        {
+            return landDict.TryGetValue(landValue, out var land) ? land : default;
+        }
+
+        public static HexResource GetResourceType(float resourceValue)
+        {
+            return resourceDict.TryGetValue(resourceValue, out var resource) ? resource : default;
+        }
+
+         public static StructureType GetStructureType(float structureValue)
+         {
+             return structureDict.TryGetValue(structureValue, out var structure) ? structure : default;
+         }
+
+         public static GovernmentType GetGovernmentType(float governmentValue)
+        {
+            return governmentDict.TryGetValue(governmentValue, out var government) ? government : default;
         }
     }
 }

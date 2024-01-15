@@ -50,14 +50,16 @@ namespace Terrain {
             TextMeshProUGUI city_nourishment_rate = GameObject.Find("ECNTitle").GetComponent<TextMeshProUGUI>();
 
             city_title_ui.text = city.GetName();
-            city_owner_ui.text = city_owner_ui.text.Replace("%OWNER%",GameManager.player_id_to_player[city.GetPlayerId()].name);
-            city_inhabitants_ui.text = city_inhabitants_ui.text.Replace("%INHABITANTS%",city.inhabitants.ToString());
-            city_stability_ui.text = city_stability_ui.text.Replace("%STABILITY%",city.stability.ToString());
-            city_nourishment_ui.text = city_nourishment_ui.text.Replace("%NOURISHMENT%",city.nourishment.ToString());
-            city_construction_ui.text = city_construction_ui.text.Replace("%CONSTRUCTION%",city.construction.ToString());
-            city_territory_ui.text = city_territory_ui.text.Replace("%TERRITORY%",city.hex_territory_list.Count.ToString());
-            city_construction_rate.text = city_construction_rate.text.Replace("%ECC%",GameManager.territory_manager.CalculateCityConstruction(city).ToString());
-            city_nourishment_rate.text = city_nourishment_rate.text.Replace("%ECN%",GameManager.territory_manager.CalculateCityNourishment(city).ToString());
+            city_owner_ui.text = GameManager.player_id_to_player[city.GetPlayerId()].name;
+            city_inhabitants_ui.text = city.inhabitants.ToString();
+            city_stability_ui.text = city.stability.ToString();
+            city_nourishment_ui.text = city.nourishment.ToString();
+            city_construction_ui.text = city.construction.ToString();
+            city_territory_ui.text = city.hex_territory_list.Count.ToString();
+            city_construction_rate.text = GameManager.territory_manager.CalculateCityConstruction(city).ToString();
+            city_nourishment_rate.text = GameManager.territory_manager.CalculateCityNourishment(city).ToString();
+            
+            
 
         }
 

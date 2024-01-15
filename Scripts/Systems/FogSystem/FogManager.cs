@@ -22,6 +22,7 @@ namespace Terrain {
 
         public void InitializePlayerFogOfWar(List<Player> player_list, Vector2 map_size){
             foreach(Player player in player_list){
+
                 List<List<float>> player_fog_of_war_map = TerrainUtils.GenerateMap(map_size, 0);
 
                 List<City> city_list = player.cities;
@@ -32,6 +33,7 @@ namespace Terrain {
                 }
                 
                 player.SetFogOfWarMap(player_fog_of_war_map);
+
             }
 
         }
@@ -48,12 +50,11 @@ namespace Terrain {
 
             for(int i = 0; i < fog_of_war_map.Count; i++){
                 for(int j = 0; j < fog_of_war_map[i].Count; j++){
-                    if(fog_of_war_map[i][j] == 0){
-                        DespawnHexTile(new Vector2(i,j), map_size);
-                    }
-                    else{
-                        SpawnHexTile(new Vector2(i,j), map_size);
-                    }
+
+                    if(fog_of_war_map[i][j] == 0) DespawnHexTile(new Vector2(i,j), map_size);
+
+                    else SpawnHexTile(new Vector2(i,j), map_size);
+                    
                 }
             }
         }

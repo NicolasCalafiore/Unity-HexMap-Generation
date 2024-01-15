@@ -213,17 +213,6 @@ namespace Terrain {
             strategy.GenerateElevationMap(elevation_map, map_size, regions_map);
             return elevation_map;
         }
-
-        public List<HexTile> GetHexList(List<HexTile> hex_list){
-            return hex_list;
-        }
-
-        private void InitializeDebugComponents(List<List<float>> elevation_map, List<List<float>> regions_map, List<List<float>> features_map, List<List<float>> ocean_map){
-            DebugHandler.PrintMapDebug("ocean_map", ocean_map);
-            DebugHandler.PrintMapDebug("regions_map", regions_map);
-            DebugHandler.PrintMapDebug("features_map", features_map);
-            DebugHandler.PrintMapDebug("elevation_map", elevation_map);
-        }
     }
 }
 

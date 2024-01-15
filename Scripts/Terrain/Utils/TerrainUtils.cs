@@ -57,6 +57,35 @@ namespace Terrain
             return new Vector3(i, 0, j);
         }
 
+        public static bool CircularSearch(int i, int j, List<List<float>> map, int target, int iterations = 1)
+        {
+            int mapSizeX = map.Count;
+            int mapSizeY = map[0].Count;
+
+
+            // Check immediate neighbors
+            if ((j - 1 >= 0 && map[i][j - 1] == target) ||
+                (j + 1 < mapSizeY && map[i][j + 1] == target) ||
+                (i - 1 >= 0 && map[i - 1][j] == target) ||
+                (i + 1 < mapSizeX && map[i + 1][j] == target) ||
+                (i + 1 < mapSizeX && j - 1 >= 0 && map[i + 1][j - 1] == target) ||
+                (i - 1 >= 0 && j + 1 < mapSizeY && map[i - 1][j + 1] == target))
+            {
+                return true;
+            }
+
+            // Base case to stop recursion
+            if (iterations <= 1) return false;
+
+            // Recursive calls
+            return (j - 1 >= 0 && CircularSearch(i, j - 1, map, target, iterations - 1)) ||
+                (j + 1 < mapSizeY && CircularSearch(i, j + 1, map, target, iterations - 1)) ||
+                (i - 1 >= 0 && CircularSearch(i - 1, j, map, target, iterations - 1)) ||
+                (i + 1 < mapSizeX && CircularSearch(i + 1, j, map, target, iterations - 1)) ||
+                (i + 1 < mapSizeX && j - 1 >= 0 && CircularSearch(i + 1, j - 1, map, target, iterations - 1)) ||
+                (i - 1 >= 0 && j + 1 < mapSizeY && CircularSearch(i - 1, j + 1, map, target, iterations - 1));
+        }
+
         public static void CircularSpawn(int i, int j, List<List<float>> map, float value, int iterations = 1)
         {
             int mapSizeX = map.Count;

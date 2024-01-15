@@ -70,9 +70,9 @@ public class CityManager
         return name;
     }
 
-    public void SetCityTerritory(TerritoryManager territory_manager, List<HexTile> hex_list){
+    public void SetCityTerritory(List<HexTile> hex_list, HexFactory hex_factory, Vector2 map_size){
         foreach(City city in capitals_list){
-            city.AddHexTileTerritory(territory_manager, hex_list);
+            hex_factory.AddHexTileToCityTerritory(hex_list, city, map_size);
         }
     }
 

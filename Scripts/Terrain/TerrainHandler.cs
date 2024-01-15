@@ -26,6 +26,7 @@ namespace Terrain{
         public static List<GameObject> hex_go_list = new List<GameObject>();   // List of all Hex-Objects
         public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); // Given Hex gives Hex-Object
         public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>(); // Given City gives City-Game-Object
+        public static Dictionary<Vector2, GameObject> col_row_to_hex_go = new Dictionary<Vector2, GameObject>(); // Given ColRow gives Hex-Object
 
         public void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){ // Called from MapGeneration
         
@@ -47,6 +48,8 @@ namespace Terrain{
                 hex_object.transform.position = hex.GetPosition();
                 hex_go_list.Add(hex_object);
                 hex_to_hex_go.Add(hex, hex_object);
+                col_row_to_hex_go.Add(hex.GetColRow(), hex_object);
+                hex_object.name = "Hex: " + hex.GetColRow().x + " " + hex.GetColRow().y;
             }
         }
 
@@ -79,9 +82,9 @@ namespace Terrain{
                 GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
                 GameObject resource = null;
 
-                if(hex.resource_type != EnumHandler.HexResource.None){
+                if(hex.resource_type != EnumHandler.HexResource.None) 
                     resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/" + hex.resource_type.ToString()));
-                }
+                
 
                 if(resource != null){
                     resource.transform.SetParent(hex_object.transform);
@@ -94,7 +97,7 @@ namespace Terrain{
 
         public void ShowRegionTypes(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
-                GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
+                GameObject hex_go = hex_to_hex_go[hex];
                 if(hex.land_type != EnumHandler.LandType.Water){
                         hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.region_type.ToString());
                 }
@@ -104,7 +107,7 @@ namespace Terrain{
 
         public void ShowOceanTypes(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
-                GameObject hex_go = TerrainHandler.hex_to_hex_go[hex];
+                GameObject hex_go = hex_to_hex_go[hex];
                 if(hex.land_type == EnumHandler.LandType.Water){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.region_type.ToString());
                 }
@@ -119,7 +122,7 @@ namespace Terrain{
 
             foreach(HexTile hex in hex_list){
 
-                GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];  // Get hex GameObject from hex_to_hex_go Dictionary
+                GameObject hex_object = hex_to_hex_go[hex];  // Get hex GameObject from hex_to_hex_go Dictionary
                 GameObject structure_go = null; // GameObject to be spawned (Capital)
 
                 if(hex.structure_type == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital

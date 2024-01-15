@@ -20,7 +20,7 @@ namespace Terrain
                         map_generation.water_map[column][row],
                         map_generation.regions_map[column][row], 
                         map_generation.resource_map[column][row], 
-                        territory_manager.territory_map[column][row], 
+                        // territory_manager.territory_map[column][row], 
                         column, row);
 
                     hex_list.Add(hex);
@@ -30,6 +30,22 @@ namespace Terrain
 
             return hex_list;
             
+        }
+
+
+        public static List<HexTile> CircularRetrieval(int i, int j, Vector2 map_size, int iterations = 1)
+        {
+            List<HexTile> hex_list = new List<HexTile>();
+
+            // Check immediate neighbors
+            if (j - 1 >= 0) hex_list.Add(HexFactory.col_row_to_hex[new Vector2(i, j - 1)]);
+            if (j + 1 < map_size.y) hex_list.Add(HexFactory.col_row_to_hex[new Vector2(i, j + 1)]);
+            if (i - 1 >= 0) hex_list.Add(HexFactory.col_row_to_hex[new Vector2(i - 1, j)]);
+            if (i + 1 < map_size.x) hex_list.Add(HexFactory.col_row_to_hex[new Vector2(i + 1, j)]);
+            if (i + 1 < map_size.x && j - 1 >= 0) hex_list.Add(HexFactory.col_row_to_hex[new Vector2(i + 1, j - 1)]);
+            if (i - 1 >= 0 && j + 1 < map_size.y) hex_list.Add(HexFactory.col_row_to_hex[new Vector2(i - 1, j + 1)]);
+
+            return hex_list;
         }
 
     }

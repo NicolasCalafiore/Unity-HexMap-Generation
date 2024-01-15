@@ -42,40 +42,44 @@ namespace Terrain {
             this.row = row;
             this.S = -(column + row);
         }
-        public void SetElevation(EnumHandler.HexElevation elevation_type)
+        public HexTile SetElevation(EnumHandler.HexElevation elevation_type)
         {
             this.elevation = (float) elevation_type / 100;
             this.elevation_type = elevation_type;
+            return this;
         }
 
-        public void SetStructureType(EnumHandler.StructureType structure_type){
+        public HexTile SetStructureType(EnumHandler.StructureType structure_type){
             this.structure_type = structure_type;
+            return this;
         }
 
-        public void SetFeatureType(EnumHandler.HexNaturalFeature feature_type){
+        public HexTile SetFeatureType(EnumHandler.HexNaturalFeature feature_type){
             this.feature_type = feature_type;
+            return this;
         }
 
-        public void SetLandType(EnumHandler.LandType land_type){
+        public HexTile SetLandType(EnumHandler.LandType land_type){
             this.land_type = land_type;
+            return this;
         }
-        public void SetRegionType(EnumHandler.HexRegion region_type){
-                if(region_type == EnumHandler.HexRegion.Shore){
-                    Debug.Log("HexTile: SetRegionType: " + region_type);
-                    Debug.Log("Coor: " + this.column + " " + this.row);
-                }
-                this.region_type = region_type;
+        public HexTile SetRegionType(EnumHandler.HexRegion region_type){
+            this.region_type = region_type;
+            return this;
         }
 
-        public void SetResourceType(EnumHandler.HexResource resource_type){
+        public HexTile SetResourceType(EnumHandler.HexResource resource_type){
             this.resource_type = resource_type;
+            return this;
         }
 
-        public void SetOwnerPlayer(Player owner_player){
+        public HexTile SetOwnerPlayer(Player owner_player){
             this.owner_player = owner_player;
+            return this;
         }
-        public void SetOwnerCity(City owner_city){
+        public HexTile SetOwnerCity(City owner_city){
             this.owner_city = owner_city;
+            return this;
         }
 
 

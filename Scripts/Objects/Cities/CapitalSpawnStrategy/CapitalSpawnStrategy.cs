@@ -12,8 +12,18 @@ namespace Terrain
         /*
             ElevationStrategy is used to generate elevation on the map - abstract class
         */
-        private List<List<float>> city_map;
+        private int capital_minimum_distance = 5;
         public abstract List<List<float>> GenerateCapitalMap(List<List<float>> water_map, List<Player> player_list, Vector2 map_size, List<List<float>> feature_map, List<List<float>> resource_map, List<List<float>> city_map);
+
+        protected bool isInvalidCoordinate(Vector3 random_coor, List<List<float>> water_map, List<List<float>> city_map){
+            
+            return 
+            water_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.LandType.Water || 
+            city_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.StructureType.Capital ||
+            TerrainUtils.CircularSearch( (int) random_coor.x, (int) random_coor.z, city_map, (int) EnumHandler.StructureType.Capital, capital_minimum_distance);
+        }
+
+
 
     }
 }
