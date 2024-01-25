@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Character;
 using Players;
 using Strategy.Assets.Scripts.Objects;
 using Terrain;
@@ -21,18 +22,21 @@ public class GameManager: MonoBehaviour{
     [SerializeField] private int region_strategy;
     [SerializeField] private int features_strategy;
     [SerializeField] private int capital_strategy;
+[SerializeField] private int names_stratgy;
+
 
 
     public static Vector2 map_size = new Vector2(128, 128);
     public static Dictionary<float, Player> player_id_to_player = new Dictionary<float, Player>();
-    public static TerrainHandler terrain_manager;
+    public static TerrainGameHandler terrain_manager;
     public static PlayerManager player_manager;
     public static CityManager city_manager;
     public static MapGeneration map_generation;
     public static TerritoryManager territory_manager;
     public static FogManager fog_manager;
-    public static HexFactory hex_factory;
+    public static HexManager hex_manager;
     public static UIManager ui_manager;
+    public static CharacterManager character_manager;
     public static int player_view;
     public static List<HexTile> hex_list = new List<HexTile>();   // All HexTile objects
 
@@ -50,39 +54,43 @@ public class GameManager: MonoBehaviour{
 
         CameraMovement.CenterCamera();
 
-
+        character_manager.GenerateGovernmentsLeaders(map_generation.terrain_map_handler.regions_map, player_manager.player_list);
 
     }
 
     void InitializeCoreComponents(){
-        terrain_manager = new TerrainHandler();
+        terrain_manager = new TerrainGameHandler();
         player_manager = new PlayerManager();
         city_manager = new CityManager();
-        map_generation = new MapGeneration(map_size, elevation_strategy, land_strategy, region_strategy, features_strategy);
+        map_generation = new MapGeneration();
         territory_manager = new TerritoryManager();
         fog_manager = new FogManager(map_size); 
-        hex_factory = new HexFactory();
+        hex_manager = new HexManager();
         ui_manager = new UIManager();
+        character_manager = new CharacterManager();
     }
 
     void GameGeneration(){
         player_manager.GeneratePlayers(player_count);
-        map_generation.GenerateTerrainMap();
-        city_manager.GenerateStructureMap(map_generation.water_map, player_manager.player_list, map_size, map_generation.features_map, map_generation.resource_map, capital_strategy);
+        map_generation.GenerateTerrainMaps(map_size, elevation_strategy, land_strategy, region_strategy, features_strategy);
+        map_generation.terrain_map_handler.GenerateTerrainMap();
+        city_manager.GenerateStructureMap(map_generation.terrain_map_handler.water_map, player_manager.player_list, map_size, map_generation.terrain_map_handler.features_map, map_generation.terrain_map_handler.resource_map, capital_strategy);
+        character_manager.SetCharacterGenerationStrategy(names_stratgy);
     }
 
     void MapDependanHextInitialization(){
         city_manager.InitializeCapitalCityObjects(player_manager.player_list);
         fog_manager.InitializePlayerFogOfWar(player_manager.player_list, map_size); 
-        hex_list = HexTileUtils.GenerateHexList(map_size, map_generation, city_manager, territory_manager, hex_factory);
+        hex_list = hex_manager.GenerateHexList(map_size, map_generation, city_manager, territory_manager, hex_manager);
+        player_manager.GenerateGovernments(map_generation);
     }
 
     void HexDependantHexInitialization(){
         territory_manager.GenerateCapitalTerritory(city_manager.structure_map, player_manager.player_list, map_size);
-        map_generation.InitializeBorderEffects(hex_list);
+        map_generation.terrain_map_handler.GenerateShores(hex_list);
         player_manager.SetStateName(hex_list); // Needs Characteristics to be applied to apply region-based names
         DecoratorHandler.SetHexDecorators(hex_list);
-        city_manager.SetCityTerritory(hex_list, hex_factory, map_size);
+        city_manager.SetCityTerritory(hex_manager, map_size);
     }
 
     void SpawnGameObjects(){

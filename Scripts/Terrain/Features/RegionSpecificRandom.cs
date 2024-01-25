@@ -33,10 +33,10 @@ namespace Terrain
                     else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert){
                         if(Random.Range(0, 100) < oasis_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Oasis;
                     }
-                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plains){
+                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plain){
                         if(Random.Range(0, 100) < heavy_vegetation_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Heavy_Vegetation;
                     }
-                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highlands || regions_map[i][j] == (int) EnumHandler.HexRegion.Tundra){
+                    else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highland || regions_map[i][j] == (int) EnumHandler.HexRegion.Tundra){
                         if(Random.Range(0, 100) < rock_chance) features_map[i][j] = (int) EnumHandler.HexNaturalFeature.Rocks;
                     }
                     else if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle){

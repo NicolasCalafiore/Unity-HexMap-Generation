@@ -64,15 +64,16 @@ public class CityManager
     }
 
     public string GenerateCityName(HexTile hex){
-        List<string> cityNames = IOHandler.ReadCityNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CityNames.xml", hex.region_type.ToString());
+        List<string> cityNames = IOHandler.ReadCityNamesRegionSpecified("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CityNames.xml", hex.region_type.ToString());
         int random_pick = UnityEngine.Random.Range(0, cityNames.Count);
+
         string name = cityNames[random_pick];
         return name;
     }
 
-    public void SetCityTerritory(List<HexTile> hex_list, HexFactory hex_factory, Vector2 map_size){
+    public void SetCityTerritory(HexManager hex_factory, Vector2 map_size){
         foreach(City city in capitals_list){
-            hex_factory.AddHexTileToCityTerritory(hex_list, city, map_size);
+            hex_factory.AddHexTileToCityTerritory(city, map_size);
         }
     }
 

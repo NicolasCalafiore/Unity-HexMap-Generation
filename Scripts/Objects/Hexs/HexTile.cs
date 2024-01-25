@@ -17,8 +17,6 @@ namespace Terrain {
 
         public float construction { get; set; }
 
-
-
         public readonly int column;  //Column
         public readonly int row;  //Row
         private readonly int S;  // -(column + row)
@@ -85,7 +83,7 @@ namespace Terrain {
 
 
 
-
+        
         public Vector2 GetColRow()
         {
             return new Vector2(this.column, this.row);

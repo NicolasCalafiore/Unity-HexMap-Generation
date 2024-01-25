@@ -37,7 +37,7 @@ namespace Terrain
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < gems_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Gems;
                     }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highlands && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
+                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highland && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < stone_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Stone;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle && (features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None || features_map[i][j] == (int) EnumHandler.HexNaturalFeature.Jungle)){
@@ -46,7 +46,7 @@ namespace Terrain
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < incense_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Incense;}
                     }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plains){
+                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plain){
                         if(Random.Range(0, 100) < wheat_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Wheat;}
                     }
 

@@ -89,7 +89,7 @@ namespace Terrain
         {
             switch (hex.region_type)
             {
-                case EnumHandler.HexRegion.Plains:
+                case EnumHandler.HexRegion.Plain:
                     hex = new PlainDecorator(hex);
                     break;
                 case EnumHandler.HexRegion.Desert:
@@ -98,7 +98,7 @@ namespace Terrain
                 case EnumHandler.HexRegion.Grassland:
                     hex = new GrasslandDecorator(hex);
                     break;
-                case EnumHandler.HexRegion.Highlands:
+                case EnumHandler.HexRegion.Highland:
                     hex = new HighlandsDecorator(hex);
                     break;
                 case EnumHandler.HexRegion.Jungle:

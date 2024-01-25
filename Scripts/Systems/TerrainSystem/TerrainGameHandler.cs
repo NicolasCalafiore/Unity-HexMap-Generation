@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Terrain{
-    public class TerrainHandler
+    public class TerrainGameHandler
     {
 
         /*
@@ -63,7 +63,7 @@ namespace Terrain{
         }
         private void SpawnHexFeature(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
-                GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
+                GameObject hex_object = TerrainGameHandler.hex_to_hex_go[hex];
                 GameObject feature = null;
 
                 if(hex.feature_type != EnumHandler.HexNaturalFeature.None){
@@ -79,7 +79,7 @@ namespace Terrain{
 
         private void SpawnHexResource(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
-                GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
+                GameObject hex_object = TerrainGameHandler.hex_to_hex_go[hex];
                 GameObject resource = null;
 
                 if(hex.resource_type != EnumHandler.HexResource.None) 
@@ -153,7 +153,7 @@ namespace Terrain{
 
         public void SpawnTerritoryFlags(List<HexTile> hex_list){
             foreach(HexTile hex in hex_list){
-                GameObject hex_object = TerrainHandler.hex_to_hex_go[hex];
+                GameObject hex_object = TerrainGameHandler.hex_to_hex_go[hex];
                 GameObject territory_flag = null;
 
                 if(hex.owner_player != null){

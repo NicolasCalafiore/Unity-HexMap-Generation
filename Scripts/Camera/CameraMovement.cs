@@ -60,7 +60,7 @@ public class CameraMovement : MonoBehaviour
         GameManager.fog_manager.ShowFogOfWar(GameManager.player_manager.player_list[GameManager.player_view], GameManager.map_size); // Shows Fog of War for all players
         Vector2 coordinates = GameManager.player_manager.player_list[GameManager.player_view].GetCityByIndex(0).GetColRow();
         HexTile hexTile = GameManager.hex_list[(int) coordinates.x * (int) GameManager.map_size.y + (int) coordinates.y];
-        GameObject hex = TerrainHandler.hex_to_hex_go[hexTile];
+        GameObject hex = TerrainGameHandler.hex_to_hex_go[hexTile];
         Vector3 vector = hex.transform.position;
         vector.y += 10f;
         vector.z -= 10f;

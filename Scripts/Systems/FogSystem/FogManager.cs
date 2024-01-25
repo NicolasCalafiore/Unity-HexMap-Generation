@@ -40,7 +40,7 @@ namespace Terrain {
 
         public void DestroyFog()
         {
-            foreach(GameObject hex_go in TerrainHandler.hex_go_list){
+            foreach(GameObject hex_go in TerrainGameHandler.hex_go_list){
                 hex_go.SetActive(true);
             }
         }
@@ -61,12 +61,12 @@ namespace Terrain {
 
         public void SpawnHexTile(Vector2 vector2, Vector2 map_size)
         {
-            GameObject hex_go = TerrainHandler.hex_go_list[(int) vector2.x * (int) map_size.y + (int) vector2.y];
+            GameObject hex_go = TerrainGameHandler.hex_go_list[(int) vector2.x * (int) map_size.y + (int) vector2.y];
             hex_go.SetActive(true);
         }
 
         public void DespawnHexTile(Vector2 coordinates, Vector2 map_size){
-            GameObject hex_go = TerrainHandler.hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
+            GameObject hex_go = TerrainGameHandler.hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
             hex_go.SetActive(false);
         }
 

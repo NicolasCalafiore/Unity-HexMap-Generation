@@ -29,10 +29,10 @@ namespace Terrain
             Ocean ,
             River,
             Desert,
-            Plains,
+            Plain,
             Grassland,
             Tundra,
-            Highlands,
+            Highland,
             Jungle,
             Swamp,
             Shore,
@@ -88,7 +88,31 @@ namespace Terrain
 
         }
 
-         private static readonly Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>
+        public enum CharacterType{
+            None,
+            Leader,
+        }
+
+        public enum CharacterGender{
+            Male,
+            Female,
+        }
+
+        private static readonly Dictionary<float, CharacterType> characterDict = new Dictionary<float, CharacterType>{
+            {(int) CharacterType.None,  CharacterType.None},
+            {(int) CharacterType.Leader,  CharacterType.Leader},
+
+        };
+
+        private static readonly Dictionary<float, CharacterGender> genderDict = new Dictionary<float, CharacterGender>
+        {
+            {(int) CharacterGender.Male, CharacterGender.Male},
+            {(int) CharacterGender.Female, CharacterGender.Female},
+
+        };
+        
+
+        private static readonly Dictionary<float, HexElevation> elevationDict = new Dictionary<float, HexElevation>
         {
             { (int) HexElevation.Canyon, HexElevation.Canyon },
             { (int) HexElevation.Valley, HexElevation.Valley },
@@ -103,10 +127,10 @@ namespace Terrain
             { (int) HexRegion.Ocean, HexRegion.Ocean },
             { (int) HexRegion.River, HexRegion.River },
             { (int) HexRegion.Desert, HexRegion.Desert },
-            { (int) HexRegion.Plains, HexRegion.Plains },
+            { (int) HexRegion.Plain, HexRegion.Plain },
             { (int) HexRegion.Grassland, HexRegion.Grassland },
             { (int) HexRegion.Tundra, HexRegion.Tundra },
-            { (int) HexRegion.Highlands, HexRegion.Highlands },
+            { (int) HexRegion.Highland, HexRegion.Highland },
             { (int) HexRegion.Jungle, HexRegion.Jungle },
             { (int) HexRegion.Swamp, HexRegion.Swamp },
             { (int) HexRegion.Shore, HexRegion.Shore },
@@ -157,6 +181,11 @@ namespace Terrain
             { (int) GovernmentType.Tribalism, GovernmentType.Tribalism },
         };
 
+        public static CharacterGender GetGenderType(float genderValue)
+        {
+            return genderDict.TryGetValue(genderValue, out var elevation) ? elevation : default;
+        }
+
         public static HexElevation GetElevationType(float elevationValue)
         {
             return elevationDict.TryGetValue(elevationValue, out var elevation) ? elevation : default;
@@ -192,6 +221,11 @@ namespace Terrain
          public static GovernmentType GetGovernmentType(float governmentValue)
         {
             return governmentDict.TryGetValue(governmentValue, out var government) ? government : default;
+        }
+
+        public static CharacterType GetCharacterType(float characterValue)
+        {
+            return characterDict.TryGetValue(characterValue, out var character) ? character : default;
         }
     }
 }

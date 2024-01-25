@@ -23,7 +23,7 @@ public static class DebugHandler
     public static void GetHexInformation(GameObject gameObject){  // Used to read HexTile object from GameObject from MouseInputHandler
         string MESSAGE = "Hex Information: \n";
         GameObject hex_go = gameObject.transform.parent.gameObject;
-        HexTile hex = TerrainHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
+        HexTile hex = TerrainGameHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
         MESSAGE += "Hex: " + hex.GetColRow().x + " " + hex.GetColRow().y + "\n";
         MESSAGE += "Elevation: " + hex.GetPosition().y  + "\n";
         MESSAGE += "Elevation Type: " + hex.elevation_type  + "\n";
@@ -76,7 +76,7 @@ public static class DebugHandler
     {
         string MESSAGE = "Player Information: \n";
         GameObject city_go = city_collider.transform.parent.gameObject;
-        City city = TerrainHandler.city_go_to_city[city_go];
+        City city = TerrainGameHandler.city_go_to_city[city_go];
         Player player = GameManager.player_id_to_player[city.GetPlayerId()];
         MESSAGE += "Player State: " +  player.GetOfficialName() + "\n";
         MESSAGE += "Government Type: " + player.government_type + "\n";

@@ -9,6 +9,7 @@ using UnityEngine;
 using Strategy.Assets.Scripts.Objects;
 using TMPro;
 using System.Linq;
+using Players;
 
 
 
@@ -37,7 +38,8 @@ namespace Terrain {
             city_ui.SetActive(true);
 
             GameObject city_go = city_collider.transform.parent.gameObject;
-            City city = TerrainHandler.city_go_to_city[city_go];
+            City city = TerrainGameHandler.city_go_to_city[city_go];
+            Player player = GameManager.player_id_to_player[city.GetPlayerId()];
 
             TextMeshProUGUI city_title_ui = GameObject.Find("CityTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI city_owner_ui = GameObject.Find("OwnerTitle").GetComponent<TextMeshProUGUI>();
@@ -48,9 +50,10 @@ namespace Terrain {
             TextMeshProUGUI city_territory_ui = GameObject.Find("TerritoryTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI city_construction_rate = GameObject.Find("ECCTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI city_nourishment_rate = GameObject.Find("ECNTitle").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI state_leader_name = GameObject.Find("StateLeader").GetComponent<TextMeshProUGUI>();
 
             city_title_ui.text = city.GetName();
-            city_owner_ui.text = GameManager.player_id_to_player[city.GetPlayerId()].name;
+            city_owner_ui.text = player.name;
             city_inhabitants_ui.text = city.inhabitants.ToString();
             city_stability_ui.text = city.stability.ToString();
             city_nourishment_ui.text = city.nourishment.ToString();
@@ -58,6 +61,9 @@ namespace Terrain {
             city_territory_ui.text = city.hex_territory_list.Count.ToString();
             city_construction_rate.text = GameManager.territory_manager.CalculateCityConstruction(city).ToString();
             city_nourishment_rate.text = GameManager.territory_manager.CalculateCityNourishment(city).ToString();
+
+            string gender = player.GetGovernment().GetLeader().gender == EnumHandler.CharacterGender.Male ? "M" : "F";        //TO DO: REFACTOR THIS
+            state_leader_name.text = player.GetGovernment().GetLeader().GetFullName() + " (" + gender + ")";
             
             
 
@@ -68,7 +74,7 @@ namespace Terrain {
             hex_ui.SetActive(true);
 
             GameObject hex_go = gameObject.transform.parent.gameObject;
-            HexTile hex = TerrainHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
+            HexTile hex = TerrainGameHandler.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
 
             TextMeshProUGUI hex_elevation_ui = GameObject.Find("ElevationType").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI hex_region_ui = GameObject.Find("RegionType").GetComponent<TextMeshProUGUI>();

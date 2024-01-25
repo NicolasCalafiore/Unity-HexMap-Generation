@@ -52,7 +52,7 @@ namespace Terrain {
                 TerrainUtils.CircularSpawn(i, j, territory_map, player.id);
                 List<HexTile> hex_list = HexTileUtils.CircularRetrieval(i, j, map_size);
 
-                HexFactory.AddHexTileToPlayerTerritory(hex_list, player);
+                HexManager.AddHexTileToPlayerTerritory(hex_list, player);
                 
             }
         }

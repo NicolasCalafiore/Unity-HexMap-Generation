@@ -157,7 +157,7 @@
         <Country>Yoki</Country>
     </Regions>
 
-    <Regions name="Highlands">
+    <Regions name="Highland">
         <Country>Taigaria</Country>
         <Country>Yeniseisk</Country>
         <Country>Kolymara</Country>
@@ -321,7 +321,7 @@
         <Country>Zamoria</Country>
     </Regions>
 
-    <Regions name="Plains">
+    <Regions name="Plain">
 <Country>Kilimara</Country>
         <Country>Zambeziana</Country>
         <Country>Safariland</Country>

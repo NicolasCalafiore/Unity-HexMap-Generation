@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cabinet;
+using PlayerGovernment;
 using Players;
 using Terrain;
 using Unity.VisualScripting;
@@ -44,7 +46,7 @@ public class PlayerManager
     private void SetStatePrefix()
     {
         foreach(Player player in player_list){
-            List<string> state_prefixes = IOHandler.ReadPrefixNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\GovernmentPrefixes.xml", player.government_type.ToString());
+            List<string> state_prefixes = IOHandler.ReadPrefixNamesRegionSpecified("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\GovernmentPrefixes.xml", player.government_type.ToString());
             int random_index = UnityEngine.Random.Range(0, state_prefixes.Count);
             string state_prefix = state_prefixes[random_index];
             player.SetStatePrefix(state_prefix);
@@ -54,19 +56,28 @@ public class PlayerManager
     public void SetStateName(List<HexTile> hex_list)
     {
         foreach(Player player in player_list){
-            try{
             Vector2 capital_coordinates = player.GetCityByIndex(0).GetColRow();
             HexTile capital_hex = hex_list.FirstOrDefault(x => x.GetColRow() == capital_coordinates);
             EnumHandler.HexRegion hex_region = capital_hex.region_type;
 
-            List<string> state_names = IOHandler.ReadStateNames("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\StateNames.xml", hex_region.ToString());
+            List<string> state_names = IOHandler.ReadStateNamesRegionSpecified("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\StateNames.xml", hex_region.ToString());
             int random_index = UnityEngine.Random.Range(0, state_names.Count);
             string state_name = state_names[random_index];
             player.SetStateName(state_name);
-            }catch(Exception e){
-                Debug.Log(e);
-                Debug.Log("Tried to get city from: " + player.name + " but failed");
-            }
+
         }
     }
+
+
+    public void GenerateGovernments(MapGeneration map_generation){      // TO DO: REFACTOR - GET CHARACTER GENERATION OUT OF GOV.T GENERATION
+        foreach(Player player in player_list){
+            Government government = new Government(player.government_type);
+            player.SetGovernment(government);
+        }
+    }
+
+
+
+    
+
 }

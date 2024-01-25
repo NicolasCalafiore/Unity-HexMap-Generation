@@ -50,7 +50,7 @@
         <City>Suleiman City</City>
         <City>Al Zahra</City>
     </Region>
-    <Region name="Plains">
+    <Region name="Plain">
         <City>Kilimara</City>
         <City>Zambeziana</City>
         <City>Safaritown</City>
@@ -216,7 +216,7 @@
         <City>Tomskoy</City>
         <City>Kemerovsk</City>
     </Region>
-    <Region name="Highlands">
+    <Region name="Highland">
      <City>Ulaanbaatar</City>
         <City>Erdenet</City>
         <City>Darkhan</City>
