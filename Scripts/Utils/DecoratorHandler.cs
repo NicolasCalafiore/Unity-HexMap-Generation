@@ -70,7 +70,7 @@ namespace Terrain
                 case EnumHandler.HexResource.Cattle:
                     hex = new CattleDecorator(hex);
                     break;
-                case EnumHandler.HexResource.Gems:
+                case EnumHandler.HexResource.Gems: 
                     hex = new GemsDecorator(hex);
                     break;
                 case EnumHandler.HexResource.Incense:
@@ -81,6 +81,9 @@ namespace Terrain
                     break;
                 case EnumHandler.HexResource.Stone:
                     hex = new StoneDecorator(hex);
+                    break;
+                case EnumHandler.HexResource.Pigs:
+                    hex = new PigsDecorator(hex);
                     break;
             }
         }

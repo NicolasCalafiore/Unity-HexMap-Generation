@@ -197,33 +197,11 @@ namespace Terrain
                 return map;
         }
 
-        // public static List<Tuple<int, int>> CompareValueBorder(List<List<float>> matrix, int target_value, int border_value)
-        // {
-        //     var border_list
-        //      = new List<Tuple<int, int>>();
-        //     int rows = matrix.Count;
-        //     int cols = matrix[0].Count;
 
-        //     for (int i = 0; i < rows; i++)
-        //     {
-        //         for (int j = 0; j < cols; j++)
-        //         {
-        //             if (matrix[i][j] == target_value && IsBordering(matrix, i, j, border_value))
-        //             {
-        //                 border_list
-        //                 .Add(new Tuple<int, int>(i, j));
-        //             }
-        //         }
-        //     }
-
-        //     return border_list
-        //     ;
-        // }
 
         public static List<Tuple<int, int>> CompareValueBorder(List<List<float>> matrix, int target_value, int border_value)
         {
-            var border_list
-             = new List<Tuple<int, int>>();
+            var border_list = new List<Tuple<int, int>>();
             int rows = matrix.Count;
             int cols = matrix[0].Count;
 
@@ -235,15 +213,13 @@ namespace Terrain
 
                     if (matrix[i][j] == target_value && IsBordering(matrix, i, j, border_value))
                     {
-                        border_list
-                        .Add(new Tuple<int, int>(i, j));
+                        border_list.Add(new Tuple<int, int>(i, j));
                     }
                     
                 }
             }
 
-            return border_list
-            ;
+            return border_list;
         }
 
         static bool IsBordering(List<List<float>> matrix, int row, int col, int border_value)

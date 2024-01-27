@@ -22,7 +22,7 @@ public class GameManager: MonoBehaviour{
     [SerializeField] private int region_strategy;
     [SerializeField] private int features_strategy;
     [SerializeField] private int capital_strategy;
-[SerializeField] private int names_stratgy;
+    [SerializeField] private int names_stratgy;
 
 
 
@@ -56,13 +56,15 @@ public class GameManager: MonoBehaviour{
 
         character_manager.GenerateGovernmentsLeaders(map_generation.terrain_map_handler.regions_map, player_manager.player_list);
 
+       
+
     }
 
     void InitializeCoreComponents(){
         terrain_manager = new TerrainGameHandler();
         player_manager = new PlayerManager();
         city_manager = new CityManager();
-        map_generation = new MapGeneration();
+        map_generation = new MapGeneration(map_size);
         territory_manager = new TerritoryManager();
         fog_manager = new FogManager(map_size); 
         hex_manager = new HexManager();
@@ -72,21 +74,20 @@ public class GameManager: MonoBehaviour{
 
     void GameGeneration(){
         player_manager.GeneratePlayers(player_count);
-        map_generation.GenerateTerrainMaps(map_size, elevation_strategy, land_strategy, region_strategy, features_strategy);
-        map_generation.terrain_map_handler.GenerateTerrainMap();
-        city_manager.GenerateStructureMap(map_generation.terrain_map_handler.water_map, player_manager.player_list, map_size, map_generation.terrain_map_handler.features_map, map_generation.terrain_map_handler.resource_map, capital_strategy);
+        map_generation.GenerateTerrainMaps(elevation_strategy, land_strategy, region_strategy, features_strategy);
+        map_generation.GenerateCitiesMaps(player_manager.player_list, capital_strategy);
         character_manager.SetCharacterGenerationStrategy(names_stratgy);
     }
 
     void MapDependanHextInitialization(){
-        city_manager.InitializeCapitalCityObjects(player_manager.player_list);
+        city_manager.InitializeCapitalCityObjects(player_manager.player_list, map_generation);
         fog_manager.InitializePlayerFogOfWar(player_manager.player_list, map_size); 
         hex_list = hex_manager.GenerateHexList(map_size, map_generation, city_manager, territory_manager, hex_manager);
         player_manager.GenerateGovernments(map_generation);
     }
 
     void HexDependantHexInitialization(){
-        territory_manager.GenerateCapitalTerritory(city_manager.structure_map, player_manager.player_list, map_size);
+        map_generation.GenerateTerritoryMaps(player_manager.player_list);
         map_generation.terrain_map_handler.GenerateShores(hex_list);
         player_manager.SetStateName(hex_list); // Needs Characteristics to be applied to apply region-based names
         DecoratorHandler.SetHexDecorators(hex_list);

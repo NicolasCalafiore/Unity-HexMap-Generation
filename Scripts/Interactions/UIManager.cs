@@ -87,6 +87,7 @@ namespace Terrain {
             TextMeshProUGUI hex_movecost = GameObject.Find("MoveCostValue").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI hex_owner = GameObject.Find("PlayerTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI hex_city = GameObject.Find("CityTitle").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI coast_title = GameObject.Find("CoastTitle").GetComponent<TextMeshProUGUI>();
 
             hex_elevation_ui.text = hex.elevation_type.ToString();
             hex_region_ui.text = hex.region_type.ToString();
@@ -99,6 +100,7 @@ namespace Terrain {
             hex_movecost.text = hex.MovementCost.ToString();
             hex_owner.text = hex.owner_player != null ? hex.owner_player.name : "None";
             hex_city.text = hex.owner_city != null ? hex.owner_city.GetName() : "None";
+            coast_title.text = hex.IsCoast() ? "Coast" : "Not Coast";
 
 
         }

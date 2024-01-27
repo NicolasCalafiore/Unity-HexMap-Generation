@@ -46,12 +46,24 @@ PrefabInstance:
       value: PalmTrees
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fa4b2ff13c344434b8094e8784f48439, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa4b2ff13c344434b8094e8784f48439, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa4b2ff13c344434b8094e8784f48439, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: fa4b2ff13c344434b8094e8784f48439, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fa4b2ff13c344434b8094e8784f48439, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.191
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fa4b2ff13c344434b8094e8784f48439, type: 3}
       propertyPath: m_LocalPosition.z
@@ -109,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e78e9e9e77f1fd34b932bf555a8735a7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.3027339
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e78e9e9e77f1fd34b932bf555a8735a7, type: 3}
       propertyPath: m_LocalScale.y
@@ -117,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e78e9e9e77f1fd34b932bf555a8735a7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.29284516
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e78e9e9e77f1fd34b932bf555a8735a7, type: 3}
       propertyPath: m_LocalPosition.x

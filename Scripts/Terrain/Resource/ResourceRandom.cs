@@ -20,6 +20,14 @@ namespace Terrain
         int bananas_chance = 2;
         int incense_chance = 1;
         int wheat_chance = 10;
+        int pig_chance  = 2;
+        int citrus_chance = 5;
+        int foxes_chance = 2;
+        int gold_chance = 1;
+        int grapes_chance = 2;
+        int rice_chance = 5;
+        int salt_chance = 5;
+        int horse_chance = 2;
 
 
         public override List<List<float>> GenerateResourceMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map, List<List<float>> regions_map, List<List<float>> features_map){
@@ -30,24 +38,38 @@ namespace Terrain
                 for(int j = 0; j < map_size.y; j++){
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Tundra && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < iron_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Iron;
+                        if(Random.Range(0, 100) < foxes_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Foxes;
+                        if(Random.Range(0, 100) < horse_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Horses;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Grassland && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < cattle_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Cattle;
+                        if(Random.Range(0, 100) < pig_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Pigs;
+                        if(Random.Range(0, 100) < citrus_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Citrus;
+                        if(Random.Range(0, 100) < grapes_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Grapes;
+                        if(Random.Range(0, 100) < horse_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Horses;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < gems_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Gems;
+                        if(Random.Range(0, 100) < salt_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Salt;
+                        if(Random.Range(0, 100) < gold_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Gold;
+                        if(Random.Range(0, 100) < incense_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Incense;}
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highland && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < stone_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Stone;
+                        if(Random.Range(0, 100) < gold_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Gold;
+                        if(Random.Range(0, 100) < salt_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Salt;
+                        if(Random.Range(0, 100) < horse_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Horses;
                     }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle && (features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None || features_map[i][j] == (int) EnumHandler.HexNaturalFeature.Jungle)){
+                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle){
                         if(Random.Range(0, 100) < bananas_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Bananas; features_map[i][j] = (int) EnumHandler.HexNaturalFeature.None;}
-                    }
-                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Desert && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
-                        if(Random.Range(0, 100) < incense_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Incense;}
+                        if(Random.Range(0, 100) < rice_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Rice;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plain){
                         if(Random.Range(0, 100) < wheat_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Wheat;}
+                        if(Random.Range(0, 100) < horse_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Horses;
+                    }
+                    if(regions_map[i][j] == (int) EnumHandler.HexRegion.Swamp){
+                        if(Random.Range(0, 100) < rice_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Rice;}
                     }
 
 

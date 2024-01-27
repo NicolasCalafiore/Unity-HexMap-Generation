@@ -46,13 +46,21 @@ namespace Terrain {
             ocean_map = water_tuple.Item1;
             river_map = water_tuple.Item2;
             water_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) EnumHandler.LandType.Water);   // Combine ocean_map and river_map into water_map
-
             regions_map = GenerateRegionMap(ocean_map, river_map);
-
             elevation_map = GenerateElevationMap(regions_map);
             features_map = GenerateFeaturesMap(regions_map, water_map);
             resource_map = GenerateResourceMap(ocean_map, river_map, regions_map, features_map);
 
+             DebugHandler.PrintMapDebug("Elevation Map", elevation_map);
+                DebugHandler.PrintMapDebug("Water Map", water_map);
+                DebugHandler.PrintMapDebug("Ocean Map", ocean_map);
+                DebugHandler.PrintMapDebug("River Map", river_map);
+                DebugHandler.PrintMapDebug("Region Map", regions_map);
+                DebugHandler.PrintMapDebug("Features Map", features_map);
+                DebugHandler.PrintMapDebug("Resource Map", resource_map);
+                
+
+            
         }
 
 
@@ -169,7 +177,7 @@ namespace Terrain {
             FilterShoreElevation(land_border, (float) EnumHandler.HexElevation.Flatland, (float) EnumHandler.HexElevation.Flatland, hex_list);  // Sets all coasts to 0 if < 0
             //             coor of border tiles               conditional value                  set value
             
-            List<System.Tuple<int, int>> land_ocean_border = TerrainUtils.CompareValueBorder(ocean_map, 0, 1);
+             List<System.Tuple<int, int>> land_ocean_border = TerrainUtils.CompareValueBorder(ocean_map, 0, 1);
             SetBorderRegion(land_ocean_border, (float) EnumHandler.HexRegion.Ocean, (float) EnumHandler.HexRegion.Shore, hex_list);   //Makes Shores
 
             List<System.Tuple<int, int>> shore_river_borders = TerrainUtils.CompareValueBorder(regions_map, (int) EnumHandler.HexRegion.Shore, (int) EnumHandler.HexRegion.River);
@@ -178,16 +186,17 @@ namespace Terrain {
         }
 
         private void FilterShoreElevation( List<Tuple<int, int>> land_border, float conditional_value, float set_value, List<HexTile> hex_list){
+
             foreach(Tuple<int, int> tuple in land_border){
                 foreach(HexTile hex in hex_list){
                     if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
-                            if( (float) hex.elevation_type <= conditional_value)
+                            if( (float) hex.elevation_type <= conditional_value){
                                 elevation_map[tuple.Item1][tuple.Item2] = set_value;
-                                hex.is_coast = true;
+                            }
+                            hex.SetCoast();
                     }
                 }
             }
-
         }
 
 

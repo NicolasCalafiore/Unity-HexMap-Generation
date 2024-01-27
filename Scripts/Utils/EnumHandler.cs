@@ -67,6 +67,15 @@ namespace Terrain
             Bananas,
             Incense,
             Wheat,
+            Pigs,
+            Citrus,
+            Foxes,
+            Gold,
+            Grain,
+            Grapes,
+            Rice,
+            Salt,
+            Horses
 
 
         }
@@ -163,6 +172,15 @@ namespace Terrain
             { (int) HexResource.Bananas, HexResource.Bananas },
             { (int) HexResource.Incense, HexResource.Incense },
             { (int) HexResource.Wheat, HexResource.Wheat },
+            { (int) HexResource.Pigs, HexResource.Pigs },
+            { (int) HexResource.Citrus, HexResource.Citrus },
+            { (int) HexResource.Foxes, HexResource.Foxes },
+            { (int) HexResource.Gold, HexResource.Gold },
+            { (int) HexResource.Grain, HexResource.Grain },
+            { (int) HexResource.Grapes, HexResource.Grapes },
+            { (int) HexResource.Rice, HexResource.Rice },
+            { (int) HexResource.Salt, HexResource.Salt },
+            { (int) HexResource.Horses, HexResource.Horses },
         };
 
         private static readonly Dictionary<float, StructureType> structureDict = new Dictionary<float, StructureType>

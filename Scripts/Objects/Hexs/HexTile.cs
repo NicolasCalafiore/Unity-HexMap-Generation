@@ -31,7 +31,7 @@ namespace Terrain {
         public EnumHandler.StructureType structure_type;   //Structures
         public Player owner_player;   
         public City owner_city;
-        public bool is_coast = false;
+        private bool is_coast = false;
         public virtual float MovementCost { get; set; } = 1.0f; // Default movement costs
 
         public HexTile(int column, int row)
@@ -103,6 +103,15 @@ namespace Terrain {
                 elevation,
                 vert * this.row
             );
+        }
+
+        public void SetCoast(){
+            is_coast = true;
+            elevation = elevation < 0 ? 0 : elevation;
+        }
+
+        public bool IsCoast(){
+            return is_coast;
         }
 
     }

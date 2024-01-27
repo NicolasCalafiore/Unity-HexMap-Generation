@@ -19,22 +19,24 @@ public class HexManager{
 
     public List<HexTile> GenerateHexList(Vector2 map_size, MapGeneration map_generation, CityManager city_manager, TerritoryManager territory_manager, HexManager hex_factory){
         List<HexTile> hex_list = new List<HexTile>();
+
         for(int column = 0; column < map_size.x; column++){
             for(int row = 0; row < map_size.y; row++){
+                
                 HexTile hex = hex_factory.GenerateHex(
                     map_generation.terrain_map_handler.elevation_map[column][row], 
-                    city_manager.structure_map[column][row], 
+                    map_generation.city_map_handler.structure_map[column][row], 
                     map_generation.terrain_map_handler.features_map[column][row], 
                     map_generation.terrain_map_handler.water_map[column][row],
                     map_generation.terrain_map_handler.regions_map[column][row], 
                     map_generation.terrain_map_handler.resource_map[column][row], 
-                    // territory_manager.territory_map[column][row], 
                     column, row);
 
                 hex_list.Add(hex);
             }
             
         }
+
 
         return hex_list;
         
