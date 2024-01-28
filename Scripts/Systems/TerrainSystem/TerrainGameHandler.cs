@@ -247,27 +247,33 @@ namespace Terrain{
         public static void SpawnAIFlags(){
             RemoveAlerts();
             RemoveForeignLines();
+            Player player = GameManager.player_manager.player_list[GameManager.player_view];
         
-            List<HexTile> construction_tiles = GameManager.player_manager.player_list[GameManager.player_view].GetGovernment().GetDomestic(0).GetPotentialConstructionTiles();
+            List<HexTile> construction_tiles = player.GetGovernment().GetDomestic(0).GetPotentialConstructionTiles();
             foreach(HexTile hex_tile in construction_tiles){
                 TerrainGameHandler.SpawnConstructionAlert(hex_tile);
             }
 
-            List<HexTile> expansion_tiles = GameManager.player_manager.player_list[GameManager.player_view].GetGovernment().GetDomestic(0).GetPotentialExpansionTiles();
+            List<HexTile> expansion_tiles = player.GetGovernment().GetDomestic(0).GetPotentialExpansionTiles();
             foreach(HexTile hex_tile in expansion_tiles){
                 TerrainGameHandler.SpawnExpansionAlert(hex_tile);
             }
 
+            Dictionary<Player, int> relationships = player.GetGovernment().GetForeign(0).relations;
+            foreach(KeyValuePair<Player, int> relationship in relationships){
+                player.government.cabinet.GetForeign(0).foreign_strategy.RelationshipBreakdown(player, relationship.Key);
+            }
+            
 
-            List<Player> known_players = GameManager.player_manager.player_list[GameManager.player_view].GetGovernment().GetForeign(0).GetKnownPlayers();
-            foreach(Player player in known_players){
-                City foreign_capital_city = player.GetCityByIndex(0);
+            List<Player> known_players = player.GetGovernment().GetForeign(0).GetKnownPlayers();
+            foreach(Player i in known_players){
+                City foreign_capital_city = i.GetCityByIndex(0);
                 GameObject foreign_capital_city_go = CityManager.city_to_city_go[foreign_capital_city];
                 
                 City capital_city = PlayerManager.player_id_to_player[GameManager.player_view].GetCityByIndex(0); 
                 GameObject capital_city_go = CityManager.city_to_city_go[capital_city];
 
-                int relationship = PlayerManager.player_id_to_player[GameManager.player_view].GetGovernment().GetForeign(0).GetRelationship(player);
+                int relationship = PlayerManager.player_id_to_player[GameManager.player_view].GetGovernment().GetForeign(0).GetRelationship(i);
                 TerrainGameHandler.DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
             }
         }

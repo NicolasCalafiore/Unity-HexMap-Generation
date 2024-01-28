@@ -13,11 +13,6 @@ using UnityEngine;
 namespace Cabinet{
     public class Domestic : ICharacter
     {
-        public string first_name;
-        public string last_name;
-        public string title;
-        public EnumHandler.CharacterType character_type;
-        public EnumHandler.CharacterGender gender;
         private List<HexTile> potential_construction_tiles = new List<HexTile>();
         private List<HexTile> potential_expansion_tiles = new List<HexTile>();
 
@@ -30,14 +25,8 @@ namespace Cabinet{
 
         }
 
-        public override string GetFullName()
-        {
-             return title + first_name + " " + last_name;
-        }
 
         public void IdentifyConstructionOppruntities(List<List<float>> territory_map, int player_id){
-
-            potential_construction_tiles = new List<HexTile>();
 
             for(int i = 0; i < territory_map.Count; i++){
                 for(int j = 0; j < territory_map[i].Count; j++){
@@ -57,8 +46,6 @@ namespace Cabinet{
         }
 
         public void IdentifyExpansionOpportuntiies(List<List<float>> fog_of_war, int player_id, List<List<float>> territory_map){
-
-            potential_expansion_tiles = new List<HexTile>();
 
             for(int i = 0; i < fog_of_war.Count; i++){
                 for(int j = 0; j < fog_of_war[i].Count; j++){

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Diplomacy;
 using Players;
 using Strategy.Assets.Game.Scripts.Terrain;
 using Strategy.Assets.Scripts.Objects;
@@ -13,13 +14,10 @@ using UnityEngine;
 namespace Cabinet{
     public class Foreign : ICharacter
     {
-        public string first_name;
-        public string last_name;
-        public string title;
-        public EnumHandler.CharacterType character_type;
-        public EnumHandler.CharacterGender gender;
+
         public List<Player> known_players = new List<Player>();
         public Dictionary<Player, int> relations = new Dictionary<Player, int>();
+        public ForeignStrategy foreign_strategy;
 
 
 
@@ -31,16 +29,27 @@ namespace Cabinet{
             this.character_type = EnumHandler.CharacterType.Advisor;
         }
 
-        public override string GetFullName()
-        {
-             return title + first_name + " " + last_name;
-        }
 
-        public void GenerateStartingRelationship(){
-            foreach(Player i in known_players){
-                relations.Add(i, 50);
+        public void SetForeignStrategy(int strategy){
+            switch(strategy){
+                case 0:
+                    foreign_strategy = new ForeignStandard();
+                    break;
+                default:
+                    foreign_strategy = new ForeignStandard();
+                    break;
             }
         }
+
+        public void GenerateStartingRelationship(int player_id){
+            foreach(Player i in known_players){
+                foreign_strategy.SetStrategyValues(PlayerManager.player_id_to_player[player_id], i);
+                float relationship = foreign_strategy.GenerateStartingRelationship();
+                relations.Add(i, (int) relationship);
+            }
+        }
+
+   
 
         public void ScanForNewPlayers(List<List<float>> territory_map, List<List<float>> fog_of_war, int player_id){
             for(int i = 0; i < territory_map.Count; i++){

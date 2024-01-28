@@ -39,7 +39,19 @@ namespace Terrain {
             this.features_strategy = features_strategy;
         }
 
+        public int GetElementCount(int target, List<List<float>> map){
+            int count = 0;
+            foreach(List<float> list in map){
+                foreach(float element in list){
+                    if(element == target){
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
 
+        
         public void GenerateTerrainMap()
         {
             (List<List<float>>, List<List<float>>) water_tuple = GenerateWaterMap();    // Returns Perlin (ocean_map, river_map)

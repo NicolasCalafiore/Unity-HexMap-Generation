@@ -44,18 +44,22 @@ namespace Character {
                 Leader leader = new Leader(names, gender);
 
                 i.GetGovernment().SetLeader(leader);
+                leader.InitializeCharacteristics();
 
                 gender = UnityEngine.Random.Range(0, 100) < gender_male_chance ? EnumHandler.CharacterGender.Male : EnumHandler.CharacterGender.Female;
                 names = character_names_strategy.GenerateNames(i.GetCityByIndex(0).GetColRow(), regions_map, gender);
                 Domestic domestic_advisor = new Domestic(names, gender);
 
                 i.GetGovernment().AddDomestic(domestic_advisor);
+                domestic_advisor.InitializeCharacteristics();
 
                 gender = UnityEngine.Random.Range(0, 100) < gender_male_chance ? EnumHandler.CharacterGender.Male : EnumHandler.CharacterGender.Female;
                 names = character_names_strategy.GenerateNames(i.GetCityByIndex(0).GetColRow(), regions_map, gender);
                 Foreign foreign_advisor = new Foreign(names, gender);
+                foreign_advisor.SetForeignStrategy(1);
                 
                 i.GetGovernment().AddForeign(foreign_advisor);
+                foreign_advisor.InitializeCharacteristics();
             }
         }
 

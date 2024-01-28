@@ -44,7 +44,8 @@ namespace Cabinet {
         public void StartForeignTurn(List<List<float>> territory_map, int id, List<List<float>> fog_of_war){
             foreach(Foreign i in foreign_advisor_list){
                 i.ScanForNewPlayers(territory_map, fog_of_war, id);
-                i.GenerateStartingRelationship();
+                i.GenerateStartingRelationship(id);
+      
             }
         }
 

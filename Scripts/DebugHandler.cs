@@ -83,5 +83,13 @@ public static class DebugHandler
         Debug.Log(MESSAGE);
     }
 
+    public static void DisplayMessage(List<string> message){
+        string MESSAGE = "";
+        foreach(string line in message){
+            MESSAGE += line + "\n";
+        }
+        Debug.Log(MESSAGE);
+    }
+
 
 }

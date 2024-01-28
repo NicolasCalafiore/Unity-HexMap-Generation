@@ -15,11 +15,13 @@ public class MouseInput : MonoBehaviour
             {
                 if(hit.transform.gameObject.name.Contains("Hex")){  
                     GameObject hex_go = hit.transform.gameObject;
+                    GameManager.ui_manager.CloseHexUI();
                     GameManager.ui_manager.GetHexInformation(hex_go);
      
                 }
                 if(hit.transform.gameObject.tag.Contains("City")){  
                     GameObject city = hit.transform.gameObject;
+                    GameManager.ui_manager.CloseCityUI();  
                     GameManager.ui_manager.GetCityInformation(city);
                 }
             }

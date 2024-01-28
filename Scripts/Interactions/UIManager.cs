@@ -10,6 +10,7 @@ using Strategy.Assets.Scripts.Objects;
 using TMPro;
 using System.Linq;
 using Players;
+using UnityEngine.UI;
 
 
 
@@ -21,6 +22,7 @@ namespace Terrain {
         public GameObject city_ui;
         public GameObject hex_ui;
         public GameObject world_ui;
+        public GameObject character_ui;
 
         public UIManager(){
             city_ui = GameObject.Find("CityUI");
@@ -30,6 +32,9 @@ namespace Terrain {
             hex_ui.SetActive(false);
 
             world_ui = GameObject.Find("WorldUI");
+
+            character_ui = GameObject.Find("CharacterUI");
+            character_ui.SetActive(false);
         }
 
         internal void GetCityInformation(GameObject city_collider)
@@ -50,10 +55,17 @@ namespace Terrain {
             TextMeshProUGUI city_territory_ui = GameObject.Find("TerritoryTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI city_construction_rate = GameObject.Find("ECCTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI city_nourishment_rate = GameObject.Find("ECNTitle").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI state_leader_name = GameObject.Find("StateLeader").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI foreign = GameObject.Find("Foreign").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI domestic = GameObject.Find("Domestic").GetComponent<TextMeshProUGUI>();
+            
+            
+            Button state_leader_name_button = GameObject.Find("StateLeader").GetComponent<Button>();
+            TextMeshProUGUI state_leader_name = state_leader_name_button.GetComponentInChildren<TextMeshProUGUI>();
 
+            Button foreign_name_button = GameObject.Find("Foreign").GetComponent<Button>();
+            TextMeshProUGUI foreign_name = foreign_name_button.GetComponentInChildren<TextMeshProUGUI>();
+
+            Button domestic_name_button = GameObject.Find("Domestic").GetComponent<Button>();
+            TextMeshProUGUI domestic_name = domestic_name_button.GetComponentInChildren<TextMeshProUGUI>();
+        
             city_title_ui.text = city.GetName();
             city_owner_ui.text = player.name;
             city_inhabitants_ui.text = city.inhabitants.ToString();
@@ -68,11 +80,19 @@ namespace Terrain {
             state_leader_name.text = player.GetGovernment().GetLeader().GetFullName() + " (" + gender + ")";
             
             gender =  player.GetGovernment().cabinet.GetDomestic(0).gender == EnumHandler.CharacterGender.Male ? "M" : "F";        //TO DO: REFACTOR THIS
-            domestic.text = player.GetGovernment().cabinet.GetDomestic(0).GetFullName() + " (" + gender + ")";
+            domestic_name.text = player.GetGovernment().cabinet.GetDomestic(0).GetFullName() + " (" + gender + ")";
 
             gender =  player.GetGovernment().cabinet.GetForeign(0).gender == EnumHandler.CharacterGender.Male ? "M" : "F";        //TO DO: REFACTOR THIS
-            foreign.text = player.GetGovernment().cabinet.GetForeign(0).GetFullName() + " (" + gender + ")";
+            foreign_name.text = player.GetGovernment().cabinet.GetForeign(0).GetFullName() + " (" + gender + ")";
             
+            ButtonInput.button_binds.Clear();
+            ButtonInput.button_binds.Add(state_leader_name_button, player.GetGovernment().GetLeader());
+            ButtonInput.button_binds.Add(foreign_name_button, player.GetGovernment().cabinet.GetForeign(0));
+            ButtonInput.button_binds.Add(domestic_name_button, player.GetGovernment().cabinet.GetDomestic(0));
+
+            Debug.Log("Added " + state_leader_name.text + " to button  " + state_leader_name_button.name);
+            Debug.Log("Added " + foreign_name.text + " to button  " + foreign_name_button.name);
+            Debug.Log("Added " + domestic_name.text + " to button  " + domestic_name_button.name);
 
         }
 
@@ -111,6 +131,40 @@ namespace Terrain {
             coast_title.text = hex.IsCoast() ? "Coast" : "Not Coast";
 
         }
+
+        public void GetCharacterInformation(ICharacter character){
+            character_ui.SetActive(true);
+            
+
+            TextMeshProUGUI name_field = GameObject.Find("Character_Panel_Name").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI type_field = GameObject.Find("Character_Panel_Type").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI role_field = GameObject.Find("Character_Panel_Role").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI age_field =  GameObject.Find("Character_Panel_Age").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI charisma_field =  GameObject.Find("Character_Panel_Charisma").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI intelligence_Field =  GameObject.Find("Character_Panel_Intelligence").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI skill_field =  GameObject.Find("Character_Panel_Skill").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI loyalty_field =  GameObject.Find("Character_Panel_Loyalty").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI wealth_field =  GameObject.Find("Character_Panel_Wealth").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI influence_Field =  GameObject.Find("Character_Panel_Influence").GetComponent<TextMeshProUGUI>();
+
+            //ICharacter character = 
+
+            name_field.text = character.GetFullName();
+            type_field.text = character.character_type.ToString();
+            role_field.text = character.title;
+            age_field.text = character.age.ToString();
+            charisma_field.text = character.charisma.ToString();
+            intelligence_Field.text = character.intelligence.ToString();
+            skill_field.text = character.skill.ToString();
+            loyalty_field.text = character.loyalty.ToString();
+            wealth_field.text = character.wealth.ToString();
+            influence_Field.text = "N/A";
+
+           
+
+        }
+
+
 
         public void CloseHexUI(){
             hex_ui.SetActive(false);

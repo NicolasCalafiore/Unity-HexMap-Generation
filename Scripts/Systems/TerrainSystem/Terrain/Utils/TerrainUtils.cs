@@ -15,6 +15,7 @@ namespace Terrain
             Used to normalize all List<List<float>> maps
             Used to generate all Vector2 spawn locations
         */
+        private static int temp_one = 0;
 
         public static void NormalizePerlinMap(List<List<float>> map){   // Normalizes Perlin Noise Map
             float max = map.SelectMany(x => x).Max();
@@ -84,6 +85,39 @@ namespace Terrain
                 (i + 1 < mapSizeX && CircularSearch(i + 1, j, map, target, iterations - 1)) ||
                 (i + 1 < mapSizeX && j - 1 >= 0 && CircularSearch(i + 1, j - 1, map, target, iterations - 1)) ||
                 (i - 1 >= 0 && j + 1 < mapSizeY && CircularSearch(i - 1, j + 1, map, target, iterations - 1));
+        }
+
+        public static bool FloodFillDistance(int i, int j, List<List<float>> map, int target, int depth = 0)
+        {
+            int mapSizeX = map.Count;
+            int mapSizeY = map[0].Count;
+
+            if(depth > 10){
+                return false;
+            }
+
+
+            // Check immediate neighbors
+            if ((j - 1 >= 0 && map[i][j - 1] == target) ||
+                (j + 1 < mapSizeY && map[i][j + 1] == target) ||
+                (i - 1 >= 0 && map[i - 1][j] == target) ||
+                (i + 1 < mapSizeX && map[i + 1][j] == target) ||
+                (i + 1 < mapSizeX && j - 1 >= 0 && map[i + 1][j - 1] == target) ||
+                (i - 1 >= 0 && j + 1 < mapSizeY && map[i - 1][j + 1] == target))
+            {
+                temp_one = depth;
+                return true;
+            }
+
+            depth++;
+
+            // Recursive calls
+            return (j - 1 >= 0 && CircularSearch(i, j - 1, map, target, depth)) ||
+                (j + 1 < mapSizeY && CircularSearch(i, j + 1, map, target, depth)) ||
+                (i - 1 >= 0 && CircularSearch(i - 1, j, map, target, depth)) ||
+                (i + 1 < mapSizeX && CircularSearch(i + 1, j, map, target, depth)) ||
+                (i + 1 < mapSizeX && j - 1 >= 0 && CircularSearch(i + 1, j - 1, map, target, depth)) ||
+                (i - 1 >= 0 && j + 1 < mapSizeY && CircularSearch(i - 1, j + 1, map, target, depth));
         }
 
         public static void CircularSpawn(int i, int j, List<List<float>> map, float value, int iterations = 1)
@@ -222,6 +256,18 @@ namespace Terrain
             return border_list;
         }
 
+    public static int GetElementCount(int target, List<List<float>> map){
+            int count = 0;
+            foreach(List<float> list in map){
+                foreach(float element in list){
+                    if(element == target){
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
         static bool IsBordering(List<List<float>> matrix, int row, int col, int border_value)
         {
             int rows = matrix.Count;
@@ -246,7 +292,11 @@ namespace Terrain
 
 
         
-
+    private static int GetTempOne(){
+        int temp = temp_one;
+        temp_one = 0;
+        return temp;
+    }
 
 
         
