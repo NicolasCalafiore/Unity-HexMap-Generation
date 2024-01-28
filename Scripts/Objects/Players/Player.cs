@@ -26,6 +26,7 @@ namespace Players {
         public int heritage_points = 0;
         public int belief_points = 0;
 
+
         public Player(string state_prefix, string name, int id){
             this.state_prefix = state_prefix;
             this.name = name;
@@ -35,7 +36,7 @@ namespace Players {
 
             this.id = id;
 
-            GameManager.player_id_to_player.Add(id, this);
+            PlayerManager.player_id_to_player.Add(id, this);
         }
 
         public void AddCity(City city){
@@ -73,6 +74,11 @@ namespace Players {
 
         public City GetCityByIndex(int index){
             return cities[index];
+        }
+
+        public void GovernmentSimulation(List<List<float>> territory_map){
+            government.cabinet.StartDomesticTurn(territory_map, id, fog_of_war_map);
+            government.cabinet.StartForeignTurn(territory_map, id, fog_of_war_map);
         }
     }
 }

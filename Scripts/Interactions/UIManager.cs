@@ -39,7 +39,7 @@ namespace Terrain {
 
             GameObject city_go = city_collider.transform.parent.gameObject;
             City city = TerrainGameHandler.city_go_to_city[city_go];
-            Player player = GameManager.player_id_to_player[city.GetPlayerId()];
+            Player player = PlayerManager.player_id_to_player[city.GetPlayerId()];
 
             TextMeshProUGUI city_title_ui = GameObject.Find("CityTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI city_owner_ui = GameObject.Find("OwnerTitle").GetComponent<TextMeshProUGUI>();
@@ -51,6 +51,8 @@ namespace Terrain {
             TextMeshProUGUI city_construction_rate = GameObject.Find("ECCTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI city_nourishment_rate = GameObject.Find("ECNTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI state_leader_name = GameObject.Find("StateLeader").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI foreign = GameObject.Find("Foreign").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI domestic = GameObject.Find("Domestic").GetComponent<TextMeshProUGUI>();
 
             city_title_ui.text = city.GetName();
             city_owner_ui.text = player.name;
@@ -65,6 +67,11 @@ namespace Terrain {
             string gender = player.GetGovernment().GetLeader().gender == EnumHandler.CharacterGender.Male ? "M" : "F";        //TO DO: REFACTOR THIS
             state_leader_name.text = player.GetGovernment().GetLeader().GetFullName() + " (" + gender + ")";
             
+            gender =  player.GetGovernment().cabinet.GetDomestic(0).gender == EnumHandler.CharacterGender.Male ? "M" : "F";        //TO DO: REFACTOR THIS
+            domestic.text = player.GetGovernment().cabinet.GetDomestic(0).GetFullName() + " (" + gender + ")";
+
+            gender =  player.GetGovernment().cabinet.GetForeign(0).gender == EnumHandler.CharacterGender.Male ? "M" : "F";        //TO DO: REFACTOR THIS
+            foreign.text = player.GetGovernment().cabinet.GetForeign(0).GetFullName() + " (" + gender + ")";
             
 
         }
@@ -89,6 +96,7 @@ namespace Terrain {
             TextMeshProUGUI hex_city = GameObject.Find("CityTitle").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI coast_title = GameObject.Find("CoastTitle").GetComponent<TextMeshProUGUI>();
 
+
             hex_elevation_ui.text = hex.elevation_type.ToString();
             hex_region_ui.text = hex.region_type.ToString();
             hex_land_ui.text = hex.land_type.ToString();
@@ -101,7 +109,6 @@ namespace Terrain {
             hex_owner.text = hex.owner_player != null ? hex.owner_player.name : "None";
             hex_city.text = hex.owner_city != null ? hex.owner_city.GetName() : "None";
             coast_title.text = hex.IsCoast() ? "Coast" : "Not Coast";
-
 
         }
 

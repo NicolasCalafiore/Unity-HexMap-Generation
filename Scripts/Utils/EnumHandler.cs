@@ -23,7 +23,6 @@ namespace Terrain
             Large_Hill = 50,
             Mountain = 150,
         }
-
         
         public enum HexRegion{   //Make sure to update getter function if you add more region types
             Ocean ,
@@ -65,7 +64,7 @@ namespace Terrain
             Gems,
             Stone,
             Bananas,
-            Incense,
+            Spices,
             Wheat,
             Pigs,
             Citrus,
@@ -100,12 +99,35 @@ namespace Terrain
         public enum CharacterType{
             None,
             Leader,
+            Advisor,
         }
 
         public enum CharacterGender{
             Male,
             Female,
         }
+
+        public enum FogType{
+            Undiscovered,
+            Discovered,
+            DiscoveredUnvisible,
+            DiscoveredVisible,
+
+        }
+
+        public enum GoalType{
+            Foreign,
+            Domestic,
+        }
+
+
+
+        private static readonly Dictionary<float, FogType> fogDict = new Dictionary<float, FogType>{
+            {(int) FogType.Undiscovered,  FogType.Undiscovered},
+            {(int) FogType.Discovered,  FogType.Discovered},
+            {(int) FogType.DiscoveredUnvisible,  FogType.DiscoveredUnvisible},
+            {(int) FogType.DiscoveredVisible,  FogType.DiscoveredVisible},
+        };
 
         private static readonly Dictionary<float, CharacterType> characterDict = new Dictionary<float, CharacterType>{
             {(int) CharacterType.None,  CharacterType.None},
@@ -170,7 +192,7 @@ namespace Terrain
             { (int) HexResource.Gems, HexResource.Gems },
             { (int) HexResource.Stone, HexResource.Stone },
             { (int) HexResource.Bananas, HexResource.Bananas },
-            { (int) HexResource.Incense, HexResource.Incense },
+            { (int) HexResource.Spices, HexResource.Spices },
             { (int) HexResource.Wheat, HexResource.Wheat },
             { (int) HexResource.Pigs, HexResource.Pigs },
             { (int) HexResource.Citrus, HexResource.Citrus },
@@ -244,6 +266,11 @@ namespace Terrain
         public static CharacterType GetCharacterType(float characterValue)
         {
             return characterDict.TryGetValue(characterValue, out var character) ? character : default;
+        }
+
+        public static FogType GetFogType(float fogValue)
+        {
+            return fogDict.TryGetValue(fogValue, out var character) ? character : default;
         }
     }
 }

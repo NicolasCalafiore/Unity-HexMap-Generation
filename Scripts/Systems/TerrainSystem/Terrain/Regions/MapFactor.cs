@@ -14,7 +14,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
         /*
             MapFactor is used to generate regions on the map, respective to a rain and temperature list.
         */
-        public float perlin_scale = 4.5f;   // Higher --> more random
+        public float perlin_scale = 3.5f;   // Higher --> more random
         private static int counter = 0;     // Used to force map generation if requirements are not met after X iterations
         private static int max_iterations = 500; // Max iterations before forced map generation
 

@@ -73,7 +73,7 @@ namespace Terrain
                 case EnumHandler.HexResource.Gems: 
                     hex = new GemsDecorator(hex);
                     break;
-                case EnumHandler.HexResource.Incense:
+                case EnumHandler.HexResource.Spices:
                     hex = new IncenseDecorator(hex);
                     break;
                 case EnumHandler.HexResource.Iron:

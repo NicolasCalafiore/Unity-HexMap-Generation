@@ -70,7 +70,7 @@ public static class DebugHandler
         string MESSAGE = "Player Information: \n";
         GameObject city_go = city_collider.transform.parent.gameObject;
         City city = TerrainGameHandler.city_go_to_city[city_go];
-        Player player = GameManager.player_id_to_player[city.GetPlayerId()];
+        Player player = PlayerManager.player_id_to_player[city.GetPlayerId()];
         MESSAGE += "Player State: " +  player.GetOfficialName() + "\n";
         MESSAGE += "Government Type: " + player.government_type + "\n";
         MESSAGE += "Color: " + player.team_color + "\n";

@@ -27,6 +27,8 @@ namespace Terrain{
         public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); // Given Hex gives Hex-Object
         public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>(); // Given City gives City-Game-Object
         public static Dictionary<Vector2, GameObject> col_row_to_hex_go = new Dictionary<Vector2, GameObject>(); // Given ColRow gives Hex-Object
+        public static List<GameObject> alerts_go_list = new List<GameObject>(); // List of all Alerts
+        public static List<GameObject> line_renderer_list = new List<GameObject>(); // List of all LineRenderers
 
         public void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){ // Called from MapGeneration
         
@@ -128,7 +130,10 @@ namespace Terrain{
                 if(hex.structure_type == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital
                     structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
                     city_go_to_city.Add(structure_go, capitals_list[counter]);
+                    CityManager.city_to_city_go.Add(capitals_list[counter], structure_go);
                     counter++;
+
+
                 }
                 if(structure_go != null){   // If structure_go is not null, spawn structure_go
                     city_go_to_city[structure_go].SetName(city_manager.GenerateCityName(hex)); // Set city name
@@ -136,15 +141,15 @@ namespace Terrain{
                     structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
                     structure_go.transform.localPosition = new Vector3(0, 0, 0);
                     structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
-                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
-                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].team_color;
+                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = PlayerManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
+                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = PlayerManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].team_color;
 
 
                     var CapitalFlags = structure_go.transform.GetChild(3);
 
                     foreach (Transform child in CapitalFlags)
                     {
-                        child.GetChild(0).GetComponent<MeshRenderer>().material.color = GameManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].team_color;
+                        child.GetChild(0).GetComponent<MeshRenderer>().material.color = PlayerManager.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].team_color;
                     }
                     
                 }
@@ -163,6 +168,107 @@ namespace Terrain{
                     territory_flag.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex.owner_player.team_color; 
 
                 }
+            }
+        }
+
+        public static void SpawnConstructionAlert(HexTile hextile){
+            GameObject alert = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Construction_Alert"));
+            GameObject hex_object = TerrainGameHandler.hex_to_hex_go[hextile];
+
+            alert.transform.SetParent(hex_object.transform);
+            alert.transform.localPosition = new Vector3(0, 0, 0);
+
+            alerts_go_list.Add(alert);
+
+        }
+
+        public static void SpawnExpansionAlert(HexTile hextile){
+            GameObject alert = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Expansion_Alert"));
+            GameObject hex_object = TerrainGameHandler.hex_to_hex_go[hextile];
+
+            alert.transform.SetParent(hex_object.transform);
+            alert.transform.localPosition = new Vector3(0, 0, 0);
+
+            alerts_go_list.Add(alert);
+
+        }
+
+        public static void RemoveAlerts(){
+            if(alerts_go_list.Count != 0){
+                for (int i = alerts_go_list.Count - 1; i >= 0; i--) //Cannot use foreach because we are removing items from the list being iterated over
+                {
+                    GameObject.Destroy(alerts_go_list[i]);
+                    alerts_go_list.RemoveAt(i);
+                }
+            }
+        }
+
+
+        public static void DrawForeignLine(GameObject capital_city, GameObject foreign_city, int relationship){
+
+            Color color = Color.white;
+
+            if(relationship < 25) color = Color.red;
+            else if(relationship < 50) color = Color.yellow;
+            else if(relationship < 75) color = Color.green;
+            else if(relationship < 100) color = Color.blue;
+                
+
+            GameObject line_render_object = new GameObject();
+            line_render_object.transform.SetParent(capital_city.transform);
+            line_render_object.transform.localPosition = new Vector3(0, 0, 0);
+            line_render_object.AddComponent<LineRenderer>();
+
+            LineRenderer lineRenderer = line_render_object.GetComponent<LineRenderer>();
+              
+
+            lineRenderer.SetPosition(0, capital_city.transform.position);
+            lineRenderer.SetPosition(1, foreign_city.transform.position);
+            lineRenderer.startWidth = .25f;
+            lineRenderer.endWidth = .0f;
+            lineRenderer.material.color = color;
+
+            line_renderer_list.Add(line_render_object);
+        }
+
+        public static void RemoveForeignLines(){
+            if(line_renderer_list.Count != 0){
+                for (int i = line_renderer_list.Count - 1; i >= 0; i--) //Cannot use foreach because we are removing items from the list being iterated over
+                {
+                    GameObject.Destroy(line_renderer_list[i]);
+                    line_renderer_list.RemoveAt(i);
+                }
+            }
+        }
+
+
+
+
+        public static void SpawnAIFlags(){
+            RemoveAlerts();
+            RemoveForeignLines();
+        
+            List<HexTile> construction_tiles = GameManager.player_manager.player_list[GameManager.player_view].GetGovernment().GetDomestic(0).GetPotentialConstructionTiles();
+            foreach(HexTile hex_tile in construction_tiles){
+                TerrainGameHandler.SpawnConstructionAlert(hex_tile);
+            }
+
+            List<HexTile> expansion_tiles = GameManager.player_manager.player_list[GameManager.player_view].GetGovernment().GetDomestic(0).GetPotentialExpansionTiles();
+            foreach(HexTile hex_tile in expansion_tiles){
+                TerrainGameHandler.SpawnExpansionAlert(hex_tile);
+            }
+
+
+            List<Player> known_players = GameManager.player_manager.player_list[GameManager.player_view].GetGovernment().GetForeign(0).GetKnownPlayers();
+            foreach(Player player in known_players){
+                City foreign_capital_city = player.GetCityByIndex(0);
+                GameObject foreign_capital_city_go = CityManager.city_to_city_go[foreign_capital_city];
+                
+                City capital_city = PlayerManager.player_id_to_player[GameManager.player_view].GetCityByIndex(0); 
+                GameObject capital_city_go = CityManager.city_to_city_go[capital_city];
+
+                int relationship = PlayerManager.player_id_to_player[GameManager.player_view].GetGovernment().GetForeign(0).GetRelationship(player);
+                TerrainGameHandler.DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
             }
         }
 

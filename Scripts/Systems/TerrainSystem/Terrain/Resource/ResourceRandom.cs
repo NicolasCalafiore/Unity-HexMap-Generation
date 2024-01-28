@@ -52,7 +52,7 @@ namespace Terrain
                         if(Random.Range(0, 100) < gems_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Gems;
                         if(Random.Range(0, 100) < salt_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Salt;
                         if(Random.Range(0, 100) < gold_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Gold;
-                        if(Random.Range(0, 100) < incense_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Incense;}
+                        if(Random.Range(0, 100) < incense_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Spices;}
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Highland && features_map[i][j] == (int) EnumHandler.HexNaturalFeature.None){
                         if(Random.Range(0, 100) < stone_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Stone;
@@ -63,6 +63,7 @@ namespace Terrain
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Jungle){
                         if(Random.Range(0, 100) < bananas_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Bananas; features_map[i][j] = (int) EnumHandler.HexNaturalFeature.None;}
                         if(Random.Range(0, 100) < rice_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Rice;
+                        if(Random.Range(0, 100) < incense_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Spices;
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Plain){
                         if(Random.Range(0, 100) < wheat_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Wheat;}
@@ -70,6 +71,7 @@ namespace Terrain
                     }
                     if(regions_map[i][j] == (int) EnumHandler.HexRegion.Swamp){
                         if(Random.Range(0, 100) < rice_chance){resource_map[i][j] = (int) EnumHandler.HexResource.Rice;}
+                        if(Random.Range(0, 100) < incense_chance) resource_map[i][j] = (int) EnumHandler.HexResource.Spices;
                     }
 
 

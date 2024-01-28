@@ -17,7 +17,7 @@ public class PlayerManager
     */
     public delegate void PlayersCreatedEventHandler(object sender, EventArgs e);
     public event PlayersCreatedEventHandler PlayersCreated;
-
+    public static Dictionary<float, Player> player_id_to_player = new Dictionary<float, Player>();
     public List<Player> player_list = new List<Player>();
     public PlayerManager(){
         
@@ -75,6 +75,9 @@ public class PlayerManager
             player.SetGovernment(government);
         }
     }
+
+
+    
 
 
 

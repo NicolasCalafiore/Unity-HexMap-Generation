@@ -18,6 +18,7 @@ public class CityManager
     */
 
     public static List<City> capitals_list = new List<City>();
+    public static Dictionary<City, GameObject> city_to_city_go = new Dictionary<City, GameObject>(); // Given Hex gives Hex-Object
     public CityManager(){
 
     }

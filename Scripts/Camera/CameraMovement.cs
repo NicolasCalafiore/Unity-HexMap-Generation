@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Players;
+using Strategy.Assets.Scripts.Objects;
 using Terrain;
 using UnityEngine;
 
@@ -58,6 +60,7 @@ public class CameraMovement : MonoBehaviour
     public static void CenterCamera(){
         GameManager.player_view = GameManager.player_view == GameManager.player_manager.player_list.Count - 1 ? 0 : GameManager.player_view + 1; // If player_view is at the end of the list, set player_view to 0, else increment player_view by 1
         GameManager.fog_manager.ShowFogOfWar(GameManager.player_manager.player_list[GameManager.player_view], GameManager.map_size); // Shows Fog of War for all players
+        
         Vector2 coordinates = GameManager.player_manager.player_list[GameManager.player_view].GetCityByIndex(0).GetColRow();
         HexTile hexTile = GameManager.hex_list[(int) coordinates.x * (int) GameManager.map_size.y + (int) coordinates.y];
         GameObject hex = TerrainGameHandler.hex_to_hex_go[hexTile];

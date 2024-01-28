@@ -8,6 +8,7 @@ public class ButtonInput : MonoBehaviour
 {
     public void NextPlayer(){
         CameraMovement.CenterCamera();
+        TerrainGameHandler.SpawnAIFlags();
     }
 
     public void DestroyFog(){

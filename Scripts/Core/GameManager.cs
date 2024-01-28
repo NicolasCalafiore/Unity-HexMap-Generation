@@ -27,7 +27,6 @@ public class GameManager: MonoBehaviour{
 
 
     public static Vector2 map_size = new Vector2(128, 128);
-    public static Dictionary<float, Player> player_id_to_player = new Dictionary<float, Player>();
     public static TerrainGameHandler terrain_manager;
     public static PlayerManager player_manager;
     public static CityManager city_manager;
@@ -52,9 +51,14 @@ public class GameManager: MonoBehaviour{
 
         SpawnGameObjects(); // Spawns all GameObjects into GameWorld
 
-        CameraMovement.CenterCamera();
+        character_manager.GenerateGovernmentsCharacters(map_generation.terrain_map_handler.regions_map, player_manager.player_list);
 
-        character_manager.GenerateGovernmentsLeaders(map_generation.terrain_map_handler.regions_map, player_manager.player_list);
+        foreach(Player i in player_manager.player_list){
+            i.GovernmentSimulation(map_generation.territory_map_handler.territory_map);
+        }
+
+        CameraMovement.CenterCamera();
+        TerrainGameHandler.SpawnAIFlags();
 
        
 
