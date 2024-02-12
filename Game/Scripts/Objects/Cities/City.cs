@@ -12,20 +12,20 @@ namespace Strategy.Assets.Scripts.Objects
         /*
             City class is used to store information about the city
         */
+        public List<HexTile> hex_territory_list = new List<HexTile>();
+        private Vector2 COL_ROW;
         private string name;
         private int player_id;
-        Vector2 col_row;
         public float inhabitants = 500;
         public float stability = 50;
         public float nourishment = 50;
         public float construction = 15;
-        public List<HexTile> hex_territory_list = new List<HexTile>();
 
         public City(string name, int player_id, Vector2 col_row)
         {
             this.name = name;
             this.player_id = player_id;
-            this.col_row = col_row;
+            this.COL_ROW = col_row;
         }
 
         public void CalculateCityNourishment(TerritoryManager territory_manager){
@@ -53,7 +53,7 @@ namespace Strategy.Assets.Scripts.Objects
 
         public Vector2 GetColRow()
         {
-            return col_row;
+            return COL_ROW;
         }
 
     }

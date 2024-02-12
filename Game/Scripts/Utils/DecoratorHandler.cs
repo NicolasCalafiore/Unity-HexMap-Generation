@@ -8,13 +8,16 @@ using UnityEngine;
 
 namespace Terrain
 {
-    public static class DecoratorHandler
+    public class DecoratorHandler
     {
         /*
             DecoratorHandler is used to set HexTile decorators for each HexTile
         */
+        public DecoratorHandler()
+        {
+        }
 
-        public static void SetHexDecorators(List<HexTile> hex_list){    // Wraps each Hex Object with a Decorator Object for each HexTile - called from MapGeneration
+        public void SetHexDecorators( List<HexTile> hex_list){    // Wraps each Hex Object with a Decorator Object for each HexTile - called from MapGeneration
             foreach(HexTile hex in hex_list){
                 SetFeatureDecorators(hex);
                 SetLandDecorator(hex);
@@ -25,7 +28,7 @@ namespace Terrain
             }
         }
 
-        private static void SetStructureDecorator(HexTile hex)
+        private void SetStructureDecorator(HexTile hex)
         {
             switch (hex.structure_type)
             {
@@ -35,7 +38,7 @@ namespace Terrain
             }
         }
 
-        private static void SetElevationDecorator(HexTile hex)  // Sets Elevation Decorator
+        private void SetElevationDecorator(HexTile hex)  // Sets Elevation Decorator
         {
             switch (hex.elevation_type)
             {
@@ -60,7 +63,7 @@ namespace Terrain
             }
         }
 
-        private static void SetResourceDecorator(HexTile hex)   // Sets Resource Decorator
+        private void SetResourceDecorator(HexTile hex)   // Sets Resource Decorator
         {
             switch (hex.resource_type)
             {
@@ -88,7 +91,7 @@ namespace Terrain
             }
         }
 
-        private static void SetRegionDecorator(HexTile hex) // Sets Region Decorator
+        private void SetRegionDecorator(HexTile hex) // Sets Region Decorator
         {
             switch (hex.region_type)
             {
@@ -116,7 +119,7 @@ namespace Terrain
             }
         }
 
-        private static void SetLandDecorator(HexTile hex)   // Sets Land Decorator
+        private void SetLandDecorator(HexTile hex)   // Sets Land Decorator
         {
             switch (hex.land_type)
             {
@@ -129,7 +132,7 @@ namespace Terrain
             }
         }
 
-        private static void SetFeatureDecorators(HexTile hex)  // Sets Feature Decorator
+        private void SetFeatureDecorators(HexTile hex)  // Sets Feature Decorator
         {
             switch (hex.feature_type)
             {

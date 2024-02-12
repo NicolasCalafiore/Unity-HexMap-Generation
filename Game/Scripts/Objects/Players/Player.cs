@@ -6,6 +6,7 @@ using System;
 using Random = UnityEngine.Random;
 using Cabinet;
 using PlayerGovernment;
+using Unity.VisualScripting;
 
 namespace Players {
     public class Player {
@@ -37,6 +38,15 @@ namespace Players {
             this.id = id;
 
             PlayerManager.player_id_to_player.Add(id, this);
+        }
+
+        public void GovernmentSimulation(MapGeneration map_generation){
+            //List<List<float>> territory_map = TerrainUtils.GenerateMap(map_generation.GetMapSize(), 0);
+            //DebugHandler.PrintMapDebug("Territory Map", territory_map);   //TO DO: REEVALUATE EFFECT
+
+            List<List<float>> territory_map = map_generation.territory_map_handler.territory_map;
+            government.cabinet.StartDomesticTurn(territory_map, id, fog_of_war_map);
+            government.cabinet.StartForeignTurn(territory_map, id, fog_of_war_map);
         }
 
         public void AddCity(City city){
@@ -76,9 +86,5 @@ namespace Players {
             return cities[index];
         }
 
-        public void GovernmentSimulation(List<List<float>> territory_map){
-            government.cabinet.StartDomesticTurn(territory_map, id, fog_of_war_map);
-            government.cabinet.StartForeignTurn(territory_map, id, fog_of_war_map);
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace Character {
 
     public class CharacterManager
     {
-        CharacterNameStrategy character_names_strategy;
+        CharacterNameStrategy character_names_strategy = new NameByRegion();
         private int gender_male_chance = 75;
 
         public CharacterManager(){
@@ -24,19 +24,9 @@ namespace Character {
 
         }
 
-        public void SetCharacterGenerationStrategy(int name_mode){
-            switch(name_mode){
-                case 0:
-                    character_names_strategy = new NameByRegion();
-                    break;
-                default:
-                    character_names_strategy = new NameByRegion();
-                    break;
-            }
-        }
-
-
-        public void GenerateGovernmentsCharacters(List<List<float>> regions_map, List<Player> player_list){
+        public void GenerateGovernmentsCharacters(MapGeneration map_generation, PlayerManager player_manager){
+            List<List<float>> regions_map = map_generation.terrain_map_handler.regions_map;
+            List<Player> player_list = player_manager.GetPlayerList();
             foreach(Player i in player_list){
 
                 EnumHandler.CharacterGender gender = UnityEngine.Random.Range(0, 100) < gender_male_chance ? EnumHandler.CharacterGender.Male : EnumHandler.CharacterGender.Female;

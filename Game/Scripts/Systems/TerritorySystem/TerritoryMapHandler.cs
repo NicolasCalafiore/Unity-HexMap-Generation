@@ -7,6 +7,7 @@ using Strategy.Assets.Game.Scripts.Terrain.Regions;
 using Unity.VisualScripting;
 using UnityEngine;
 using Players;
+using Cities;
 
 
 
@@ -17,8 +18,10 @@ namespace Terrain {
     {
         public List<List<float>> territory_map = new List<List<float>>();
 
-        public void GenerateCapitalTerritory(List<List<float>> capital_map, List<Player> player_list, Vector2 map_size)
+        public void GenerateCapitalTerritory(CityMapHandler city_map_handler, List<Player> player_list, Vector2 map_size)
         {
+            List<List<float>> capital_map = city_map_handler.structure_map; //Only Capitals are initialized at this time.
+
             List<List<float>> territory_map = TerrainUtils.GenerateMap(new Vector2(capital_map.Count, capital_map[0].Count), -1);
 
             for (int i = 0; i < capital_map.Count; i++)

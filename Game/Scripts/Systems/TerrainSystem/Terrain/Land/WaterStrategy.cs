@@ -15,7 +15,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
         public abstract List<List<float>> GenerateWaterMap(Vector2 map_size, EnumHandler.HexRegion region_type);
         private int padding = 5;
 
-        public void OceanBorder(List<List<float>> ocean_map){
+        public void SetOceanBorder(List<List<float>> ocean_map){
             for(int i = 0; i < ocean_map.Count; i++){
                 for(int j = 0; j < ocean_map[i].Count; j++){
                     if(i < padding || j > ocean_map[i].Count - padding || j < padding || i > ocean_map.Count - padding){

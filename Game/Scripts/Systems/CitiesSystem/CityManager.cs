@@ -17,13 +17,15 @@ public class CityManager
         CityManager is used to manipulate the cities in the game
     */
 
-    public static List<City> capitals_list = new List<City>();
+    public static List<City> capital_strategy = new List<City>();
+    private List<City> capitals_list = new List<City>();
     public static Dictionary<City, GameObject> city_to_city_go = new Dictionary<City, GameObject>(); // Given Hex gives Hex-Object
     public CityManager(){
 
     }
 
-    public void GenerateCapitalCityObjects(List<Player> player_list, MapGeneration map_generation){ 
+    public void GenerateCapitalCityObjects(PlayerManager player_manager, MapGeneration map_generation){ 
+        List<Player> player_list = player_manager.GetPlayerList();
         int PLAYER_INDEX = 0;
         for(int i = 0; i < map_generation.city_map_handler.structure_map.Count; i++){
             for(int j = 0; j < map_generation.city_map_handler.structure_map.Count; j++){
@@ -40,18 +42,24 @@ public class CityManager
     }
 
     public string GenerateCityName(HexTile hex){
-        List<string> cityNames = IOHandler.ReadCityNamesRegionSpecified("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CityNames.xml", hex.region_type.ToString());
+        List<string> cityNames = IOHandler.ReadCityNamesRegionSpecified(hex.region_type.ToString());
         int random_pick = UnityEngine.Random.Range(0, cityNames.Count);
 
         string name = cityNames[random_pick];
         return name;
     }
 
-    public void SetCityTerritory(HexManager hex_factory, Vector2 map_size){
+    public void SetCityTerritory(HexManager hex_factory, MapGeneration map_generation){
         foreach(City city in capitals_list){
-            hex_factory.AddHexTileToCityTerritory(city, map_size);
+            hex_factory.AddHexTileToCityTerritory(city, map_generation.GetMapSize());
         }
     }
+
+    public List<City> GetCapitalsList(){
+        return capitals_list;
+    }
+
+
 
 
 

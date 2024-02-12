@@ -30,7 +30,8 @@ namespace Terrain{
         public static List<GameObject> alerts_go_list = new List<GameObject>(); // List of all Alerts
         public static List<GameObject> line_renderer_list = new List<GameObject>(); // List of all LineRenderers
 
-        public void SpawnTerrain(Vector2 map_size, List<HexTile> hex_list){ // Called from MapGeneration
+        public void SpawnTerrain(HexManager hex_manager){ // Called from MapGeneration
+            List<HexTile> hex_list = hex_manager.GetHexList();
         
             generic_hex = Resources.Load<GameObject>("Prefab/Core/Hex_Generic_No_TMP"); 
             
@@ -118,9 +119,10 @@ namespace Terrain{
             
         }
 
-        public void SpawnStructures(List<HexTile> hex_list, List<City> capitals_list, CityManager city_manager)   // Spawns all capitals into GameWorld
+        public void SpawnStructures(HexManager hex_manager, CityManager city_manager)   // Spawns all capitals into GameWorld
         {
             int counter = 0;
+            List<HexTile> hex_list = hex_manager.GetHexList();
 
             foreach(HexTile hex in hex_list){
 
@@ -129,8 +131,8 @@ namespace Terrain{
 
                 if(hex.structure_type == EnumHandler.StructureType.Capital){    // If hex is tagged as a capital, spawn capital
                     structure_go = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/City"));
-                    city_go_to_city.Add(structure_go, capitals_list[counter]);
-                    CityManager.city_to_city_go.Add(capitals_list[counter], structure_go);
+                    city_go_to_city.Add(structure_go, city_manager.GetCapitalsList()[counter]);
+                    CityManager.city_to_city_go.Add(city_manager.GetCapitalsList()[counter], structure_go);
                     counter++;
 
 
@@ -249,10 +251,10 @@ namespace Terrain{
 
 
 
-        public static void SpawnAIFlags(){
+        public static void SpawnAIFlags(PlayerManager player_manager){
             RemoveAlerts();
             RemoveForeignLines();
-            Player player = GameManager.player_manager.player_list[GameManager.player_view];
+            Player player = player_manager.GetPlayerView();
         
             List<HexTile> construction_tiles = player.GetGovernment().GetDomestic(0).GetPotentialConstructionTiles();
             foreach(HexTile hex_tile in construction_tiles){
@@ -275,10 +277,10 @@ namespace Terrain{
                 City foreign_capital_city = i.GetCityByIndex(0);
                 GameObject foreign_capital_city_go = CityManager.city_to_city_go[foreign_capital_city];
                 
-                City capital_city = PlayerManager.player_id_to_player[GameManager.player_view].GetCityByIndex(0); 
+                City capital_city = player.GetCityByIndex(0); 
                 GameObject capital_city_go = CityManager.city_to_city_go[capital_city];
 
-                int relationship = PlayerManager.player_id_to_player[GameManager.player_view].GetGovernment().GetForeign(0).GetRelationship(i);
+                int relationship = player.GetGovernment().GetForeign(0).GetRelationship(i);
                 TerrainGameHandler.DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
             }
         }
