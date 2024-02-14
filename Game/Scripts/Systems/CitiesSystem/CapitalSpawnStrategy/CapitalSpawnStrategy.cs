@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Character;
 using Players;
 using UnityEngine;
 
@@ -18,9 +19,9 @@ namespace Terrain
         protected bool isInvalidCoordinate(Vector3 random_coor, List<List<float>> water_map, List<List<float>> city_map){
             
             return 
-            water_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.LandType.Water || 
-            city_map[(int) random_coor.x][(int) random_coor.z] == (int) EnumHandler.StructureType.Capital ||
-            TerrainUtils.CircularSearch( (int) random_coor.x, (int) random_coor.z, city_map, (int) EnumHandler.StructureType.Capital, capital_minimum_distance);
+            water_map[(int) random_coor.x][(int) random_coor.z] == (int) LandEnums.LandType.Water || 
+            city_map[(int) random_coor.x][(int) random_coor.z] == (int) StructureEnums.StructureType.Capital ||
+            TerrainUtils.CircularSearch( (int) random_coor.x, (int) random_coor.z, city_map, (int) StructureEnums.StructureType.Capital, capital_minimum_distance);
         }
 
 

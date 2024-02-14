@@ -9,7 +9,7 @@ namespace Character
 {
     public abstract class CharacterNameStrategy
     {
-         public abstract List<string> GenerateNames(Vector2 capital_coordinates, List<List<float>> regions_map, EnumHandler.CharacterGender gender);
+         public abstract List<string> GenerateNames(Vector2 capital_coordinates, List<List<float>> regions_map, CharacterEnums.CharacterGender gender);
         
     }
 }
