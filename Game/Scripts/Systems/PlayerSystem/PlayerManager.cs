@@ -17,34 +17,33 @@ public class PlayerManager
     */
 
     public static Dictionary<float, Player> player_id_to_player = new Dictionary<float, Player>();
-    private List<Player> player_list = new List<Player>();
-    private int player_count = 10;
-    private int player_view;
+    public List<Player> player_list = new List<Player>();
     public PlayerManager(){
         
     }
 
     
-    public void GeneratePlayers(){
-        CreatePlayers(0);
-        SetGovernmentTypes(0);
+    public void GeneratePlayers(int num_players){
+        
+        for(int i = 0; i < num_players; i++){
+            player_list.Add(new Player("player", "Player " + i, i));
+        }
+
+        SetGovernmentTypes();
+
+    }
+
+    private void SetGovernmentTypes(){
+        List<EnumHandler.GovernmentType> government_types = EnumHandler.GetGovernmentTypes();
+
+        foreach(Player player in player_list){
+            int random_index = UnityEngine.Random.Range(1, government_types.Count);
+            player.SetGovernmentType(government_types[random_index]);
+        }
+
         SetStatePrefix();
     }
 
-    public void CreatePlayers(int player_id){        // TO DO: EVALUATE FUNCTIONAL PROGRAMMING
-        if(player_id < player_count){
-            player_list.Add(new Player("player", "Player " + player_id, player_id));
-            CreatePlayers(player_id + 1);
-        }
-    }
-
-    private void SetGovernmentTypes(int index){
-        if(index < player_list.Count){
-            int random_index = UnityEngine.Random.Range(1, EnumHandler.GetGovernmentTypes().Count);
-            player_list[index].SetGovernmentType(EnumHandler.GetGovernmentTypes()[random_index]);
-            SetGovernmentTypes(index + 1);
-        }
-    }
 
     //Sets the state's government-related prefix
     private void SetStatePrefix()
@@ -58,16 +57,11 @@ public class PlayerManager
     }
 
     //
-    public void SetStateName(HexManager hex_manager)
+    public void SetStateName(List<HexTile> hex_list)
     {
-        List<HexTile> hex_list = hex_manager.GetHexList();
-
         foreach(Player player in player_list){
             Vector2 capital_coordinates = player.GetCityByIndex(0).GetColRow();
-            HexTile capital_hex = HexManager.col_row_to_hex[capital_coordinates];
-
-            //Given player get capitals hextile
-
+            HexTile capital_hex = hex_list.FirstOrDefault(x => x.GetColRow() == capital_coordinates);
             EnumHandler.HexRegion hex_region = capital_hex.region_type;
 
             List<string> state_names = IOHandler.ReadStateNamesRegionSpecified(hex_region.ToString());
@@ -81,25 +75,13 @@ public class PlayerManager
     }
 
 
-    public void GenerateGovernments(){   
+    public void GenerateGovernments(MapGeneration map_generation){   
         foreach(Player player in player_list){
             Government government = new Government(player.government_type);
             player.SetGovernment(government);
         }
     }
 
-
-    public Player GetPlayerView(){
-        return player_list[player_view];
-    }
-
-    public int GetPlayerViewIndex(){
-        return player_view;
-    }
-
-    public List<Player> GetPlayerList(){
-        return player_list;
-    }
 
     
 

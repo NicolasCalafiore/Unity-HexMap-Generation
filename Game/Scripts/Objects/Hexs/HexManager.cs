@@ -12,20 +12,18 @@ using UnityEngine;
 public class HexManager{
 
     public static Dictionary<Vector2, HexTile> col_row_to_hex = new Dictionary<Vector2, HexTile>();
-    private List<HexTile> hex_list = new List<HexTile>();   // All HexTile objects
-    private DecoratorHandler hex_decorator = new DecoratorHandler();
 
     public HexManager(){
 
     }
 
-    public void GenerateHexList(MapGeneration map_generation, HexManager hex_manager){
+    public List<HexTile> GenerateHexList(Vector2 map_size, MapGeneration map_generation, CityManager city_manager, TerritoryManager territory_manager, HexManager hex_factory){
         List<HexTile> hex_list = new List<HexTile>();
 
-        for(int column = 0; column < map_generation.GetMapSize().x; column++){
-            for(int row = 0; row < map_generation.GetMapSize().y; row++){
+        for(int column = 0; column < map_size.x; column++){
+            for(int row = 0; row < map_size.y; row++){
                 
-                HexTile hex = hex_manager.GenerateHex(
+                HexTile hex = hex_factory.GenerateHex(
                     map_generation.terrain_map_handler.elevation_map[column][row], 
                     map_generation.city_map_handler.structure_map[column][row], 
                     map_generation.terrain_map_handler.features_map[column][row], 
@@ -40,16 +38,14 @@ public class HexManager{
         }
 
 
-        this.hex_list = hex_list;
+        return hex_list;
         
     }
 
     public HexTile GenerateHex(float elevation_type, float structure_type, float feature_type, float land_type, float region_type, float resource_type, /* float owner_id, */ float col, float row){ 
         HexTile hex = new((int) col, (int) row);
-        
         col_row_to_hex.Add(new Vector2(col, row), hex);
         EnumHandler.HexElevation elevation_type_enum = EnumHandler.GetLandType(land_type) == EnumHandler.LandType.Water ? EnumHandler.HexElevation.Flatland : EnumHandler.GetElevationType(elevation_type);
-        
         hex.SetElevation(elevation_type_enum)
             .SetStructureType(EnumHandler.GetStructureType(structure_type))
             .SetFeatureType(EnumHandler.GetNaturalFeatureType(feature_type))
@@ -82,14 +78,8 @@ public class HexManager{
         }
     }
 
-    public List<HexTile> GetHexList(){
-        return hex_list;
-    }
 
-    internal void SetHexDecorators()
-    {
-        hex_decorator.SetHexDecorators(hex_list);
-    }
+
 
 }
 

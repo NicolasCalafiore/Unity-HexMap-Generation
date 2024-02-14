@@ -22,7 +22,7 @@ namespace Cities {
 
         }
     
-        public void GenerateCitiesMap(TerrainMapHandler terrain_map_handler, List<Player> player_list, Vector2 map_size, int capital_strategy)
+        public List<List<float>> GenerateCitiesMap(List<List<float>> water_map, List<Player> player_list, Vector2 map_size, List<List<float>> feature_map, List<List<float>> resource_map, int capital_strategy)
         {
             List<List<float>> structure_map = TerrainUtils.GenerateMap(map_size);
 
@@ -40,11 +40,10 @@ namespace Cities {
                     break;
             }
 
-            structure_map = strategy.GenerateCapitalMap(terrain_map_handler.water_map, player_list, 
-                                                        map_size, terrain_map_handler.features_map, 
-                                                        terrain_map_handler.resource_map, structure_map);
+            structure_map = strategy.GenerateCapitalMap(water_map, player_list, map_size, feature_map, resource_map, structure_map);
             
             this.structure_map = structure_map;
+            return structure_map;
         }
 
     }

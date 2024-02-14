@@ -11,11 +11,12 @@ namespace PlayerGovernment {
         
         Leader leader;
         private EnumHandler.GovernmentType government_type;
-        public Cabinet.Cabinet cabinet;
+        public CabinetAdvisors cabinet;
+
 
         public Government(EnumHandler.GovernmentType government_type){
             this.government_type = government_type;
-            cabinet = new Cabinet.Cabinet();
+            cabinet = new CabinetAdvisors();
         }
 
         public void SetLeader(Leader leader){
@@ -40,10 +41,6 @@ namespace PlayerGovernment {
 
         public Domestic GetDomestic(int index){
             return cabinet.GetDomestic(index);
-        }
-
-        public EnumHandler.GovernmentType GetGovernment(){
-            return government_type;
         }
 
     }

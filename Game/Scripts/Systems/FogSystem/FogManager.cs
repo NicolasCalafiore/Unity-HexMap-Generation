@@ -16,21 +16,20 @@ namespace Terrain {
 
     public class FogManager
     {
-        public FogManager(){
+        public FogManager(Vector2 map_size){
 
         }
 
-        public void InitializePlayerFogOfWar(PlayerManager player_manager, MapGeneration map_generation){
-            List<Player> player_list = player_manager.GetPlayerList();
+        public void InitializePlayerFogOfWar(List<Player> player_list, Vector2 map_size){
             foreach(Player player in player_list){
 
-                List<List<float>> player_fog_of_war_map = TerrainUtils.GenerateMap(map_generation.GetMapSize(), 0);
+                List<List<float>> player_fog_of_war_map = TerrainUtils.GenerateMap(map_size, 0);
 
                 List<City> city_list = player.cities;
                 foreach(City city in city_list){
                     Vector2 city_col_row = city.GetColRow();
                     player_fog_of_war_map[(int) city_col_row.x][(int) city_col_row.y] = 1;
-                    TerrainUtils.CircularSpawn((int) city_col_row.x, (int) city_col_row.y, player_fog_of_war_map, 1, 10);
+                    TerrainUtils.CircularSpawn((int) city_col_row.x, (int) city_col_row.y, player_fog_of_war_map, 1, 5);
                 }
                 
                 player.SetFogOfWarMap(player_fog_of_war_map);
@@ -46,16 +45,15 @@ namespace Terrain {
             }
         }
 
-        public void ShowFogOfWar(PlayerManager player_manager, MapGeneration map_generation){
-            Player player = player_manager.GetPlayerView();
+        public void ShowFogOfWar(Player player, Vector2 map_size){
             List<List<float>> fog_of_war_map = player.fog_of_war_map;
 
             for(int i = 0; i < fog_of_war_map.Count; i++){
                 for(int j = 0; j < fog_of_war_map[i].Count; j++){
 
-                    if(fog_of_war_map[i][j] == 0) DespawnHexTile(new Vector2(i,j), map_generation.GetMapSize());
+                    if(fog_of_war_map[i][j] == 0) DespawnHexTile(new Vector2(i,j), map_size);
 
-                    else SpawnHexTile(new Vector2(i,j), map_generation.GetMapSize());
+                    else SpawnHexTile(new Vector2(i,j), map_size);
                     
                 }
             }

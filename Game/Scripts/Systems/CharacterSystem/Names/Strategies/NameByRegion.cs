@@ -12,10 +12,10 @@ namespace Character
     {
         public override List<string> GenerateNames(Vector2 capital_coordinates, List<List<float>> regions_map, EnumHandler.CharacterGender gender)
         {            
-            List<string> first_names = IOHandler.ReadFirstNamesRegionSpecified( 
+            List<string> first_names = IOHandler.ReadFirstNamesRegionSpecified("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CharacterNames.xml", 
                 EnumHandler.GetRegionType(regions_map[ (int) capital_coordinates.x][ (int) capital_coordinates.y]).ToString(), gender.ToString());
             
-            List<string> last_names = IOHandler.ReadLastNamesRegionSpecified(
+            List<string> last_names = IOHandler.ReadLastNamesRegionSpecified("C:\\Users\\Nico\\Desktop\\Projects\\Strategy\\Assets\\Game\\Resources\\Data\\CharacterNames.xml", 
                 EnumHandler.GetRegionType(regions_map[ (int) capital_coordinates.x][ (int) capital_coordinates.y]).ToString());
 
 

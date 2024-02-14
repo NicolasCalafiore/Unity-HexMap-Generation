@@ -57,12 +57,12 @@ public class CameraMovement : MonoBehaviour
         Camera.main.transform.position = position;
     }
 
-    public static void CenterCamera(PlayerManager player_manager, FogManager fog_manager, MapGeneration map_generation, HexManager hex_manager){
-        // TO DO: REIMPLEMENT -->If player_view is at the end of the list, set player_view to 0, else increment player_view by 1
-        fog_manager.ShowFogOfWar(player_manager, map_generation); // Shows Fog of War for all players
+    public static void CenterCamera(){
+        GameManager.player_view = GameManager.player_view == GameManager.player_manager.player_list.Count - 1 ? 0 : GameManager.player_view + 1; // If player_view is at the end of the list, set player_view to 0, else increment player_view by 1
+        GameManager.fog_manager.ShowFogOfWar(GameManager.player_manager.player_list[GameManager.player_view], GameManager.map_size); // Shows Fog of War for all players
         
-        Vector2 coordinates = player_manager.GetPlayerView().GetCityByIndex(0).GetColRow();
-        HexTile hexTile = hex_manager.GetHexList()[(int) coordinates.x * (int) map_generation.GetMapSize().y + (int) coordinates.y];
+        Vector2 coordinates = GameManager.player_manager.player_list[GameManager.player_view].GetCityByIndex(0).GetColRow();
+        HexTile hexTile = GameManager.hex_list[(int) coordinates.x * (int) GameManager.map_size.y + (int) coordinates.y];
         GameObject hex = TerrainGameHandler.hex_to_hex_go[hexTile];
         Vector3 vector = hex.transform.position;
         vector.y += 10f;
