@@ -18,7 +18,7 @@ namespace Cabinet {
 
         public void StartDomesticTurn(List<List<float>> territory_map, int id, List<List<float>> fog_of_war){
             foreach(Domestic i in domestic_advisor_list){
-                i.IdentifyConstructionOppruntities(territory_map, id);
+                i.IdentifyConstructionOpportunities(territory_map, id);
                 i.IdentifyExpansionOpportuntiies(fog_of_war, id, territory_map);
             }
         }

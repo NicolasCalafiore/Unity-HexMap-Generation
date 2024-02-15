@@ -13,47 +13,45 @@ namespace Players {
         /*
             Player class is used to store information about the player
         */
-        private static int player_count = 10; //**
+        private static int player_count = 25; //**
         public static Dictionary<float, Player> player_id_to_player = new Dictionary<float, Player>();
         private static List<Player> player_list = new List<Player>();
         private static Player player_view; //**
 
 
-        public string state_prefix;
-        public string name;
-        public Color team_color;
-        public int id;
-        public List<City> cities = new List<City>();
-        public List<List<float>> fog_of_war_map;
-        public GovernmentEnums.GovernmentType government_type;
-        public Government government;
-        public float wealth = 1000;
-        public int knowledge_points = 0;
-        public int heritage_points = 0;
-        public int belief_points = 0;
+        private string state_prefix;
+        private string name;
+        private Color team_color;
+        private int id;
+        private List<City> cities = new List<City>();
+        private List<List<float>> fog_of_war_map;
+        private GovernmentEnums.GovernmentType government_type;
+        private Government government;
+        private float wealth = 1000;
+        private int knowledge_points = 0;
+        private int heritage_points = 0;
+        private int belief_points = 0;
 
 
         public Player(string state_prefix, string name, int id){
             this.state_prefix = state_prefix;
             this.name = name;
-
-
-             this.team_color = new Color(Random.Range(0f, 1f),Random.Range(0f, 1f),Random.Range(0f, 1f));
-
+            this.team_color = new Color(Random.Range(0f, 1f),Random.Range(0f, 1f),Random.Range(0f, 1f));
             this.id = id;
-
-            Player.player_id_to_player.Add(id, this);
+            player_id_to_player.Add(id, this);
         }
 
-        public void GovernmentSimulation(MapManager map_generation){
-            //List<List<float>> territory_map = TerrainUtils.GenerateMap(map_generation.GetMapSize(), 0);
-            //DebugHandler.PrintMapDebug("Territory Map", territory_map);   //TO DO: REEVALUATE EFFECT
-
-            List<List<float>> territory_map = map_generation.territory_map_handler.territory_map;
+        public void SimulateGovernment(){
+            List<List<float>> territory_map = MapManager.territory_map_handler.territory_map;
             government.cabinet.StartDomesticTurn(territory_map, id, fog_of_war_map);
             government.cabinet.StartForeignTurn(territory_map, id, fog_of_war_map);
         }
 
+        public static void SimulateGovernments(){
+            foreach(Player i in player_list){        
+                i.SimulateGovernment();
+            }
+        }
         public void AddCity(City city){
             cities.Add(city);
         }
@@ -91,18 +89,77 @@ namespace Players {
             return cities[index];
         }
 
-        //**
+        public string GetStatePrefix(){
+            return state_prefix;
+        }
 
-        public static void GeneratePlayers(){
-        CreatePlayers(0);
-        SetGovernmentTypes(0);
-        SetStatePrefix();
-    }
+        public string GetName(){
+            return name;
+        }
+
+        public int GetId(){
+            return id;
+        }
+
+        public Color GetTeamColor(){
+            return team_color;
+        }
+
+        public float GetWealth(){
+            return wealth;
+        }
+
+        public void SetWealth(float wealth){
+            this.wealth = wealth;
+        }
+
+        public void AddWealth(float wealth){
+            this.wealth += wealth;
+        }
+
+        public void SubtractWealth(float wealth){
+            this.wealth -= wealth;
+        }
+
+        public void AddKnowledgePoints(int knowledge_points){
+            this.knowledge_points += knowledge_points;
+        }
+
+        public void AddHeritagePoints(int heritage_points){
+            this.heritage_points += heritage_points;
+        }
+
+        public void AddBeliefPoints(int belief_points){
+            this.belief_points += belief_points;
+        }
+
+        public int GetKnowledgePoints(){
+            return knowledge_points;
+        }
+
+        public int GetHeritagePoints(){
+            return heritage_points;
+        }
+
+        public int GetBeliefPoints(){
+            return belief_points;
+        }
+
+        public List<City> GetCities(){
+            return cities;
+        }
+
+        public List<List<float>> GetFogOfWarMap(){
+            return fog_of_war_map;
+        }
+
+        public GovernmentEnums.GovernmentType GetGovernmentType(){
+            return government_type;
+        }
 
         public static void CreatePlayers(int player_id){        // TO DO: EVALUATE FUNCTIONAL PROGRAMMING
             if(player_id < player_count){
                 player_list.Add(new Player("player", "Player " + player_id, player_id));
-                Debug.Log("Player " + player_id + " created");
                 CreatePlayers(player_id + 1);
             }
         }
@@ -126,7 +183,14 @@ namespace Players {
             }
         }
 
-        //
+        public static void GeneratePlayers(){
+            CreatePlayers(0);
+            SetGovernmentTypes(0);
+            SetStatePrefix();
+
+            player_id_to_player.Add(-1, null);
+        }
+
         public static void SetStateNames()
         {
             List<HexTile> hex_list = HexTile.GetHexList();
@@ -170,10 +234,13 @@ namespace Players {
                 player_view = player_list[player_list.IndexOf(player_view) + 1];
             }
 
-                Debug.Log("Printing player view government and advisors:");
+                Debug.Log("Printing player view government and advisors:");                  //CHARACTERS
                 DebugHandler.DisplayCharacter(player_view.GetGovernment().GetLeader());
                 DebugHandler.DisplayCharacter(player_view.GetGovernment().GetDomestic(0));
                 DebugHandler.DisplayCharacter(player_view.GetGovernment().GetForeign(0));
+
+
+
         }
 
         public static List<Player> GetPlayerList(){

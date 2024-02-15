@@ -15,14 +15,14 @@ namespace Strategy.Assets.Scripts.Objects
         private static List<City> capitals_list = new List<City>();
         public static Dictionary<City, GameObject> city_to_city_go = new Dictionary<City, GameObject>(); // Given Hex gives Hex-Object
 
-        public List<HexTile> hex_territory_list = new List<HexTile>();
+        private List<HexTile> hex_territory_list = new List<HexTile>();
         private Vector2 COL_ROW;
         private string name;
         private int player_id;
-        public float inhabitants = 500;
-        public float stability = 50;
-        public float nourishment = 50;
-        public float construction = 15;
+        private float inhabitants = 500;
+        private float stability = 50;
+        private float nourishment = 50;
+        private float construction = 15;
 
         public City(string name, int player_id, Vector2 col_row)
         {
@@ -59,15 +59,20 @@ namespace Strategy.Assets.Scripts.Objects
             return COL_ROW;
         }
 
+        public List<HexTile> GetHexTerritoryList()
+        {
+            return hex_territory_list;
+        }
 
-        public static void GenerateCapitalCityObjects(MapManager map_generation){ 
+
+        public static void GenerateCapitalCityObjects(){ 
             List<Player> player_list = Player.GetPlayerList();
             int PLAYER_INDEX = 0;
-            for(int i = 0; i < map_generation.city_map_handler.structure_map.Count; i++){
-                for(int j = 0; j < map_generation.city_map_handler.structure_map.Count; j++){
+            for(int i = 0; i < MapManager.city_map_handler.structure_map.Count; i++){
+                for(int j = 0; j < MapManager.city_map_handler.structure_map.Count; j++){
 
-                    if(map_generation.city_map_handler.structure_map[i][j] == (int) StructureEnums.StructureType.Capital){
-                        City city = new City("Error", player_list[PLAYER_INDEX].id, new Vector2(i,j));
+                    if(MapManager.city_map_handler.structure_map[i][j] == (int) StructureEnums.StructureType.Capital){
+                        City city = new City("Error", player_list[PLAYER_INDEX].GetId(), new Vector2(i,j));
                         capitals_list.Add(city);
                         player_list[PLAYER_INDEX].AddCity(city); // Add city to player
                         PLAYER_INDEX++;
@@ -85,15 +90,16 @@ namespace Strategy.Assets.Scripts.Objects
             return name;
         }
 
-        public static void SetCityTerritory(MapManager map_generation){
+        public static void SetCityTerritory(){
             foreach(City city in capitals_list){
-                HexTile.AddHexTileToCityTerritory(city, map_generation.GetMapSize());
+                HexTile.AddHexTileToCityTerritory(city, MapManager.GetMapSize());
             }
         }
 
         public static List<City> GetCapitalsList(){
             return capitals_list;
         }
+
 
 
     }

@@ -8,71 +8,70 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Players;
 using Strategy.Assets.Scripts.Objects;
+using static Terrain.FogEnums;
 
 
 
 
 namespace Terrain {
 
-    public class FogManager
+    public static class FogManager
     {
-        public FogManager(){
+        public static void InitializePlayerFogOfWar(){
 
-        }
+            foreach(Player player in Player.GetPlayerList()){
 
-        public void InitializePlayerFogOfWar(MapManager map_generation){
-            List<Player> player_list = Player.GetPlayerList();
-            foreach(Player player in player_list){
+                List<List<float>> player_fog_of_war_map = TerrainUtils.GenerateMap((float) FogType.Undiscovered);
+                List<City> city_list = player.GetCities();
 
-                List<List<float>> player_fog_of_war_map = TerrainUtils.GenerateMap(map_generation.GetMapSize(), 0);
-
-                List<City> city_list = player.cities;
                 foreach(City city in city_list){
-                    Vector2 city_col_row = city.GetColRow();
-                    player_fog_of_war_map[(int) city_col_row.x][(int) city_col_row.y] = 1;
-                    TerrainUtils.CircularSpawn((int) city_col_row.x, (int) city_col_row.y, player_fog_of_war_map, 1, 10);
+                    int x = (int) city.GetColRow().x;
+                    int y = (int) city.GetColRow().y;
+
+                    player_fog_of_war_map[x][y] = (float) FogType.Discovered;
+                    TerrainUtils.CircularSpawn(x, y, player_fog_of_war_map, (float) FogType.Discovered, 10);
                 }
                 
                 player.SetFogOfWarMap(player_fog_of_war_map);
-
             }
 
         }
 
-        public void DestroyFog()
-        {
-            foreach(GameObject hex_go in TerrainManager.hex_go_list){
-                hex_go.SetActive(true);
-            }
-        }
-
-        public void ShowFogOfWar(MapManager map_generation){
+        public static void ShowFogOfWar(){
             Player player = Player.GetPlayerView();
-            List<List<float>> fog_of_war_map = player.fog_of_war_map;
+            List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
 
             for(int i = 0; i < fog_of_war_map.Count; i++){
                 for(int j = 0; j < fog_of_war_map[i].Count; j++){
 
-                    if(fog_of_war_map[i][j] == 0) DespawnHexTile(new Vector2(i,j), map_generation.GetMapSize());
-
-                    else SpawnHexTile(new Vector2(i,j), map_generation.GetMapSize());
+                    if(fog_of_war_map[i][j] == (float) FogType.Undiscovered) DespawnHexTile(i, j);
+                    else SpawnHexTile(i, j);
                     
                 }
             }
         }
 
-        public void SpawnHexTile(Vector2 vector2, Vector2 map_size)
+        public static void SpawnHexTile(int i, int j)
         {
-            GameObject hex_go = TerrainManager.hex_go_list[(int) vector2.x * (int) map_size.y + (int) vector2.y];
+            Vector2 coordinates = new Vector2(i, j);
+
+            GameObject hex_go = TerrainManager.hex_go_list[(int) coordinates.x * (int) MapManager.GetMapSize().y + (int) coordinates.y];
             hex_go.SetActive(true);
         }
 
-        public void DespawnHexTile(Vector2 coordinates, Vector2 map_size){
-            GameObject hex_go = TerrainManager.hex_go_list[(int) coordinates.x * (int) map_size.y + (int) coordinates.y];
+        public static void DespawnHexTile(int i, int j){
+            Vector2 coordinates = new Vector2(i, j);
+
+            GameObject hex_go = TerrainManager.hex_go_list[(int) coordinates.x * (int) MapManager.GetMapSize().y + (int) coordinates.y];
             hex_go.SetActive(false);
         }
 
-
+        public static void DestroyFog()
+        {
+            foreach(GameObject hex_go in TerrainManager.hex_go_list){
+                hex_go.SetActive(true);
+            }
+        }
 
 
 

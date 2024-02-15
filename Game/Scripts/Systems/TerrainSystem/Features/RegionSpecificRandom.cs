@@ -22,7 +22,7 @@ namespace Terrain
         int swamp_chance = 75;
         public override List<List<float>> GenerateFeaturesMap(Vector2 map_size, List<List<float>> regions_map, List<List<float>> ocean_map) //Called from MapGeneration.cs
         {
-            List<List<float>> features_map = TerrainUtils.GenerateMap(map_size);
+            List<List<float>> features_map = TerrainUtils.GenerateMap();
 
             for(int i = 0; i < map_size.x; i++){
                 for(int j = 0; j < map_size.y; j++){

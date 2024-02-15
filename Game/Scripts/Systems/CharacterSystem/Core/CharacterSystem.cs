@@ -14,18 +14,13 @@ using Cabinet;
 
 namespace Character {
 
-    public class CharacterManager
+    public static class CharacterManager
     {
-        CharacterNameStrategy character_names_strategy = new NameByRegion();
-        private int gender_male_chance = 75;
+        private static CharacterNameStrategy character_names_strategy = new NameByRegion();
+        private static int gender_male_chance = 75;
 
-        public CharacterManager(){
-
-
-        }
-
-        public void GenerateGovernmentsCharacters(MapManager map_generation){
-            List<List<float>> regions_map = map_generation.terrain_map_handler.regions_map;
+        public static void GenerateGovernmentsCharacters(){
+            List<List<float>> regions_map = MapManager.terrain_map_handler.GetRegionsMap();
             List<Player> player_list = Player.GetPlayerList();
             foreach(Player i in player_list){
 

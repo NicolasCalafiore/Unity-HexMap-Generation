@@ -12,8 +12,8 @@ namespace Terrain
     {
         
         public enum FogType{
-            Undiscovered,
-            Discovered,
+            Undiscovered = 0,
+            Discovered = 1,
             DiscoveredUnvisible,
             DiscoveredVisible,
 

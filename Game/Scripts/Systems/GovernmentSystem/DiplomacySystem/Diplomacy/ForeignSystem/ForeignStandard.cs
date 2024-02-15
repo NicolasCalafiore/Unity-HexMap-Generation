@@ -19,16 +19,16 @@ namespace Diplomacy
 
         public override void SetStrategyValues(Player owner, Player foreigner){
         
-        Vector2 owner_capital_coor = owner.cities[0].GetColRow();
-        Vector2 foreigner_capital_coor = foreigner.cities[0].GetColRow();
+        Vector2 owner_capital_coor = owner.GetCities()[0].GetColRow();
+        Vector2 foreigner_capital_coor = foreigner.GetCities()[0].GetColRow();
 
         float distance = Vector2.Distance(owner_capital_coor, foreigner_capital_coor);
 
-        HexTile owner_hex_tile = HexTile.col_row_to_hex[owner.cities[0].GetColRow()];
-        HexTile foreigner_hex_tile = HexTile.col_row_to_hex[foreigner.cities[0].GetColRow()];
+        HexTile owner_hex_tile = HexTile.col_row_to_hex[owner.GetCities()[0].GetColRow()];
+        HexTile foreigner_hex_tile = HexTile.col_row_to_hex[foreigner.GetCities()[0].GetColRow()];
 
         bool similiar_region = owner_hex_tile.GetRegionType() == foreigner_hex_tile.GetRegionType();
-        bool similiar_government = owner.government_type == foreigner.government_type;
+        bool similiar_government = owner.GetGovernmentType() == foreigner.GetGovernmentType();
 
         if(distance < 2){
             capital_distance_level = 1;

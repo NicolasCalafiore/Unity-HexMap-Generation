@@ -17,13 +17,13 @@ namespace Terrain {
     public class TerrainMapHandler
     {
         private Vector2 map_size;
-        public List<List<float>> ocean_map = new List<List<float>>();
-        public List<List<float>> river_map = new List<List<float>>();
-        public List<List<float>> water_map = new List<List<float>>();
-        public List<List<float>> regions_map = new List<List<float>>();
-        public List<List<float>> elevation_map = new List<List<float>>();
-        public List<List<float>> features_map = new List<List<float>>();
-        public List<List<float>> resource_map = new List<List<float>>();
+        private List<List<float>> ocean_map = new List<List<float>>();
+        private List<List<float>> river_map = new List<List<float>>();
+        private List<List<float>> water_map = new List<List<float>>();
+        private List<List<float>> regions_map = new List<List<float>>();
+        private List<List<float>> elevation_map = new List<List<float>>();
+        private List<List<float>> features_map = new List<List<float>>();
+        private List<List<float>> resource_map = new List<List<float>>();
 
         public TerrainMapHandler(){}
               
@@ -119,7 +119,7 @@ namespace Terrain {
 
 
         private List<List<float>> GenerateElevationMap(ElevationStrat elevation_strategy, List<List<float>> regions_map){
-            List<List<float>> elevation_map = TerrainUtils.GenerateMap(map_size);
+            List<List<float>> elevation_map = TerrainUtils.GenerateMap();
 
             ElevationStrategy strategy = null;
             switch (elevation_strategy)
@@ -186,6 +186,40 @@ namespace Terrain {
             }
 
         }
+
+        public List<List<float>> GetElevationMap(){
+            return elevation_map;
+        }
+
+        public List<List<float>> GetRegionsMap(){
+            return regions_map;
+        }
+
+        public List<List<float>> GetWaterMap(){
+            return water_map;
+        }
+
+        public List<List<float>> GetOceanMap(){
+            return ocean_map;
+        }
+
+        public List<List<float>> GetRiverMap(){
+            return river_map;
+        }
+
+        public List<List<float>> GetFeaturesMap(){
+            return features_map;
+        }
+
+        public List<List<float>> GetResourceMap(){
+            return resource_map;
+        }
+
+        public Vector2 GetMapSize(){
+            return map_size;
+        }
+
+        
 
 
 

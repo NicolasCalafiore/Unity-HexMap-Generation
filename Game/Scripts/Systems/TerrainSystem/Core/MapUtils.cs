@@ -28,8 +28,10 @@ namespace Terrain
                 }
             }
         }
-        public static List<List<float>> GenerateMap(Vector2 map_size, float value = 0){  // Generates List<List<float>> map with 0 values
+        public static List<List<float>> GenerateMap(float value = 0){  // Generates List<List<float>> map with 0 values
             List<List<float>> map = new List<List<float>>();
+            Vector2 map_size = MapManager.GetMapSize();
+
             for (int i = 0; i < map_size.x; i++)
             {
                 List<float> row = new List<float>();

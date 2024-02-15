@@ -38,7 +38,7 @@ public static class DebugHandler
         MESSAGE += "Movement Cost:" + hex.MovementCost + "\n";
 
         if(hex.GetOwnerPlayer() != null){
-            MESSAGE += "Player Owner: " + hex.GetOwnerPlayer().name + "\n";
+            MESSAGE += "Player Owner: " + hex.GetOwnerPlayer().GetName() + "\n";
         }
         else{
             MESSAGE += "Player Owner: None\n";
@@ -73,13 +73,13 @@ public static class DebugHandler
         City city = TerrainManager.city_go_to_city[city_go];
         Player player = Player.player_id_to_player[city.GetPlayerId()];
         MESSAGE += "Player State: " +  player.GetOfficialName() + "\n";
-        MESSAGE += "Government Type: " + player.government_type + "\n";
-        MESSAGE += "Color: " + player.team_color + "\n";
-        MESSAGE += "Cities: " + player.cities.Count + "\n";
-        MESSAGE += "Wealth: " + player.wealth + "\n";
-        MESSAGE += "Knowledge: " + player.knowledge_points + "\n";
-        MESSAGE += "Heritage: " + player.heritage_points + "\n";
-        MESSAGE += "Belief: " + player.belief_points + "\n";
+        MESSAGE += "Government Type: " + player.GetGovernmentType() + "\n";
+        MESSAGE += "Color: " + player.GetTeamColor() + "\n";
+        MESSAGE += "Cities: " + player.GetCities().Count + "\n";
+        MESSAGE += "Wealth: " + player.GetWealth() + "\n";
+        MESSAGE += "Knowledge: " + player.GetKnowledgePoints() + "\n";
+        MESSAGE += "Heritage: " + player.GetHeritagePoints() + "\n";
+        MESSAGE += "Belief: " + player.GetBeliefPoints() + "\n";
                 
         Debug.Log(MESSAGE);
     }

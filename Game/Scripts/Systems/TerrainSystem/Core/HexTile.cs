@@ -170,19 +170,19 @@ namespace Terrain {
         }
 
 
-        public static void GenerateHexList(MapManager map_generation){
+        public static void GenerateHexList(){
             List<HexTile> hex_list = new List<HexTile>();
 
-            for(int column = 0; column < map_generation.GetMapSize().x; column++){
-                for(int row = 0; row < map_generation.GetMapSize().y; row++){
+            for(int column = 0; column < MapManager.GetMapSize().x; column++){
+                for(int row = 0; row < MapManager.GetMapSize().y; row++){
                     
                     HexTile hex = HexTile.GenerateHex(
-                        map_generation.terrain_map_handler.elevation_map[column][row], 
-                        map_generation.city_map_handler.structure_map[column][row], 
-                        map_generation.terrain_map_handler.features_map[column][row], 
-                        map_generation.terrain_map_handler.water_map[column][row],
-                        map_generation.terrain_map_handler.regions_map[column][row], 
-                        map_generation.terrain_map_handler.resource_map[column][row], 
+                        MapManager.terrain_map_handler.GetElevationMap()[column][row], 
+                        MapManager.city_map_handler.structure_map[column][row], 
+                        MapManager.terrain_map_handler.GetFeaturesMap()[column][row], 
+                        MapManager.terrain_map_handler.GetWaterMap()[column][row],
+                        MapManager.terrain_map_handler.GetRegionsMap()[column][row], 
+                        MapManager.terrain_map_handler.GetResourceMap()[column][row], 
                         column, row);
 
                     hex_list.Add(hex);
@@ -219,7 +219,7 @@ namespace Terrain {
             List<HexTile> hex_list_to_add = HexTileUtils.CircularRetrieval((int) city_col_row.x, (int) city_col_row.y, map_size);
                 
             foreach(HexTile hex in hex_list_to_add){
-                city.hex_territory_list.Add(hex);
+                city.GetHexTerritoryList().Add(hex);
                 hex.SetOwnerCity(city);
             }
         }

@@ -15,7 +15,7 @@ public class ButtonInput : MonoBehaviour
 //PlayerManager player_manager, FogManager fog_manager, MapGeneration map_generation, HexManager hex_manager
     public void NextPlayer(){
         Player.NextPlayer();
-        CameraMovement.CenterCamera(GameManager.fog_manager, GameManager.map_manager);
+        CameraMovement.CenterCamera();
         TerrainManager.SpawnAIFlags();
     }
 

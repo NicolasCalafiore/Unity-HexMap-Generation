@@ -18,45 +18,27 @@ namespace Terrain {
     public class TerritoryManager
     {
 
-        public TerritoryManager()
-        {
-
-        }
+        public TerritoryManager(){}
 
         public float CalculateCityNourishment(City city){
-
             float nourishment = 0;
-            foreach(HexTile hex in city.hex_territory_list){
+
+            foreach(HexTile hex in city.GetHexTerritoryList()){
                 nourishment += hex.nourishment;
             }
             return nourishment;
         }
 
         public float CalculateCityConstruction(City city){
-
             float construction = 0;
-            foreach(HexTile hex in city.hex_territory_list){
+
+            foreach(HexTile hex in city.GetHexTerritoryList()){
                 construction += hex.construction;
             }
             return construction;
         }
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
     }
 }

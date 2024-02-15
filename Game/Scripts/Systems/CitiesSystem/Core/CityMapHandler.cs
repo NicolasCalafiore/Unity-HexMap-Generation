@@ -24,7 +24,7 @@ namespace Cities {
     
         public void GenerateCitiesMap(TerrainMapHandler terrain_map_handler, List<Player> player_list, Vector2 map_size, MapManager.CapitalStrat capital_strategy)
         {
-            List<List<float>> structure_map = TerrainUtils.GenerateMap(map_size);
+            List<List<float>> structure_map = TerrainUtils.GenerateMap();
 
             CapitalSpawnStrategy strategy = null;
             switch (capital_strategy)
@@ -37,9 +37,9 @@ namespace Cities {
                     break;
             }
 
-            structure_map = strategy.GenerateCapitalMap(terrain_map_handler.water_map, player_list, 
-                                                        map_size, terrain_map_handler.features_map, 
-                                                        terrain_map_handler.resource_map, structure_map);
+            structure_map = strategy.GenerateCapitalMap(terrain_map_handler.GetWaterMap(), player_list, 
+                                                        map_size, terrain_map_handler.GetFeaturesMap(), 
+                                                        terrain_map_handler.GetResourceMap(), structure_map);
             
             this.structure_map = structure_map;
         }

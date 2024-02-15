@@ -19,7 +19,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
 
         public override List<List<float>> GenerateWaterMap(Vector2 map_size, RegionsEnums.HexRegion region_type)   //Called from MapGeneration.GenerateWater
         {
-            List<List<float>> map = TerrainUtils.GenerateMap(map_size);
+            List<List<float>> map = TerrainUtils.GenerateMap();
         
             if(region_type == RegionsEnums.HexRegion.River){
                 TerrainUtils.GeneratePerlinNoiseMap(map, map_size, river_scale);

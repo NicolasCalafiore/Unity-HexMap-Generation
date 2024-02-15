@@ -74,7 +74,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
         }
 
         private List<List<float>> CombineRegionFactors(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map){
-            List<List<float>> map_factors = TerrainUtils.GenerateMap(map_size);
+            List<List<float>> map_factors = TerrainUtils.GenerateMap();
 
             for(int i = 0; i < map_size.x; i++){
                 for(int j = 0; j < map_size.y; j++){
@@ -143,13 +143,13 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
         }
 
         private List<List<float>> GenerateRainMap(Vector2 map_size){
-            List<List<float>> rain_map = TerrainUtils.GenerateMap(map_size);
+            List<List<float>> rain_map = TerrainUtils.GenerateMap();
             TerrainUtils.GeneratePerlinNoiseMap(rain_map, map_size, perlin_scale);
              return rain_map;
         }
 
         private List<List<float>> GenerateTemperatureMap(Vector2 map_size ){
-            List<List<float>> temperature_map = TerrainUtils.GenerateMap(map_size);
+            List<List<float>> temperature_map = TerrainUtils.GenerateMap();
             TerrainUtils.GeneratePerlinNoiseMap(temperature_map, map_size, perlin_scale);
             return temperature_map;
 
