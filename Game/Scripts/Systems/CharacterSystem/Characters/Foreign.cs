@@ -56,8 +56,9 @@ namespace Cabinet{
         public void ScanForNewPlayers(List<List<float>> territory_map, List<List<float>> fog_of_war, int player_id){
             for(int i = 0; i < territory_map.Count; i++){
                 for(int j = 0; j < territory_map[i].Count; j++){
+                    if(territory_map[i][j] == -1) continue;
+                    
                     Player new_player = Player.player_id_to_player[(int) territory_map[i][j]];
-
                     if(IfIsValidPlayer(fog_of_war[i][j], territory_map[i][j], player_id, new_player)){
                         known_players.Add(new_player);
                     }
@@ -67,7 +68,9 @@ namespace Cabinet{
         }
 
         public bool IfIsValidPlayer(float fog_map, float territory_map, int player_id, Player new_player){
-            if(fog_map != (float) FogEnums.FogType.Discovered || territory_map == player_id || territory_map == -1) return false;
+            if(fog_map != (float) FogEnums.FogType.Discovered) return false;
+            if(territory_map == player_id) return false;
+            if(territory_map == -1) return false;
             if(known_players.Contains(new_player)) return false;
             if(new_player == null) return false;
 

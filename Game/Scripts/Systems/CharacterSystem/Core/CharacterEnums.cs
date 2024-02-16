@@ -20,6 +20,14 @@ namespace Character
             Male,
             Female,
         }
+
+        public enum RoleType
+        {
+            Foreign,
+            Domestic,
+            Leader
+        }
+
         private static readonly Dictionary<float, CharacterType> characterDict = new Dictionary<float, CharacterType>{
             {(int) CharacterType.None,  CharacterType.None},
             {(int) CharacterType.Leader,  CharacterType.Leader},
@@ -31,6 +39,13 @@ namespace Character
             {(int) CharacterGender.Male, CharacterGender.Male},
             {(int) CharacterGender.Female, CharacterGender.Female},
 
+        };
+
+        private static readonly Dictionary<float, RoleType> roleDict = new Dictionary<float, RoleType>
+        {
+            {(int) RoleType.Foreign, RoleType.Foreign},
+            {(int) RoleType.Domestic, RoleType.Domestic},
+            {(int) RoleType.Leader, RoleType.Leader},
         };
 
         public static List<CharacterGender> GetCharacterGenders()
@@ -51,6 +66,11 @@ namespace Character
         public static CharacterGender GetGenderType(float genderValue)
         {
             return genderDict.TryGetValue(genderValue, out var elevation) ? elevation : default;
+        }
+
+        public static RoleType GetRoleType(float roleValue)
+        {
+            return roleDict.TryGetValue(roleValue, out var role) ? role : default;
         }
     }
 }

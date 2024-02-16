@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
 using Cabinet;
+using Character;
 
 namespace PlayerGovernment {
     public class Government {
@@ -18,16 +19,20 @@ namespace PlayerGovernment {
             cabinet = new Cabinet.Cabinet();
         }
 
-        public void SetLeader(Leader leader){
-            this.leader = leader;
-        }
+        public void AddCharacter(ICharacter character){
 
-        public void AddDomestic(Domestic domestic){
-            cabinet.AddCharacter(domestic);
-        }
 
-        public void AddForeign(Foreign foreign){
-            cabinet.AddCharacter(foreign);
+            switch(character){
+                case Leader leader:
+                    this.leader = leader;
+                    break;
+                case Domestic domestic:
+                    cabinet.GetDomesticList().Add(domestic);
+                    break;
+                case Foreign foreign:
+                    cabinet.GetForeignList().Add(foreign);
+                    break;
+            }
         }
 
         public Leader GetLeader(){

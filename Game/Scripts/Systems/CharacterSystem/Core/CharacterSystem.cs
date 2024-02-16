@@ -9,6 +9,7 @@ using Players;
 using Strategy.Assets.Scripts.Objects;
 using Terrain;
 using Cabinet;
+using static Character.CharacterEnums;
 
 
 
@@ -16,39 +17,31 @@ namespace Character {
 
     public static class CharacterManager
     {
-        private static CharacterNameStrategy character_names_strategy = new NameByRegion();
-        private static int gender_male_chance = 75;
 
         public static void GenerateGovernmentsCharacters(){
             List<List<float>> regions_map = MapManager.terrain_map_handler.GetRegionsMap();
             List<Player> player_list = Player.GetPlayerList();
             foreach(Player i in player_list){
-
-                CharacterEnums.CharacterGender gender = UnityEngine.Random.Range(0, 100) < gender_male_chance ? CharacterEnums.CharacterGender.Male : CharacterEnums.CharacterGender.Female;
                 City city = i.GetCityByIndex(0);
-                
-                List<string> names = character_names_strategy.GenerateNames(city.GetColRow(), regions_map, gender);
-                Leader leader = new Leader(names, gender);
 
-                i.GetGovernment().SetLeader(leader);
+                Leader leader = (Leader) CharacterFactory.CreateCharacter(RoleType.Leader, regions_map, city);
+                i.GetGovernment().AddCharacter(leader);
                 leader.InitializeCharacteristics();
 
-                gender = UnityEngine.Random.Range(0, 100) < gender_male_chance ? CharacterEnums.CharacterGender.Male : CharacterEnums.CharacterGender.Female;
-                names = character_names_strategy.GenerateNames(city.GetColRow(), regions_map, gender);
-                Domestic domestic_advisor = new Domestic(names, gender);
 
-                i.GetGovernment().AddDomestic(domestic_advisor);
+                Domestic domestic_advisor = (Domestic) CharacterFactory.CreateCharacter(RoleType.Domestic, regions_map, city);
+                i.GetGovernment().AddCharacter(domestic_advisor);
                 domestic_advisor.InitializeCharacteristics();
 
-                gender = UnityEngine.Random.Range(0, 100) < gender_male_chance ? CharacterEnums.CharacterGender.Male : CharacterEnums.CharacterGender.Female;
-                names = character_names_strategy.GenerateNames(city.GetColRow(), regions_map, gender);
-                Foreign foreign_advisor = new Foreign(names, gender);
+                Foreign foreign_advisor = (Foreign) CharacterFactory.CreateCharacter(RoleType.Foreign, regions_map, city);
                 foreign_advisor.SetForeignStrategy(1);
-                
-                i.GetGovernment().AddForeign(foreign_advisor);
+                i.GetGovernment().AddCharacter(foreign_advisor);
                 foreign_advisor.InitializeCharacteristics();
+
             }
         }
+
+
 
     }
 }

@@ -14,22 +14,22 @@ using UnityEngine;
 namespace Terrain{
     public static class TerrainManager
     {
-        private static GameObject generic_hex;  //Grey Empty Hex-Object - No Region/Feature/Resource/Elevation Type
-        public static List<GameObject> hex_go_list = new List<GameObject>();   // List of all Hex-Objects
-        public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); // Given Hex gives Hex-Object
-        public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>(); // Given City gives City-Game-Object
-        public static Dictionary<Vector2, GameObject> col_row_to_hex_go = new Dictionary<Vector2, GameObject>(); // Given ColRow gives Hex-Object
-        public static List<GameObject> alerts_go_list = new List<GameObject>(); // List of all Alerts
-        public static List<GameObject> line_renderer_list = new List<GameObject>(); // List of all LineRenderers
+        private static GameObject generic_hex;
+        public static List<GameObject> hex_go_list = new List<GameObject>(); 
+        public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); 
+        public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>();
+        public static Dictionary<Vector2, GameObject> col_row_to_hex_go = new Dictionary<Vector2, GameObject>(); 
+        public static List<GameObject> alerts_go_list = new List<GameObject>();
+        public static List<GameObject> line_renderer_list = new List<GameObject>(); 
 
-        public static void SpawnTerrain(){ // Called from MapGeneration
+        public static void SpawnTerrain(){ 
             List<HexTile> hex_list = HexTile.GetHexList();
         
             generic_hex = Resources.Load<GameObject>("Prefab/Core/Hex_Generic_No_TMP"); 
             
-            SpawnHexTiles(hex_list);    // Spawn all generic_hex GameObjects into GameWorld
+            SpawnHexTiles(hex_list);
 
-            InitializeVisuals(hex_list); // Spawns all GameObjects that are not HexTile objects (Region/Feature/Resource/Elevation)
+            InitializeVisuals(hex_list); 
         }
 
 
@@ -45,67 +45,69 @@ namespace Terrain{
             }
         }
 
-        private static void InitializeVisuals( List<HexTile> hex_list){                // Spawns all GameObjects that are not HexTile objects (Region/Feature/Resource/Elevation)
-            ShowRegionTypes(hex_list);                                          // Set Region Types
-            ShowOceanTypes(hex_list);                                           // Set Ocean Types 
-            SpawnHexFeature(hex_list);                                          // Spawn Features
-            SpawnHexResource(hex_list);                                         // Spawn Resources    
-            SpawnTerritoryFlags(hex_list);                                       // Spawn Capitals
-            SpawnElevationGraphics(hex_list);                                   // Spawn Elevation Graphics
-
-        }
-        private static void SpawnHexFeature(List<HexTile> hex_list){
+        private static void InitializeVisuals(List<HexTile> hex_list){                
             foreach(HexTile hex in hex_list){
-                GameObject hex_object = TerrainManager.hex_to_hex_go[hex];
-                GameObject feature = null;
-
-                if(hex.GetFeatureType() != FeaturesEnums.HexNaturalFeature.None){
-                    feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Natural_Features/" + hex.GetFeatureType().ToString()));
-                }
-
-                if(feature != null){
-                    feature.transform.SetParent(hex_object.transform);
-                    feature.transform.localPosition = new Vector3(0, 0, 0);
-                }
-            }
-        }
-
-        private static void SpawnHexResource(List<HexTile> hex_list){
-            foreach(HexTile hex in hex_list){
-                GameObject hex_object = TerrainManager.hex_to_hex_go[hex];
-                GameObject resource = null;
-
-                if(hex.GetResourceType() != ResourceEnums.HexResource.None) 
-
-                    resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/" + hex.GetResourceType().ToString()));
-
-                if(resource != null){
-                    resource.transform.SetParent(hex_object.transform);
-                    resource.transform.localPosition = new Vector3(0, 0, 0);
-                }
+                ShowRegionTypes(hex);                                         
+                ShowOceanTypes(hex);                                          
+                SpawnHexFeature(hex);                                         
+                SpawnHexResource(hex);                                        
+                SpawnTerritoryFlags(hex);                                     
+                SpawnElevationGraphics(hex);                                   
             }
 
         }
+        private static void SpawnHexFeature(HexTile hex){
 
+            GameObject hex_object = TerrainManager.hex_to_hex_go[hex];
+            GameObject feature = null;
 
-        public static void ShowRegionTypes(List<HexTile> hex_list){
-            foreach(HexTile hex in hex_list){
-                GameObject hex_go = hex_to_hex_go[hex];
-                if(hex.GetLandType() != LandEnums.LandType.Water){
-                        hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.GetRegionType().ToString());
-                }
-
+            if(hex.GetFeatureType() != FeaturesEnums.HexNaturalFeature.None){
+                feature = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Natural_Features/" + hex.GetFeatureType().ToString()));
             }
+
+            if(feature != null){
+                feature.transform.SetParent(hex_object.transform);
+                feature.transform.localPosition = new Vector3(0, 0, 0);
+            }
+            
         }
 
-        public static void ShowOceanTypes(List<HexTile> hex_list){
-            foreach(HexTile hex in hex_list){
-                GameObject hex_go = hex_to_hex_go[hex];
-                if(hex.GetLandType() == LandEnums.LandType.Water){
+        private static void SpawnHexResource(HexTile hex){
+
+            GameObject hex_object = TerrainManager.hex_to_hex_go[hex];
+            GameObject resource = null;
+
+            if(hex.GetResourceType() != ResourceEnums.HexResource.None) 
+
+                resource = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Resources/" + hex.GetResourceType().ToString()));
+
+            if(resource != null){
+                resource.transform.SetParent(hex_object.transform);
+                resource.transform.localPosition = new Vector3(0, 0, 0);
+            }
+            
+
+        }
+
+
+        public static void ShowRegionTypes(HexTile hex){
+
+            GameObject hex_go = hex_to_hex_go[hex];
+            if(hex.GetLandType() != LandEnums.LandType.Water){
                     hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.GetRegionType().ToString());
-                }
-
             }
+
+            
+        }
+
+        public static void ShowOceanTypes(HexTile hex){
+
+            GameObject hex_go = hex_to_hex_go[hex];
+            if(hex.GetLandType() == LandEnums.LandType.Water){
+                hex_go.transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.GetRegionType().ToString());
+            }
+
+        
             
         }
 
@@ -148,24 +150,24 @@ namespace Terrain{
             }
         }
 
-        public static void SpawnTerritoryFlags(List<HexTile> hex_list){
-            foreach(HexTile hex in hex_list){
-                GameObject hex_object = TerrainManager.hex_to_hex_go[hex];
-                GameObject territory_flag = null;
+        public static void SpawnTerritoryFlags(HexTile hex){
 
-                if(hex.GetOwnerPlayer() != null){
-                    territory_flag = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Territory_Flag"));
-                    territory_flag.transform.SetParent(hex_object.transform);
-                    territory_flag.transform.localPosition = new Vector3(0, 0, 0);
-                    territory_flag.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex.GetOwnerPlayer().GetTeamColor(); 
+            GameObject hex_object = TerrainManager.hex_to_hex_go[hex];
+            GameObject territory_flag = null;
 
-                }
+            if(hex.GetOwnerPlayer() != null){
+                territory_flag = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Territory_Flag"));
+                territory_flag.transform.SetParent(hex_object.transform);
+                territory_flag.transform.localPosition = new Vector3(0, 0, 0);
+                territory_flag.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex.GetOwnerPlayer().GetTeamColor(); 
+
             }
+        
         }
 
-        public static void SpawnConstructionAlert(HexTile hextile){
+        public static void SpawnConstructionAlert(HexTile hex){
             GameObject alert = GameObject.Instantiate(Resources.Load<GameObject>("Prefab/Players/Construction_Alert"));
-            GameObject hex_object = TerrainManager.hex_to_hex_go[hextile];
+            GameObject hex_object = TerrainManager.hex_to_hex_go[hex];
 
             alert.transform.SetParent(hex_object.transform);
             alert.transform.localPosition = new Vector3(0, 0, 0);
@@ -247,22 +249,24 @@ namespace Terrain{
             Player player = Player.GetPlayerView();
         
             List<HexTile> construction_tiles = player.GetGovernment().GetDomestic(0).GetPotentialConstructionTiles();
+            List<HexTile> expansion_tiles = player.GetGovernment().GetDomestic(0).GetPotentialExpansionTiles();
+            Dictionary<Player, int> relationships = player.GetGovernment().GetForeign(0).relations;
+            List<Player> known_players = player.GetGovernment().GetForeign(0).GetKnownPlayers();
+
             foreach(HexTile hex_tile in construction_tiles){
                 SpawnConstructionAlert(hex_tile);   // TO DO: FIX CONSTRUCTION BUG (NOT SHOWING UP)
             }
 
-            List<HexTile> expansion_tiles = player.GetGovernment().GetDomestic(0).GetPotentialExpansionTiles();
+           
             foreach(HexTile hex_tile in expansion_tiles){
                 SpawnExpansionAlert(hex_tile);
             }
 
-            Dictionary<Player, int> relationships = player.GetGovernment().GetForeign(0).relations;
             foreach(KeyValuePair<Player, int> relationship in relationships){
                 player.GetGovernment().cabinet.GetForeign(0).foreign_strategy.RelationshipBreakdown(player, relationship.Key);
             }
             
 
-            List<Player> known_players = player.GetGovernment().GetForeign(0).GetKnownPlayers();
             foreach(Player i in known_players){
                 City foreign_capital_city = i.GetCityByIndex(0);
                 GameObject foreign_capital_city_go = City.city_to_city_go[foreign_capital_city];
@@ -271,28 +275,28 @@ namespace Terrain{
                 GameObject capital_city_go = City.city_to_city_go[capital_city];
 
                 int relationship = player.GetGovernment().GetForeign(0).GetRelationship(i);
-                TerrainManager.DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
+                DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
             }
         }
 
-        public static void SpawnElevationGraphics(List<HexTile> hex_list){
+        public static void SpawnElevationGraphics(HexTile hex){
                 // TO DO: FINISH
-            foreach(HexTile hex in hex_list){
-                GameObject hex_object = hex_to_hex_go[hex];
-                
-                if(hex.GetElevationType() == ElevationEnums.HexElevation.Small_Hill){
-                    Color hex_color = hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                    hex_color += new Color(.1f, .1f, .1f, 0f);
-                    hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex_color;
 
-                }
+            GameObject hex_object = hex_to_hex_go[hex];
+            
+            if(hex.GetElevationType() == ElevationEnums.HexElevation.Small_Hill){
+                Color hex_color = hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                hex_color += new Color(.1f, .1f, .1f, 0f);
+                hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex_color;
 
-                if(hex.GetElevationType() == ElevationEnums.HexElevation.Valley || hex.GetElevationType() == ElevationEnums.HexElevation.Canyon){
-                    Color hex_color = hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                    hex_color -= new Color(.1f, .1f, .1f, 0f);
-                    hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex_color;
-                }
             }
+
+            if(hex.GetElevationType() == ElevationEnums.HexElevation.Valley || hex.GetElevationType() == ElevationEnums.HexElevation.Canyon){
+                Color hex_color = hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+                hex_color -= new Color(.1f, .1f, .1f, 0f);
+                hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex_color;
+            }
+        
         }
 
     }
