@@ -13,7 +13,7 @@ namespace Players {
         /*
             Player class is used to store information about the player
         */
-        private static int player_count = 25; //**
+        private static int player_count = 100; //**
         public static Dictionary<float, Player> player_id_to_player = new Dictionary<float, Player>();
         private static List<Player> player_list = new List<Player>();
         private static Player player_view; //**
@@ -226,6 +226,10 @@ namespace Players {
             return player_view;
         }
 
+        public static void SetPlayerView(Player player){
+            player_view = player;
+        }
+
         public static void NextPlayer(){
             if(player_view == player_list[player_list.Count - 1]){
                 player_view = player_list[0];
@@ -234,22 +238,16 @@ namespace Players {
                 player_view = player_list[player_list.IndexOf(player_view) + 1];
             }
 
-                Debug.Log("Printing player view government and advisors:");                  //CHARACTERS
+                DebugHandler.ClearLog();
+                player_view.GetGovernment().GetForeign(0).PrintRelationships();
                 DebugHandler.DisplayCharacter(player_view.GetGovernment().GetLeader());
                 DebugHandler.DisplayCharacter(player_view.GetGovernment().GetDomestic(0));
                 DebugHandler.DisplayCharacter(player_view.GetGovernment().GetForeign(0));
-
-
 
         }
 
         public static List<Player> GetPlayerList(){
             return player_list;
         }
-
-        public static void SetPlayerView(int index){
-            player_view = player_list[index];
-        }
-
     }
 }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Cabinet;
 using Character;
 using Players;
 using Strategy.Assets.Game.Scripts.Terrain;
@@ -68,10 +70,11 @@ public static class DebugHandler
 
     internal static void GetPlayerInformation(GameObject city_collider)
     {
-        string MESSAGE = "Player Information: \n";
         GameObject city_go = city_collider.transform.parent.gameObject;
         City city = TerrainManager.city_go_to_city[city_go];
-        Player player = Player.player_id_to_player[city.GetPlayerId()];
+        Player player = city.GetPlayer();
+
+        string MESSAGE = "Player Information: \n";
         MESSAGE += "Player State: " +  player.GetOfficialName() + "\n";
         MESSAGE += "Government Type: " + player.GetGovernmentType() + "\n";
         MESSAGE += "Color: " + player.GetTeamColor() + "\n";
@@ -95,9 +98,23 @@ public static class DebugHandler
     public static void DisplayCharacter(ICharacter character){
         string MESSAGE = "Character Information: \n";
         MESSAGE += "Name: " + character.GetFullName() + "\n";
+
+        switch(character){
+            case Leader:
+                MESSAGE += "Role: Leader\n";
+                break;
+            case Domestic:
+                MESSAGE += "Role: Domestic\n";
+                break;
+            case Foreign:
+                MESSAGE += "Role: Foreign\n";
+                break;
+        }
+
         MESSAGE += "Type: " + character.character_type + "\n";
-        MESSAGE += "Gender: " + character.gender + "\n";
-        MESSAGE += "Title: " + character.title + "\n";
+        MESSAGE += "Gender: " + character.gender + "\n\n";
+
+
         MESSAGE += "Charisma: " + character.charisma + "\n";
         MESSAGE += "Intelligence: " + character.intelligence + "\n";
         MESSAGE += "Skill: " + character.skill + "\n";
@@ -105,9 +122,20 @@ public static class DebugHandler
         MESSAGE += "Health: " + character.health + "\n";
         MESSAGE += "Loyalty: " + character.loyalty + "\n";
         MESSAGE += "Wealth: " + character.wealth + "\n";
-        MESSAGE += "Influence: " + character.influence + "\n";
+        MESSAGE += "Influence: " + character.influence + "\n\n";
+
+        foreach(TraitBase trait in character.traits){
+            MESSAGE += "Trait: " + trait.GetName() + "\n";
+        }
         Debug.Log(MESSAGE);
 
+    }
+
+    public static void ClearLog(){
+        var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Clear");
+        method.Invoke(new object(), null);
     }
 
 }

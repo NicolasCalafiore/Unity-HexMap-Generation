@@ -14,20 +14,20 @@ namespace Strategy.Assets.Scripts.Objects
         public static List<City> capital_strategy = new List<City>();
         private static List<City> capitals_list = new List<City>();
         public static Dictionary<City, GameObject> city_to_city_go = new Dictionary<City, GameObject>(); // Given Hex gives Hex-Object
-
         private List<HexTile> hex_territory_list = new List<HexTile>();
         private Vector2 COL_ROW;
+        private RegionsEnums.HexRegion region_type;
         private string name;
-        private int player_id;
+        private Player player;
         private float inhabitants = 500;
         private float stability = 50;
         private float nourishment = 50;
         private float construction = 15;
 
-        public City(string name, int player_id, Vector2 col_row)
+        public City(string name, Player player, Vector2 col_row)
         {
             this.name = name;
-            this.player_id = player_id;
+            this.player = player;
             this.COL_ROW = col_row;
         }
 
@@ -44,9 +44,9 @@ namespace Strategy.Assets.Scripts.Objects
             return name;
         }
 
-        public int GetPlayerId()
+        public Player GetPlayer()
         {
-            return player_id;
+            return player;
         }
 
         public void SetName(string name)
@@ -64,7 +64,26 @@ namespace Strategy.Assets.Scripts.Objects
             return hex_territory_list;
         }
 
+        public RegionsEnums.HexRegion GetRegionType()
+        {
+            return region_type;
+        }
 
+        public void SetRegionType(RegionsEnums.HexRegion region_type)
+        {
+            this.region_type = region_type;
+        }
+
+        
+
+        public static void SetRegionTypes()
+        {
+            foreach (City city in capitals_list)
+            {
+                city.SetRegionType(HexTile.col_row_to_hex[city.GetColRow()].GetRegionType());
+            }
+        }
+        
         public static void GenerateCapitalCityObjects(){ 
             List<Player> player_list = Player.GetPlayerList();
             int PLAYER_INDEX = 0;
@@ -72,7 +91,7 @@ namespace Strategy.Assets.Scripts.Objects
                 for(int j = 0; j < MapManager.city_map_handler.structure_map.Count; j++){
 
                     if(MapManager.city_map_handler.structure_map[i][j] == (int) StructureEnums.StructureType.Capital){
-                        City city = new City("Error", player_list[PLAYER_INDEX].GetId(), new Vector2(i,j));
+                        City city = new City("Error", player_list[PLAYER_INDEX], new Vector2(i,j));
                         capitals_list.Add(city);
                         player_list[PLAYER_INDEX].AddCity(city); // Add city to player
                         PLAYER_INDEX++;
@@ -99,6 +118,7 @@ namespace Strategy.Assets.Scripts.Objects
         public static List<City> GetCapitalsList(){
             return capitals_list;
         }
+        
 
 
 

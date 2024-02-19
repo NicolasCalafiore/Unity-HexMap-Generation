@@ -24,21 +24,28 @@ namespace Character {
             foreach(Player i in player_list){
                 City city = i.GetCityByIndex(0);
 
-                Leader leader = (Leader) CharacterFactory.CreateCharacter(RoleType.Leader, regions_map, city);
+                Leader leader = (Leader) CharacterFactory.CreateCharacter(RoleType.Leader, regions_map, city, i);
                 i.GetGovernment().AddCharacter(leader);
                 leader.InitializeCharacteristics();
+                leader.AddRandomTrait();
 
 
-                Domestic domestic_advisor = (Domestic) CharacterFactory.CreateCharacter(RoleType.Domestic, regions_map, city);
+                Domestic domestic_advisor = (Domestic) CharacterFactory.CreateCharacter(RoleType.Domestic, regions_map, city, i);
                 i.GetGovernment().AddCharacter(domestic_advisor);
                 domestic_advisor.InitializeCharacteristics();
+                domestic_advisor.AddRandomTrait();
 
-                Foreign foreign_advisor = (Foreign) CharacterFactory.CreateCharacter(RoleType.Foreign, regions_map, city);
-                foreign_advisor.SetForeignStrategy(1);
+                Foreign foreign_advisor = (Foreign) CharacterFactory.CreateCharacter(RoleType.Foreign, regions_map, city, i);
+                // foreign_advisor.SetForeignStrategy(1);
                 i.GetGovernment().AddCharacter(foreign_advisor);
                 foreign_advisor.InitializeCharacteristics();
+                foreign_advisor.AddRandomTrait();
 
             }
+        }
+
+        private static void CreateCharacter(RoleType role_type){
+
         }
 
 

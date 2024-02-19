@@ -22,7 +22,7 @@ namespace Terrain {
         public void GenerateCapitalTerritory(CityMapHandler city_map_handler, List<Player> player_list, Vector2 map_size)
         {
             List<List<float>> capital_map = city_map_handler.structure_map; //Only Capitals are initialized at this time.
-
+            
             List<List<float>> territory_map = TerrainUtils.GenerateMap(-1);
 
             for (int i = 0; i < capital_map.Count; i++)

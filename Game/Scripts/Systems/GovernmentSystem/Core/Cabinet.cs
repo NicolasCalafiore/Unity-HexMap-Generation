@@ -26,17 +26,7 @@ namespace Cabinet {
         public void StartForeignTurn(List<List<float>> territory_map, int id, List<List<float>> fog_of_war){
             foreach(Foreign i in foreign_advisor_list){
                 i.ScanForNewPlayers(territory_map, fog_of_war, id);
-                i.GenerateStartingRelationship(id);
-      
-            }
-        }
-
-        public void AddCharacter(ICharacter character){
-            if(character is Domestic){
-                domestic_advisor_list.Add((Domestic) character);
-            }
-            else if(character is Foreign){
-                foreign_advisor_list.Add((Foreign) character);
+                i.GenerateStartingRelationship(i.known_players);
             }
         }
 

@@ -1,33 +1,26 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Character;
 using Diplomacy;
 using Players;
-using Strategy.Assets.Game.Scripts.Terrain;
-using Strategy.Assets.Scripts.Objects;
 using Terrain;
-using TMPro;
 using UnityEngine;
 
 
-namespace Cabinet{
+namespace Cabinet
+{
     public class Foreign : ICharacter
     {
 
         public List<Player> known_players = new List<Player>();
-        public Dictionary<Player, int> relations = new Dictionary<Player, int>();
+        public Dictionary<Player, float> relations = new Dictionary<Player, float>();
         public ForeignStrategy foreign_strategy;
 
-
-
-
-        public Foreign(List<string> names, CharacterEnums.CharacterGender gender){
+        public Foreign(List<string> names, CharacterEnums.CharacterGender gender, Player player){
             this.first_name = names[0];
             this.last_name = names[1];
             this.gender = gender;
             this.character_type = CharacterEnums.CharacterType.Advisor;
+            this.owner_player = player;
         }
 
 
@@ -42,13 +35,13 @@ namespace Cabinet{
             }
         }
 
-        public void GenerateStartingRelationship(int player_id){
+        public void GenerateStartingRelationship(List<Player> known_players){
+            SetForeignStrategy(0);
             
-            foreach(Player i in known_players){
-                foreign_strategy.SetStrategyValues(Player.player_id_to_player[player_id], i);
-                float relationship = foreign_strategy.GenerateStartingRelationship();
-                relations.Add(i, (int) relationship);
+            foreach(Player player in known_players){
+                relations.Add(player, foreign_strategy.GenerateStartingRelationship(player, owner_player));
             }
+
         }
 
    
@@ -81,8 +74,21 @@ namespace Cabinet{
             return known_players;
         }
 
-        public int GetRelationship(Player player){
+        public float GetRelationship(Player player){
             return relations[player];
+        }
+
+        public void PrintRelationships(){
+            
+            foreach(Player i in known_players){
+                string MESSAGE = "Relationship with " + i.GetOfficialName() + " is " + relations[i] + "\n";
+                List<string> relationship_calculations = foreign_strategy.CalculationValues(i, owner_player);
+                foreach(string j in relationship_calculations){
+                    MESSAGE += j + "\n";
+                }
+                Debug.Log(MESSAGE);
+            }
+
         }
 
 

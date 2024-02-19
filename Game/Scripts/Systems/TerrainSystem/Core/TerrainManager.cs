@@ -131,19 +131,20 @@ namespace Terrain{
                 }
                 if(structure_go != null){   // If structure_go is not null, spawn structure_go
                     city_go_to_city[structure_go].SetName(City.GenerateCityName(hex)); // Set city name
+                    Player player =  city_go_to_city[structure_go].GetPlayer();
 
                     structure_go.transform.SetParent(hex_object.transform); // Set parent to hex_object --> Spawn structure on hex_game_object
                     structure_go.transform.localPosition = new Vector3(0, 0, 0);
                     structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].GetName();
-                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = Player.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetOfficialName();
-                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = Player.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetTeamColor();
+                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = player.GetOfficialName();
+                    structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = player.GetTeamColor();
 
 
                     var CapitalFlags = structure_go.transform.GetChild(3);
 
                     foreach (Transform child in CapitalFlags)
                     {
-                        child.GetChild(0).GetComponent<MeshRenderer>().material.color = Player.player_id_to_player[city_go_to_city[structure_go].GetPlayerId()].GetTeamColor();
+                        child.GetChild(0).GetComponent<MeshRenderer>().material.color = player.GetTeamColor();
                     }
                     
                 }
@@ -198,16 +199,19 @@ namespace Terrain{
         }
 
 
-        public static void DrawForeignLine(GameObject capital_city, GameObject foreign_city, int relationship = 0){
+        public static void DrawForeignLine(GameObject capital_city, GameObject foreign_city, float relationship = 0){
 
             Color color = Color.white;
 
-            if(relationship < 25) color = Color.red;
-            else if(relationship < 50) color = Color.yellow;
-            else if(relationship < 75) color = Color.green;
-            else if(relationship < 100) color = Color.blue;
-                
+            ForeignEnums.RelationshipLevel relationship_level = ForeignEnums.GetRelationshipLevel(relationship);
 
+            if(relationship_level == ForeignEnums.RelationshipLevel.Enemy) color = Color.red;
+            else if(relationship_level == ForeignEnums.RelationshipLevel.Unfriendly) color = Color.yellow;
+            else if(relationship_level == ForeignEnums.RelationshipLevel.Neutral) color = Color.gray;
+            else if(relationship_level == ForeignEnums.RelationshipLevel.Friendly) color = Color.green;
+            else if(relationship_level == ForeignEnums.RelationshipLevel.Ally) color = Color.blue;
+
+                
             GameObject line_render_object = new GameObject();
             line_render_object.transform.SetParent(capital_city.transform);
             line_render_object.transform.localPosition = new Vector3(0, 0, 0);
@@ -250,7 +254,7 @@ namespace Terrain{
         
             List<HexTile> construction_tiles = player.GetGovernment().GetDomestic(0).GetPotentialConstructionTiles();
             List<HexTile> expansion_tiles = player.GetGovernment().GetDomestic(0).GetPotentialExpansionTiles();
-            Dictionary<Player, int> relationships = player.GetGovernment().GetForeign(0).relations;
+            Dictionary<Player, float> relationships = player.GetGovernment().GetForeign(0).relations;
             List<Player> known_players = player.GetGovernment().GetForeign(0).GetKnownPlayers();
 
             foreach(HexTile hex_tile in construction_tiles){
@@ -262,9 +266,9 @@ namespace Terrain{
                 SpawnExpansionAlert(hex_tile);
             }
 
-            foreach(KeyValuePair<Player, int> relationship in relationships){
-                player.GetGovernment().cabinet.GetForeign(0).foreign_strategy.RelationshipBreakdown(player, relationship.Key);
-            }
+            // foreach(KeyValuePair<Player, float> relationship in relationships){
+            //     player.GetGovernment().cabinet.GetForeign(0).foreign_strategy.RelationshipBreakdown(player, relationship.Key);
+            // }
             
 
             foreach(Player i in known_players){
@@ -274,7 +278,7 @@ namespace Terrain{
                 City capital_city = player.GetCityByIndex(0); 
                 GameObject capital_city_go = City.city_to_city_go[capital_city];
 
-                int relationship = player.GetGovernment().GetForeign(0).GetRelationship(i);
+                float relationship = player.GetGovernment().GetForeign(0).GetRelationship(i);
                 DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
             }
         }

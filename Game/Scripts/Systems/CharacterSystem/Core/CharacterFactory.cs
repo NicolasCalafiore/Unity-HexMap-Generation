@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cabinet;
+using Players;
 using Strategy.Assets.Scripts.Objects;
 using UnityEngine;
 using static Character.CharacterEnums;
@@ -14,19 +15,19 @@ namespace Character
         private static CharacterNameStrategy character_names_strategy = new NameByRegion();
         private static int gender_male_chance = 75;
 
-        public static ICharacter CreateCharacter(RoleType type, List<List<float>> regions_map, City city){
+        public static ICharacter CreateCharacter(RoleType type, List<List<float>> regions_map, City city, Player player){
                 CharacterGender gender = Random.Range(0, 100) < gender_male_chance ? CharacterGender.Male : CharacterGender.Female;
                 List<string> names = character_names_strategy.GenerateNames(city.GetColRow(), regions_map, gender);
 
                 switch(type){
                     case RoleType.Leader:
-                        return new Leader(names, gender);
+                        return new Leader(names, gender, player);
  
                     case RoleType.Domestic:
-                        return new Domestic(names, gender);
+                        return new Domestic(names, gender, player);
                     
                     case RoleType.Foreign:
-                        return new Foreign(names, gender);
+                        return new Foreign(names, gender, player);
                     
                 }
 

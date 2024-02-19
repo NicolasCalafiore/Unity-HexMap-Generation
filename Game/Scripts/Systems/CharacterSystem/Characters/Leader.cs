@@ -14,11 +14,12 @@ using UnityEngine;
 namespace Cabinet{
     public class Leader : ICharacter
     {
-        public Leader(List<string> names, CharacterEnums.CharacterGender gender){
+        public Leader(List<string> names, CharacterEnums.CharacterGender gender, Player player){
             this.first_name = names[0];
             this.last_name = names[1];
             this.gender = gender;
             this.character_type = CharacterEnums.CharacterType.Leader;
+            this.owner_player = player;
 
         }
 

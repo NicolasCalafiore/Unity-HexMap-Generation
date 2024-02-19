@@ -20,8 +20,6 @@ namespace PlayerGovernment {
         }
 
         public void AddCharacter(ICharacter character){
-
-
             switch(character){
                 case Leader leader:
                     this.leader = leader;
@@ -47,7 +45,7 @@ namespace PlayerGovernment {
             return cabinet.GetDomestic(index);
         }
 
-        public GovernmentEnums.GovernmentType GetGovernment(){
+        public GovernmentEnums.GovernmentType GetGovernmentType(){
             return government_type;
         }
 

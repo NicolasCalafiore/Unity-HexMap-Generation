@@ -17,6 +17,7 @@ namespace Terrain {
 
     public static class FogManager
     {
+        private static int fog_radius = 7;
         public static void InitializePlayerFogOfWar(){
 
             foreach(Player player in Player.GetPlayerList()){
@@ -29,7 +30,7 @@ namespace Terrain {
                     int y = (int) city.GetColRow().y;
 
                     player_fog_of_war_map[x][y] = (float) FogType.Discovered;
-                    TerrainUtils.CircularSpawn(x, y, player_fog_of_war_map, (float) FogType.Discovered, 10);
+                    TerrainUtils.CircularSpawn(x, y, player_fog_of_war_map, (float) FogType.Discovered, fog_radius);
                 }
                 
                 player.SetFogOfWarMap(player_fog_of_war_map);

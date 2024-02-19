@@ -44,6 +44,7 @@ public class GameManager: MonoBehaviour{
         Player.SetStateNames(); 
         HexTile.SetHexDecorators(); 
         City.SetCityTerritory();
+        City.SetRegionTypes();
     }
 
     void SpawnGameObjects(){
@@ -54,7 +55,7 @@ public class GameManager: MonoBehaviour{
     private void InitializeGameWorld()
     {
         Player.SimulateGovernments();
-        Player.SetPlayerView(0);
+        Player.SetPlayerView(Player.GetPlayerList()[0]);
         FogManager.ShowFogOfWar();
         CameraMovement.CenterCamera();
         TerrainManager.SpawnAIFlags();

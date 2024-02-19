@@ -18,12 +18,12 @@ namespace Cabinet{
         private List<HexTile> potential_expansion_tiles = new List<HexTile>();
 
 
-        public Domestic(List<string> names, CharacterEnums.CharacterGender gender){
+        public Domestic(List<string> names, CharacterEnums.CharacterGender gender, Player player){
             this.first_name = names[0];
             this.last_name = names[1];
             this.gender = gender;
             this.character_type = CharacterEnums.CharacterType.Advisor;
-
+            this.owner_player = player;
         }
 
 
