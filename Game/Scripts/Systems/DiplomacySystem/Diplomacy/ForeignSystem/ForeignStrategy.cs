@@ -15,13 +15,8 @@ namespace Diplomacy
         public abstract float GenerateStartingRelationship(Player known_player, Player player);
         public abstract List<string> CalculationValues(Player known_player, Player player);
 
-        public enum RelationshipLevel{
-            Ally = 10,
-            Friendly = 5,
-            Neutral = 0,
-            Unfriendly = -5,
-            Enemy = -10
-        }
+
+
     }
 }
 

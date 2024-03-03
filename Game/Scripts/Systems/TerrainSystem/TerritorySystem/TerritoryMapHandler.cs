@@ -23,7 +23,7 @@ namespace Terrain {
         {
             List<List<float>> capital_map = city_map_handler.structure_map; //Only Capitals are initialized at this time.
             
-            List<List<float>> territory_map = TerrainUtils.GenerateMap(-1);
+            List<List<float>> territory_map = MapUtils.GenerateMap(-1);
 
             for (int i = 0; i < capital_map.Count; i++)
             {
@@ -47,12 +47,15 @@ namespace Terrain {
             {
                 if (player.GetCityByIndex(0).GetColRow() != capitalCoordinate) continue;
 
-                TerrainUtils.CircularSpawn(i, j, territory_map, player.GetId());
+                MapUtils.CircularSpawn(i, j, territory_map, player.GetId());
                 List<HexTile> hex_list = HexTileUtils.CircularRetrieval(i, j, map_size);
 
                 HexTile.AddHexTileToPlayerTerritory(hex_list, player);
                 
             }
         }
+
+
+
     }
 }

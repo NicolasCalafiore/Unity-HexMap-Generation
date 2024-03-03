@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 using Cabinet;
 using PlayerGovernment;
 using Unity.VisualScripting;
+using Character;
+using static Terrain.GovernmentEnums;
 
 namespace Players {
     public class Player {
@@ -157,6 +159,14 @@ namespace Players {
             return government_type;
         }
 
+        public List<ICharacter> GetAllCharacters(){
+            List<ICharacter> character_list = new List<ICharacter>();
+            character_list.Add(government.GetLeader());
+            character_list.Add(government.GetDomestic(0));
+            character_list.Add(government.GetForeign(0));
+            return character_list;
+        }
+
         public static void CreatePlayers(int player_id){        // TO DO: EVALUATE FUNCTIONAL PROGRAMMING
             if(player_id < player_count){
                 player_list.Add(new Player("player", "Player " + player_id, player_id));
@@ -226,8 +236,13 @@ namespace Players {
             return player_view;
         }
 
-        public static void SetPlayerView(Player player){
+        public static void SetPlayerView(Player player, bool clear_log = true){
             player_view = player;
+
+            if(clear_log) DebugHandler.ClearLog();
+            player_view.GetGovernment().GetForeign(0).PrintRelationships();
+
+            UIManager.UpdatePlayerView(player_view);
         }
 
         public static void NextPlayer(){
@@ -240,14 +255,22 @@ namespace Players {
 
                 DebugHandler.ClearLog();
                 player_view.GetGovernment().GetForeign(0).PrintRelationships();
-                DebugHandler.DisplayCharacter(player_view.GetGovernment().GetLeader());
-                DebugHandler.DisplayCharacter(player_view.GetGovernment().GetDomestic(0));
-                DebugHandler.DisplayCharacter(player_view.GetGovernment().GetForeign(0));
+
+                UIManager.UpdatePlayerView(player_view);
+
 
         }
 
         public static List<Player> GetPlayerList(){
             return player_list;
         }
+
+        public static void AllScanForNewPlayers(){
+            foreach(Player player in player_list){
+                player.GetGovernment().GetForeign(0).ScanForNewPlayers(MapManager.territory_map_handler.territory_map, player.GetFogOfWarMap(), player.GetId());
+            }
+        }
+
+
     }
 }

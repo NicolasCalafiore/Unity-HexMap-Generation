@@ -8,17 +8,20 @@ using Cabinet;
 using PlayerGovernment;
 using Unity.VisualScripting;
 using Players;
+using static Character.TraitEnums;
 
 namespace Character {
     public abstract class TraitBase {
         public string name;
         public string description;
         public int id;
+        public TraitType type;
+        
 
-        internal static TraitBase GetRandomLeaderTrait() 
+        internal static TraitBase GetRandomLeaderTrait(Player player) 
         {
-            if(Random.Range(0, 100) < 50) return DomesticTraitBase.GetRandomDomesticTrait();
-            else return ForeignTraitBase.GetRandomForeignTrait();
+            if(Random.Range(0, 100) < 50) return DomesticTraitBase.GetRandomDomesticTrait(player);
+            else return ForeignTraitBase.GetRandomForeignTrait(player);
         }
 
         public string GetName(){

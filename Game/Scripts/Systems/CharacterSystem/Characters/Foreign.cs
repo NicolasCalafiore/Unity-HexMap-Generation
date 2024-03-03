@@ -3,6 +3,7 @@ using Character;
 using Diplomacy;
 using Players;
 using Terrain;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -15,12 +16,13 @@ namespace Cabinet
         public Dictionary<Player, float> relations = new Dictionary<Player, float>();
         public ForeignStrategy foreign_strategy;
 
-        public Foreign(List<string> names, CharacterEnums.CharacterGender gender, Player player){
+        public Foreign(List<string> names, CharacterEnums.CharacterGender gender, Player player, List<string> titles){
             this.first_name = names[0];
             this.last_name = names[1];
             this.gender = gender;
             this.character_type = CharacterEnums.CharacterType.Advisor;
             this.owner_player = player;
+            this.title = titles[UnityEngine.Random.Range(0, titles.Count)];
         }
 
 
@@ -89,6 +91,12 @@ namespace Cabinet
                 Debug.Log(MESSAGE);
             }
 
+        }
+
+        public Player GetRandomKnownPlayer(){
+            if(known_players.Count == 0) return null;
+            
+            return known_players[Random.Range(0, known_players.Count)];
         }
 
 

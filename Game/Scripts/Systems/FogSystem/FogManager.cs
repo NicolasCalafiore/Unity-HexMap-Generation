@@ -22,7 +22,7 @@ namespace Terrain {
 
             foreach(Player player in Player.GetPlayerList()){
 
-                List<List<float>> player_fog_of_war_map = TerrainUtils.GenerateMap((float) FogType.Undiscovered);
+                List<List<float>> player_fog_of_war_map = MapUtils.GenerateMap((float) FogType.Undiscovered);
                 List<City> city_list = player.GetCities();
 
                 foreach(City city in city_list){
@@ -30,7 +30,7 @@ namespace Terrain {
                     int y = (int) city.GetColRow().y;
 
                     player_fog_of_war_map[x][y] = (float) FogType.Discovered;
-                    TerrainUtils.CircularSpawn(x, y, player_fog_of_war_map, (float) FogType.Discovered, fog_radius);
+                    MapUtils.CircularSpawn(x, y, player_fog_of_war_map, (float) FogType.Discovered, fog_radius);
                 }
                 
                 player.SetFogOfWarMap(player_fog_of_war_map);
@@ -72,6 +72,18 @@ namespace Terrain {
             foreach(GameObject hex_go in TerrainManager.hex_go_list){
                 hex_go.SetActive(true);
             }
+        }
+
+        public static List<Player> GetVisiblePlayers(){
+            List<Player> visible_players = new List<Player>();
+
+            foreach(Player player in Player.GetPlayerList()){
+                foreach(City city in player.GetCities()){
+                    if(City.city_to_city_go[city].activeSelf) visible_players.Add(player);
+                }
+            }
+
+            return visible_players;
         }
 
 

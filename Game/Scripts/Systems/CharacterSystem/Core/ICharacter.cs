@@ -6,6 +6,7 @@ using Players;
 using Terrain;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Character
 {
@@ -29,36 +30,63 @@ namespace Character
         private int max_traits = 3;
 
         public string GetFullName(){
-            return title + first_name + " " + last_name;
+            return title + " " + first_name + " " + last_name;
         }
+
+        public string GetName(){
+            return first_name + " " + last_name;
+        }
+
+
 
 
         public void InitializeCharacteristics(){
-            charisma = UnityEngine.Random.Range(0, 100);
-            intelligence = UnityEngine.Random.Range(0, 100);
-            skill = UnityEngine.Random.Range(0, 100);
-            age = UnityEngine.Random.Range(13, 100);
-            health = UnityEngine.Random.Range(0, 100);
-            loyalty = UnityEngine.Random.Range(0, 100);
-            wealth = UnityEngine.Random.Range(0, 100);
-            influence = UnityEngine.Random.Range(0, 100);
+
+            int max = 100;
+            int min = 0;
+            int random = UnityEngine.Random.Range(0, 100);
+            if(random < 70){            //NORMAL PERSON
+                max = 85 + UnityEngine.Random.Range(-5, 5);;
+                min = 20 + UnityEngine.Random.Range(-5, 10);
+            }
+            else if(random < 80){       //BAD PERSON
+                max = 60 + UnityEngine.Random.Range(-5, 5);
+                min = 20 + UnityEngine.Random.Range(-5, 10);
+            }
+            else if(random < 95){       //GOOD PERSON
+                max = 95 + UnityEngine.Random.Range(-5, 5);
+                min = 45 + UnityEngine.Random.Range(-5, 10);
+            }
+            else{                       //SPECIAL PERSON
+                max = 100 + UnityEngine.Random.Range(-5, 5);
+                min = 70 + UnityEngine.Random.Range(-5, 10);
+            }   
+
+            charisma = UnityEngine.Random.Range(min, max);
+            intelligence = UnityEngine.Random.Range(min, max);
+            skill = UnityEngine.Random.Range(min, max);
+            age = UnityEngine.Random.Range(13, 90);
+            health = UnityEngine.Random.Range(min, max);
+            loyalty = UnityEngine.Random.Range(min, max);
+            wealth = UnityEngine.Random.Range(min, max);
+            influence = UnityEngine.Random.Range(min, max);
         }
 
         public void AddRandomTrait(){
-            int random_trait_amount = UnityEngine.Random.Range(1, max_traits);
+            int random_trait_amount = UnityEngine.Random.Range(1, max_traits + 1);
 
             for(int i = 0; i < random_trait_amount; i++){
-                TraitBase trait_method = DomesticTraitBase.GetRandomDomesticTrait(); // default
+                TraitBase trait_method = DomesticTraitBase.GetRandomDomesticTrait(owner_player); // default
 
                 switch(this){
                     case Leader leader:
-                        trait_method = TraitBase.GetRandomLeaderTrait();
+                        trait_method = TraitBase.GetRandomLeaderTrait(owner_player);
                         break;
                     case Domestic domestic:
-                        trait_method = DomesticTraitBase.GetRandomDomesticTrait();
+                        trait_method = DomesticTraitBase.GetRandomDomesticTrait(owner_player);
                         break;
                     case Foreign foreign:
-                        trait_method = ForeignTraitBase.GetRandomForeignTrait();
+                        trait_method = ForeignTraitBase.GetRandomForeignTrait(owner_player);
                         break;
                 }
 
@@ -83,6 +111,22 @@ namespace Character
                 }
             }
             return true;
+        }
+
+        public TraitBase GetTrait(int index){
+            if(index < traits.Count){
+                return traits[index];
+            }
+
+            return null;
+        }
+
+        public List<TraitBase> GetTraits(){
+            return traits;
+        }
+
+        public int GetRating(){
+            return (charisma + intelligence + skill + loyalty + wealth + influence)/6;
         }
 
 

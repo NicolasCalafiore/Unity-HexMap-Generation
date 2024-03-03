@@ -14,7 +14,7 @@ public class MouseInput : MonoBehaviour
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit)){
-
+                
                 if(hit.transform.gameObject.tag.Contains("City")){
                     Debug.Log("CITY HIT");  
                     GameObject game_object = hit.transform.gameObject;
@@ -25,9 +25,14 @@ public class MouseInput : MonoBehaviour
                     Player.SetPlayerView(city.GetPlayer());
                     CameraMovement.CenterCamera();
                     TerrainManager.SpawnAIFlags();
+                    UIManager.ShowCityMenu(city);
                 }
             }
         }
+
+
+
+
 
 
 

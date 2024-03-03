@@ -111,7 +111,7 @@ namespace Terrain {
             this.river_map = strategy.GenerateWaterMap(map_size, RegionsEnums.HexRegion.River);
 
             strategy.SetOceanBorder(ocean_map);
-            water_map = TerrainUtils.CombineMapValue(ocean_map, river_map, map_size, (int) LandEnums.LandType.Water);   // Combine ocean_map and river_map into water_map
+            water_map = MapUtils.CombineMapValue(ocean_map, river_map, map_size, (int) LandEnums.LandType.Water);   // Combine ocean_map and river_map into water_map
         
             return water_map;
         }
@@ -119,7 +119,7 @@ namespace Terrain {
 
 
         private List<List<float>> GenerateElevationMap(ElevationStrat elevation_strategy, List<List<float>> regions_map){
-            List<List<float>> elevation_map = TerrainUtils.GenerateMap();
+            List<List<float>> elevation_map = MapUtils.GenerateMap();
 
             ElevationStrategy strategy = null;
             switch (elevation_strategy)
@@ -141,14 +141,14 @@ namespace Terrain {
 
             List<HexTile> hex_list = HexTile.GetHexList();
 
-            List<Tuple<int, int>> land_border = TerrainUtils.CompareValueBorder(water_map, 1, 0);
+            List<Tuple<int, int>> land_border = MapUtils.CompareValueBorder(water_map, 1, 0);
             FilterShoreElevation(land_border, (float) ElevationEnums.HexElevation.Flatland, (float) ElevationEnums.HexElevation.Flatland, hex_list);  // Sets all coasts to 0 if < 0
             //             coor of border tiles               conditional value                  set value
             
-             List<System.Tuple<int, int>> land_ocean_border = TerrainUtils.CompareValueBorder(ocean_map, 0, 1);
+             List<System.Tuple<int, int>> land_ocean_border = MapUtils.CompareValueBorder(ocean_map, 0, 1);
             SetBorderRegion(land_ocean_border, (float) RegionsEnums.HexRegion.Ocean, (float) RegionsEnums.HexRegion.Shore, hex_list);   //Makes Shores
 
-            List<System.Tuple<int, int>> shore_river_borders = TerrainUtils.CompareValueBorder(regions_map, (int) RegionsEnums.HexRegion.Shore, (int) RegionsEnums.HexRegion.River);
+            List<System.Tuple<int, int>> shore_river_borders = MapUtils.CompareValueBorder(regions_map, (int) RegionsEnums.HexRegion.Shore, (int) RegionsEnums.HexRegion.River);
             SetBorderRegion(shore_river_borders, (float) RegionsEnums.HexRegion.Shore, (float) RegionsEnums.HexRegion.Ocean, hex_list); // Destroys shores that are touching rivers
 
         }

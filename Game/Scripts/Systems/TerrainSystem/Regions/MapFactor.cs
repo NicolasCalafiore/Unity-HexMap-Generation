@@ -23,9 +23,9 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
             List<List<float>> rain_map = GenerateRainMap(map_size);
             List<List<float>> temperature_map = GenerateTemperatureMap(map_size);
 
-            TerrainUtils.NormalizePerlinMap(rain_map);
+            MapUtils.NormalizePerlinMap(rain_map);
 
-            TerrainUtils.NormalizePerlinMap(temperature_map);
+            MapUtils.NormalizePerlinMap(temperature_map);
 
             List<List<float>> map_factors = CombineRegionFactors(rain_map, temperature_map, map_size, ocean_map, river_map);    // Combine rain_map and temperature_map into unique map
 
@@ -74,7 +74,7 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
         }
 
         private List<List<float>> CombineRegionFactors(List<List<float>> rain_map, List<List<float>> temperature_map, Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map){
-            List<List<float>> map_factors = TerrainUtils.GenerateMap();
+            List<List<float>> map_factors = MapUtils.GenerateMap();
 
             for(int i = 0; i < map_size.x; i++){
                 for(int j = 0; j < map_size.y; j++){
@@ -143,14 +143,14 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Regions
         }
 
         private List<List<float>> GenerateRainMap(Vector2 map_size){
-            List<List<float>> rain_map = TerrainUtils.GenerateMap();
-            TerrainUtils.GeneratePerlinNoiseMap(rain_map, map_size, perlin_scale);
+            List<List<float>> rain_map = MapUtils.GenerateMap();
+            MapUtils.GeneratePerlinNoiseMap(rain_map, map_size, perlin_scale);
              return rain_map;
         }
 
         private List<List<float>> GenerateTemperatureMap(Vector2 map_size ){
-            List<List<float>> temperature_map = TerrainUtils.GenerateMap();
-            TerrainUtils.GeneratePerlinNoiseMap(temperature_map, map_size, perlin_scale);
+            List<List<float>> temperature_map = MapUtils.GenerateMap();
+            MapUtils.GeneratePerlinNoiseMap(temperature_map, map_size, perlin_scale);
             return temperature_map;
 
     }

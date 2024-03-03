@@ -10,9 +10,9 @@ using Character;
 
 public class ButtonInput : MonoBehaviour
 {
-    public static Dictionary<Button, ICharacter> button_binds = new Dictionary<Button, ICharacter>();
+    public static Dictionary<Button, ICharacter> character_binds = new Dictionary<Button, ICharacter>();
+    public static Player player;
 
-//PlayerManager player_manager, FogManager fog_manager, MapGeneration map_generation, HexManager hex_manager
     public void NextPlayer(){
         Player.NextPlayer();
         CameraMovement.CenterCamera();
@@ -20,7 +20,23 @@ public class ButtonInput : MonoBehaviour
     }
 
     public void DestroyFog(){
-        // GameManager.fog_manager.DestroyFog();
+            FogManager.DestroyFog();
+    }
+
+    public void ShowRelationships(){
+        Debug.Log("Showing All Relationships");
+        TerrainManager.ShowRelationships();
+    }
+
+    public void ShowPlayerMenu(){
+        UIManager.ShowPlayerMenu(player);
+    }
+
+    public void ShowCharacterMenu(){
+        GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        Debug.Log("Showing Character Menu");
+        Debug.Log(character_binds[button.GetComponent<Button>()].GetFullName());
+        UIManager.ShowCharacterMenu(character_binds[button.GetComponent<Button>()]);
     }
 
     public void CloseCityUI(){

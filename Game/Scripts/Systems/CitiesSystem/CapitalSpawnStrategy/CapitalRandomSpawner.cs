@@ -11,10 +11,10 @@ namespace Terrain
         public override List<List<float>> GenerateCapitalMap(List<List<float>> water_map, List<Player> player_list, Vector2 map_size, List<List<float>> feature_map, List<List<float>> resource_map, List<List<float>> city_map){
             for(int i = 0; i < player_list.Count; i++){
                 
-                Vector3 random_coor = TerrainUtils.RandomVector3(map_size);
+                Vector3 random_coor = MapUtils.RandomVector3(map_size);
 
                 while(isInvalidCoordinate(random_coor, water_map, city_map)){
-                    random_coor = TerrainUtils.RandomVector3(map_size);
+                    random_coor = MapUtils.RandomVector3(map_size);
                 }
 
                 ClearSpaceForCapital(random_coor, city_map, feature_map, resource_map); // Clear space for capital

@@ -10,6 +10,11 @@ namespace Character
     public static class TraitEnums
     {
 
+        public enum TraitType
+        {
+            Domestic,
+            Foreign
+        }
 
     }
 }

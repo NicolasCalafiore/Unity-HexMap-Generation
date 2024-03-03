@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Terrain
 {
-    public static class TerrainUtils
+    public static class MapUtils
     {
        /*
             Contains all functions used for general terrain manipulation
@@ -259,15 +259,5 @@ namespace Terrain
             return false;
         }
 
-
-        
-    private static int GetTempOne(){
-        int temp = temp_one;
-        temp_one = 0;
-        return temp;
-    }
-
-
-        
     }
 }

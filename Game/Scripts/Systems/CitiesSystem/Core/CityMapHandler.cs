@@ -24,7 +24,7 @@ namespace Cities {
     
         public void GenerateCitiesMap(TerrainMapHandler terrain_map_handler, List<Player> player_list, Vector2 map_size, MapManager.CapitalStrat capital_strategy)
         {
-            List<List<float>> structure_map = TerrainUtils.GenerateMap();
+            List<List<float>> structure_map = MapUtils.GenerateMap();
 
             CapitalSpawnStrategy strategy = null;
             switch (capital_strategy)

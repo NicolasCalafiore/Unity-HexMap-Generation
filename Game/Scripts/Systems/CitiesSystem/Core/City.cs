@@ -59,6 +59,28 @@ namespace Strategy.Assets.Scripts.Objects
             return COL_ROW;
         }
 
+        public float GetPopulation()
+        {
+            return inhabitants;
+        }
+
+        public float GetStability()
+        {
+            return stability;
+        }
+
+        public float GetNourishment()
+        {
+            return nourishment;
+        }
+
+        public float GetConstruction()
+        {
+            return construction;
+        }
+
+        
+
         public List<HexTile> GetHexTerritoryList()
         {
             return hex_territory_list;

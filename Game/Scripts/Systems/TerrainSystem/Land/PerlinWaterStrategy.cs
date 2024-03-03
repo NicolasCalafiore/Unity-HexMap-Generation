@@ -19,14 +19,14 @@ namespace Strategy.Assets.Game.Scripts.Terrain.Water
 
         public override List<List<float>> GenerateWaterMap(Vector2 map_size, RegionsEnums.HexRegion region_type)   //Called from MapGeneration.GenerateWater
         {
-            List<List<float>> map = TerrainUtils.GenerateMap();
+            List<List<float>> map = MapUtils.GenerateMap();
         
             if(region_type == RegionsEnums.HexRegion.River){
-                TerrainUtils.GeneratePerlinNoiseMap(map, map_size, river_scale);
+                MapUtils.GeneratePerlinNoiseMap(map, map_size, river_scale);
                 FilterPerlinMap(map, map_size, river_max_min, region_type); //Filter map to only include values within max_min range
             }
             else if(region_type == RegionsEnums.HexRegion.Ocean){
-                TerrainUtils.GeneratePerlinNoiseMap(map, map_size, ocean_scale);
+                MapUtils.GeneratePerlinNoiseMap(map, map_size, ocean_scale);
                 FilterPerlinMap(map, map_size, ocean_max_min, region_type); //Filter map to only include values within max_min range
             }
 

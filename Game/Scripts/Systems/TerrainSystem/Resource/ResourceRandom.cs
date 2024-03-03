@@ -32,7 +32,7 @@ namespace Terrain
 
         public override List<List<float>> GenerateResourceMap(Vector2 map_size, List<List<float>> ocean_map, List<List<float>> river_map, List<List<float>> regions_map, List<List<float>> features_map){
 
-            List<List<float>> resource_map = TerrainUtils.GenerateMap();
+            List<List<float>> resource_map = MapUtils.GenerateMap();
 
             for(int i = 0; i < map_size.x; i++){
                 for(int j = 0; j < map_size.y; j++){

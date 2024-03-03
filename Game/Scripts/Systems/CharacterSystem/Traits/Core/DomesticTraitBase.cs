@@ -15,7 +15,7 @@ namespace Character {
         public abstract float GetTraitAlgorithmValue(Player player);
         public abstract bool isActivated(Player player);
 
-        public static DomesticTraitBase GetRandomDomesticTrait(){
+        public static DomesticTraitBase GetRandomDomesticTrait(Player player){
             List<DomesticTraitBase> trait_list = new List<DomesticTraitBase>();
             trait_list.Add(new PeaceKeeper());
             trait_list.Add(new Financier());

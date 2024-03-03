@@ -21,9 +21,9 @@ namespace Terrain
         public static RelationshipLevel GetRelationshipLevel(float relationship_value)
         {
             if(relationship_value >= 10) return RelationshipLevel.Ally;
-            if(relationship_value >= 5) return RelationshipLevel.Friendly;
+            if(relationship_value > 5) return RelationshipLevel.Friendly;
             if(relationship_value >= -5) return RelationshipLevel.Neutral;
-            if(relationship_value >= -10) return RelationshipLevel.Unfriendly;
+            if(relationship_value > -10) return RelationshipLevel.Unfriendly;
             else return RelationshipLevel.Enemy;
         }
 

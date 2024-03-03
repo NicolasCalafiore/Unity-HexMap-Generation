@@ -1,7 +1,101 @@
 <World>
-    <Name Government = "Monarchy">King</Name>
-    <Name Government = "Monarchy">Supreme King</Name>
-    <Name Government = "Monarchy">Ahmed</Name>
+    <Government name="Monarchy">
+        <Title type="leader">King</Title>
+        <Title type="leader">Prince</Title>
+        <Title type="leader">Emperor</Title>
+        <Title type="leader">Grand King</Title>
+        <Title type="leader">Grand Emperor</Title>
+        <Title type="leader">Grand Prince</Title>
+        <Title type="leader">Lord</Title>
 
+        <Title type="foreign">Emissary</Title>
+        <Title type="foreign">Ambassador</Title>
+        <Title type="foreign">Envoy</Title>
+        <Title type="foreign">Chancellor</Title>
+        <Title type="foreign">Minister of State</Title>
+
+        <Title type="domestic">Steward</Title>
+        <Title type="domestic">Chamberlain</Title>
+        <Title type="domestic">Marshal</Title>
+        <Title type="domestic">Minister of Chief</Title>
+    </Government>
+
+    <Government name="Dictatorship">
+        <Title type="leader">Supreme Leader</Title>
+        <Title type="leader">Generalissimo</Title>
+        <Title type="leader">Commander</Title>
+        <Title type="leader">Marshal</Title>
+        <Title type="leader">Chairman</Title>
+        <Title type="leader">President</Title>
+
+        <Title type="foreign">Minister of Foreign Affairs</Title>
+        <Title type="foreign">Secretary of State</Title>
+        <Title type="foreign">Secretary of Foreign Affairs</Title>
+        <Title type="foreign">Party Representative</Title>
+        <Title type="foreign">Advisor</Title>
+
+        <Title type="domestic">General Minister</Title>
+        <Title type="domestic">Minister of the Interior</Title>
+        <Title type="domestic">Advisor</Title>
+    </Government>
+
+    <Government name="Theocracy">
+        <Title type="leader">Cardinal</Title>
+        <Title type="leader">Archbishop</Title>
+        <Title type="leader">Abbot</Title>
+        <Title type="leader">Deacon</Title>
+        <Title type="leader">High Priest</Title>
+        <Title type="leader">Grand Ayatollah</Title>
+        <Title type="leader">Imam</Title>
+        <Title type="leader">Caliph</Title>
+        <Title type="leader">Grand Mutfi</Title>
+        <Title type="leader">Cleric</Title>
+
+        <Title type="foreign">Foreign Cleric</Title>
+        <Title type="foreign">Advisor of Foreign Affairs</Title>
+        <Title type="foreign">Advisor</Title>
+
+        <Title type="domestic">Cleric of the Interior</Title>
+        <Title type="domestic">Advisor</Title>
+        <Title type="domestic">Cleric of Domestic Affairs</Title>
+    </Government>
+
+    <Government name="Democracy">
+        <Title type="leader">President</Title>
+        <Title type="leader">Prime Minister</Title>
+        <Title type="leader">Democratic Representative</Title>
+        <Title type="leader">Head of State</Title>
+
+        <Title type="foreign">Foreign Representative</Title>
+        <Title type="foreign">Foreign Advisor</Title>
+        <Title type="foreign">Foreign Minister</Title>
+        <Title type="domestic">Secretary of State</Title>
+
+        <Title type="domestic">Domestic Advisor</Title>
+        <Title type="domestic">Domestic Minister</Title>
+        <Title type="domestic">Domestic Representative</Title>
+        <Title type="domestic">Secretary of Interior</Title>
+    </Government>
+
+    <Government name="Tribalism">
+        <Title type="leader">Chief</Title>
+        <Title type="leader">Warlord</Title>
+        <Title type="leader">Shaman</Title>
+        <Title type="leader">Chieftain</Title>
+        <Title type="leader">High Chief</Title>
+        <Title type="leader">High Shaman</Title>
+        <Title type="leader">High Warlord</Title>
+
+        <Title type="foreign">Foreign Representative</Title>
+        <Title type="foreign">Foreign Advisor</Title>
+        <Title type="foreign">Foreign Minister</Title>
+
+        <Title type="domestic">Domestic Advisor</Title>
+        <Title type="domestic">Domestic Minister</Title>
+        <Title type="domestic">Domestic Representative</Title>
+        <Title type="domestic">Secretary of Interior</Title>
+    </Government>
 </World>
+
+
 

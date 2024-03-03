@@ -21,7 +21,7 @@ namespace Terrain
             return 
             water_map[(int) random_coor.x][(int) random_coor.z] == (int) LandEnums.LandType.Water || 
             city_map[(int) random_coor.x][(int) random_coor.z] == (int) StructureEnums.StructureType.Capital ||
-            TerrainUtils.CircularSearch( (int) random_coor.x, (int) random_coor.z, city_map, (int) StructureEnums.StructureType.Capital, capital_minimum_distance);
+            MapUtils.CircularSearch( (int) random_coor.x, (int) random_coor.z, city_map, (int) StructureEnums.StructureType.Capital, capital_minimum_distance);
         }
 
 

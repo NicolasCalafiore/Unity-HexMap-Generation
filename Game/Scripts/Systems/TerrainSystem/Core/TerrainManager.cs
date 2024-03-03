@@ -219,16 +219,17 @@ namespace Terrain{
 
             LineRenderer lineRenderer = line_render_object.GetComponent<LineRenderer>();
               
+            float random = UnityEngine.Random.Range(0, 500);
             Vector3 capital_point = capital_city.transform.position;
-            capital_point.y += .05f;
+            capital_point.y += .05f + random/1000;
 
             Vector3 foreign_point = foreign_city.transform.position;
-            foreign_point.y += .05f;
+            foreign_point.y += .05f + random/1000;
 
             lineRenderer.SetPosition(0, capital_point);
             lineRenderer.SetPosition(1, foreign_point);
             lineRenderer.startWidth = .1f;
-            lineRenderer.endWidth = .1f;
+            lineRenderer.endWidth = .001f;
             lineRenderer.material.color = color;
 
             line_renderer_list.Add(line_render_object);
@@ -247,10 +248,10 @@ namespace Terrain{
 
 
 
-        public static void SpawnAIFlags(){
+        public static void SpawnAIFlags(Player player = null){
             RemoveAlerts();
             RemoveForeignLines();
-            Player player = Player.GetPlayerView();
+            if(player == null) player = Player.GetPlayerView();
         
             List<HexTile> construction_tiles = player.GetGovernment().GetDomestic(0).GetPotentialConstructionTiles();
             List<HexTile> expansion_tiles = player.GetGovernment().GetDomestic(0).GetPotentialExpansionTiles();
@@ -280,6 +281,31 @@ namespace Terrain{
 
                 float relationship = player.GetGovernment().GetForeign(0).GetRelationship(i);
                 DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
+            }
+        }
+
+        public static void ShowRelationships(){
+            Player player = Player.GetPlayerView();
+
+            List<Player> visible_players = FogManager.GetVisiblePlayers();
+            
+            foreach(Player i in visible_players){
+                List<Player> known_players_2 = i.GetGovernment().GetForeign(0).GetKnownPlayers();
+                foreach(Player j in known_players_2){
+                    
+                City foreign_capital_city = j.GetCityByIndex(0);
+                GameObject foreign_capital_city_go = City.city_to_city_go[foreign_capital_city];
+                
+                City capital_city = i.GetCityByIndex(0); 
+                GameObject capital_city_go = City.city_to_city_go[capital_city];
+
+                float relationship = i.GetGovernment().GetForeign(0).GetRelationship(j);
+                DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
+
+
+
+
+                }
             }
         }
 

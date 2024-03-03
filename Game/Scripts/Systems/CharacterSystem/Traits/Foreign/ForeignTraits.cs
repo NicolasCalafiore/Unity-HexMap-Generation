@@ -8,6 +8,8 @@ using Cabinet;
 using PlayerGovernment;
 using Unity.VisualScripting;
 using Players;
+using static Character.TraitEnums;
+using static Terrain.RegionsEnums;
 
 
 namespace Character {
@@ -17,6 +19,7 @@ namespace Character {
             this.description = "Government";
             this.government_type_value = 5;
             this.id = 1;
+            this.type = TraitType.Foreign;
         }
 
         public override float GetTraitAlgorithmValue(Player player, Player other_player){
@@ -36,6 +39,7 @@ namespace Character {
             this.description = "Regions";
             this.region_type_value = 5;
             this.id = 2;
+            this.type = TraitType.Foreign;
         }
 
         public override float GetTraitAlgorithmValue(Player player, Player other_player){
@@ -55,6 +59,7 @@ namespace Character {
             this.description = "Homeland";
             this.region_type_value = 8;
             this.id = 2;
+            this.type = TraitType.Foreign;
         }
 
         public override float GetTraitAlgorithmValue(Player player, Player other_player){
@@ -73,6 +78,7 @@ namespace Character {
             this.description = "Peace";
             this.base_value = 5;
             this.id = 3;
+            this.type = TraitType.Foreign;
         }
 
         public override float GetTraitAlgorithmValue(Player player, Player other_player){
@@ -88,8 +94,9 @@ namespace Character {
         public WarMonger(){
             this.name = "War Monger";
             this.description = "War";
-            this.base_value = 10;
+            this.base_value = 7;
             this.id = 3;
+            this.type = TraitType.Foreign;
         }
 
         public override float GetTraitAlgorithmValue(Player player, Player other_player){
@@ -106,8 +113,9 @@ namespace Character {
         public Diplomat(){
             this.name = "Diplomat";
             this.description = "Diplomacy";
-            this.base_value = 10;
+            this.base_value = 7;
             this.id = 3;
+            this.type = TraitType.Foreign;
         }
 
         public override float GetTraitAlgorithmValue(Player player, Player other_player){
@@ -117,6 +125,50 @@ namespace Character {
 
         public override bool isActivated(Player player, Player other_player){
             return true;
+        }
+    }
+
+    public class RacistRegion : ForeignTraitBase {
+        public RacistRegion(){
+            HexRegion region_type = RegionsEnums.GetRandomRegionLandType();
+
+            this.name = "Discrimatory towards " + region_type;
+            this.description = "Racist";
+            this.base_value = 5;
+            this.id = 4;
+            this.type = TraitType.Foreign;
+            this.region_type = region_type; 
+        }
+
+        public override float GetTraitAlgorithmValue(Player player, Player other_player){
+            if(other_player.GetCityByIndex(0).GetRegionType() == region_type) return base_value * -1;
+            else return 0;
+        }
+
+        public override bool isActivated(Player player, Player other_player){
+             if(other_player.GetCityByIndex(0).GetRegionType() == region_type) return true;
+                else return false;
+        }
+    }
+
+    public class RacistPlayer : ForeignTraitBase {
+        public RacistPlayer(Player player){
+            this.player_target = player.GetGovernment().GetForeign(0).GetRandomKnownPlayer();
+            this.name = "Discrimatory towards " + player_target.GetOfficialName();
+            this.description = "Racist";
+            this.base_value = 5;
+            this.id = 4;
+            this.type = TraitType.Foreign;
+        }
+
+        public override float GetTraitAlgorithmValue(Player other_player, Player player){
+            if(other_player == player_target) return base_value * -1;
+            else return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+             if(other_player == player_target) return true;
+                else return false;
         }
     }
 }

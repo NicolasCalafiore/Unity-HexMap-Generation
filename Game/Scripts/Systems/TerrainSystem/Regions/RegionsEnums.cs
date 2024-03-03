@@ -47,6 +47,18 @@ namespace Terrain
             return Enum.GetValues(typeof(HexRegion)).Cast<HexRegion>().ToList();
         }
 
+        public static HexRegion GetRandomRegionType(){
+            return GetRegionType(UnityEngine.Random.Range(0, GetRegionTypes().Count));
+        }
+
+        public static HexRegion GetRandomRegionLandType(){
+            List<HexRegion> regions =  GetRegionTypes();
+            regions.Remove(HexRegion.Ocean);
+            regions.Remove(HexRegion.River);
+            regions.Remove(HexRegion.Shore);
+
+            return regions[UnityEngine.Random.Range(0, regions.Count)];
+        }
         
         public static HexRegion GetRegionType(float regionValue)
         {

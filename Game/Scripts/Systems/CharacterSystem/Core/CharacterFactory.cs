@@ -18,16 +18,21 @@ namespace Character
         public static ICharacter CreateCharacter(RoleType type, List<List<float>> regions_map, City city, Player player){
                 CharacterGender gender = Random.Range(0, 100) < gender_male_chance ? CharacterGender.Male : CharacterGender.Female;
                 List<string> names = character_names_strategy.GenerateNames(city.GetColRow(), regions_map, gender);
+                List<string> titles = IOHandler.ReadTitles(type, player.GetGovernmentType());
+
+                foreach(string title in titles){
+                    Debug.Log(title);
+                }
 
                 switch(type){
                     case RoleType.Leader:
-                        return new Leader(names, gender, player);
+                        return new Leader(names, gender, player, titles);
  
                     case RoleType.Domestic:
-                        return new Domestic(names, gender, player);
+                        return new Domestic(names, gender, player, titles);
                     
                     case RoleType.Foreign:
-                        return new Foreign(names, gender, player);
+                        return new Foreign(names, gender, player, titles);
                     
                 }
 

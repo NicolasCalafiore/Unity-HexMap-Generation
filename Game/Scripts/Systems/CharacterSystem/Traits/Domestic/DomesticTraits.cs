@@ -8,6 +8,7 @@ using Cabinet;
 using PlayerGovernment;
 using Unity.VisualScripting;
 using Players;
+using static Character.TraitEnums;
 
 namespace Character {
     public class PeaceKeeper : DomesticTraitBase {
@@ -15,6 +16,7 @@ namespace Character {
             this.name = "Peace Keeper";
             this.description = "Peace";
             this.id = 1;
+            this.type = TraitType.Domestic;
 
         }
 
@@ -33,6 +35,7 @@ namespace Character {
             this.name = "Financier";
             this.description = "Financier";
             this.id = 2;
+            this.type = TraitType.Domestic;
         }
 
         public override float GetTraitAlgorithmValue(Player player){
@@ -49,6 +52,7 @@ namespace Character {
             this.name = "Production Expert";
             this.description = "Production";
             this.id = 3;
+            this.type = TraitType.Domestic;
         }
 
         public override float GetTraitAlgorithmValue(Player player){
