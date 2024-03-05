@@ -55,6 +55,7 @@ public class CameraMovement : MonoBehaviour
 
     public static void MoveCameraTo(Vector3 position){
         Camera.main.transform.position = position;
+
     }
 
     public static void CenterCamera(){
@@ -67,6 +68,7 @@ public class CameraMovement : MonoBehaviour
         Vector3 vector = hex.transform.position;
         vector.y += 10f;
         vector.z -= 10f;
+
 
         CameraMovement.MoveCameraTo(vector);
     }

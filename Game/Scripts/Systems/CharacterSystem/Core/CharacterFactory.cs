@@ -20,9 +20,6 @@ namespace Character
                 List<string> names = character_names_strategy.GenerateNames(city.GetColRow(), regions_map, gender);
                 List<string> titles = IOHandler.ReadTitles(type, player.GetGovernmentType());
 
-                foreach(string title in titles){
-                    Debug.Log(title);
-                }
 
                 switch(type){
                     case RoleType.Leader:

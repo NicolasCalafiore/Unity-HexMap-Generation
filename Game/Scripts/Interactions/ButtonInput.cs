@@ -1,4 +1,3 @@
-    
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,54 +9,49 @@ using Character;
 
 public class ButtonInput : MonoBehaviour
 {
-    public static Dictionary<Button, ICharacter> character_binds = new Dictionary<Button, ICharacter>();
+
     public static Player player;
 
-    public void NextPlayer(){
-        Player.NextPlayer();
-        CameraMovement.CenterCamera();
-        TerrainManager.SpawnAIFlags();
+    public void OpenDevPanel(){
+        if(UIManager.dev_panel_ui.activeSelf) UIManager.dev_panel_ui.SetActive(false);
+        else UIManager.dev_panel_ui.SetActive(true);
     }
 
-    public void DestroyFog(){
-            FogManager.DestroyFog();
+    public void OpenCabinet(){
+        if(UIManager.cabinet_ui.activeSelf){
+            UIManager.cabinet_ui.SetActive(false);
+        }
+        else{
+            UIManager.cabinet_ui.SetActive(true);
+            UIManager.LoadCabinetCharacters(Player.GetPlayerView());
+            }
+    }
+
+    public void OpenCharacterScreen(){
+        GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        ICharacter character = UIManager.character_binds[button.GetComponent<Button>()];
+        UIManager.character_ui.SetActive(true);
+        UIManager.LoadCharacterScreen(character);
+    
+    }
+
+    public void CloseCity(){
+        UIManager.city_ui.SetActive(false);
     }
 
     public void ShowRelationships(){
-        Debug.Log("Showing All Relationships");
         TerrainManager.ShowRelationships();
     }
 
-    public void ShowPlayerMenu(){
-        UIManager.ShowPlayerMenu(player);
+
+    public void NextPlayer(){
+        Player.NextPlayer();
+
+        UIManager.SetPlayerName(Player.GetPlayerView());
+        UIManager.UpdatePlayerUI(Player.GetPlayerView());
     }
 
-    public void ShowCharacterMenu(){
-        GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        Debug.Log("Showing Character Menu");
-        Debug.Log(character_binds[button.GetComponent<Button>()].GetFullName());
-        UIManager.ShowCharacterMenu(character_binds[button.GetComponent<Button>()]);
-    }
-
-    public void CloseCityUI(){
-        // GameManager.ui_manager.city_ui.SetActive(false);
-        // button_binds.Clear();
-    }
-    public void CloseHexUI(){
-        // GameManager.ui_manager.hex_ui.SetActive(false);
-    }
-    public void CloseCharacterUI(){
-        // GameManager.ui_manager.character_ui.SetActive(false);
-    }
-    public void QuitGame(){
-        // Application.Quit();
-    }
-
-    public void GetCharacterInformation(){
-        // GameObject go = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        // ICharacter character = button_binds[go.GetComponent<Button>()];
-
-        // GameManager.ui_manager.GetCharacterInformation(character);
-    }
-
+        public static void CloseCharacterScreen(){
+            UIManager.character_ui.SetActive(false);
+        }
 }

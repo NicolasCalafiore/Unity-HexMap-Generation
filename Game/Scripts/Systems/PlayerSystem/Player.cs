@@ -54,6 +54,7 @@ namespace Players {
                 i.SimulateGovernment();
             }
         }
+
         public void AddCity(City city){
             cities.Add(city);
         }
@@ -71,7 +72,7 @@ namespace Players {
         }
 
         public string GetOfficialName(){
-            return state_prefix + " " + name;
+            return state_prefix  + name;
         }
 
         internal void SetGovernmentType(GovernmentEnums.GovernmentType governmentType)
@@ -242,10 +243,15 @@ namespace Players {
             if(clear_log) DebugHandler.ClearLog();
             player_view.GetGovernment().GetForeign(0).PrintRelationships();
 
-            UIManager.UpdatePlayerView(player_view);
+            UIManager.SetPlayerName(player_view);
+            CameraMovement.CenterCamera();
+            TerrainManager.SpawnAIFlags();
+            UIManager.UpdatePlayerUI(player_view);
         }
 
         public static void NextPlayer(){
+                
+        
             if(player_view == player_list[player_list.Count - 1]){
                 player_view = player_list[0];
             }
@@ -256,7 +262,10 @@ namespace Players {
                 DebugHandler.ClearLog();
                 player_view.GetGovernment().GetForeign(0).PrintRelationships();
 
-                UIManager.UpdatePlayerView(player_view);
+                UIManager.SetPlayerName(player_view);
+                CameraMovement.CenterCamera();
+                TerrainManager.SpawnAIFlags();
+                UIManager.UpdatePlayerUI(player_view);
 
 
         }

@@ -13,22 +13,39 @@ public class MouseInput : MonoBehaviour
         if (Input.GetMouseButtonDown(0)){
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
             if (Physics.Raycast(ray, out hit)){
                 
                 if(hit.transform.gameObject.tag.Contains("City")){
-                    Debug.Log("CITY HIT");  
                     GameObject game_object = hit.transform.gameObject;
                     
                     GameObject city_go = game_object.transform.parent.gameObject;
                     City city = TerrainManager.city_go_to_city[city_go];
 
+                    UIManager.ShowCityMenu(city);
                     Player.SetPlayerView(city.GetPlayer());
                     CameraMovement.CenterCamera();
                     TerrainManager.SpawnAIFlags();
-                    UIManager.ShowCityMenu(city);
                 }
+
+
+                if(hit.transform.gameObject.name.Contains("Hex")){
+                    GameObject hex_go = hit.transform.parent.gameObject;
+                    HexTile hexTile = TerrainManager.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
+                    UIManager.SetHexUI(hexTile);
+                }
+
+
+
+
+
             }
+
+
+            
         }
+
 
 
 

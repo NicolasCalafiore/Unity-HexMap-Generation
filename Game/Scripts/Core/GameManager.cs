@@ -56,10 +56,11 @@ public class GameManager: MonoBehaviour{
         Player.AllScanForNewPlayers();
         CharacterManager.GenerateCharacterTraits();
         Player.SimulateGovernments();                   // Player.AllScanForNewPlayers(); is called twice now. Relies on traits for foreign. Traits rely on known_players
-        Player.SetPlayerView(Player.GetPlayerList()[0], false);
+        Player.SetPlayerView(Player.GetPlayerList()[1], false);
         FogManager.ShowFogOfWar();
         CameraMovement.CenterCamera();
         TerrainManager.SpawnAIFlags();
+        UIManager.InitializeUI();
     }
 
     

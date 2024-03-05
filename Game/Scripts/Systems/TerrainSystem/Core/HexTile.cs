@@ -13,6 +13,7 @@ namespace Terrain {
             Used to store all HexTile properties
             Is wrap around any HexTile decorators
         */
+
         public static Dictionary<Vector2, HexTile> col_row_to_hex = new Dictionary<Vector2, HexTile>();
         private static List<HexTile> hex_list = new List<HexTile>();   // All HexTile objects
         private static DecoratorHandler hex_decorator = new DecoratorHandler();
@@ -27,11 +28,6 @@ namespace Terrain {
         public readonly int row;  //Row
         private readonly int S;  // -(column + row)
         public float elevation; //Elevation
-
-        public float gCost;
-        public float hCost;
-        public float fCost { get { return gCost + hCost; } }
-        public bool is_walakble = true;
 
 
         private ElevationEnums.HexElevation elevation_type { get; set;}
@@ -91,10 +87,6 @@ namespace Terrain {
             return this;
         }
 
-
-
-
-        
         public Vector2 GetColRow()
         {
             return new Vector2(this.column, this.row);
@@ -157,17 +149,6 @@ namespace Terrain {
             return owner_city;
         }
 
-        public bool IsWalkable(){
-            return is_walakble;
-        }
-
-        public void SetWalkable(bool is_walkable){
-            is_walakble = is_walkable;
-        }
-
-        public float GetMovementCost(){
-            return MovementCost;
-        }
 
 
         public static void GenerateHexList(){
