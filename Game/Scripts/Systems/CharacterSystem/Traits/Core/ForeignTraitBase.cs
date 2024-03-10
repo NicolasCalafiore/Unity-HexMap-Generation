@@ -30,6 +30,8 @@ namespace Character {
             trait_list.Add(new WarMonger());
             trait_list.Add(new Diplomat());
             trait_list.Add(new RacistRegion());
+            trait_list.Add(new HomeFront());
+            trait_list.Add(new Neighborly());
             if(player.GetGovernment().GetForeign(0).GetRandomKnownPlayer() != null) trait_list.Add(new RacistPlayer(player));
             
 

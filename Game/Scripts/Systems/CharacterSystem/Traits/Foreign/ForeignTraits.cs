@@ -171,4 +171,51 @@ namespace Character {
                 else return false;
         }
     }
+
+    public class Neighborly : ForeignTraitBase {
+        public Neighborly(){
+            this.name = "Neighborly";
+            this.description = "Neighborly";
+            this.base_value = 5;
+            this.id = 4;
+            this.type = TraitType.Foreign;
+        }
+
+        public override float GetTraitAlgorithmValue(Player other_player, Player player){
+            Vector2 position = player.GetCityByIndex(0).GetColRow();
+            Vector2 other_position = other_player.GetCityByIndex(0).GetColRow();
+
+            if(PathFinding.GetTileDistance(position, other_position) < 5) return base_value * -1;
+            else return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+             if(other_player == player_target) return true;
+                else return false;
+        }
+    }
+
+    
+    public class HomeFront : ForeignTraitBase {
+        public HomeFront(){
+            this.name = "HomeFront";
+            this.description = "HomeFront";
+            this.base_value = 5;
+            this.id = 4;
+            this.type = TraitType.Foreign;
+        }
+
+        public override float GetTraitAlgorithmValue(Player other_player, Player player){
+            Vector2 position = player.GetCityByIndex(0).GetColRow();
+            Vector2 other_position = other_player.GetCityByIndex(0).GetColRow();
+
+            if(PathFinding.GetTileDistance(position, other_position) < 5) return base_value;
+            else return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+             if(other_player == player_target) return true;
+                else return false;
+        }
+    }
 }
