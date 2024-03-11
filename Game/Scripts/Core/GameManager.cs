@@ -6,7 +6,6 @@ using System.Xml.Linq;
 using Character;
 using Cities;
 using Players;
-using Cities;
 using Terrain;
 using UnityEngine;
 
@@ -56,12 +55,11 @@ public class GameManager: MonoBehaviour{
     {
         PlayerManager.AllScanForNewPlayers();
         TraitManager.GenerateCharacterTraits();
-        PlayerManager.SimulateGovernments();                   // PlayerManager.AllScanForNewPlayers(); is called twice now. Relies on traits for foreign. Traits rely on known_players
+        PlayerManager.SimulateGovernments();
+        UIManager.InitializeUI();
         PlayerManager.SetPlayerView(PlayerManager.player_list[1]);
         FogManager.ShowFogOfWar();
-        CameraMovement.CenterCamera();
         TerrainManager.SpawnAIFlags();
-        UIManager.InitializeUI();
     }
 
     

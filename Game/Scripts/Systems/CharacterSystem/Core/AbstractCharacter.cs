@@ -10,8 +10,8 @@ namespace Character
 {
     public abstract class AbstractCharacter
     {
-        public CharacterEnums.CharacterType character_type {get; set;}
-        public CharacterEnums.CharacterGender gender {get; set;}
+        public CharacterType character_type {get; set;}
+        public CharacterGender gender {get; set;}
         public List<TraitBase> traits = new List<TraitBase>();
         public Player owner_player {get; set;}
         public  string first_name {get; set;}
@@ -27,17 +27,17 @@ namespace Character
         public int influence {get; set;}
 
         public AbstractCharacter(List<string> names, CharacterGender gender, Player player, List<string> titles){
-            this.first_name = names[0];
-            this.last_name = names[1];
+            first_name = names[0];
+            last_name = names[1];
             this.gender = gender;
-            this.character_type = CharacterType.Leader;
-            this.owner_player = player;         
-            this.title = titles[UnityEngine.Random.Range(0, titles.Count)];
+            character_type = CharacterType.Leader;
+            owner_player = player;         
+            title = titles[UnityEngine.Random.Range(0, titles.Count)];
         }
 
         // Returns the full name of the character
         public string GetFullName() => $"{title} {first_name} {last_name}";
-
+        
         // Returns the name of the character
         public string GetName() => $"{first_name} {last_name}";
 

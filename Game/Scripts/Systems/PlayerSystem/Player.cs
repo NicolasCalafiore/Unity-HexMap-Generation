@@ -14,7 +14,8 @@ using System.Linq;
 namespace Players {
     public class Player {
 
-        public string state_prefix { get; set; }
+        public string state_prefix { get; set; } = "";
+        public string state_suffix { get; set; } = "";
         public string name  { get; set; }
         public int id  { get; set; }
         public float wealth { get; set; } = 1000;
@@ -28,8 +29,7 @@ namespace Players {
         private List<List<float>> fog_of_war_map;
 
 
-        public Player(string state_prefix, string name, int id){
-            this.state_prefix = state_prefix;
+        public Player(string name, int id){
             this.name = name;
             this.team_color = new Color(Random.Range(0f, 1f),Random.Range(0f, 1f),Random.Range(0f, 1f));
             this.id = id;
@@ -38,7 +38,7 @@ namespace Players {
 
         public void SimulateGovernment(){
             government.cabinet.StartDomesticTurn(this, fog_of_war_map);
-            government.cabinet.StartForeignTurn(this, fog_of_war_map);
+            government.cabinet.StartForeignTurn();
         }
 
         public List<AbstractCharacter> GetAllCharacters(){
@@ -50,7 +50,7 @@ namespace Players {
 
         public void AddCity(City city) => cities.Add(city);
         public City GetCapital() => cities[0];
-        public string GetOfficialName() => state_prefix  + name;
+        public string GetOfficialName() => $"{state_prefix}{name}{state_suffix}";
         public City GetCityByIndex(int index) => cities[index];
         public Vector2 GetCapitalCoordinate()=> cities[0].col_row;
         public List<City> GetCities() => cities;

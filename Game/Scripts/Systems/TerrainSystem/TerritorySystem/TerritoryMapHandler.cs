@@ -48,8 +48,8 @@ namespace Terrain {
                 if (player.GetCapitalCoordinate() != capitalCoordinate) continue;
 
                 MapUtils.CircularSpawn(i, j, territory_map, player.id);
-                List<HexTile> hex_list = HexTileUtils.CircularRetrieval(i, j);
-                HexManager.AddHexTileToPlayerTerritory(hex_list, player);
+                List<HexTile> territory_hex_list = HexTileUtils.CircularRetrieval(i, j);
+                HexManager.AddHexTileToPlayerTerritory(territory_hex_list, player);
                 
             }
         }

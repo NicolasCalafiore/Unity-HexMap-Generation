@@ -21,7 +21,7 @@ namespace Players {
         // Functional programming is used to generate the list
         public static void CreatePlayers(int player_id){        // TO DO: EVALUATE FUNCTIONAL PROGRAMMING
             if(player_id < player_count){
-                player_list.Add(new Player("player", "Player " + player_id, player_id));
+                player_list.Add(new Player("ERRL", player_id));
                 CreatePlayers(player_id + 1);
             }
         }
@@ -55,8 +55,14 @@ namespace Players {
         private static void SetStatePrefix()
         {
             foreach(Player player in player_list){  //TO DO: OPTIMIZATION POINT
-                List<string> state_prefixes = IOHandler.ReadPrefixNamesRegionSpecified(player.government_type.ToString());
-                player.state_prefix = state_prefixes[Random.Range(0, state_prefixes.Count)];
+                if(Random.Range(0, 100) < 50){
+                    List<string> state_prefixes = IOHandler.ReadPrefixNamesRegionSpecified(player.government_type.ToString());
+                    player.state_prefix = state_prefixes[Random.Range(0, state_prefixes.Count)];
+                }
+                else{
+                    List<string> state_suffixes = IOHandler.ReadSuffixNamesRegionSpecified(player.government_type.ToString());
+                    player.state_suffix = state_suffixes[Random.Range(0, state_suffixes.Count)];
+                }
             }
         }
 

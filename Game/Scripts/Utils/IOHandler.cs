@@ -27,28 +27,44 @@ public static class IOHandler{
     {
 
         string filePath = "C:\\Users\\nicol\\OneDrive\\Documents\\GitHub\\Unity-Strategy\\My project\\Assets\\Game\\Resources\\Data\\GovernmentPrefixes.xml";
-       XDocument doc = XDocument.Load(filePath);
-        List<string> cityNames = doc.Descendants("Government")
+        XDocument doc = XDocument.Load(filePath);
+        List<string> prefixes = doc.Descendants("Government")
                                     .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
-                                    .Descendants("Prefix")
+                                    .Descendants("Identifier")
+                                    .Where(p => p.Attribute("loc")?.Value == "beg")
                                     .Select(c => c.Value)
                                     .ToList();
 
-        return cityNames;
+        return prefixes;
+    }
+
+    public static List<string> ReadSuffixNamesRegionSpecified(string region)
+    {
+
+        string filePath = "C:\\Users\\nicol\\OneDrive\\Documents\\GitHub\\Unity-Strategy\\My project\\Assets\\Game\\Resources\\Data\\GovernmentPrefixes.xml";
+        XDocument doc = XDocument.Load(filePath);
+        List<string> suffixes = doc.Descendants("Government")
+                                    .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
+                                    .Descendants("Identifier")
+                                    .Where(p => p.Attribute("loc")?.Value == "end")
+                                    .Select(c => c.Value)
+                                    .ToList();
+
+        return suffixes;
     }
 
     public static List<string> ReadStateNamesRegionSpecified(string region)
     {
     
-    string filePath = "C:\\Users\\nicol\\OneDrive\\Documents\\GitHub\\Unity-Strategy\\My project\\Assets\\Game\\Resources\\Data\\StateNames.xml";
-    XDocument doc = XDocument.Load(filePath);
-    List<string> countryNames = doc.Descendants("Regions")
-                                   .FirstOrDefault(r => r.Attribute("name")?.Value.Equals(region, StringComparison.OrdinalIgnoreCase) == true)
-                                   ?.Descendants("Country")
-                                   .Select(c => c.Value)
-                                   .ToList();
+        string filePath = "C:\\Users\\nicol\\OneDrive\\Documents\\GitHub\\Unity-Strategy\\My project\\Assets\\Game\\Resources\\Data\\StateNames.xml";
+        XDocument doc = XDocument.Load(filePath);
+        List<string> countryNames = doc.Descendants("Regions")
+                                    .FirstOrDefault(r => r.Attribute("name")?.Value.Equals(region, StringComparison.OrdinalIgnoreCase) == true)
+                                    ?.Descendants("Country")
+                                    .Select(c => c.Value)
+                                    .ToList();
 
-    return countryNames ?? new List<string>(); // Return an empty list if the region is not found
+        return countryNames ?? new List<string>(); // Return an empty list if the region is not found
     }
 
     public static List<string> ReadFirstNamesRegionSpecified(string region, string gender)

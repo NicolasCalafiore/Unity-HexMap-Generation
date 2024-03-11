@@ -26,9 +26,8 @@ namespace Cabinet {
         // Starts the foreign turn for each advisor
         // This is where the advisors will scan for new players and generate starting relationships
         // with the new players
-        public void StartForeignTurn(Player player, List<List<float>> fog_of_war){
+        public void StartForeignTurn(){
             foreach(Foreign i in foreign_advisor_list){
-                i.ScanForNewPlayers(fog_of_war, player);
                 i.GenerateStartingRelationship(i.known_players);
             }
         }

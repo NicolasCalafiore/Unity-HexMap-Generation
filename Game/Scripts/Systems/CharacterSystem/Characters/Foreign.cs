@@ -16,8 +16,7 @@ namespace Cabinet
         public Dictionary<Player, float> relations = new Dictionary<Player, float>();
         public ForeignStrategy foreign_strategy;
 
-        public Foreign(List<string> names, CharacterEnums.CharacterGender gender, Player player, List<string> titles)
-        : base(names, gender, player, titles){}
+        public Foreign(List<string> names, CharacterEnums.CharacterGender gender, Player player, List<string> titles): base(names, gender, player, titles){}
 
         // Sets the foreign strategy based on the strategy int
         public void SetForeignStrategy(int strategy){

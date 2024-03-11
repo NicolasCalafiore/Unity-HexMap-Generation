@@ -27,22 +27,13 @@ namespace Terrain
                     map[i][j] = (map[i][j] - min) / range;
                 }
             }
+
         }
         public static List<List<float>> GenerateMap(float value = 0){  // Generates List<List<float>> map with 0 values
-            List<List<float>> map = new List<List<float>>();
             Vector2 map_size = MapManager.GetMapSize();
-
-            for (int i = 0; i < map_size.x; i++)
-            {
-                List<float> row = new List<float>();
-                for (int j = 0; j < map_size.y; j++)
-                {
-                    row.Add(value);
-                }
-                map.Add(row);
-            }
-            return map;
-
+            return Enumerable.Range(0, (int)map_size.x)
+                            .Select(_ => Enumerable.Repeat(value, (int)map_size.y).ToList())
+                            .ToList();
         }
 
         public static Vector2 RandomSpawn(Vector2 map_size, List<List<float>> elevation_map, float value, int min = 0, int limiter = 0){    // Coordinate value at random location on map

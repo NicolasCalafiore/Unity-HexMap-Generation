@@ -19,8 +19,7 @@ namespace Character {
         public abstract float GetTraitValue(Player player, Player other_player);
         public abstract bool isActivated(Player player, Player other_player);
 
-        public ForeignTraitBase(string name, string description, int value) : base(name, description, value)
-        {}
+        public ForeignTraitBase(string name, string description, int value) : base(name, description, value){}
 
         public static ForeignTraitBase GetRandomForeignTrait(Player player){
 
