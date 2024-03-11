@@ -13,9 +13,6 @@ namespace Diplomacy
     public abstract class ForeignStrategy
     {
         public abstract float GenerateStartingRelationship(Player known_player, Player player);
-        public abstract List<string> CalculationValues(Player known_player, Player player);
-
-
 
     }
 }

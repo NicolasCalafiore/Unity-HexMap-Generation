@@ -33,13 +33,13 @@ namespace Terrain {
         }
 
         public static void GenerateCitiesMaps(){
-            List<Player> player_list = Player.GetPlayerList();
+            List<Player> player_list = PlayerManager.player_list;
             city_map_handler = new CityMapHandler();
             city_map_handler.GenerateCitiesMap(terrain_map_handler, player_list, map_size, capital_strategy);
         }
 
         public static void GenerateTerritoryMaps(){
-            List<Player> player_list = Player.GetPlayerList();
+            List<Player> player_list = PlayerManager.player_list;
             territory_map_handler = new TerritoryMapHandler();
             territory_map_handler.GenerateCapitalTerritory(city_map_handler, player_list, map_size);
         }

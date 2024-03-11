@@ -17,16 +17,16 @@ namespace Cities {
     public class CityMapHandler
     {
         public List<List<float>> structure_map = new List<List<float>>();
+        public CityMapHandler(){}
 
-        public CityMapHandler(){
-
-        }
-    
+        // Generate the map of cities
+        // This method is called by the MapManager
         public void GenerateCitiesMap(TerrainMapHandler terrain_map_handler, List<Player> player_list, Vector2 map_size, MapManager.CapitalStrat capital_strategy)
         {
             List<List<float>> structure_map = MapUtils.GenerateMap();
 
-            CapitalSpawnStrategy strategy = null;
+            CapitalSpawnStrategy strategy;
+
             switch (capital_strategy)
             {
                 case MapManager.CapitalStrat.Random:

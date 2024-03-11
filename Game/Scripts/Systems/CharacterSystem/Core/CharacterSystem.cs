@@ -6,10 +6,11 @@ using Strategy.Assets.Game.Scripts.Terrain.Regions;
 using Unity.VisualScripting;
 using UnityEngine;
 using Players;
-using Strategy.Assets.Scripts.Objects;
+using Cities;
 using Terrain;
 using Cabinet;
 using static Character.CharacterEnums;
+using System;
 
 
 
@@ -18,50 +19,27 @@ namespace Character {
     public static class CharacterManager
     {
 
+        // Generates all characters for all players
         public static void GenerateGovernmentsCharacters(){
+
             List<List<float>> regions_map = MapManager.terrain_map_handler.GetRegionsMap();
-            List<Player> player_list = Player.GetPlayerList();
-            foreach(Player i in player_list){
-                City city = i.GetCityByIndex(0);
+            List<Player> player_list = PlayerManager.player_list;
 
-                Leader leader = (Leader) CharacterFactory.CreateCharacter(RoleType.Leader, regions_map, city, i);
-                i.GetGovernment().AddCharacter(leader);
-                leader.InitializeCharacteristics();
-                //leader.AddRandomTrait();
+            foreach(Player player in player_list)
+            {
+                City city = player.GetCityByIndex(0);
 
-
-                Domestic domestic_advisor = (Domestic) CharacterFactory.CreateCharacter(RoleType.Domestic, regions_map, city, i);
-                i.GetGovernment().AddCharacter(domestic_advisor);
-                domestic_advisor.InitializeCharacteristics();
-                //domestic_advisor.AddRandomTrait();
-
-                Foreign foreign_advisor = (Foreign) CharacterFactory.CreateCharacter(RoleType.Foreign, regions_map, city, i);
-                // foreign_advisor.SetForeignStrategy(1);
-                i.GetGovernment().AddCharacter(foreign_advisor);
-                foreign_advisor.InitializeCharacteristics();
-                //foreign_advisor.AddRandomTrait();
-
-                
-
+                foreach (RoleType role in Enum.GetValues(typeof(RoleType)))
+                {
+                    AbstractCharacter character = CharacterFactory.CreateCharacterNullable(role, regions_map, city, player);
+                    if (character != null)
+                    {
+                        player.government.AddCharacter(character);
+                        character.InitializeCharacteristics();
+                    }
+                }
             }
         }
-
-        public static void GenerateCharacterTraits(){
-            List<Player> player_list = Player.GetPlayerList();
-            foreach(Player i in player_list){
-                Leader leader = i.GetGovernment().GetLeader();
-                Domestic domestic_advisor = i.GetGovernment().GetDomestic(0);
-                Foreign foreign_advisor = i.GetGovernment().GetForeign(0);
-
-                leader.AddRandomTrait();
-                domestic_advisor.AddRandomTrait();
-                foreign_advisor.AddRandomTrait();
-            }
-        }
-
-
-
-
 
     }
 }

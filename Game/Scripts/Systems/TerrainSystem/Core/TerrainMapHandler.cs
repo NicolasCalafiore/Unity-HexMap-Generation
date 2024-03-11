@@ -139,7 +139,7 @@ namespace Terrain {
 
         public void GenerateShores(){
 
-            List<HexTile> hex_list = HexTile.GetHexList();
+            List<HexTile> hex_list = HexManager.hex_list;
 
             List<Tuple<int, int>> land_border = MapUtils.CompareValueBorder(water_map, 1, 0);
             FilterShoreElevation(land_border, (float) ElevationEnums.HexElevation.Flatland, (float) ElevationEnums.HexElevation.Flatland, hex_list);  // Sets all coasts to 0 if < 0
@@ -158,7 +158,7 @@ namespace Terrain {
             foreach(Tuple<int, int> tuple in land_border){
                 foreach(HexTile hex in hex_list){
                     if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
-                            if( (float) hex.GetElevationType() <= conditional_value){
+                            if( (float) hex.elevation_type <= conditional_value){
                                 elevation_map[tuple.Item1][tuple.Item2] = set_value;
                             }
                             hex.SetCoast();
@@ -173,13 +173,13 @@ namespace Terrain {
                 foreach(HexTile hex in hex_list){
                     if(hex.GetColRow() == new Vector2(tuple.Item1, tuple.Item2)){
                         
-                            if( (float) hex.GetElevationType() == conditional_value){
+                            if( (float) hex.elevation_type == conditional_value){
                                 regions_map[tuple.Item1][tuple.Item2] = set_value;
-                                hex.SetRegionType(RegionsEnums.GetRegionType(set_value));
+                                hex.region_type = RegionsEnums.GetRegionType(set_value);
                             }
                             else{
                                 regions_map[tuple.Item1][tuple.Item2] = set_value;
-                                hex.SetRegionType(RegionsEnums.GetRegionType(set_value));
+                                hex.region_type = RegionsEnums.GetRegionType(set_value);
                             }
                     }
                 }

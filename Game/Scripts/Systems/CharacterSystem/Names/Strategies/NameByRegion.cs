@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 namespace Character
 {
-
+    // NameByRegion is a strategy for generating names based on the region of the character
     public class NameByRegion : CharacterNameStrategy
     {
         public override List<string> GenerateNames(Vector2 capital_coordinates, List<List<float>> regions_map, CharacterEnums.CharacterGender gender)
@@ -19,9 +19,9 @@ namespace Character
                 RegionsEnums.GetRegionType(regions_map[ (int) capital_coordinates.x][ (int) capital_coordinates.y]).ToString());
 
 
-            System.Random r = new System.Random();
-            int first_random_index = r.Next(0, first_names.Count() - 1);
-            int second_random_index = r.Next(0, last_names.Count() - 1);
+            System.Random random = new System.Random();
+            int first_random_index = random.Next(0, first_names.Count() - 1);
+            int second_random_index = random.Next(0, last_names.Count() - 1);
             
             List<string> names = new List<string>(){
                 first_names[first_random_index], 

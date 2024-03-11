@@ -31,7 +31,7 @@ namespace Terrain
 
         private void SetStructureDecorator(HexTile hex)
         {
-            switch (hex.GetStructureType())
+            switch (hex.structure_type)
             {
                 case StructureEnums.StructureType.Capital:
                     hex = new CapitalDecorator(hex);
@@ -41,7 +41,7 @@ namespace Terrain
 
         private void SetElevationDecorator(HexTile hex)  // Sets Elevation Decorator
         {
-            switch (hex.GetElevationType())
+            switch (hex.elevation_type)
             {
                 case ElevationEnums.HexElevation.Mountain:
                     hex = new MountainDecorator(hex);
@@ -66,7 +66,7 @@ namespace Terrain
 
         private void SetResourceDecorator(HexTile hex)   // Sets Resource Decorator
         {
-            switch (hex.GetResourceType())
+            switch (hex.resource_type)
             {
                 case ResourceEnums.HexResource.Bananas:
                     hex = new BananasDecorator(hex);
@@ -94,7 +94,7 @@ namespace Terrain
 
         private void SetRegionDecorator(HexTile hex) // Sets Region Decorator
         {
-            switch (hex.GetRegionType())
+            switch (hex.region_type)
             {
                 case RegionsEnums.HexRegion.Plain:
                     hex = new PlainDecorator(hex);
@@ -122,7 +122,7 @@ namespace Terrain
 
         private void SetLandDecorator(HexTile hex)   // Sets Land Decorator
         {
-            switch (hex.GetLandType())
+            switch (hex.land_type)
             {
                 case LandEnums.LandType.Water:
                     hex = new WaterDecorator(hex);
@@ -135,7 +135,7 @@ namespace Terrain
 
         private void SetFeatureDecorators(HexTile hex)  // Sets Feature Decorator
         {
-            switch (hex.GetFeatureType())
+            switch (hex.feature_type)
             {
                 case FeaturesEnums.HexNaturalFeature.Forest:
                     hex = new ForestDecorator(hex);

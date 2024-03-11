@@ -1,53 +1,48 @@
 using UnityEngine;
 using Terrain;
-using Strategy.Assets.Scripts.Objects;
+using Cities;
 using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
 using Cabinet;
 using Character;
+using static Terrain.GovernmentEnums;
+using System.Linq;
 
 namespace PlayerGovernment {
     public class Government {
         
-        Leader leader;
-        private GovernmentEnums.GovernmentType government_type;
-        public Cabinet.Cabinet cabinet;
+        public Leader leader {get; set;}
+        public GovernmentType government_type {get; set;}
+        public Cabinet.Cabinet cabinet {get; set;}
 
-        public Government(GovernmentEnums.GovernmentType government_type){
+        public Government(GovernmentType government_type){
             this.government_type = government_type;
             cabinet = new Cabinet.Cabinet();
         }
 
-        public void AddCharacter(ICharacter character){
-            switch(character){
-                case Leader leader:
-                    this.leader = leader;
-                    break;
-                case Domestic domestic:
-                    cabinet.GetDomesticList().Add(domestic);
-                    break;
-                case Foreign foreign:
-                    cabinet.GetForeignList().Add(foreign);
-                    break;
-            }
+        public List<AbstractCharacter> GetCharacterList(){
+            return new List<AbstractCharacter> { leader }
+                .Concat(cabinet.GetDomesticList())
+                .Concat(cabinet.GetForeignList())
+                .ToList();
         }
+        
+        // Adds a character to the government
+        // The character is added to the appropriate list based on the type of character
+        // Dictionary is used to store the character type and the action to add the character to the appropriate list
+        public void AddCharacter(AbstractCharacter character){
+            Dictionary<Type, Action<AbstractCharacter>> characterAddActions = new Dictionary<Type, Action<AbstractCharacter>>
+            {
+                { typeof(Leader), character => leader = (Leader) character },
+                { typeof(Domestic), character => cabinet.GetDomesticList().Add((Domestic) character) },
+                { typeof(Foreign), character => cabinet.GetForeignList().Add((Foreign) character) },
+            };
 
-        public Leader GetLeader(){
-            return leader;
+            characterAddActions[character.GetType()](character);
         }
-
-        public Foreign GetForeign(int index){
-            return cabinet.GetForeign(index);
-        }
-
-        public Domestic GetDomestic(int index){
-            return cabinet.GetDomestic(index);
-        }
-
-        public GovernmentEnums.GovernmentType GetGovernmentType(){
-            return government_type;
-        }
+        public Foreign GetForeignByIndex(int index) => cabinet.GetForeign(index);
+        public Domestic GetDomesticByIndex(int index) => cabinet.GetDomestic(index);
 
     }
 }

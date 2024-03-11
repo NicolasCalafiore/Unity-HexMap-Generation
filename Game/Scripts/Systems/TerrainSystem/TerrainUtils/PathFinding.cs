@@ -19,7 +19,7 @@ namespace Terrain
 
         }
 
-        public static int GetTileDistance(Vector2 pos_one, Vector2 pos_two){
+        public static int GetManhattanDistance(Vector2 pos_one, Vector2 pos_two){
 
             int block = 0;
             while(pos_one != pos_two){

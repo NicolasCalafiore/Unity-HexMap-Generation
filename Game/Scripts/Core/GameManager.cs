@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Character;
+using Cities;
 using Players;
-using Strategy.Assets.Scripts.Objects;
+using Cities;
 using Terrain;
 using UnityEngine;
 
@@ -24,26 +25,26 @@ public class GameManager: MonoBehaviour{
         InitializeGameWorld();
     }
     void GameGeneration(){
-        Player.GeneratePlayers();
+        PlayerManager.GeneratePlayers();
         MapManager.GenerateTerrainMaps();
         MapManager.GenerateCitiesMaps();
-        Player.GenerateGovernments();
-        City.GenerateCapitalCityObjects();
+        PlayerManager.GenerateGovernments();
+        CityManager.GenerateCapitalCityObjects();
         CharacterManager.GenerateGovernmentsCharacters(); 
     }
 
     void MapDependantHexInitialization(){
-        HexTile.GenerateHexList();
+        HexManager.GenerateHexList();
         FogManager.InitializePlayerFogOfWar(); 
     }
 
     void HexDependantHexInitialization(){
         MapManager.GenerateTerritoryMaps();
         MapManager.GenerateShores(); 
-        Player.SetStateNames(); 
-        HexTile.SetHexDecorators(); 
-        City.SetCityTerritory();
-        City.SetRegionTypes();
+        PlayerManager.SetStateNames(); 
+        HexManager.SetHexDecorators(); 
+        CityManager.SetCityTerritory();
+        CityManager.SetRegionTypes();
     }
 
     void SpawnGameObjects(){
@@ -53,10 +54,10 @@ public class GameManager: MonoBehaviour{
 
     void InitializeGameWorld()
     {
-        Player.AllScanForNewPlayers();
-        CharacterManager.GenerateCharacterTraits();
-        Player.SimulateGovernments();                   // Player.AllScanForNewPlayers(); is called twice now. Relies on traits for foreign. Traits rely on known_players
-        Player.SetPlayerView(Player.GetPlayerList()[1], false);
+        PlayerManager.AllScanForNewPlayers();
+        TraitManager.GenerateCharacterTraits();
+        PlayerManager.SimulateGovernments();                   // PlayerManager.AllScanForNewPlayers(); is called twice now. Relies on traits for foreign. Traits rely on known_players
+        PlayerManager.SetPlayerView(PlayerManager.player_list[1]);
         FogManager.ShowFogOfWar();
         CameraMovement.CenterCamera();
         TerrainManager.SpawnAIFlags();

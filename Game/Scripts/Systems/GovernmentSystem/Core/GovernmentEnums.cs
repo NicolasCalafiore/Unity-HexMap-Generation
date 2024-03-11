@@ -8,25 +8,6 @@ namespace Terrain
 {
     public static class GovernmentEnums
     {
-        public static List<GovernmentType> GetGovernmentTypes()
-        {
-            return Enum.GetValues(typeof(GovernmentType)).Cast<GovernmentType>().ToList();
-        }
-
-        public static GovernmentType GetGovernmentType(float governmentValue)
-        {
-            return governmentDict.TryGetValue(governmentValue, out var government) ? government : default;
-        }
-
-        private static readonly Dictionary<float, GovernmentType> governmentDict = new Dictionary<float, GovernmentType>
-        {
-            { (int) GovernmentType.None, GovernmentType.None },
-            { (int) GovernmentType.Democracy, GovernmentType.Democracy },
-            { (int) GovernmentType.Monarchy, GovernmentType.Monarchy },
-            { (int) GovernmentType.Dictatorship, GovernmentType.Dictatorship },
-            { (int) GovernmentType.Theocracy, GovernmentType.Theocracy },
-            { (int) GovernmentType.Tribalism, GovernmentType.Tribalism },
-        };
 
         public enum GovernmentType{
             None,
@@ -37,5 +18,9 @@ namespace Terrain
             Tribalism,
 
         }
+
+        public static List<GovernmentType> GetGovernmentTypes() => Enum.GetValues(typeof(GovernmentType)).Cast<GovernmentType>().ToList();
+        public static GovernmentType GetGovernmentType(float governmentValue) => (GovernmentType)Enum.Parse(typeof(GovernmentType), governmentValue.ToString());
+
     }
 }

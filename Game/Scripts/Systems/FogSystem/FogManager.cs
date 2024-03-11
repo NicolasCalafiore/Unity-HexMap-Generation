@@ -7,8 +7,9 @@ using Strategy.Assets.Game.Scripts.Terrain.Regions;
 using Unity.VisualScripting;
 using UnityEngine;
 using Players;
-using Strategy.Assets.Scripts.Objects;
+using Cities;
 using static Terrain.FogEnums;
+using System.Linq;
 
 
 
@@ -17,77 +18,64 @@ namespace Terrain {
 
     public static class FogManager
     {
-        private static int fog_radius = 7;
+        private const int fog_radius = 7;
+
+        // Initialize the fog of war for all players
+        // This method is called by the MapManager
         public static void InitializePlayerFogOfWar(){
+            PlayerManager.player_list.ForEach(player =>
+            {
+                List<List<float>> player_fog_of_war_map = MapUtils.GenerateMap((float)FogType.Undiscovered);
 
-            foreach(Player player in Player.GetPlayerList()){
+                player.GetCities().ForEach(city =>
+                {
+                    int x = (int)city.col_row.x;
+                    int y = (int)city.col_row.y;
 
-                List<List<float>> player_fog_of_war_map = MapUtils.GenerateMap((float) FogType.Undiscovered);
-                List<City> city_list = player.GetCities();
+                    player_fog_of_war_map[x][y] = (float)FogType.Discovered;
+                    MapUtils.CircularSpawn(x, y, player_fog_of_war_map, (float)FogType.Discovered, fog_radius);
+                });
 
-                foreach(City city in city_list){
-                    int x = (int) city.GetColRow().x;
-                    int y = (int) city.GetColRow().y;
-
-                    player_fog_of_war_map[x][y] = (float) FogType.Discovered;
-                    MapUtils.CircularSpawn(x, y, player_fog_of_war_map, (float) FogType.Discovered, fog_radius);
-                }
-                
                 player.SetFogOfWarMap(player_fog_of_war_map);
-            }
-
+            });
         }
-
+        // Update the fog of war for a player
+        // This method is called by the Player class
         public static void ShowFogOfWar(){
-            Player player = Player.GetPlayerView();
-            List<List<float>> fog_of_war_map = player.GetFogOfWarMap();
-
-            for(int i = 0; i < fog_of_war_map.Count; i++){
-                for(int j = 0; j < fog_of_war_map[i].Count; j++){
-
-                    if(fog_of_war_map[i][j] == (float) FogType.Undiscovered) DespawnHexTile(i, j);
-                    else SpawnHexTile(i, j);
-                    
-                }
-            }
+            PlayerManager.player_view.GetFogOfWarMap()
+                .SelectMany((row, i) => row.Select((value, j) => new { i, j, value }))
+                .ToList()
+                .ForEach(cell => 
+                {
+                    if (cell.value == (float)FogType.Undiscovered) 
+                        DespawnHexTile(cell.i, cell.j);
+                    else 
+                        SpawnHexTile(cell.i, cell.j);
+                });
         }
 
         public static void SpawnHexTile(int i, int j)
         {
-            Vector2 coordinates = new Vector2(i, j);
-
-            GameObject hex_go = TerrainManager.hex_go_list[(int) coordinates.x * (int) MapManager.GetMapSize().y + (int) coordinates.y];
+            GameObject hex_go = TerrainManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
             hex_go.SetActive(true);
         }
 
         public static void DespawnHexTile(int i, int j){
-            Vector2 coordinates = new Vector2(i, j);
-
-            GameObject hex_go = TerrainManager.hex_go_list[(int) coordinates.x * (int) MapManager.GetMapSize().y + (int) coordinates.y];
+            GameObject hex_go = TerrainManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
             hex_go.SetActive(false);
         }
 
-        public static void DestroyFog()
+        public static void DestroyAllFog()
         {
-            foreach(GameObject hex_go in TerrainManager.hex_go_list){
+            foreach(GameObject hex_go in TerrainManager.hex_go_list)
                 hex_go.SetActive(true);
-            }
         }
 
+        // Get the list of players that are currently visible
         public static List<Player> GetVisiblePlayers(){
-            List<Player> visible_players = new List<Player>();
-
-            foreach(Player player in Player.GetPlayerList()){
-                foreach(City city in player.GetCities()){
-                    if(City.city_to_city_go[city].activeSelf) visible_players.Add(player);
-                }
-            }
-
-            return visible_players;
+            return PlayerManager.player_list
+                .Where(player => player.GetCities().Any(city => CityManager.city_to_city_go[city].activeSelf))
+                .ToList();
         }
-
-
-
-
     }
 }

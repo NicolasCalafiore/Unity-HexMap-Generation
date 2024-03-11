@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Character
 {
@@ -28,49 +29,15 @@ namespace Character
             Leader
         }
 
-        private static readonly Dictionary<float, CharacterType> characterDict = new Dictionary<float, CharacterType>{
-            {(int) CharacterType.None,  CharacterType.None},
-            {(int) CharacterType.Leader,  CharacterType.Leader},
+        public static List<CharacterGender> GetCharacterGenders() => Enum.GetValues(typeof(CharacterGender)).Cast<CharacterGender>().ToList();
 
-        };
+        public static List<CharacterType> GetCharacterTypes() => Enum.GetValues(typeof(CharacterType)).Cast<CharacterType>().ToList();
 
-        private static readonly Dictionary<float, CharacterGender> genderDict = new Dictionary<float, CharacterGender>
-        {
-            {(int) CharacterGender.Male, CharacterGender.Male},
-            {(int) CharacterGender.Female, CharacterGender.Female},
+        public static CharacterType GetCharacterType(float characterValue) => (CharacterType)Enum.Parse(typeof(CharacterType), characterValue.ToString());
 
-        };
-
-        private static readonly Dictionary<float, RoleType> roleDict = new Dictionary<float, RoleType>
-        {
-            {(int) RoleType.Foreign, RoleType.Foreign},
-            {(int) RoleType.Domestic, RoleType.Domestic},
-            {(int) RoleType.Leader, RoleType.Leader},
-        };
-
-        public static List<CharacterGender> GetCharacterGenders()
-        {
-            return Enum.GetValues(typeof(CharacterGender)).Cast<CharacterGender>().ToList();
-        }
-
-        public static List<CharacterType> GetCharacterTypes()
-        {
-            return Enum.GetValues(typeof(CharacterType)).Cast<CharacterType>().ToList();
-        }
-
-        public static CharacterType GetCharacterType(float characterValue)
-        {
-            return characterDict.TryGetValue(characterValue, out var character) ? character : default;
-        }
-
-        public static CharacterGender GetGenderType(float genderValue)
-        {
-            return genderDict.TryGetValue(genderValue, out var elevation) ? elevation : default;
-        }
-
-        public static RoleType GetRoleType(float roleValue)
-        {
-            return roleDict.TryGetValue(roleValue, out var role) ? role : default;
-        }
+        public static CharacterGender GetGenderType(float genderValue) => (CharacterGender)Enum.Parse(typeof(CharacterGender), genderValue.ToString());
+        
+        public static RoleType GetRoleType(float roleValue) => (RoleType)Enum.Parse(typeof(RoleType), roleValue.ToString());
+        
     }
 }

@@ -23,13 +23,13 @@ public class ButtonInput : MonoBehaviour
         }
         else{
             UIManager.cabinet_ui.SetActive(true);
-            UIManager.LoadCabinetCharacters(Player.GetPlayerView());
+            UIManager.LoadCabinetCharacters(PlayerManager.player_view);
             }
     }
 
     public void OpenCharacterScreen(){
         GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        ICharacter character = UIManager.character_binds[button.GetComponent<Button>()];
+        AbstractCharacter character = UIManager.character_binds[button.GetComponent<Button>()];
         UIManager.character_ui.SetActive(true);
         UIManager.LoadCharacterScreen(character);
     
@@ -45,10 +45,10 @@ public class ButtonInput : MonoBehaviour
 
 
     public void NextPlayer(){
-        Player.NextPlayer();
+        PlayerManager.NextPlayer();
 
-        UIManager.SetPlayerName(Player.GetPlayerView());
-        UIManager.UpdatePlayerUI(Player.GetPlayerView());
+        UIManager.SetPlayerName(PlayerManager.player_view);
+        UIManager.UpdatePlayerUI(PlayerManager.player_view);
     }
 
         public static void CloseCharacterScreen(){

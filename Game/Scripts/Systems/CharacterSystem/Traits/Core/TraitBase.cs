@@ -1,6 +1,5 @@
 using UnityEngine;
 using Terrain;
-using Strategy.Assets.Scripts.Objects;
 using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
@@ -8,25 +7,18 @@ using Cabinet;
 using PlayerGovernment;
 using Unity.VisualScripting;
 using Players;
-using static Character.TraitEnums;
 
 namespace Character {
     public abstract class TraitBase {
-        public string name;
-        public string description;
-        public int id;
-        public TraitType type;
-        
-
-        internal static TraitBase GetRandomLeaderTrait(Player player) 
+        public TraitBase(string name, string description, int value)
         {
-            if(Random.Range(0, 100) < 50) return DomesticTraitBase.GetRandomDomesticTrait(player);
-            else return ForeignTraitBase.GetRandomForeignTrait(player);
+            this.name = name;
+            this.description = description;
+            this.value = value;
         }
 
-        public string GetName(){
-            return name;
-        }
-
+        public string name {get; set;}
+        public string description {get; set;}
+        public int value {get; set;}
     }
 }

@@ -45,12 +45,11 @@ namespace Terrain {
 
             foreach (Player player in player_list)
             {
-                if (player.GetCityByIndex(0).GetColRow() != capitalCoordinate) continue;
+                if (player.GetCapitalCoordinate() != capitalCoordinate) continue;
 
-                MapUtils.CircularSpawn(i, j, territory_map, player.GetId());
-                List<HexTile> hex_list = HexTileUtils.CircularRetrieval(i, j, map_size);
-
-                HexTile.AddHexTileToPlayerTerritory(hex_list, player);
+                MapUtils.CircularSpawn(i, j, territory_map, player.id);
+                List<HexTile> hex_list = HexTileUtils.CircularRetrieval(i, j);
+                HexManager.AddHexTileToPlayerTerritory(hex_list, player);
                 
             }
         }

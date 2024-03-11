@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Terrain;
 using UnityEngine;
 using static Character.CharacterEnums;
 using static Terrain.GovernmentEnums;
 
 public static class IOHandler{
-    public static List<string> ReadCityNamesRegionSpecified(string region)
+    public static List<string> ReadCityNamesRegionSpecified(HexTile hex)
     {
-
+        string region = hex.region_type.ToString();
         string filePath = "C:\\Users\\nicol\\OneDrive\\Documents\\GitHub\\Unity-Strategy\\My project\\Assets\\Game\\Resources\\Data\\CityNames.xml";
-       XDocument doc = XDocument.Load(filePath);
+        XDocument doc = XDocument.Load(filePath);
         List<string> cityNames = doc.Descendants("Region")
                                     .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
                                     .Descendants("City")

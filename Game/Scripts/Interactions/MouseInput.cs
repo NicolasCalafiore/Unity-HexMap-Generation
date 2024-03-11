@@ -4,7 +4,7 @@ using UnityEngine;
 using Terrain;
 using System.Linq;
 using Players;
-using Strategy.Assets.Scripts.Objects;
+using Cities;
 
 public class MouseInput : MonoBehaviour
 {
@@ -24,9 +24,11 @@ public class MouseInput : MonoBehaviour
                     City city = TerrainManager.city_go_to_city[city_go];
 
                     UIManager.ShowCityMenu(city);
-                    Player.SetPlayerView(city.GetPlayer());
-                    CameraMovement.CenterCamera();
-                    TerrainManager.SpawnAIFlags();
+                    PlayerManager.SetPlayerView(city.owner_player);
+
+                    if(city.owner_player != PlayerManager.player_view){
+                        PlayerManager.SetPlayerView(city.owner_player);
+                    }
                 }
 
 

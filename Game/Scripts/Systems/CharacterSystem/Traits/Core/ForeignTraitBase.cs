@@ -1,6 +1,6 @@
 using UnityEngine;
 using Terrain;
-using Strategy.Assets.Scripts.Objects;
+using Cities;
 using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
@@ -12,40 +12,49 @@ using static Terrain.RegionsEnums;
 
 namespace Character {
     public abstract class ForeignTraitBase : TraitBase {
-        protected int government_type_value = 0;
-        protected int region_type_value = 0;
-        protected int base_value = 0;
-        protected HexRegion region_type;
+        protected HexRegion region_target;
         protected Player player_target;
+        protected int primary_int;
 
-
-        public abstract float GetTraitAlgorithmValue(Player player, Player other_player);
+        public abstract float GetTraitValue(Player player, Player other_player);
         public abstract bool isActivated(Player player, Player other_player);
+
+        public ForeignTraitBase(string name, string description, int value) : base(name, description, value)
+        {}
+
         public static ForeignTraitBase GetRandomForeignTrait(Player player){
-            List<ForeignTraitBase> trait_list = new List<ForeignTraitBase>();
-            trait_list.Add(new IdeologicalTrait());
-            trait_list.Add(new RegionalConnection());
-            trait_list.Add(new HomelandTrait());
-            trait_list.Add(new PeacePromoter());
-            trait_list.Add(new WarMonger());
-            trait_list.Add(new Diplomat());
-            trait_list.Add(new RacistRegion());
-            trait_list.Add(new HomeFront());
-            trait_list.Add(new Neighborly());
-            if(player.GetGovernment().GetForeign(0).GetRandomKnownPlayer() != null) trait_list.Add(new RacistPlayer(player));
+
+            //Non-Dependent traits
+            List<ForeignTraitBase> trait_list = new List<ForeignTraitBase>(){
+                new IdeologicalTrait(),
+                new RegionalConnection(),
+                new HomelandTrait(),
+                new PeacePromoter(),
+                new WarMonger(),
+                new Diplomat(),
+                new RacistRegion(),
+                new HomeFront(),
+                new Neighborly(),
+            };
+
+            //Dependent traits
+            AddConditionalTraits(player, trait_list);
             
-
-
             int random_index = Random.Range(0, trait_list.Count);
             return trait_list[random_index];
         }
 
-        public bool isSameGovernmentType(Player known_player, Player player){
-            return known_player.GetGovernment().GetGovernmentType() == player.GetGovernment().GetGovernmentType();
+        // Add traits that require conditionals to trait_list
+        public static void AddConditionalTraits(Player player, List<ForeignTraitBase> trait_list){
+            if(player.GetRandomKnownPlayerNullable() != null) trait_list.Add(new RacistPlayer(player));
         }
 
-        public bool isSameRegionType(Player known_player, Player player){
-            return known_player.GetCityByIndex(0).GetRegionType() == player.GetCityByIndex(0).GetRegionType();
-        }
+        public  bool isSameGovernmentType(Player known_player, Player player) =>
+            known_player.government.government_type == player.government.government_type;
+        
+
+        public bool isSameRegionType(Player known_player, Player player) =>
+            known_player.GetCityByIndex(0).region_type == player.GetCityByIndex(0).region_type;
+        
     }
 }
