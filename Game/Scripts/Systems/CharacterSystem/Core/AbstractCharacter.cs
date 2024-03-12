@@ -37,7 +37,7 @@ namespace Character
 
         // Returns the full name of the character
         public string GetFullName() => $"{title} {first_name} {last_name}";
-        
+
         // Returns the name of the character
         public string GetName() => $"{first_name} {last_name}";
 

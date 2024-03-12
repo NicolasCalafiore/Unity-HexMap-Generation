@@ -44,7 +44,7 @@ namespace Terrain {
 
             return new Vector3(
                 horiz * (this.column + this.row/2f),
-                (int) elevation_type/100,
+                (float) elevation_type/100,
                 vert * this.row
             );
         }

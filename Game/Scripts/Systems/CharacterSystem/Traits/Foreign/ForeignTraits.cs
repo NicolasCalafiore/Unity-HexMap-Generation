@@ -82,7 +82,7 @@ namespace Character {
 
     // Single Player Focused
     public class RacistPlayer : ForeignTraitBase {
-        public RacistPlayer(Player player) : base(TraitManager.RACIST_PLAYER, "Discriminator Towards a Player", 5){
+        public RacistPlayer(Player player) : base(TraitManager.RACIST, "Discriminator Towards a Player", 5){
             this.player_target = player.government.GetForeignByIndex(0).GetRandomKnownPlayerNullable();
         }
         public override float GetTraitValue(Player other_player, Player player){

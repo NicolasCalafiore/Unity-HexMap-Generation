@@ -51,7 +51,11 @@ public class ButtonInput : MonoBehaviour
         UIManager.UpdatePlayerUI(PlayerManager.player_view);
     }
 
-        public static void CloseCharacterScreen(){
-            UIManager.character_ui.SetActive(false);
-        }
+    public static void CloseCharacterScreen(){
+        UIManager.character_ui.SetActive(false);
+    }
+
+    public void DestroyFog(){
+        FogManager.DestroyAllFog();
+    }
 }

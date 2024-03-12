@@ -8,25 +8,20 @@ namespace Terrain
 {
     public static class ForeignEnums
     { 
-        private const int ALLY_MIN_VALUE = 10;
-        private const int FRIENDLY_MIN_VALUE = 5;
-        private const int NEUTRAL_MIN_VALUE = -5;
-        private const int UNFRIENDLY_MIN_VALUE = -10;
-
         public enum RelationshipLevel{
-            Ally,
-            Friendly,
-            Neutral,
-            Unfriendly,
-            Enemy
+            Ally = 30,
+            Friendly = 15,
+            Neutral = 0,
+            Unfriendly = -Friendly,
+            Enemy = -Ally
         }
         
         public static RelationshipLevel GetRelationshipLevel(float relationship_value)
         {
-            if(relationship_value >= ALLY_MIN_VALUE) return RelationshipLevel.Ally;
-            if(relationship_value >= FRIENDLY_MIN_VALUE) return RelationshipLevel.Friendly;
-            if(relationship_value >= NEUTRAL_MIN_VALUE) return RelationshipLevel.Neutral;
-            if(relationship_value >= UNFRIENDLY_MIN_VALUE) return RelationshipLevel.Unfriendly;
+            if(relationship_value > (float) RelationshipLevel.Friendly) return RelationshipLevel.Ally;
+            if(relationship_value > (float) RelationshipLevel.Neutral) return RelationshipLevel.Friendly;
+            if(relationship_value > (float) RelationshipLevel.Unfriendly) return RelationshipLevel.Neutral;
+            if(relationship_value > (float) RelationshipLevel.Enemy) return RelationshipLevel.Unfriendly;
             else return RelationshipLevel.Enemy;
         }
     }

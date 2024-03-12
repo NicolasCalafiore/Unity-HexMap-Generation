@@ -10,12 +10,12 @@ namespace Terrain
     {
         public enum HexElevation
         {
-            Canyon = -50,
-            Valley = -25,
-            Flatland = 0,
-            Small_Hill = 25,
+            Mountain = 100,
             Large_Hill = 50,
-            Mountain = 150,
+            Small_Hill = 25,
+            Flatland = 0,
+            Valley = -Small_Hill,
+            Canyon = -Large_Hill,
         }
 
         public static List<HexElevation> GetElevationTypes()

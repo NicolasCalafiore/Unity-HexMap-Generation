@@ -14,7 +14,7 @@ namespace Character {
         public const int max_traits = 3;
         public const string HOMELAND = "Homeland", REGIONAL_CONNECTION = "Regional Connection", PEACE_PROMOTER = "Peace Promoter", 
         WAR_MONGER = "War Monger", HOME_FRONT = "Home Front", NEIGHBORLY = "Neighborly", IDEOLOGICAL = "Ideological", 
-        RACIST_REGION = "Racist Region", DIPLOMAT = "Diplomat", RACIST_PLAYER = "Racist Player", PEACE_KEEPER = "Peace Keeper", 
+        RACIST_REGION = "Regional Discrimination", DIPLOMAT = "Diplomat", RACIST = "Racist", PEACE_KEEPER = "Peace Keeper", 
         FINANCIER = "Financier", PRODUCTION_EXPERT = "Production Expert";
 
         public static Dictionary<string, string> barred_traits = new Dictionary<string, string>(){

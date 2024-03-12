@@ -18,6 +18,7 @@ namespace Terrain
         private static int temp_one = 0;
 
         public static void NormalizePerlinMap(List<List<float>> map){   // Normalizes Perlin Noise Map
+            
             float max = map.SelectMany(x => x).Max();
             float min = map.SelectMany(x => x).Min();
             float range = max - min;
@@ -28,6 +29,15 @@ namespace Terrain
                 }
             }
 
+        }
+
+        public static void RatioPerlinMap(float range, List<List<float>> map){
+            for(int i = 0; i < map.Count; i++){
+                for(int j = 0; j < map[i].Count; j++){
+                    map[i][j] = map[i][j] * range;
+                    map[i][j] -= 0.5f * range;
+                }
+            }
         }
         public static List<List<float>> GenerateMap(float value = 0){  // Generates List<List<float>> map with 0 values
             Vector2 map_size = MapManager.GetMapSize();

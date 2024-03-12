@@ -5,6 +5,7 @@ using Players;
 using Terrain;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Terrain.ForeignEnums;
 
 
 namespace Cabinet
@@ -37,6 +38,11 @@ namespace Cabinet
             
             foreach(Player player in known_players){
                 relations.Add(player, foreign_strategy.GenerateStartingRelationship(player, owner_player));
+            }
+
+            foreach(Player player in known_players){
+                owner_player.government.GetForeignByIndex(0).relations[player] +=
+                        foreign_strategy.CalculateRelationshipDependantRelationshipImpact(player, owner_player);
             }
 
         }
@@ -82,7 +88,8 @@ namespace Cabinet
 
         public List<Player> GetKnownPlayers() => known_players;
 
-        public float GetRelationship(Player player) => relations[player];
+        public float GetRelationshipFloat(Player player) => relations[player];
+        public RelationshipLevel GetRelationshipLevel(Player player) => ForeignEnums.GetRelationshipLevel(GetRelationshipFloat(player));
         
         // Returns a random known player or null if there are no known players
         public Player GetRandomKnownPlayerNullable() => known_players.Count == 0 ? null : known_players[Random.Range(0, known_players.Count)];

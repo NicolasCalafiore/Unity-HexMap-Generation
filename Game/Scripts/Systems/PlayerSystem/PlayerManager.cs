@@ -89,7 +89,10 @@ namespace Players {
             UIManager.SetPlayerName(player_view);
             CameraMovement.CenterCamera();
             TerrainManager.SpawnAIFlags();
-            UIManager.UpdatePlayerUI(player_view);
+            UIManager.UpdatePlayerUI(player_view);  
+
+            DebugHandler.ClearLogConsole();
+            DebugHandler.RelationshipBreakDown(player_view);
         }
 
         public static void NextPlayer(){

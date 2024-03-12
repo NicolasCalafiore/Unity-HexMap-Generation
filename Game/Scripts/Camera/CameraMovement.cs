@@ -65,8 +65,8 @@ public class CameraMovement : MonoBehaviour
         HexTile hexTile = HexManager.hex_list[(int) coordinates.x * (int) MapManager.GetMapSize().y + (int) coordinates.y];
         GameObject hex = TerrainManager.hex_to_hex_go[hexTile];
         Vector3 vector = hex.transform.position;
-        vector.y += 10f;
-        vector.z -= 10f;
+        vector.y += 5f;
+        vector.z -= 5f;
 
 
         CameraMovement.MoveCameraTo(vector);

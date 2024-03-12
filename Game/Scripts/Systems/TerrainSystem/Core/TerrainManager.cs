@@ -23,6 +23,7 @@ namespace Terrain{
         private static List<GameObject> alerts_go_list = new List<GameObject>();
         private static List<GameObject> line_renderer_list = new List<GameObject>(); 
         private static GameObject generic_hex;
+        private const int PERLIN_VISUAL_SCALE = 15;
 
         private static Dictionary<ForeignEnums.RelationshipLevel, Color> relationship_color = new Dictionary<ForeignEnums.RelationshipLevel, Color>(){
             {ForeignEnums.RelationshipLevel.Enemy, Color.red},
@@ -33,6 +34,7 @@ namespace Terrain{
         };
 
         public static void SpawnTerrain(){ 
+
             generic_hex = Resources.Load<GameObject>("Prefab/Core/Hex_Generic_No_TMP"); 
             
             SpawnHexTiles();
@@ -53,15 +55,28 @@ namespace Terrain{
             }
         }
 
-        private static void InitializeVisuals(){                
+        private static void InitializeVisuals(){
+
+            List<List<float>> visual_map = GeneratePerlinVisuals();                
             foreach(HexTile hex in HexManager.hex_list){
                 ShowRegionTypes(hex);                                         
                 ShowOceanTypes(hex);                                          
                 SpawnHexFeature(hex);                                         
                 SpawnHexResource(hex);                                        
                 SpawnTerritoryFlags(hex);                                     
-                SpawnElevationGraphics(hex);                                   
+                SpawnPerlinTerrainGraphics(hex, visual_map);                              
             }
+        }
+
+        private static List<List<float>> GeneratePerlinVisuals()
+        {
+            List<List<float>> map = MapUtils.GenerateMap();
+            MapUtils.GeneratePerlinNoiseMap(map, MapManager.GetMapSize(), PERLIN_VISUAL_SCALE);
+            MapUtils.NormalizePerlinMap(map);
+            MapUtils.RatioPerlinMap(.4f, map);
+            DebugHandler.Print2DMap(map);
+
+            return map;
         }
 
         private static void SpawnHexFeature(HexTile hex){
@@ -95,21 +110,16 @@ namespace Terrain{
             hex_to_hex_go[hex].transform.GetChild(0).GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + hex.region_type.ToString());
         }
 
-        public static void SpawnElevationGraphics(HexTile hex){
+        private static void SpawnPerlinTerrainGraphics(HexTile hex, List<List<float>> map){
+
             GameObject hex_object = hex_to_hex_go[hex];
-            
-            if(hex.elevation_type == ElevationEnums.HexElevation.Small_Hill){
-                Color hex_color = hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_color += new Color(.1f, .1f, .1f, 0f);
-                hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex_color;
+            Vector2 hex_col_row = hex.GetColRow();
 
-            }
+            Color hex_color = hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+            float color_change = map[ (int) hex_col_row.x][ (int) hex_col_row.y];
+            hex_color -= new Color(color_change, color_change, color_change, 0f);
+            hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex_color;
 
-            if(hex.elevation_type == ElevationEnums.HexElevation.Valley || hex.elevation_type == ElevationEnums.HexElevation.Canyon){
-                Color hex_color = hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                hex_color -= new Color(.1f, .1f, .1f, 0f);
-                hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = hex_color;
-            }
         }
 
         public static void SpawnStructures()  
@@ -254,7 +264,7 @@ namespace Terrain{
                 City capital_city = player.GetCapital();
                 GameObject capital_city_go = CityManager.city_to_city_go[capital_city];
 
-                float relationship_float = player.government.GetForeignByIndex(0).GetRelationship(i);
+                float relationship_float = player.government.GetForeignByIndex(0).GetRelationshipFloat(i);
                 DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship_float);
             }
         }
@@ -273,7 +283,7 @@ namespace Terrain{
                 City capital_city = i.GetCapital();
                 GameObject capital_city_go = CityManager.city_to_city_go[capital_city];
 
-                float relationship = i.government.GetForeignByIndex(0).GetRelationship(j);
+                float relationship = i.government.GetForeignByIndex(0).GetRelationshipFloat(j);
                 DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
                 }
             }
