@@ -27,6 +27,7 @@ namespace Terrain {
         public static GameObject hex_ui;
         public static GameObject character_ui;
         public static GameObject dev_panel_ui;
+        public static GameObject timer_ui;
         public static Dictionary<Button, AbstractCharacter> character_binds = new Dictionary<Button, AbstractCharacter>();
 
         public static void InitializeUI()
@@ -38,6 +39,8 @@ namespace Terrain {
             hex_ui = GameObject.Find("HexUI");
             dev_ui = GameObject.Find("DevUI");
             dev_panel_ui = GameObject.Find("DevPanelUI");
+            timer_ui = GameObject.Find("TimerUI");
+
 
             dev_ui.SetActive(true);
             city_ui.SetActive(false);
@@ -74,8 +77,8 @@ namespace Terrain {
         internal static void LoadCabinetCharacters(Player player)
         {
 
-            Domestic domestic = player.government.cabinet.GetDomestic(0);
-            Foreign foreign = player.government.cabinet.GetForeign(0);
+            Domestic domestic = player.government.cabinet.domestic_advisor;
+            Foreign foreign = player.government.cabinet.foreign_advisor;
             Leader leader = player.government.leader;
 
             character_binds.Clear();
@@ -151,6 +154,22 @@ namespace Terrain {
             character_ui.transform.GetChild(13).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(0) == null ? "None" : character.GetTrait(0).name; 
             character_ui.transform.GetChild(12).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(1) == null ? "None" : character.GetTrait(1).name; 
             character_ui.transform.GetChild(11).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(2) == null ? "None" : character.GetTrait(2).name; 
+        }
+
+        public static void UpdateSeconds(){
+            int minutes = Int32.Parse(timer_ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text);
+            int hours = Int32.Parse(timer_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text);
+            minutes++;
+
+            if(minutes < 10) timer_ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "0" + minutes.ToString();
+            else timer_ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = minutes.ToString();
+
+            if(minutes == 60){
+                hours++;
+                if(hours < 10) timer_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "0" + hours.ToString();
+                else timer_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = minutes.ToString();
+                timer_ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "00";
+            }
         }
 
     }

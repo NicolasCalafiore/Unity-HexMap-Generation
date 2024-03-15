@@ -105,7 +105,7 @@ namespace Players {
 
         public static void AllScanForNewPlayers(){
             foreach(Player player in player_list)
-                player.government.GetForeignByIndex(0).ScanForNewPlayers(player.GetFogOfWarMap(), player);
+                player.government.cabinet.foreign_advisor.ScanForNewPlayers(player.GetFogOfWarMap(), player);
         }
     }
 }

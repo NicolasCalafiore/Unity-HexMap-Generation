@@ -44,9 +44,9 @@ namespace Terrain
         // It sets the feature_map and resource_map at the given coordinate to None
         private void ClearSpaceForCapital(Vector3 random_coor, List<List<float>> city_map, List<List<float>> feature_map, List<List<float>> resource_map)
         {
-            city_map[(int)random_coor.x][(int)random_coor.z] = (int)StructureEnums.StructureType.Capital;
-            feature_map[(int)random_coor.x][(int)random_coor.z] = (int)FeaturesEnums.HexNaturalFeature.None;
-            resource_map[(int)random_coor.x][(int)random_coor.z] = (int)ResourceEnums.HexResource.None;
+            city_map[(int)random_coor.x][(int)random_coor.z] = (int) StructureEnums.StructureType.Capital;
+            feature_map[(int)random_coor.x][(int)random_coor.z] = (int) FeaturesEnums.HexNaturalFeature.None;
+            resource_map[(int)random_coor.x][(int)random_coor.z] = (int) ResourceEnums.HexResource.None;
         }
     }
 }

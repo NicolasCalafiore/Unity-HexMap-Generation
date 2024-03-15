@@ -36,14 +36,6 @@ namespace Cabinet
         public void GenerateStartingRelationship(List<Player> known_players){
             SetForeignStrategy(0);
             
-            foreach(Player player in known_players){
-                relations.Add(player, foreign_strategy.GenerateStartingRelationship(player, owner_player));
-            }
-
-            foreach(Player player in known_players){
-                owner_player.government.GetForeignByIndex(0).relations[player] +=
-                        foreign_strategy.CalculateRelationshipDependantRelationshipImpact(player, owner_player);
-            }
 
         }
 

@@ -27,7 +27,7 @@ namespace Character {
 
             foreach(Player player in player_list)
             {
-                City city = player.GetCityByIndex(0);
+                City city = player.GetCapital();
 
                 foreach (RoleType role in Enum.GetValues(typeof(RoleType)))
                 {

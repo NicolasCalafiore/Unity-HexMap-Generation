@@ -10,6 +10,7 @@ using Character;
 using static Terrain.GovernmentEnums;
 using Cities;
 using System.Linq;
+using static Terrain.RegionsEnums;
 
 namespace Players {
     public class Player {
@@ -25,8 +26,10 @@ namespace Players {
         public Color team_color  { get; set; }
         public GovernmentType government_type { get; set; }
         public Government government  { get; set; }
+        public HexRegion home_region { get; set; }
         private List<City> cities = new List<City>();
         private List<List<float>> fog_of_war_map;
+
 
 
         public Player(string name, int id){
@@ -41,12 +44,6 @@ namespace Players {
             government.cabinet.StartForeignTurn();
         }
 
-        public List<AbstractCharacter> GetAllCharacters(){
-            return new List<AbstractCharacter> { government.leader }
-                .Concat(government.cabinet.GetDomesticList())
-                .Concat(government.cabinet.GetForeignList())
-                .ToList();
-        }
 
         public void AddCity(City city) => cities.Add(city);
         public City GetCapital() => cities[0];
@@ -56,7 +53,8 @@ namespace Players {
         public List<City> GetCities() => cities;
         public List<List<float>> GetFogOfWarMap() => fog_of_war_map;
         public void SetFogOfWarMap(List<List<float>> fog_of_war_map) => this.fog_of_war_map = fog_of_war_map;
-        internal Player GetRandomKnownPlayerNullable() => government.GetForeignByIndex(0).GetRandomKnownPlayerNullable();
-    
+        internal Player GetRandomKnownPlayerNullable() => government.cabinet.foreign_advisor.GetRandomKnownPlayerNullable();
+        public List<Player> GetKnownPlayers() => government.cabinet.foreign_advisor.known_players;
+
     }
 }

@@ -44,5 +44,7 @@ namespace Cities {
             this.structure_map = structure_map;
         }
 
+        public List<List<float>> GetStructureMap() => structure_map;
+        
     }
 }

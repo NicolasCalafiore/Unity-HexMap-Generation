@@ -44,22 +44,17 @@ public static class DebugHandler
     }
 
     public static void RelationshipBreakDown(Player owner_player){
-        foreach(Player player in owner_player.government.GetForeignByIndex(0).known_players){
+        foreach(Player other_player in owner_player.government.cabinet.foreign_advisor.known_players){
             
             List<string> message = new List<string>();
-
-            float trait_impact = owner_player.government.GetForeignByIndex(0).foreign_strategy.GenerateStartingRelationship(player, owner_player);
-            float relationship_impact = owner_player.government.GetForeignByIndex(0).foreign_strategy.CalculateRelationshipDependantRelationshipImpact(player, owner_player);
-        
-            message.Add($"{owner_player.GetOfficialName()} and {player.GetOfficialName()}");
-            message.Add($"Relationship: {owner_player.government.GetForeignByIndex(0).GetRelationshipLevel(player)}");
-            message.Add($"Relationship Value: {owner_player.government.GetForeignByIndex(0).GetRelationshipFloat(player)}");
-            message.Add($"Final Trait Impact: {trait_impact}");
-            message.Add($"Final Relationship Impact: {relationship_impact}");
+            message.Add($"{owner_player.GetOfficialName()} <--> {other_player.GetOfficialName()}");
+            message.Add($"Final Relationship: {owner_player.government.cabinet.foreign_advisor.GetRelationshipLevel(other_player)} ({owner_player.government.cabinet.foreign_advisor.relations[other_player]})");
+            message.Add($"Base Relationship: {DiplomacyManager.GenerateBaseRelationship(owner_player, other_player)}");
+            message.Add($"Trait Relationship Impact: {DiplomacyManager.CalculateTraitRelationshipImpact(owner_player, other_player)}");
+            message.Add($"Similiar Trait Impact: {DiplomacyManager.CalculateSimiliarTraitsImpact(owner_player, other_player)}");
+            message.Add($"Dependant Relationship Impact: {DiplomacyManager.CalculateRelationshipDependantRelationshipImpact(owner_player, other_player)}");
 
             DisplayMessage(message);
-            DisplayMessage(ForeignStandard.DEBUG_MESSAGE);
-            ForeignStandard.DEBUG_MESSAGE.Clear();
         }
     }
 

@@ -17,6 +17,7 @@ namespace Terrain {
 
     public class TerritoryManager
     {
+        private static bool DefenseMapIsActive = false;
 
         public TerritoryManager(){}
 

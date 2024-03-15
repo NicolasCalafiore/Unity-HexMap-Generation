@@ -18,8 +18,10 @@ namespace Terrain {
         public City owner_city { get; set;}
         public bool is_coast { get; set;} = false;
         public virtual float MovementCost { get; set; } = 1.0f; 
-        public float nourishment { get; set; }
-        public float construction { get; set; }
+        public float nourishment { get; set; }  = 0;
+        public float construction { get; set; }  = 0;
+        public float defense { get; set; }  = 0;
+        public int appeal { get; set; } = 0;
         public int column; 
         public int row;  
         protected readonly int S; 
@@ -56,5 +58,43 @@ namespace Terrain {
 
         // HexTiles 2D position in World map
         public Vector2 GetColRow() => new Vector2(this.column, this.row);
+        public List<HexTile> GetNeighbors(){
+
+            //public static Dictionary<Vector2, GameObject> col_row_to_hex_go = new Dictionary<Vector2, GameObject>(); 
+            // public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); 
+            List<HexTile> neighbors = new List<HexTile>();
+            if(this.column > 0){
+                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column - 1, row)];
+                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                neighbors.Add(hex);
+            }
+            if(this.column < MapManager.GetMapSize().x - 1){
+                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column + 1, row)];
+                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                neighbors.Add(hex);
+            }
+            if(this.row > 0){
+                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column, row - 1)];
+                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                neighbors.Add(hex);
+            }
+            if(this.row < MapManager.GetMapSize().y - 1){
+                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column, row + 1)];
+                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                neighbors.Add(hex);
+            }
+            if(this.column < MapManager.GetMapSize().y - 1 && this.row > 0){
+                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column + 1, row - 1)];
+                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                neighbors.Add(hex);
+            }
+            if(this.row < MapManager.GetMapSize().x - 1 && this.column > 0){
+                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column - 1, row + 1)];
+                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                neighbors.Add(hex);
+            }
+            
+            return neighbors;
+        }
     }
 }

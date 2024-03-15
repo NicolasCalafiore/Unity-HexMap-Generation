@@ -15,8 +15,10 @@ namespace Cities
     
         // Sets the region type of the capitals for name generation
         public static void SetRegionTypes(){
-            foreach (City city in capitals_list)
+            foreach (City city in capitals_list){
                 city.region_type = HexManager.col_row_to_hex[city.col_row].region_type;
+                city.owner_player.home_region = city.region_type;
+            }
         }
         
         // Generates the capital cities for each player

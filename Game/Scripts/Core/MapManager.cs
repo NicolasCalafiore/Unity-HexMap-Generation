@@ -22,7 +22,7 @@ namespace Terrain {
         private static FeaturesStrat features_strategy = FeaturesStrat.RegionSpecific;
         private static ResourceStrat resource_strategy = ResourceStrat.RegionRandom;
         private static CapitalStrat capital_strategy =  CapitalStrat.Random;  //TO DO: Convert to enums
-        private static Vector2 map_size = new Vector2(128, 128);
+        public static Vector2 map_size = new Vector2(128, 128);
 
         public static TerrainMapHandler terrain_map_handler;
         public static CityMapHandler city_map_handler;

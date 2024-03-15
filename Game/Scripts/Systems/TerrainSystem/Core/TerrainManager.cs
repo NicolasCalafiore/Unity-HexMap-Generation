@@ -18,19 +18,22 @@ namespace Terrain{
 
         public static List<GameObject> hex_go_list = new List<GameObject>(); 
         public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); 
+        public static Dictionary<GameObject, HexTile> hex_go_to_hex = new Dictionary<GameObject, HexTile>(); 
         public static Dictionary<GameObject, City> city_go_to_city = new Dictionary<GameObject, City>();
         public static Dictionary<Vector2, GameObject> col_row_to_hex_go = new Dictionary<Vector2, GameObject>(); 
         private static List<GameObject> alerts_go_list = new List<GameObject>();
         private static List<GameObject> line_renderer_list = new List<GameObject>(); 
         private static GameObject generic_hex;
+        private static Dictionary<GameObject, Color> hex_color = new Dictionary<GameObject, Color>();
+        private static bool map_overlay_is_active = false;
         private const int PERLIN_VISUAL_SCALE = 15;
 
         private static Dictionary<ForeignEnums.RelationshipLevel, Color> relationship_color = new Dictionary<ForeignEnums.RelationshipLevel, Color>(){
-            {ForeignEnums.RelationshipLevel.Enemy, Color.red},
+            {ForeignEnums.RelationshipLevel.Hostile, Color.red},
             {ForeignEnums.RelationshipLevel.Unfriendly, Color.yellow},
             {ForeignEnums.RelationshipLevel.Neutral, Color.gray},
             {ForeignEnums.RelationshipLevel.Friendly, Color.green},
-            {ForeignEnums.RelationshipLevel.Ally, Color.blue}
+            {ForeignEnums.RelationshipLevel.Welcoming, Color.blue}
         };
 
         public static void SpawnTerrain(){ 
@@ -51,6 +54,7 @@ namespace Terrain{
                 hex_go_list.Add(hex_object);
                 hex_to_hex_go.Add(hex, hex_object);
                 col_row_to_hex_go.Add(hex.GetColRow(), hex_object);
+                hex_go_to_hex.Add(hex_object, hex);
                 hex_object.name = "Hex: " + hex.GetColRow().x + " " + hex.GetColRow().y;
             }
         }
@@ -245,9 +249,9 @@ namespace Terrain{
 
             if(player == null) player = PlayerManager.player_view;
         
-            List<HexTile> construction_tiles = player.government.GetDomesticByIndex(0).GetPotentialConstructionTiles();
-            List<HexTile> expansion_tiles = player.government.GetDomesticByIndex(0).GetPotentialExpansionTiles();
-            List<Player> known_players = player.government.GetForeignByIndex(0).GetKnownPlayers();
+            List<HexTile> construction_tiles = player.government.cabinet.domestic_advisor.GetPotentialConstructionTiles();
+            List<HexTile> expansion_tiles = player.government.cabinet.domestic_advisor.GetPotentialExpansionTiles();
+            List<Player> known_players = player.government.cabinet.foreign_advisor.GetKnownPlayers();
 
             foreach(HexTile hex_tile in construction_tiles){
                 SpawnConstructionAlert(hex_tile);   // TO DO: FIX CONSTRUCTION BUG (NOT SHOWING UP)
@@ -264,7 +268,7 @@ namespace Terrain{
                 City capital_city = player.GetCapital();
                 GameObject capital_city_go = CityManager.city_to_city_go[capital_city];
 
-                float relationship_float = player.government.GetForeignByIndex(0).GetRelationshipFloat(i);
+                float relationship_float = player.government.cabinet.foreign_advisor.GetRelationshipFloat(i);
                 DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship_float);
             }
         }
@@ -274,7 +278,7 @@ namespace Terrain{
             List<Player> visible_players = FogManager.GetVisiblePlayers();
             
             foreach(Player i in visible_players){
-                List<Player> known_players_2 = i.government.GetForeignByIndex(0).GetKnownPlayers();
+                List<Player> known_players_2 = i.government.cabinet.foreign_advisor.GetKnownPlayers();
                 foreach(Player j in known_players_2){
                     
                 City foreign_capital_city = j.GetCapital();
@@ -283,9 +287,149 @@ namespace Terrain{
                 City capital_city = i.GetCapital();
                 GameObject capital_city_go = CityManager.city_to_city_go[capital_city];
 
-                float relationship = i.government.GetForeignByIndex(0).GetRelationshipFloat(j);
+                float relationship = i.government.cabinet.foreign_advisor.GetRelationshipFloat(j);
                 DrawForeignLine(capital_city_go, foreign_capital_city_go, relationship);
                 }
+            }
+        }
+
+        public static void GenerateHexAppeal(){
+            foreach(HexTile hex in HexManager.hex_list){
+                if(hex.defense > 7) hex.appeal += 4;
+                else if(hex.defense > 5) hex.appeal += 3;
+                else if(hex.defense > 3) hex.appeal += 2;
+                else if(hex.defense > 1) hex.appeal += 1;
+                else hex.appeal += 0;
+
+                if(hex.nourishment > 7) hex.appeal += 4;
+                else if(hex.nourishment > 5) hex.appeal += 3;
+                else if(hex.nourishment > 3) hex.appeal += 2;
+                else if(hex.nourishment > 1) hex.appeal += 1;
+                else hex.appeal += 0;
+
+                if(hex.construction > 7) hex.appeal += 4;
+                else if(hex.construction > 5) hex.appeal += 3;
+                else if(hex.construction > 3) hex.appeal += 2;
+                else if(hex.construction > 1) hex.appeal += 1;
+                else hex.appeal += 0;
+
+                if(hex.resource_type != ResourceEnums.HexResource.None) hex.appeal += 3;
+            }
+
+            GenerateHexDependantAppeal();
+        }
+
+        public static void GenerateHexDependantAppeal(){
+            foreach(HexTile hex in HexManager.hex_list){
+                foreach(HexTile hex_neighbor in hex.GetNeighbors()){
+                    if(hex_neighbor.appeal > 0) hex.appeal += Convert.ToInt32(hex_neighbor.appeal * .17);
+                }
+            }
+        }
+
+        internal static void ShowDefenseMap()
+        {
+            if(!map_overlay_is_active){
+                hex_color.Clear();
+
+                foreach(HexTile hex in HexManager.hex_list){
+                    GameObject hex_object = hex_to_hex_go[hex];
+                    hex_color.Add(hex_object, hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color);
+
+                    if(hex.defense > 7) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
+                    else if(hex.defense > 5) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
+                    else if(hex.defense > 3) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    else if(hex.defense > 1) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+                    else hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+                }
+
+                map_overlay_is_active = true;
+            }
+            else{
+                foreach(KeyValuePair<GameObject, Color> entry in hex_color){
+                    entry.Key.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = entry.Value;
+                }
+
+                map_overlay_is_active = false;
+            }
+        }
+
+        internal static void ShowNourishmentMap(){
+            if(!map_overlay_is_active){
+                hex_color.Clear();
+
+                foreach(HexTile hex in HexManager.hex_list){
+                    GameObject hex_object = hex_to_hex_go[hex];
+                    hex_color.Add(hex_object, hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color);
+
+                    if(hex.nourishment > 7) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
+                    else if(hex.nourishment > 5) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
+                    else if(hex.nourishment > 3) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    else if(hex.nourishment > 1) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+                    else hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+                }
+
+                map_overlay_is_active = true;
+            }
+            else{
+                foreach(KeyValuePair<GameObject, Color> entry in hex_color){
+                    entry.Key.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = entry.Value;
+                }
+
+                map_overlay_is_active = false;
+            }
+        }
+
+        internal static void ShowConstructionMap(){
+            if(!map_overlay_is_active){
+                hex_color.Clear();
+
+                foreach(HexTile hex in HexManager.hex_list){
+                    GameObject hex_object = hex_to_hex_go[hex];
+                    hex_color.Add(hex_object, hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color);
+
+                    if(hex.construction > 7) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
+                    else if(hex.construction > 5) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
+                    else if(hex.construction > 3) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    else if(hex.construction > 1) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+                    else hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+                }
+
+                map_overlay_is_active = true;
+            }
+            else{
+                foreach(KeyValuePair<GameObject, Color> entry in hex_color){
+                    entry.Key.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = entry.Value;
+                }
+
+                map_overlay_is_active = false;
+            }
+        }
+
+        internal static void ShowAppealMap(){
+            if(!map_overlay_is_active){
+                hex_color.Clear();
+
+                foreach(HexTile hex in HexManager.hex_list){
+                    GameObject hex_object = hex_to_hex_go[hex];
+                    hex_color.Add(hex_object, hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color);
+
+                    if(hex.appeal > 10) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
+                    else if(hex.appeal > 7) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.cyan;
+                    else if(hex.appeal > 5) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
+                    else if(hex.appeal > 3) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    else if(hex.appeal > 1) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+                    else hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+                }
+
+                map_overlay_is_active = true;
+            }
+            else{
+                foreach(KeyValuePair<GameObject, Color> entry in hex_color){
+                    entry.Key.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = entry.Value;
+                }
+
+                map_overlay_is_active = false;
             }
         }
     }

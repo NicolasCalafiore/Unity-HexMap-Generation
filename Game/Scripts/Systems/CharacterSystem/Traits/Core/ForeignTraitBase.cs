@@ -45,7 +45,7 @@ namespace Character {
 
         // Add traits that require conditionals to trait_list
         public static void AddConditionalTraits(Player player, List<ForeignTraitBase> trait_list){
-            if(player.GetRandomKnownPlayerNullable() != null) trait_list.Add(new RacistPlayer(player));
+            if(player.GetRandomKnownPlayerNullable() != null) trait_list.Add(new Racist(player));
         }
 
         public  bool isSameGovernmentType(Player known_player, Player player) =>
@@ -53,7 +53,7 @@ namespace Character {
         
 
         public bool isSameRegionType(Player known_player, Player player) =>
-            known_player.GetCityByIndex(0).region_type == player.GetCityByIndex(0).region_type;
+            known_player.GetCapital().region_type == player.GetCapital().region_type;
         
     }
 }

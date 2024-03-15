@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace Terrain{
 
 
@@ -6,6 +8,7 @@ namespace Terrain{
             this.tile.MovementCost *= 1.75f; 
             this.tile.construction += 1;
             this.tile.nourishment += 1;
+            this.tile.defense += 2;
         }
 
     }

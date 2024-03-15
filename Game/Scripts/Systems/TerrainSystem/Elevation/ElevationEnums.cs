@@ -10,9 +10,9 @@ namespace Terrain
     {
         public enum HexElevation
         {
-            Mountain = 100,
-            Large_Hill = 50,
-            Small_Hill = 25,
+            Mountain = 60,
+            Large_Hill = 20,
+            Small_Hill = 10,
             Flatland = 0,
             Valley = -Small_Hill,
             Canyon = -Large_Hill,

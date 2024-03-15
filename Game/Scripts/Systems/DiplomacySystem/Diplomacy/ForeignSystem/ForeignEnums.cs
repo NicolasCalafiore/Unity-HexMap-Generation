@@ -9,20 +9,20 @@ namespace Terrain
     public static class ForeignEnums
     { 
         public enum RelationshipLevel{
-            Ally = 30,
-            Friendly = 15,
+            Welcoming = 75,
+            Friendly = 50,
             Neutral = 0,
             Unfriendly = -Friendly,
-            Enemy = -Ally
+            Hostile = -Welcoming
         }
         
         public static RelationshipLevel GetRelationshipLevel(float relationship_value)
         {
-            if(relationship_value > (float) RelationshipLevel.Friendly) return RelationshipLevel.Ally;
-            if(relationship_value > (float) RelationshipLevel.Neutral) return RelationshipLevel.Friendly;
-            if(relationship_value > (float) RelationshipLevel.Unfriendly) return RelationshipLevel.Neutral;
-            if(relationship_value > (float) RelationshipLevel.Enemy) return RelationshipLevel.Unfriendly;
-            else return RelationshipLevel.Enemy;
+            if(relationship_value >= (float)RelationshipLevel.Welcoming) return RelationshipLevel.Welcoming;
+            if(relationship_value >= (float)RelationshipLevel.Friendly) return RelationshipLevel.Friendly;
+            if(relationship_value >= (float)RelationshipLevel.Neutral) return RelationshipLevel.Neutral;
+            if(relationship_value >= (float)RelationshipLevel.Unfriendly) return RelationshipLevel.Unfriendly;
+            return RelationshipLevel.Hostile;
         }
     }
 }

@@ -58,4 +58,20 @@ public class ButtonInput : MonoBehaviour
     public void DestroyFog(){
         FogManager.DestroyAllFog();
     }
+
+    public void DefenseMap(){
+        TerrainManager.ShowDefenseMap();
+    }
+
+    public void NourishmentMap(){
+        TerrainManager.ShowNourishmentMap();
+    }
+
+    public void ConstructionMap(){
+        TerrainManager.ShowConstructionMap();
+    }
+
+    public void AppealMap(){
+        TerrainManager.ShowAppealMap();
+    }
 }

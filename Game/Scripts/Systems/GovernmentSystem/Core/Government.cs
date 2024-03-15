@@ -22,10 +22,7 @@ namespace PlayerGovernment {
         }
 
         public List<AbstractCharacter> GetCharacterList(){
-            return new List<AbstractCharacter> { leader }
-                .Concat(cabinet.GetDomesticList())
-                .Concat(cabinet.GetForeignList())
-                .ToList();
+            return new List<AbstractCharacter> {leader, cabinet.foreign_advisor, cabinet.domestic_advisor};
         }
         
         // Adds a character to the government
@@ -35,14 +32,11 @@ namespace PlayerGovernment {
             Dictionary<Type, Action<AbstractCharacter>> characterAddActions = new Dictionary<Type, Action<AbstractCharacter>>
             {
                 { typeof(Leader), character => leader = (Leader) character },
-                { typeof(Domestic), character => cabinet.GetDomesticList().Add((Domestic) character) },
-                { typeof(Foreign), character => cabinet.GetForeignList().Add((Foreign) character) },
+                { typeof(Domestic), character => cabinet.domestic_advisor = (Domestic) character},
+                { typeof(Foreign), character => cabinet.foreign_advisor = (Foreign) character},
             };
 
             characterAddActions[character.GetType()](character);
         }
-        public Foreign GetForeignByIndex(int index) => cabinet.GetForeign(index);
-        public Domestic GetDomesticByIndex(int index) => cabinet.GetDomestic(index);
-
     }
 }

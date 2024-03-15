@@ -36,6 +36,7 @@ public class MouseInput : MonoBehaviour
                     GameObject hex_go = hit.transform.parent.gameObject;
                     HexTile hexTile = TerrainManager.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
                     UIManager.SetHexUI(hexTile);
+
                 }
 
 
