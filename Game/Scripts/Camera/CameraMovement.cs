@@ -49,7 +49,6 @@ public class CameraMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.DownArrow)){
             transform.position += new Vector3(0, -speed, 0);
         }
-
     }
 
 
@@ -63,7 +62,7 @@ public class CameraMovement : MonoBehaviour
         FogManager.ShowFogOfWar();
         Vector2 coordinates = PlayerManager.player_view.GetCapitalCoordinate();
         HexTile hexTile = HexManager.hex_list[(int) coordinates.x * (int) MapManager.GetMapSize().y + (int) coordinates.y];
-        GameObject hex = TerrainManager.hex_to_hex_go[hexTile];
+        GameObject hex = GraphicsManager.hex_to_hex_go[hexTile];
         Vector3 vector = hex.transform.position;
         vector.y += 5f;
         vector.z -= 5f;

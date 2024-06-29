@@ -56,18 +56,18 @@ namespace Terrain {
 
         public static void SpawnHexTile(int i, int j)
         {
-            GameObject hex_go = TerrainManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
+            GameObject hex_go = GraphicsManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
             hex_go.SetActive(true);
         }
 
         public static void DespawnHexTile(int i, int j){
-            GameObject hex_go = TerrainManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
+            GameObject hex_go = GraphicsManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
             hex_go.SetActive(false);
         }
 
         public static void DestroyAllFog()
         {
-            foreach(GameObject hex_go in TerrainManager.hex_go_list)
+            foreach(GameObject hex_go in GraphicsManager.hex_go_list)
                 hex_go.SetActive(true);
         }
 

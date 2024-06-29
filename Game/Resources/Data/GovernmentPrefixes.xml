@@ -1,202 +1,78 @@
 <World>
     <Government name="Democracy">
-        <Identifier>Democratic Republic of </Identifier>
-        <Identifier loc="beg">Democratic State of </Identifier>
-        <Identifier loc="beg">Democratic Union of </Identifier>
-        <Identifier loc="beg">Democratic Federation of </Identifier>
-        <Identifier loc="beg">Federal Democracy of </Identifier>
-        <Identifier loc="beg">People's Democracy of </Identifier>
-        <Identifier loc="beg">Democratic Commonwealth of </Identifier>
-        <Identifier loc="beg">Democratic Nation of </Identifier>
-        <Identifier loc="beg">Democratic Community of </Identifier>
-        <Identifier loc="beg">Democratic Alliance of </Identifier>
-        <Identifier loc="beg">Democratic Confederation of </Identifier>
-        <Identifier loc="beg">Democratic Collective of </Identifier>
-        <Identifier loc="beg">Democratic Assembly of </Identifier>
-        <Identifier loc="beg">United States of </Identifier>
-        <Identifier loc="beg">People's Republic of </Identifier>
-        <Identifier loc="beg">Federal Assembly of </Identifier>
-        <Identifier loc="beg">Democratic Society of </Identifier>
-        <Identifier loc="beg">People's Coalition of </Identifier>
-        <Identifier loc="end"> Democracy</Identifier>
-        <Identifier loc="end"> Republic</Identifier>
-        <Identifier loc="end"> Federation</Identifier>
-        <Identifier loc="end"> Union</Identifier>
-        <Identifier loc="end"> Confederation</Identifier>
-        <Identifier loc="end"> State</Identifier>
-        <Identifier loc="end"> Commonwealth</Identifier>
-        <Identifier loc="end"> Alliance</Identifier>
-        <Identifier loc="end"> Coalition</Identifier>
-        <Identifier loc="end"> Syndicate</Identifier>
-        <Identifier loc="end"> Assembly</Identifier>
-        <Identifier loc="end"> Council</Identifier>
-        <Identifier loc="end"> Syndicate</Identifier>
-        <Identifier loc="end"> Consortium</Identifier>
-        <Identifier loc="end"> Cooperative</Identifier>
-        <Identifier loc="end"> League</Identifier>
-        <Identifier loc="end"> Society</Identifier>
+<Prefix>Democratic Republic of </Prefix>
+        <Prefix>Democratic State of </Prefix>
+        <Prefix>Democratic Union of </Prefix>
+        <Prefix>Democratic Federation of </Prefix>
+        <Prefix>Federal Democracy of </Prefix>
+        <Prefix>People's Democracy of </Prefix>
+        <Prefix>Democratic Commonwealth of </Prefix>
+        <Prefix>Democratic Nation of </Prefix>
+        <Prefix>Democratic Community of </Prefix>
+        <Prefix>Democratic Alliance of </Prefix>
+        <Prefix>Democratic Confederation of </Prefix>
+        <Prefix>Democratic Collective of </Prefix>
+        <Prefix>Democratic Assembly of </Prefix>
     </Government>
-
     <Government name="Monarchy">
-        <Identifier loc="beg">Kingdom of </Identifier>
-        <Identifier loc="beg">Royal Kingdom of </Identifier>
-        <Identifier loc="beg">United Kingdom of </Identifier>
-        <Identifier loc="beg">Sovereign Kingdom of </Identifier>
-        <Identifier loc="beg">Imperial Kingdom of </Identifier>
-        <Identifier loc="beg">Grand Kingdom of </Identifier>
-        <Identifier loc="beg">Crowned Republic of </Identifier>
-        <Identifier loc="beg">Princely State of </Identifier>
-        <Identifier loc="beg">Monarchical Federation of </Identifier>
-        <Identifier loc="beg">Regal Dominion of </Identifier>
-        <Identifier loc="beg">Royal Federation of </Identifier>
-        <Identifier loc="beg">Royal Commonwealth of </Identifier>
-        <Identifier loc="beg">Imperial Dominion of </Identifier>
-        <Identifier loc="beg">United </Identifier>
-        <Identifier loc="end"> Kingdom</Identifier>
-        <Identifier loc="end"> Empire</Identifier>
-        <Identifier loc="end"> Dominion</Identifier>
-        <Identifier loc="end"> Principality</Identifier>
-        <Identifier loc="end"> Commonwealth</Identifier>
-        <Identifier loc="end"> Kingdom</Identifier>
-        <Identifier loc="end"> Realm</Identifier>
-        <Identifier loc="end"> Duchy</Identifier>
-        <Identifier loc="end"> Sultanate</Identifier>
-        <Identifier loc="end"> Emirate</Identifier>
-        <Identifier loc="end"> Grand Duchy</Identifier>
-        <Identifier loc="end"> Archduchy</Identifier>
-        <Identifier loc="end"> Margraviate</Identifier>
-        <Identifier loc="end"> Viscounty</Identifier>
-        <Identifier loc="end"> County</Identifier>
-        <Identifier loc="end"> Barony</Identifier>
-        <Identifier loc="end"> Lordship</Identifier>
-        <Identifier loc="end"> Bailiwick</Identifier>
-        <Identifier loc="end"> March</Identifier>
-        <Identifier loc="end"> Palatinate</Identifier>
-        <Identifier loc="end"> Shire</Identifier>
+        <Prefix>Kingdom of </Prefix>
+        <Prefix>Royal Kingdom of </Prefix>
+        <Prefix>United Kingdom of </Prefix>
+        <Prefix>Sovereign Kingdom of </Prefix>
+        <Prefix>Imperial Kingdom of </Prefix>
+        <Prefix>Grand Kingdom of </Prefix>
+        <Prefix>Crowned Republic of </Prefix>
+        <Prefix>Princely State of </Prefix>
+        <Prefix>Monarchical Federation of </Prefix>
+        <Prefix>Regal Dominion of </Prefix>
+        <Prefix>Royal Federation of </Prefix>
+        <Prefix>Royal Commonwealth of </Prefix>
+        <Prefix>Imperial Dominion of </Prefix>
     </Government>
-
     <Government name="Dictatorship">
-        <Identifier loc="beg">Fascist </Identifier>
-        <Identifier loc="beg">The One Party State of </Identifier>
-        <Identifier loc="beg">The Autocratic Republic of </Identifier>
-        <Identifier loc="beg">The Totalitarian State of </Identifier>
-        <Identifier loc="beg">The Military State of </Identifier>
-        <Identifier loc="beg">Dictatorial Regime of </Identifier>
-        <Identifier loc="beg">Authoritarian State of </Identifier>
-        <Identifier loc="beg">Centralized State of </Identifier>
-        <Identifier loc="beg">Supreme Rule of </Identifier>
-        <Identifier loc="beg">Iron Republic of </Identifier>
-        <Identifier loc="beg">Single Leader State of </Identifier>
-        <Identifier loc="beg">Controlled State of </Identifier>
-        <Identifier loc="beg">Dictatorial Regime of </Identifier>
-        <Identifier loc="beg">Autocratic State of </Identifier>
-        <Identifier loc="beg">Totalitarian Rule of </Identifier>
-        <Identifier loc="beg">Authoritarian Regime of </Identifier>
-        <Identifier loc="beg">Despotic Dominion of </Identifier>
-        <Identifier loc="end"> National Party</Identifier>
-        <Identifier loc="end"> Regime</Identifier>
-        <Identifier loc="end"> Junta</Identifier>
-        <Identifier loc="end"> Autocracy</Identifier>
-        <Identifier loc="end"> Despotate</Identifier>
-        <Identifier loc="end"> Tyranny</Identifier>
-        <Identifier loc="end"> Order</Identifier>
-        <Identifier loc="end"> Regency</Identifier>
-        <Identifier loc="end"> Command</Identifier>
-        <Identifier loc="end"> Authority</Identifier>
-        <Identifier loc="end"> Control</Identifier>
-        <Identifier loc="end"> Dominion</Identifier>
-        <Identifier loc="end"> Hegemony</Identifier>
-        <Identifier loc="end"> Supremacy</Identifier>
-        <Identifier loc="end"> Mastery</Identifier>
-        <Identifier loc="end"> Sovereignty</Identifier>
-        <Identifier loc="end"> Ascendancy</Identifier>
-        <Identifier loc="end"> Predominance</Identifier>
-        <Identifier loc="end"> Prepotency</Identifier>
-        <Identifier loc="end"> Paramountcy</Identifier>
-        <Identifier loc="end"> Supremacy</Identifier>
-        <Identifier loc="end"> Rule</Identifier>
-
+        <Prefix>Fascist </Prefix>
+        <Prefix>The One Party State of </Prefix>
+        <Prefix>The Autocratic Republic of </Prefix>
+        <Prefix>The Totalitarian State of </Prefix>
+        <Prefix>The Military State of </Prefix>
+        <Prefix>Dictatorial Regime of </Prefix>
+        <Prefix>Authoritarian State of </Prefix>
+        <Prefix>Centralized State of </Prefix>
+        <Prefix>Supreme Rule of </Prefix>
+        <Prefix>Iron Republic of </Prefix>
+        <Prefix>Single Leader State of </Prefix>
+        <Prefix>Controlled State of </Prefix>
     </Government>
     <Government name="Theocracy">
-        <Identifier loc="beg">Holy State of </Identifier>
-        <Identifier loc="beg">Religious State of </Identifier>
-        <Identifier loc="beg">Divine State of </Identifier>
-        <Identifier loc="beg">Sacred Realm of </Identifier>
-        <Identifier loc="beg">Spiritual Dominion of </Identifier>
-        <Identifier loc="beg">Clerical Kingdom of </Identifier>
-        <Identifier loc="beg">Divine Kingdom of </Identifier>
-        <Identifier loc="beg">Sacred Federation of </Identifier>
-        <Identifier loc="beg">Religious Republic of </Identifier>
-        <Identifier loc="beg">Holy Nation of </Identifier>
-        <Identifier loc="beg">Spiritual Commonwealth of </Identifier>
-        <Identifier loc="beg">Divine Empire of </Identifier>
-        <Identifier loc="beg">Sacred Union of </Identifier>
-        <Identifier loc="beg">Holy See of </Identifier>
-        <Identifier loc="beg">Divine Rule of </Identifier>
-        <Identifier loc="beg">Sacred Order of </Identifier>
-        <Identifier loc="beg">Spiritual Dominion of </Identifier>
-        <Identifier loc="beg">Ecclesiastical State of </Identifier>
-        <Identifier loc="end"> Under God</Identifier>
-        <Identifier loc="end"> Papacy</Identifier>
-        <Identifier loc="end"> Caliphate</Identifier>
-        <Identifier loc="end"> Patriarchate</Identifier>
-        <Identifier loc="end"> Diocese</Identifier>
-        <Identifier loc="end"> Synod</Identifier>
-        <Identifier loc="end"> Ecclesiarchy</Identifier>
-        <Identifier loc="end"> Hierocracy</Identifier>
-        <Identifier loc="end"> Sacerdotalism</Identifier>
-        <Identifier loc="end"> Episcopacy</Identifier>
-        <Identifier loc="end"> Presbytery</Identifier>
-        <Identifier loc="end"> Vicariate</Identifier>
-        <Identifier loc="end"> Prelacy</Identifier>
-        <Identifier loc="end"> Primacy</Identifier>
-        <Identifier loc="end"> Rectorate</Identifier>
-        <Identifier loc="end"> Deanery</Identifier>
-        <Identifier loc="end"> Canonry</Identifier>
-        <Identifier loc="end"> Prebend</Identifier>
-        <Identifier loc="end"> Benefice</Identifier>
-        <Identifier loc="end"> Curacy</Identifier>
-        <Identifier loc="end"> Parsonage</Identifier>
+        <Prefix>Holy State of </Prefix>
+        <Prefix>Religious State of </Prefix>
+        <Prefix>Divine State of </Prefix>
+        <Prefix>Sacred Realm of </Prefix>
+        <Prefix>Spiritual Dominion of </Prefix>
+        <Prefix>Clerical Kingdom of </Prefix>
+        <Prefix>Divine Kingdom of </Prefix>
+        <Prefix>Sacred Federation of </Prefix>
+        <Prefix>Religious Republic of </Prefix>
+        <Prefix>Holy Nation of </Prefix>
+        <Prefix>Spiritual Commonwealth of </Prefix>
+        <Prefix>Divine Empire of </Prefix>
+        <Prefix>Sacred Union of </Prefix>
     </Government>
     <Government name="Tribalism">
-        <Identifier loc="beg">Tribal State of </Identifier>
-        <Identifier loc="beg">Clan State of </Identifier>
-        <Identifier loc="beg">Tribe of </Identifier>
-        <Identifier loc="beg">Clan of </Identifier>
-        <Identifier loc="beg">Tribal Federation of </Identifier>
-        <Identifier loc="beg">Union of </Identifier>
-        <Identifier loc="beg">Tribal Confederation of </Identifier>
-        <Identifier loc="beg">Clan Alliance of </Identifier>
-        <Identifier loc="beg">Native Union of </Identifier>
-        <Identifier loc="beg">Tribal Commonwealth of </Identifier>
-        <Identifier loc="beg">Clan Dominion of </Identifier>
-        <Identifier loc="beg">Territory of </Identifier>
-        <Identifier loc="beg">Tribe of </Identifier>
-        <Identifier loc="beg">Clan of </Identifier>
-        <Identifier loc="beg">Tribal Federation of </Identifier>
-        <Identifier loc="beg">Kinship of </Identifier>
-        <Identifier loc="beg">Family of </Identifier>
-        <Identifier loc="end"> Tribes</Identifier>
-        <Identifier loc="end"> Tribe</Identifier>
-        <Identifier loc="end"> Clan</Identifier>
-        <Identifier loc="end"> Band</Identifier>
-        <Identifier loc="end"> Horde</Identifier>
-        <Identifier loc="end"> Chiefdom</Identifier>
-        <Identifier loc="end"> Tribe</Identifier>
-        <Identifier loc="end"> Clan</Identifier>
-        <Identifier loc="end"> Band</Identifier>
-        <Identifier loc="end"> Horde</Identifier>
-        <Identifier loc="end"> Chiefdom</Identifier>
-        <Identifier loc="end"> Kinship</Identifier>
-        <Identifier loc="end"> Family</Identifier>
-        <Identifier loc="end"> Lineage</Identifier>
-        <Identifier loc="end"> House</Identifier>
-        <Identifier loc="end"> Dynasty</Identifier>
-        <Identifier loc="end"> Sept</Identifier>
-        <Identifier loc="end"> Phratry</Identifier>
-        <Identifier loc="end"> Moiety</Identifier>
-        <Identifier loc="end"> Demesne</Identifier>
-        <Identifier loc="end"> Folk</Identifier>
+        <Prefix>Tribal State of </Prefix>
+        <Prefix>Clan State of </Prefix>
+        <Prefix>Tribe of </Prefix>
+        <Prefix>Clan of </Prefix>
+        <Prefix>Tribal Federation of </Prefix>
+        <Prefix>Tribal Union of </Prefix>
+        <Prefix>Tribal Confederation of </Prefix>
+        <Prefix>Clan Alliance of </Prefix>
+        <Prefix>Indigenous State of </Prefix>
+        <Prefix>Native Union of </Prefix>
+        <Prefix>Tribal Commonwealth of </Prefix>
+        <Prefix>Clan Dominion of </Prefix>
+        <Prefix>Tribal Territory of </Prefix>
     </Government>
+
 
 </World>

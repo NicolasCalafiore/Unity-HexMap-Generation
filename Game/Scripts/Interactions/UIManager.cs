@@ -41,6 +41,8 @@ namespace Terrain {
             dev_panel_ui = GameObject.Find("DevPanelUI");
             timer_ui = GameObject.Find("TimerUI");
 
+            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Foreign");
+            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Domestic");
 
             dev_ui.SetActive(true);
             city_ui.SetActive(false);
@@ -48,6 +50,7 @@ namespace Terrain {
             character_ui.SetActive(false);
             hex_ui.SetActive(false);
             dev_panel_ui.SetActive(false);
+            
         }
 
 
@@ -88,17 +91,25 @@ namespace Terrain {
             character_binds.Add(cabinet_ui.transform.GetChild(2).GetComponent<Button>(), foreign);
             character_binds.Add(cabinet_ui.transform.GetChild(1).GetComponent<Button>(), leader);
 
-            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = domestic.GetFullName();
-            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = foreign.GetFullName();
-            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = leader.GetFullName();
+            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = domestic.GetFullName();
+            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = foreign.GetFullName();
+            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = leader.GetFullName();
         
-            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = domestic.GetRating().ToString();
-            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = foreign.GetRating().ToString();
-            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = leader.GetRating().ToString();
+            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = domestic.GetRating().ToString();
+            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = foreign.GetRating().ToString();
+            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = leader.GetRating().ToString();
         
-            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(domestic.GetRating());
-            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(foreign.GetRating());
-            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(leader.GetRating());
+            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = GetNumberColor(domestic.GetRating());
+            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = GetNumberColor(foreign.GetRating());
+            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = GetNumberColor(leader.GetRating());
+
+            if(player.government.government_type == GovernmentEnums.GovernmentType.Monarchy) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/King");
+            if(player.government.government_type == GovernmentEnums.GovernmentType.Dictatorship) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Totalitarian");
+            if(player.government.government_type == GovernmentEnums.GovernmentType.Democracy) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/President");
+            if(player.government.government_type == GovernmentEnums.GovernmentType.Tribalism) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Tribe");
+            if(player.government.government_type == GovernmentEnums.GovernmentType.Theocracy) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/KingPray");
+
+
         }
 
         public static void UpdatePlayerUI(Player player){
@@ -156,6 +167,10 @@ namespace Terrain {
             character_ui.transform.GetChild(11).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(2) == null ? "None" : character.GetTrait(2).name; 
         }
 
+        public static void ShowDepartmentMeny(AbstractCharacter character){
+
+            
+        }
         public static void UpdateSeconds(){
             int minutes = Int32.Parse(timer_ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text);
             int hours = Int32.Parse(timer_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text);
@@ -170,7 +185,5 @@ namespace Terrain {
                 else timer_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = minutes.ToString();
                 timer_ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "00";
             }
-        }
-
-    }
+        }}
 }

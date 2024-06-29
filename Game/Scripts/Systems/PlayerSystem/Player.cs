@@ -11,6 +11,8 @@ using static Terrain.GovernmentEnums;
 using Cities;
 using System.Linq;
 using static Terrain.RegionsEnums;
+using static Terrain.PlayerEnums;
+
 
 namespace Players {
     public class Player {
@@ -27,8 +29,10 @@ namespace Players {
         public GovernmentType government_type { get; set; }
         public Government government  { get; set; }
         public HexRegion home_region { get; set; }
+        public PlayerPriority priority { get; set; }
         private List<City> cities = new List<City>();
         private List<List<float>> fog_of_war_map;
+
 
 
 

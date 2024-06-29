@@ -12,28 +12,29 @@ using static Terrain.RegionsEnums;
 
 namespace Character {
     public abstract class ForeignTraitBase : TraitBase {
-        protected HexRegion region_target;
-        protected Player player_target;
-        protected int primary_int;
+        protected HexRegion generic_region_target;
+        protected Player generic_player_target;
+        protected int generic_primary_int;
 
-        public abstract float GetTraitValue(Player player, Player other_player);
         public abstract bool isActivated(Player player, Player other_player);
 
         public ForeignTraitBase(string name, string description, int value) : base(name, description, value){}
+
+        public abstract float GetTraitValue(Player player, Player known_player);
 
         public static ForeignTraitBase GetRandomForeignTrait(Player player){
 
             //Non-Dependent traits
             List<ForeignTraitBase> trait_list = new List<ForeignTraitBase>(){
-                new IdeologicalTrait(),
-                new RegionalConnection(),
-                new HomelandTrait(),
-                new PeacePromoter(),
-                new WarMonger(),
-                new Diplomat(),
-                new RacistRegion(),
-                new HomeFront(),
-                new Neighborly(),
+                new GovernanceTrait(),
+                new RegionalTrait(),
+                new CulturalConflictTrait(),
+                new PeaceTrait(),
+                new WarTrait(),
+                new DiplomatTrait(),
+                new RegionRacistTrait(),
+                new DefensiveTrait(),
+                new FriendlyTrait(),
             };
 
             //Dependent traits

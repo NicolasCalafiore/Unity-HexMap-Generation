@@ -40,7 +40,7 @@ public class ButtonInput : MonoBehaviour
     }
 
     public void ShowRelationships(){
-        TerrainManager.ShowRelationships();
+        GraphicsManager.ShowRelationships();
     }
 
 
@@ -60,18 +60,18 @@ public class ButtonInput : MonoBehaviour
     }
 
     public void DefenseMap(){
-        TerrainManager.ShowDefenseMap();
+        GraphicsManager.ShowDefenseMap();
     }
 
     public void NourishmentMap(){
-        TerrainManager.ShowNourishmentMap();
+        GraphicsManager.ShowNourishmentMap();
     }
 
     public void ConstructionMap(){
-        TerrainManager.ShowConstructionMap();
+        GraphicsManager.ShowConstructionMap();
     }
 
     public void AppealMap(){
-        TerrainManager.ShowAppealMap();
+        GraphicsManager.ShowAppealMap();
     }
 }

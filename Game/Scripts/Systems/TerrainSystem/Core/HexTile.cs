@@ -63,34 +63,35 @@ namespace Terrain {
             //public static Dictionary<Vector2, GameObject> col_row_to_hex_go = new Dictionary<Vector2, GameObject>(); 
             // public static Dictionary<HexTile, GameObject> hex_to_hex_go = new Dictionary<HexTile, GameObject>(); 
             List<HexTile> neighbors = new List<HexTile>();
+            
             if(this.column > 0){
-                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column - 1, row)];
-                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column - 1, row)];
+                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
             if(this.column < MapManager.GetMapSize().x - 1){
-                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column + 1, row)];
-                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column + 1, row)];
+                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
             if(this.row > 0){
-                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column, row - 1)];
-                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column, row - 1)];
+                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
             if(this.row < MapManager.GetMapSize().y - 1){
-                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column, row + 1)];
-                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column, row + 1)];
+                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
             if(this.column < MapManager.GetMapSize().y - 1 && this.row > 0){
-                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column + 1, row - 1)];
-                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column + 1, row - 1)];
+                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
             if(this.row < MapManager.GetMapSize().x - 1 && this.column > 0){
-                GameObject hex_go = TerrainManager.col_row_to_hex_go[new Vector2(column - 1, row + 1)];
-                HexTile hex = TerrainManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column - 1, row + 1)];
+                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
             

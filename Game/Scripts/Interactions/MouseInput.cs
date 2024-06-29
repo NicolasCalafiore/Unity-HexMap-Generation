@@ -21,7 +21,7 @@ public class MouseInput : MonoBehaviour
                     GameObject game_object = hit.transform.gameObject;
                     
                     GameObject city_go = game_object.transform.parent.gameObject;
-                    City city = TerrainManager.city_go_to_city[city_go];
+                    City city = GraphicsManager.city_go_to_city[city_go];
 
                     UIManager.ShowCityMenu(city);
                     PlayerManager.SetPlayerView(city.owner_player);
@@ -34,7 +34,7 @@ public class MouseInput : MonoBehaviour
 
                 if(hit.transform.gameObject.name.Contains("Hex")){
                     GameObject hex_go = hit.transform.parent.gameObject;
-                    HexTile hexTile = TerrainManager.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
+                    HexTile hexTile = GraphicsManager.hex_to_hex_go.FirstOrDefault(x => x.Value == hex_go).Key;
                     UIManager.SetHexUI(hexTile);
 
                 }

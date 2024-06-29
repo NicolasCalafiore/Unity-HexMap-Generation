@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using Character;
 using static Terrain.GovernmentEnums;
 using Cities;
+using Diplomacy;
 
 namespace Players {
     public class PlayerManager {
@@ -85,14 +86,13 @@ namespace Players {
 
         public static void SetPlayerView(Player player){
             player_view = player;
-
+            DebugHandler.ClearLogConsole();
+            DebugHandler.PrintRelationships(player_view);
+            
             UIManager.SetPlayerName(player_view);
             CameraMovement.CenterCamera();
-            TerrainManager.SpawnAIFlags();
+            GraphicsManager.SpawnAIFlags();
             UIManager.UpdatePlayerUI(player_view);  
-
-            DebugHandler.ClearLogConsole();
-            DebugHandler.RelationshipBreakDown(player_view);
         }
 
         public static void NextPlayer(){

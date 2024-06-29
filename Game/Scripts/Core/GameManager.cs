@@ -11,7 +11,7 @@ using Terrain;
 using UnityEngine;
 
 
-public class GameManager: MonoBehaviour{
+public class GameManagers: MonoBehaviour{
     void Start(){
 
         GameGeneration(); 
@@ -48,8 +48,9 @@ public class GameManager: MonoBehaviour{
     }
 
     void SpawnGameObjects(){
-        TerrainManager.SpawnTerrain();
-        TerrainManager.SpawnStructures();
+        GraphicsManager.Initialize();
+        GraphicsManager.SpawnTerrain();
+        GraphicsManager.SpawnStructures();
     }
 
     void InitializeGameWorld()
@@ -61,7 +62,7 @@ public class GameManager: MonoBehaviour{
         UIManager.InitializeUI();
         PlayerManager.SetPlayerView(PlayerManager.player_list[1]);
         FogManager.ShowFogOfWar();
-        TerrainManager.SpawnAIFlags();
+        GraphicsManager.SpawnAIFlags();
         TerrainManager.GenerateHexAppeal();
     }
 
