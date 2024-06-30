@@ -17,6 +17,7 @@ namespace Terrain {
         public Player owner_player { get; set;}   
         public City owner_city { get; set;}
         public bool is_coast { get; set;} = false;
+        public float continent_id;
         public virtual float MovementCost { get; set; } = 1.0f; 
         public float nourishment { get; set; }  = 0;
         public float construction { get; set; }  = 0;
@@ -26,6 +27,7 @@ namespace Terrain {
         public int row;  
         protected readonly int S; 
         private readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2; // Used to calculate HexTile position
+        
 
 
         public HexTile(int column, int row)

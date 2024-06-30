@@ -24,6 +24,7 @@ namespace Terrain {
         private List<List<float>> elevation_map = new List<List<float>>();
         private List<List<float>> features_map = new List<List<float>>();
         private List<List<float>> resource_map = new List<List<float>>();
+        private List<List<float>> continents_map = new List<List<float>>();
 
         public TerrainMapHandler(){}
               
@@ -36,8 +37,42 @@ namespace Terrain {
             elevation_map = GenerateElevationMap(elevation_strategy, regions_map);
             features_map = GenerateFeaturesMap(features_strategy, regions_map, water_map);
             resource_map = GenerateResourceMap(resource_strat, ocean_map, river_map, regions_map, features_map);
+            continents_map = GenerateContinentsMap(water_map);
+
         }
 
+        private List<List<float>> GenerateContinentsMap(List<List<float>> water_map){
+                
+            int rows = water_map.Count;
+            int cols = water_map[0].Count;
+            List<List<float>> continents_map = new List<List<float>>();
+
+            // Initialize continents_map with zeros
+            for (int i = 0; i < rows; i++)
+            {
+                continents_map.Add(new List<float>(new float[cols]));
+            }
+
+            DebugHandler.Print2DMap(water_map);
+            DebugHandler.Print2DMap(continents_map);
+            
+            int continentId = 1;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    // Check if the current cell is land and not yet visited in continents_map
+                    if (water_map[i][j] == 1 && continents_map[i][j] == 0)
+                    {
+                        MapUtils.FloodFill(water_map, continents_map, i, j, continentId);
+                        continentId++;
+                        DebugHandler.Print2DMap(continents_map);
+                    }
+                }
+            }
+
+            return continents_map;
+        }
 
         private List<List<float>> GenerateFeaturesMap(FeaturesStrat features_strategy, List<List<float>> regions_map, List<List<float>> ocean_map)
         {
@@ -215,9 +250,15 @@ namespace Terrain {
             return resource_map;
         }
 
+        public List<List<float>> GetContinentsMap(){
+            return continents_map;
+        }
+
         public Vector2 GetMapSize(){
             return map_size;
         }
+
+
 
         
 

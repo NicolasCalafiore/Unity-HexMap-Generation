@@ -23,6 +23,7 @@ public class GameManagers: MonoBehaviour{
         SpawnGameObjects();
 
         InitializeGameWorld();
+
     }
     void GameGeneration(){
         PlayerManager.GeneratePlayers();

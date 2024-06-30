@@ -260,5 +260,28 @@ namespace Terrain
             return false;
         }
 
+        public static void FloodFill(List<List<float>> water_map, List<List<float>> continent_map, int row, int col, int continentId)
+        {
+            if (row < 0 || col < 0 || row >= water_map.Count || col >= water_map[0].Count) return; // Out of bounds
+            if (water_map[row][col] != 1 || continent_map[row][col] != 0) return; // Not land or already visited
+
+            continent_map[row][col] = continentId;
+
+            FloodFill(water_map, continent_map, row - 1, col, continentId); // Up
+            FloodFill(water_map, continent_map, row + 1, col, continentId); // Down
+            FloodFill(water_map, continent_map, row, col - 1, continentId); // Left
+            FloodFill(water_map, continent_map, row, col + 1, continentId); // Right
+            FloodFill(water_map, continent_map, row - 1, col + 1, continentId); // 
+            FloodFill(water_map, continent_map, row + 1, col - 1, continentId); // 
+        }
+
+        public static void MakeCopyOfList(List<List<float>> map, List<List<float>> copy_map){
+            for(int i = 0; i < map.Count; i++){
+                for(int j = 0; j < map[i].Count; j++){
+                    copy_map[i][j] = map[i][j];
+                }
+            }
+        }
+
     }
 }

@@ -65,7 +65,6 @@ namespace Terrain {
             MapUtils.GeneratePerlinNoiseMap(map, MapManager.GetMapSize(), OVERLAY_GRADIENT_SCALE);
             MapUtils.NormalizePerlinMap(map);
             MapUtils.RatioPerlinMap(.4f, map);
-            DebugHandler.Print2DMap(map);
 
             return map;
         }
@@ -373,6 +372,52 @@ private static void SpawnHexFeature(HexTile hex){
                 else if(hex.appeal > 5) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
                 else if(hex.appeal > 3) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
                 else if(hex.appeal > 1) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+                else hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+            }
+
+            map_overlay_is_active = true;
+        }
+        else{
+            foreach(KeyValuePair<GameObject, Color> entry in hex_color){
+                entry.Key.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = entry.Value;
+            }
+
+            map_overlay_is_active = false;
+        }
+    }
+
+
+        internal static void ShowContinents(){
+        if(!map_overlay_is_active){
+            hex_color.Clear();
+
+            foreach(HexTile hex in HexManager.hex_list){
+                GameObject hex_object = hex_to_hex_go[hex];
+                hex_color.Add(hex_object, hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color);
+
+                if(hex.continent_id == 0) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
+                else if(hex.continent_id == 1) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.cyan;
+                else if(hex.continent_id == 2) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
+                else if(hex.continent_id == 3) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+                else if(hex.continent_id == 4) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+                else if(hex.continent_id == 5) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.magenta;
+                else if(hex.continent_id == 6) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.black;
+                else if(hex.continent_id == 7) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+                else if(hex.continent_id == 8) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.grey;
+                else if(hex.continent_id == 9) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.gray;
+                else if(hex.continent_id == 10) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.clear;
+                else if(hex.continent_id == 11) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+                else if(hex.continent_id == 12) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.green;
+                else if(hex.continent_id == 13) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.blue;
+                else if(hex.continent_id == 14) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+                else if(hex.continent_id == 15) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.magenta;
+                else if(hex.continent_id == 16) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.cyan;
+                else if(hex.continent_id == 17) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.black;
+                else if(hex.continent_id == 18) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+                else if(hex.continent_id == 19) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.grey;
+                else if(hex.continent_id == 20) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.gray;
+                else if(hex.continent_id == 21) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.clear;
+                else if(hex.continent_id == 22) hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
                 else hex_object.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
             }
 

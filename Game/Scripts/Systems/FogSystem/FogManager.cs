@@ -65,7 +65,7 @@ namespace Terrain {
             hex_go.SetActive(false);
         }
 
-        public static void DestroyAllFog()
+        public static void ClearFog()
         {
             foreach(GameObject hex_go in GraphicsManager.hex_go_list)
                 hex_go.SetActive(true);

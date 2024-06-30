@@ -56,7 +56,7 @@ public class ButtonInput : MonoBehaviour
     }
 
     public void DestroyFog(){
-        FogManager.DestroyAllFog();
+        FogManager.ClearFog();
     }
 
     public void DefenseMap(){
@@ -73,5 +73,13 @@ public class ButtonInput : MonoBehaviour
 
     public void AppealMap(){
         GraphicsManager.ShowAppealMap();
+    }
+
+    public void ClearFog(){
+        FogManager.ClearFog();
+    }
+
+    public void ShowContinents(){
+        GraphicsManager.ShowContinents();
     }
 }
