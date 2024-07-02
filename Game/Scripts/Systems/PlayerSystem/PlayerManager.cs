@@ -88,11 +88,13 @@ namespace Players {
             player_view = player;
             DebugHandler.ClearLogConsole();
             DebugHandler.PrintRelationships(player_view);
+            DebugHandler.PrintPlayerState(player_view);
             
             UIManager.SetPlayerName(player_view);
             CameraMovement.CenterCamera();
             GraphicsManager.SpawnAIFlags();
             UIManager.UpdatePlayerUI(player_view);  
+            
         }
 
         public static void NextPlayer(){
@@ -106,6 +108,13 @@ namespace Players {
         public static void AllScanForNewPlayers(){
             foreach(Player player in player_list)
                 player.government.cabinet.foreign_advisor.ScanForNewPlayers(player.GetFogOfWarMap(), player);
+        }
+
+        public static void InitializePlayerPriorities(){
+            Debug.Log("Initializing Player Priorities");
+            
+            foreach(Player player in player_list)
+                player.priority = PriorityCalculation.CalculateMainPriority(player);
         }
     }
 }

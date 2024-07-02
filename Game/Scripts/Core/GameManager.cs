@@ -14,6 +14,8 @@ using UnityEngine;
 public class GameManagers: MonoBehaviour{
     void Start(){
 
+        Debug.Log("Game Started");
+
         GameGeneration(); 
 
         MapDependantHexInitialization();
@@ -65,6 +67,7 @@ public class GameManagers: MonoBehaviour{
         FogManager.ShowFogOfWar();
         GraphicsManager.SpawnAIFlags();
         TerrainManager.GenerateHexAppeal();
+        PlayerManager.InitializePlayerPriorities();
     }
 
     

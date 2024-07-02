@@ -86,9 +86,31 @@ public static class DebugHandler
     }
 
     public static void ClearLogConsole() {
-        // var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-        // var type = assembly.GetType("UnityEditor.LogEntries");
-        // var method = type.GetMethod("Clear");
-        // method.Invoke(new object(), null);
+        var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Clear");
+        method.Invoke(new object(), null);
+    }
+
+    internal static void PrintPlayerState(Player player_view)
+    {
+        List<string> message = new List<string>();
+        message.Add($"Player: {player_view.GetOfficialName()}");
+        message.Add($"Priority: {player_view.priority}");
+        message.Add($"Government: {player_view.government_type}");
+        message.Add($"Priority: {player_view.priority}");
+        message.Add($"Stability: {player_view.GetStability()}");
+        message.Add($"Nutrition: {player_view.GetNutrition()}");
+        message.Add($"Production: {player_view.GetProduction()}");
+        message.Add($"Wealth: {player_view.wealth}");
+        message.Add($"Knowledge: {player_view.knowledge_level}");
+        message.Add($"Belief: {player_view.belief_level}");
+        message.Add($"Heritage: {player_view.heritage_points}");
+        message.Add($"Capital: {player_view.GetCapitalCoordinate()}");
+        message.Add($"Known Players: {player_view.GetKnownPlayers().Count}");
+        message.Add($"Cities: {player_view.GetCities().Count}");
+        message.Add($"Fog of War: {player_view.GetFogOfWarMap().Count}");
+
+        DisplayMessage(message);
     }
 }

@@ -52,9 +52,6 @@ namespace Terrain {
             dev_panel_ui.SetActive(false);
             
         }
-
-
-
         public static void SetHexUI(HexTile hex){
 
             hex_ui.SetActive(true);
@@ -70,13 +67,11 @@ namespace Terrain {
             hex_ui.transform.Find("Resource").GetComponent<TextMeshProUGUI>().text = hex.resource_type.ToString();
             hex_ui.transform.Find("Feature").GetComponent<TextMeshProUGUI>().text = hex.feature_type.ToString();
         }
-
-        public static void SetPlayerName(Player player){
+        public static void SetPlayerName(Player player){    
 
             GameObject.Find("WorldUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = player.GetOfficialName();
             GameObject.Find("WorldUI").transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = player.team_color;
         }
-
         internal static void LoadCabinetCharacters(Player player)
         {
 
@@ -116,6 +111,7 @@ namespace Terrain {
             SetPlayerName(player);
             LoadCabinetCharacters(player);
             LoadCharacterScreen(player.government.leader);
+            ShowCityMenu(player.GetCapital());
 
         }
 
@@ -128,7 +124,7 @@ namespace Terrain {
             city_ui.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = city.nourishment.ToString();
             city_ui.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = city.construction.ToString();
             city_ui.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = city.region_type.ToString();
-            city_ui.transform.GetChild(7).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshPro>().text = city.owner_player.GetOfficialName();
+            city_ui.transform.GetChild(7).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetOfficialName();
         }
 
         private static Color GetNumberColor(int number){

@@ -17,7 +17,7 @@ namespace Terrain {
     public static class  MapManager
     {
         
-        public static Vector2 map_size = new Vector2(60, 64);
+        public static Vector2 map_size = new Vector2(100, 100);
         private static ElevationStrat elevation_strategy = ElevationStrat.Groupings;                  
         private static LandStrat land_strategy = LandStrat.Perlin;
         private static RegionStrat region_strategy = RegionStrat.MapFactor;

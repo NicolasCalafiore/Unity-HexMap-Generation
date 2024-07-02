@@ -86,12 +86,15 @@ namespace Terrain {
                 HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
-            if(this.column < MapManager.GetMapSize().y - 1 && this.row > 0){
+            if(this.column < MapManager.GetMapSize().x - 1 && this.row > 0){
+                // Upper-right diagonal neighbor
                 GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column + 1, row - 1)];
                 HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);
             }
-            if(this.row < MapManager.GetMapSize().x - 1 && this.column > 0){
+
+            if(this.row < MapManager.GetMapSize().y - 1 && this.column > 0){
+                // Lower-left diagonal neighbor
                 GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column - 1, row + 1)];
                 HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
                 neighbors.Add(hex);

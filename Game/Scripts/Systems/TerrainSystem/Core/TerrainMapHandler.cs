@@ -52,10 +52,7 @@ namespace Terrain {
             {
                 continents_map.Add(new List<float>(new float[cols]));
             }
-
-            DebugHandler.Print2DMap(water_map);
-            DebugHandler.Print2DMap(continents_map);
-            
+ 
             int continentId = 1;
             for (int i = 0; i < rows; i++)
             {
@@ -66,7 +63,6 @@ namespace Terrain {
                     {
                         MapUtils.FloodFill(water_map, continents_map, i, j, continentId);
                         continentId++;
-                        DebugHandler.Print2DMap(continents_map);
                     }
                 }
             }

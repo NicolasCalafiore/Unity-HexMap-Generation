@@ -22,7 +22,6 @@ namespace Terrain {
             for(int column = 0; column < MapManager.GetMapSize().x; column++){
                 for(int row = 0; row < MapManager.GetMapSize().y; row++){
                     
-                    Debug.Log("GHL Column: " + column + " Row: " + row);
                     HexTile hex = GenerateHex(
                         MapManager.terrain_map_handler.GetElevationMap()[column][row], 
                         MapManager.city_map_handler.structure_map[column][row], 
@@ -46,8 +45,6 @@ namespace Terrain {
         // Called from above loop
         private static HexTile GenerateHex(float elevation_type, float structure_type, float feature_type, float land_type, float region_type, float resource_type, /* float owner_id, */ float continent, float col, float row){ 
             HexTile hex = new((int) col, (int) row);
-
-            Debug.Log("GH Column: " + col + " Row: " + row);
             col_row_to_hex.Add(new Vector2(col, row), hex);
 
             ElevationEnums.HexElevation elevation_type_enum = LandEnums.GetLandType(land_type) == LandEnums.LandType.Water ? ElevationEnums.HexElevation.Flatland : ElevationEnums.GetElevationType(elevation_type);
