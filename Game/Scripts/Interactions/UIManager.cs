@@ -41,9 +41,6 @@ namespace Terrain {
             dev_panel_ui = GameObject.Find("DevPanelUI");
             timer_ui = GameObject.Find("TimerUI");
 
-            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Foreign");
-            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Domestic");
-
             dev_ui.SetActive(true);
             city_ui.SetActive(false);
             cabinet_ui.SetActive(false);
@@ -82,27 +79,21 @@ namespace Terrain {
             character_binds.Clear();
 
 
-            character_binds.Add(cabinet_ui.transform.GetChild(3).GetComponent<Button>(), domestic);
-            character_binds.Add(cabinet_ui.transform.GetChild(2).GetComponent<Button>(), foreign);
-            character_binds.Add(cabinet_ui.transform.GetChild(1).GetComponent<Button>(), leader);
+            character_binds.Add(cabinet_ui.transform.GetChild(2).GetComponent<Button>(), domestic);
+            character_binds.Add(cabinet_ui.transform.GetChild(1).GetComponent<Button>(), foreign);
+            character_binds.Add(cabinet_ui.transform.GetChild(0).GetComponent<Button>(), leader);
 
-            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = domestic.GetFullName();
-            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = foreign.GetFullName();
-            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = leader.GetFullName();
+            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = domestic.GetFullName();
+            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = foreign.GetFullName();
+            cabinet_ui.transform.GetChild(0).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = leader.GetFullName();
         
-            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = domestic.GetRating().ToString();
-            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = foreign.GetRating().ToString();
-            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = leader.GetRating().ToString();
+            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = domestic.GetRating().ToString();
+            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = foreign.GetRating().ToString();
+            cabinet_ui.transform.GetChild(0).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = leader.GetRating().ToString();
         
-            cabinet_ui.transform.GetChild(3).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = GetNumberColor(domestic.GetRating());
-            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = GetNumberColor(foreign.GetRating());
-            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = GetNumberColor(leader.GetRating());
-
-            if(player.government.government_type == GovernmentEnums.GovernmentType.Monarchy) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/King");
-            if(player.government.government_type == GovernmentEnums.GovernmentType.Dictatorship) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Totalitarian");
-            if(player.government.government_type == GovernmentEnums.GovernmentType.Democracy) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/President");
-            if(player.government.government_type == GovernmentEnums.GovernmentType.Tribalism) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/Tribe");
-            if(player.government.government_type == GovernmentEnums.GovernmentType.Theocracy) cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/Cabinet/KingPray");
+            cabinet_ui.transform.GetChild(2).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(domestic.GetRating());
+            cabinet_ui.transform.GetChild(1).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(foreign.GetRating());
+            cabinet_ui.transform.GetChild(0).GetComponent<Button>().transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(leader.GetRating());
 
 
         }

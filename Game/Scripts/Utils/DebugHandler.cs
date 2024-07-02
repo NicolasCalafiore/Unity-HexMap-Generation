@@ -98,13 +98,13 @@ public static class DebugHandler
             $"Cities: {player_view.GetCities().Count}",
             $"Fog of War: {player_view.GetFogOfWarMap().Count}",
             $"Prioties",
-            $"Science: {player_view.city_priorities[0].priority}",
-            $"Religion: {player_view.city_priorities[1].priority}",
-            $"Economy: {player_view.city_priorities[2].priority}",
-            $"Stability: {player_view.city_priorities[3].priority}",
-            $"Production: {player_view.city_priorities[4].priority}",
-            $"Nourishment: {player_view.city_priorities[5].priority}",
-            $"Defense: {player_view.city_priorities[6].priority}",
+            $"Science: {player_view.main_priorities[0].priority}",
+            $"Religion: {player_view.main_priorities[1].priority}",
+            $"Economy: {player_view.main_priorities[2].priority}",
+            $"Stability: {player_view.main_priorities[3].priority}",
+            $"Production: {player_view.main_priorities[4].priority}",
+            $"Nourishment: {player_view.main_priorities[5].priority}",
+            $"Defense: {player_view.main_priorities[6].priority}",
 
 
 

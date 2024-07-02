@@ -17,11 +17,11 @@ using static Terrain.GovernmentEnums;
 
 namespace AI {
 
-    public abstract class CityPriority
+    public abstract class AIPriority
     {
         public string name;
-        public int priority;
-        public abstract PlayerPriority GetPriorityType();
+        public float priority;
+        public abstract MainPriority GetPriorityType();
         public abstract void CalculatePriority(Player player);
         
 

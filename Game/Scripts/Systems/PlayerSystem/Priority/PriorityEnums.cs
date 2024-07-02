@@ -9,7 +9,7 @@ namespace Terrain
     public static class PriorityEnums
     {
 
-        public enum PlayerPriority{
+        public enum MainPriority{
         Stability,
         Religion,
         Economy,
@@ -20,8 +20,8 @@ namespace Terrain
         }
 
 
-        public static List<PlayerPriority> GetPlayerPriorities(){
-            return Enum.GetValues(typeof(PlayerPriority)).Cast<PlayerPriority>().ToList();
+        public static List<MainPriority> GetPlayerPriorities(){
+            return Enum.GetValues(typeof(MainPriority)).Cast<MainPriority>().ToList();
         }
 
 

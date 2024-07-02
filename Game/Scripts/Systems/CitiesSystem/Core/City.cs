@@ -44,5 +44,12 @@ namespace Cities
         
         public List<HexTile> GetHexTerritoryList() => hex_territory_list;
 
+        public List<HexTile> GetNourishmentTerritories(){
+            List<HexTile> nourishment_territories = new List<HexTile>();
+            foreach(HexTile hex in hex_territory_list)
+                if(hex.nourishment - 1 > 0) nourishment_territories.Add(hex);   //-1 to get rid of grassland impact
+            return nourishment_territories;
+        }
+
     }
 }

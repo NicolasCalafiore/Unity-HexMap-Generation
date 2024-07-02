@@ -13,7 +13,7 @@ using static Terrain.RegionsEnums;
 namespace Character {
     public abstract class ForeignTraitBase : TraitBase {
         protected HexRegion region_target;
-        protected Player player_target;
+        public Player player_target;
         protected int integer_storage;
         public abstract bool isActivated(Player player, Player other_player);
         public ForeignTraitBase(string description, int value) : base(description, value){}

@@ -11,26 +11,31 @@ using Terrain;
 using static Terrain.PriorityEnums;
 using Unity.IO.LowLevel.Unsafe;
 using static Terrain.GovernmentEnums;
+using Character;
 
 
 
 
 namespace AI {
 
-    public class SciencePriority : CityPriority
+    public class SciencePriority : AIPriority
     {
+        public int knowledge_critical_point = 2;
         public SciencePriority(){
             this.name = "Science";
         }
-        public override PlayerPriority GetPriorityType() => PlayerPriority.Religion;
+        public override MainPriority GetPriorityType() => MainPriority.Religion;
 
         public override void CalculatePriority(Player player)
         {
             int priority = 0;
-            if(player.knowledge_level < 2)
+            
+            if(player.GetAllTraitsStr().Contains(ScientificTrait.name))
+                priority += 1;
+
+            if(player.knowledge_level < knowledge_critical_point)
                 if(player.government_type == GovernmentType.Democracy)
-                    priority += 3;
-                    
+                    priority += 2;
                 else
                     priority += 1;
 

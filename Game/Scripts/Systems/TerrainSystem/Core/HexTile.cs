@@ -27,6 +27,8 @@ namespace Terrain {
         public int row;  
         protected readonly int S; 
         private readonly float WIDTH_MULTIPLIER = Mathf.Sqrt(3) / 2; // Used to calculate HexTile position
+        public int upgrade_level = 0;
+        public int max_level = 1;
         
 
 

@@ -17,20 +17,25 @@ using static Terrain.GovernmentEnums;
 
 namespace AI {
 
-    public class NourishmentPriority : CityPriority
+    public class NourishmentPriority : AIPriority
     {
-        private int nourishment_critical_point = 20;
+        private float nourishment_critical_point = 20;
         public NourishmentPriority(){
             this.name = "Nourishment";
         }
 
-        public override PlayerPriority GetPriorityType() => PlayerPriority.Religion;
+        public override MainPriority GetPriorityType() => MainPriority.Religion;
 
         public override void CalculatePriority(Player player)
         {
-            int priority = 0;
+            float priority = 0;
+
             if(player.GetNutrition() < nourishment_critical_point)
                 priority += 1;
+
+            foreach(HexTile tile in player.GetCapital().GetNourishmentTerritories())
+                if(tile.upgrade_level < tile.max_level)
+                    priority += .35f;
 
             this.priority = priority;
         }

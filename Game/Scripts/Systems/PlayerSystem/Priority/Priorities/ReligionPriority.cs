@@ -17,19 +17,20 @@ using static Terrain.GovernmentEnums;
 
 namespace AI {
 
-    public class ReligionPriority : CityPriority
+    public class ReligionPriority : AIPriority
     {
+        public int critical_beleif_level = 2;
         public ReligionPriority(){
             this.name = "Religion";
         }
-        public override PlayerPriority GetPriorityType() => PlayerPriority.Religion;
+        public override MainPriority GetPriorityType() => MainPriority.Religion;
 
         public override void CalculatePriority(Player player)
         {
             int priority = 0;
-            if(player.belief_level < 2)
+            if(player.belief_level < critical_beleif_level)
                 if(player.government_type == GovernmentType.Theocracy)
-                    priority += 3;
+                    priority += 2;
                     
                 else
                     priority += 1;

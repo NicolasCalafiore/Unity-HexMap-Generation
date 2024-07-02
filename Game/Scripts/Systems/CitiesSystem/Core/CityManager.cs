@@ -12,6 +12,7 @@ namespace Cities
         public static List<City> capital_strategy = new List<City>();
         private static List<City> capitals_list = new List<City>();
         public static Dictionary<City, GameObject> city_to_city_go = new Dictionary<City, GameObject>(); // Given Hex gives Hex-Object
+        public static Dictionary<City, HexTile> city_to_hex = new Dictionary<City, HexTile>(); // Given Hex gives Hex-Object
     
         // Sets the region type of the capitals for name generation
         public static void SetRegionTypes(){
@@ -54,7 +55,10 @@ namespace Cities
 
         public static List<City> GetCapitalsList() => capitals_list;
 
-        
+        public static void SetCityToHexDictionary(){
+            foreach(City city in capitals_list)
+                city_to_hex.Add(city, HexManager.col_row_to_hex[city.col_row]);
+        }
     
     }
 }

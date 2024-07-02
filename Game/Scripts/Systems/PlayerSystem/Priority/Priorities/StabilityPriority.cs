@@ -11,23 +11,29 @@ using Terrain;
 using static Terrain.PriorityEnums;
 using Unity.IO.LowLevel.Unsafe;
 using static Terrain.GovernmentEnums;
+using Character;
 
 
 
 
 namespace AI {
 
-    public class StabilityPriority : CityPriority
+    public class StabilityPriority : AIPriority
     {
         private int stability_critical_point = 30;
         public StabilityPriority(){
             this.name = "Stability";
         }
-        public override PlayerPriority GetPriorityType() => PlayerPriority.Stability;
+        public override MainPriority GetPriorityType() => MainPriority.Stability;
 
         public override void CalculatePriority(Player player)
         {
             int priority = 0;
+
+            
+            if(player.GetAllTraitsStr().Contains(StabilityTrait.name))
+                priority += 1;
+                
             if(player.GetStability() < stability_critical_point)
                 if(player.government_type == GovernmentType.Dictatorship)
                     priority += 3;

@@ -30,7 +30,7 @@ namespace Players {
         public GovernmentType government_type { get; set; }
         public Government government  { get; set; }
         public HexRegion home_region { get; set; }
-        public List<CityPriority> city_priorities = new List<CityPriority>();
+        public List<AIPriority> main_priorities = new List<AIPriority>();
         private List<City> cities = new List<City>();
         private List<List<float>> fog_of_war_map;
 
@@ -48,13 +48,13 @@ namespace Players {
             this.heritage_points = UnityEngine.Random.Range(0, 5);
             this.belief_level = UnityEngine.Random.Range(0, 5);
 
-            this.city_priorities.Add(new SciencePriority());
-            this.city_priorities.Add(new ReligionPriority());
-            this.city_priorities.Add(new EconomyPriority());
-            this.city_priorities.Add(new StabilityPriority());
-            this.city_priorities.Add(new ProductionPriority());
-            this.city_priorities.Add(new NourishmentPriority());
-            this.city_priorities.Add(new DefensePriority());
+            this.main_priorities.Add(new SciencePriority());
+            this.main_priorities.Add(new ReligionPriority());
+            this.main_priorities.Add(new EconomyPriority());
+            this.main_priorities.Add(new StabilityPriority());
+            this.main_priorities.Add(new ProductionPriority());
+            this.main_priorities.Add(new NourishmentPriority());
+            this.main_priorities.Add(new DefensePriority());
         }
 
         public void SimulateGovernment(){
@@ -99,21 +99,51 @@ namespace Players {
 
         internal void CalculatePriorities()
         {
-            foreach(CityPriority priority in city_priorities){
+            foreach(AIPriority priority in main_priorities){
                 priority.CalculatePriority(this);
             }
         }
 
-
-        public CityPriority GetHighestPriority()
+        public AIPriority GetHighestPriority()
         {
-            CityPriority highest_priority = null;
+            AIPriority highest_priority = null;
 
-            foreach(CityPriority priority in city_priorities)
+            foreach(AIPriority priority in main_priorities)
                 if(highest_priority == null || priority.priority > highest_priority.priority)
                     highest_priority = priority;
 
             return highest_priority;
+        }
+    
+        public List<TraitBase> GetAllTraits(){
+            List<TraitBase> traits = new List<TraitBase>();
+            foreach(TraitBase trait in government.leader.traits)
+                traits.Add(trait);
+
+            foreach(TraitBase trait in government.cabinet.foreign_advisor.traits)
+                traits.Add(trait);
+
+            foreach(TraitBase trait in government.cabinet.domestic_advisor.traits)
+                traits.Add(trait);
+                
+            return traits;
+        }
+        public List<string> GetAllTraitsStr(){
+            List<TraitBase> traits = new List<TraitBase>();
+            foreach(TraitBase trait in government.leader.traits)
+                traits.Add(trait);
+
+            foreach(TraitBase trait in government.cabinet.foreign_advisor.traits)
+                traits.Add(trait);
+
+            foreach(TraitBase trait in government.cabinet.domestic_advisor.traits)
+                traits.Add(trait);
+
+            List<string> traits_str = new List<string>();
+            foreach(TraitBase trait in traits)
+                traits_str.Add(trait.Name);
+
+            return traits_str;
         }
     }
 }

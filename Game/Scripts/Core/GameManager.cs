@@ -48,6 +48,7 @@ public class GameManagers: MonoBehaviour{
         HexManager.SetHexDecorators(); 
         CityManager.SetCityTerritory();
         CityManager.SetRegionTypes();
+        CityManager.SetCityToHexDictionary();
     }
 
     void SpawnGameObjects(){
