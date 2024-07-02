@@ -13,6 +13,7 @@ namespace Cities
     public class City
     {
         public List<HexTile> hex_territory_list = new List<HexTile>();
+        public HexTile host_tile {get; set;}
         public Vector2 col_row {get; set;}
         public HexRegion region_type {get; set;}
         public string name {get; set;}

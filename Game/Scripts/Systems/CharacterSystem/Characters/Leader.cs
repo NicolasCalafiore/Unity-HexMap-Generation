@@ -14,6 +14,7 @@ using UnityEngine;
 namespace Cabinet{
     public class Leader : AbstractCharacter
     {
+        public static float TRAIT_MULTIPLIER = 1.5f;
         public Leader(List<string> names, CharacterEnums.CharacterGender gender, Player player, List<string> titles)
         : base(names, gender, player, titles){}
         

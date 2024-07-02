@@ -11,11 +11,8 @@ using Players;
 namespace Character {
     public abstract class DomesticTraitBase : TraitBase {
         // Traits for Domestic Advisor
-
         public abstract bool isActivated(Player player);
-
-        public DomesticTraitBase(string name, string description, int value) : base(name, description, value){}
-
+        public DomesticTraitBase(string description, int value) : base(description, value){}
         public abstract float GetTraitValue(Player player);
 
         public static DomesticTraitBase GetRandomDomesticTrait(Player player){

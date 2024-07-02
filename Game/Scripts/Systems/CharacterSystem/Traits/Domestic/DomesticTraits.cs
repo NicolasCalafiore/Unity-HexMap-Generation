@@ -10,7 +10,11 @@ using Players;
 
 namespace Character {
     public class PeaceKeeper : DomesticTraitBase {
-        public PeaceKeeper(): base(TraitManager.PEACE_KEEPER, "Increases Stability", 5){}
+        public static string name = "Peace Keeper";
+        public override string Name { get => name;}
+        public PeaceKeeper(): base("Increases Stability", 5){
+
+        }
 
         public override float GetTraitValue(Player player){
             throw new NotImplementedException();
@@ -23,7 +27,10 @@ namespace Character {
     }
 
     public class Financier : DomesticTraitBase {
-        public Financier() : base(TraitManager.FINANCIER, "Extra Gold", 5){}
+        public static string name = "Financier";
+        public override string Name { get => name;}
+        public Financier() : base("Extra Gold", 5){
+        }
 
         public override float GetTraitValue(Player player){
             throw new NotImplementedException();
@@ -35,7 +42,10 @@ namespace Character {
     }
 
     public class ProductionExpert : DomesticTraitBase {
-        public ProductionExpert() : base(TraitManager.PRODUCTION_EXPERT, "Increased Production", 5){}
+        public static string name = "Production Expert";
+        public override string Name { get => name;}
+        public ProductionExpert() : base("Increased Production", 5){
+        }
 
         public override float GetTraitValue(Player player){
             throw new NotImplementedException();

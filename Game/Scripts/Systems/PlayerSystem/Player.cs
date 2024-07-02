@@ -12,6 +12,7 @@ using Cities;
 using System.Linq;
 using static Terrain.RegionsEnums;
 using static Terrain.PriorityEnums;
+using AI;
 
 
 namespace Players {
@@ -29,12 +30,9 @@ namespace Players {
         public GovernmentType government_type { get; set; }
         public Government government  { get; set; }
         public HexRegion home_region { get; set; }
-        public PlayerPriority priority { get; set; }
+        public List<CityPriority> city_priorities = new List<CityPriority>();
         private List<City> cities = new List<City>();
         private List<List<float>> fog_of_war_map;
-        public int stability_critical_point = 40;       // TO DO: CHANGE DEPENDING ON TRAITS/GOVERNMENT ETC.
-        public int nourishment_critical_point = 25;     // TO DO: CHANGE DEPENDING ON TRAITS/GOVERNMENT ETC.
-        public int production_critical_point = 20;      // TO DO: CHANGE DEPENDING ON TRAITS/GOVERNMENT ETC.
 
 
 
@@ -49,6 +47,14 @@ namespace Players {
             this.knowledge_level = UnityEngine.Random.Range(0, 5);
             this.heritage_points = UnityEngine.Random.Range(0, 5);
             this.belief_level = UnityEngine.Random.Range(0, 5);
+
+            this.city_priorities.Add(new SciencePriority());
+            this.city_priorities.Add(new ReligionPriority());
+            this.city_priorities.Add(new EconomyPriority());
+            this.city_priorities.Add(new StabilityPriority());
+            this.city_priorities.Add(new ProductionPriority());
+            this.city_priorities.Add(new NourishmentPriority());
+            this.city_priorities.Add(new DefensePriority());
         }
 
         public void SimulateGovernment(){
@@ -93,7 +99,21 @@ namespace Players {
 
         internal void CalculatePriorities()
         {
-            
+            foreach(CityPriority priority in city_priorities){
+                priority.CalculatePriority(this);
+            }
+        }
+
+
+        public CityPriority GetHighestPriority()
+        {
+            CityPriority highest_priority = null;
+
+            foreach(CityPriority priority in city_priorities)
+                if(highest_priority == null || priority.priority > highest_priority.priority)
+                    highest_priority = priority;
+
+            return highest_priority;
         }
     }
 }

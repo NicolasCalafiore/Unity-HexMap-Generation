@@ -158,9 +158,9 @@ namespace Terrain {
             character_ui.transform.GetChild(3+1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(character.health);
             character_ui.transform.GetChild(2+1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(character.wealth);
 
-            character_ui.transform.GetChild(13).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(0) == null ? "None" : character.GetTrait(0).name; 
-            character_ui.transform.GetChild(12).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(1) == null ? "None" : character.GetTrait(1).name; 
-            character_ui.transform.GetChild(11).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(2) == null ? "None" : character.GetTrait(2).name; 
+            character_ui.transform.GetChild(13).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(0) == null ? "None" : character.GetTrait(0).Name; 
+            character_ui.transform.GetChild(12).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(1) == null ? "None" : character.GetTrait(1).Name; 
+            character_ui.transform.GetChild(11).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(2) == null ? "None" : character.GetTrait(2).Name; 
         }
 
         public static void ShowDepartmentMeny(AbstractCharacter character){

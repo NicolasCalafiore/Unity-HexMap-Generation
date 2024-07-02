@@ -111,10 +111,9 @@ namespace Players {
         }
 
         public static void InitializePlayerPriorities(){
-            Debug.Log("Initializing Player Priorities");
-            
-            foreach(Player player in player_list)
-                player.priority = PriorityCalculation.CalculateMainPriority(player);
+            foreach(Player player in player_list){
+                player.CalculatePriorities();
+            }
         }
     }
 }

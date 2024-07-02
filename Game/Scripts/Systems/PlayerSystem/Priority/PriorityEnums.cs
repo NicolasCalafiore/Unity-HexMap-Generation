@@ -19,6 +19,7 @@ namespace Terrain
         Defense,
         }
 
+
         public static List<PlayerPriority> GetPlayerPriorities(){
             return Enum.GetValues(typeof(PlayerPriority)).Cast<PlayerPriority>().ToList();
         }

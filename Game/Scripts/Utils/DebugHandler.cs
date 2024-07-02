@@ -45,15 +45,16 @@ public static class DebugHandler
             foreach(Player known_player in player.GetKnownPlayers()){
                 message.Add($"{player.GetOfficialName()} <--> {known_player.GetOfficialName()}");
                 message.Add($"Final Relationship: {player.government.cabinet.foreign_advisor.GetRelationshipLevel(known_player)} ({player.government.cabinet.foreign_advisor.relations[known_player]})");
-                message.Add($"Base Relationship: {DiplomacyManager.CalculateBaseRelationship(player, known_player)}");
 
                 foreach(TraitBase trait in player.government.leader.traits){
                     if(trait is ForeignTraitBase) 
-                        message.Add($"{trait.name}: {((ForeignTraitBase) trait).GetTraitValue(player, known_player)}");
+                        message.Add($"{trait.Name}: {((ForeignTraitBase) trait).GetTraitValue(player, known_player)  * Leader.TRAIT_MULTIPLIER}");
                 }
                 foreach(ForeignTraitBase trait in player.government.cabinet.foreign_advisor.traits){
-                    message.Add($"{trait.name}: {trait.GetTraitValue(player, known_player)}");
+                    message.Add($"{trait.Name}: {trait.GetTraitValue(player, known_player)}");
                 }
+
+                message.Add($"Trait Comparisons: {DiplomacyManager.CalculateTraitComparisonsImpact(player, known_player)}");
 
                 DisplayMessage(message);
                 message.Clear();
@@ -71,20 +72,6 @@ public static class DebugHandler
         Debug.Log(MESSAGE);
     }
 
-    public static void RelationshipBreakDown(Player owner_player){
-        foreach(Player other_player in owner_player.government.cabinet.foreign_advisor.known_players){
-            
-            List<string> message = new List<string>();
-            message.Add($"{owner_player.GetOfficialName()} <--> {other_player.GetOfficialName()}");
-            message.Add($"Final Relationship: {owner_player.government.cabinet.foreign_advisor.GetRelationshipLevel(other_player)} ({owner_player.government.cabinet.foreign_advisor.relations[other_player]})");
-            message.Add($"Base Relationship: {DiplomacyManager.CalculateBaseRelationship(owner_player, other_player)}");
-            message.Add($"Trait Relationship Impact: {DiplomacyManager.CalculateTraitRelationshipImpact(owner_player, other_player)}");
-            message.Add($"Similiar Trait Impact: {DiplomacyManager.CalculateSimiliarTraitsImpact(owner_player, other_player)}");
-
-            DisplayMessage(message);
-        }
-    }
-
     public static void ClearLogConsole() {
         var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
         var type = assembly.GetType("UnityEditor.LogEntries");
@@ -94,22 +81,44 @@ public static class DebugHandler
 
     internal static void PrintPlayerState(Player player_view)
     {
-        List<string> message = new List<string>();
-        message.Add($"Player: {player_view.GetOfficialName()}");
-        message.Add($"Priority: {player_view.priority}");
-        message.Add($"Government: {player_view.government_type}");
-        message.Add($"Priority: {player_view.priority}");
-        message.Add($"Stability: {player_view.GetStability()}");
-        message.Add($"Nutrition: {player_view.GetNutrition()}");
-        message.Add($"Production: {player_view.GetProduction()}");
-        message.Add($"Wealth: {player_view.wealth}");
-        message.Add($"Knowledge: {player_view.knowledge_level}");
-        message.Add($"Belief: {player_view.belief_level}");
-        message.Add($"Heritage: {player_view.heritage_points}");
-        message.Add($"Capital: {player_view.GetCapitalCoordinate()}");
-        message.Add($"Known Players: {player_view.GetKnownPlayers().Count}");
-        message.Add($"Cities: {player_view.GetCities().Count}");
-        message.Add($"Fog of War: {player_view.GetFogOfWarMap().Count}");
+        List<string> message = new List<string>
+        {
+            $"Player: {player_view.GetOfficialName()}",
+            $"Priority: {player_view.GetHighestPriority().name}",
+            $"Government: {player_view.government_type}",
+            $"Stability: {player_view.GetStability()}",
+            $"Nutrition: {player_view.GetNutrition()}",
+            $"Production: {player_view.GetProduction()}",
+            $"Wealth: {player_view.wealth}",
+            $"Knowledge: {player_view.knowledge_level}",
+            $"Belief: {player_view.belief_level}",
+            $"Heritage: {player_view.heritage_points}",
+            $"Capital: {player_view.GetCapitalCoordinate()}",
+            $"Known Players: {player_view.GetKnownPlayers().Count}",
+            $"Cities: {player_view.GetCities().Count}",
+            $"Fog of War: {player_view.GetFogOfWarMap().Count}",
+            $"Prioties",
+            $"Science: {player_view.city_priorities[0].priority}",
+            $"Religion: {player_view.city_priorities[1].priority}",
+            $"Economy: {player_view.city_priorities[2].priority}",
+            $"Stability: {player_view.city_priorities[3].priority}",
+            $"Production: {player_view.city_priorities[4].priority}",
+            $"Nourishment: {player_view.city_priorities[5].priority}",
+            $"Defense: {player_view.city_priorities[6].priority}",
+
+
+
+
+            /*
+            this.city_priorities.Add(new SciencePriority());
+            this.city_priorities.Add(new ReligionPriority());
+            this.city_priorities.Add(new EconomyPriority());
+            this.city_priorities.Add(new StabilityPriority());
+            this.city_priorities.Add(new ProductionPriority());
+            this.city_priorities.Add(new NourishmentPriority());
+            this.city_priorities.Add(new DefensePriority());
+            */
+        };
 
         DisplayMessage(message);
     }

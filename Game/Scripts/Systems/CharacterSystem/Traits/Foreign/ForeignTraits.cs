@@ -8,24 +8,36 @@ using PlayerGovernment;
 using Unity.VisualScripting;
 using Players;
 using static Terrain.RegionsEnums;
+using Diplomacy;
 
 
 namespace Character {
 
+
     // Likes Similiar Government Type
     public class GovernanceTrait : ForeignTraitBase {
-        public GovernanceTrait(): base(TraitManager.IDEOLOGICAL, "Likes Similiar Governments", 15) {}
+        public static string name = "Governance";
+        public override string Name { get => name;}
+        public GovernanceTrait(): base("Likes Similiar Governments", 10) {
+            
+        }
         public override float GetTraitValue(Player player, Player other_player){
             return isSameGovernmentType(player, other_player) ? value : value * -1;
         }
         public override bool isActivated(Player other_player, Player player) => isSameGovernmentType(player, other_player);
+
+
         
         
     }
 
     // Likes Similiar Region Type
     public class RegionalTrait : ForeignTraitBase {
-        public RegionalTrait() : base(TraitManager.REGIONAL_CONNECTION, "Likes Similiar Cultures", 15) {}
+        public static string name = "Regional";
+        public override string Name { get => name;}
+        public RegionalTrait() : base("Likes Similiar Cultures", 5) {
+            banned_traits = new List<string>(){GovernanceTrait.name};
+        }
         public override float GetTraitValue(Player player, Player other_player){
             return isSameRegionType(player, other_player) ? value : 0;
         }
@@ -36,88 +48,211 @@ namespace Character {
 
     // Dislikes Similiar Region Type
     public class CulturalConflictTrait : ForeignTraitBase {
-        public CulturalConflictTrait() : base(TraitManager.HOMELAND, "Dislikes Similiar Cultures", 10) {}
+        private static string name = "Cultural Conflict";
+        public override string Name { get => name;}
+        public CulturalConflictTrait() : base("Dislikes Similiar Cultures", -5) {
+            banned_traits = new List<string>(){RegionalTrait.name};
+        }
         public override float GetTraitValue(Player player, Player other_player){
-            return isSameRegionType(player, other_player) ?  value * -1 :  0;
+            return isSameRegionType(player, other_player) ?  value :  0;
         }
         public override bool isActivated(Player other_player, Player player) => isSameRegionType(player, other_player);
         
     }
 
-    // Universal
-    public class PeaceTrait : ForeignTraitBase {
-        public PeaceTrait() : base(TraitManager.PEACE_PROMOTER, "Promotes Peace", 12) {}
-        public override float GetTraitValue(Player player, Player other_player) => value;
-        public override bool isActivated(Player other_player, Player player) => true;
-    }
 
     // Universal
-    public class WarTrait : ForeignTraitBase {
-        public WarTrait() : base(TraitManager.WAR_MONGER, "War Hungry", 25){}
-        public override float GetTraitValue(Player player, Player other_player) => value * -1;
+    public class Rude : ForeignTraitBase {
+        public static string name = "Rude";
+        public override string Name { get => name;}
+        public Rude() : base("Rude", -7){
+            banned_traits = new List<string>(){DiplomatTrait.name};
+        }
+        public override float GetTraitValue(Player player, Player other_player) => value;
+        
         public override bool isActivated(Player other_player, Player player) => true;
         
-
     }
 
     // Universal
     public class DiplomatTrait : ForeignTraitBase {
-        public DiplomatTrait() : base(TraitManager.DIPLOMAT, "Very Persuasive", 20){}
+        public static string name = "Diplomat";
+        public override string Name { get => name;}
+        public DiplomatTrait() : base("Very Persuasive", 7){
+            banned_traits = new List<string>(){Rude.name};
+
+        }
         public override float GetTraitValue(Player player, Player other_player) => value;
         public override bool isActivated(Player other_player, Player player) => true;
     }
 
     // Single Region Focused
     public class RegionRacistTrait : ForeignTraitBase {
-        public RegionRacistTrait() : base(TraitManager.RACIST_REGION, "Discriminator Against a Region", 15){
-            generic_region_target = RegionsEnums.GetRandomRegionLandType();
+        public static string name = "Region Racist";
+        public override string Name { get => name;}
+        public RegionRacistTrait() : base("Discriminator Against a Region", -10){
+            region_target = RegionsEnums.GetRandomRegionLandType();
         }
         public override float GetTraitValue(Player player, Player other_player){
-            return other_player.GetCapital().region_type == generic_region_target ? value * -1 : 0;
+            return other_player.GetCapital().region_type == region_target ? value : 0;
         }
         public override bool isActivated(Player other_player, Player player){
-            return other_player.GetCapital().region_type == generic_region_target;
+            return other_player.GetCapital().region_type == region_target;
         }
     }
 
     // Single Player Focused
-    public class Racist : ForeignTraitBase {
-        public Racist(Player player) : base(TraitManager.RACIST, "Discriminatory Towards a Player", 15){
-            this.generic_player_target = player.government.cabinet.foreign_advisor.GetRandomKnownPlayerNullable();
+    public class Foe : ForeignTraitBase {
+        public static string name = "Foe";
+        public override string Name { get => name;}
+        public Foe(Player player) : base("Discriminatory Towards a Player", -12){
+            this.player_target = player.government.cabinet.foreign_advisor.GetRandomKnownPlayerNullable();
         }
         public override float GetTraitValue(Player other_player, Player player){
-            return other_player == generic_player_target ? value * -1 : 0;
+            return other_player == player_target ? value : 0;
         }
         public override bool isActivated(Player other_player, Player player){
-            return other_player == generic_player_target;
+            return other_player == player_target;
         }
     }
 
     // Likes Nearby Players
-    public class FriendlyTrait : ForeignTraitBase {
-        public FriendlyTrait() : base(TraitManager.NEIGHBORLY, "Likes Nearby Players", 15){
-            generic_primary_int = 5;
+    public class NeighborlyTrait : ForeignTraitBase {
+        public static string name = "Neighborly";
+        public override string Name { get => name;}
+        public NeighborlyTrait() : base("Likes Nearby Players", 11){
+            integer_storage = 5;
+            banned_traits = new List<string>(){DefensiveTrait.name};
         }
         public override float GetTraitValue(Player other_player, Player player){
-            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < generic_primary_int ? value : 0;
+            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < integer_storage ? value : 0;
         }
         public override bool isActivated(Player other_player, Player player){
-            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < generic_primary_int;
+            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < integer_storage;
         }
     }
 
     // Dislikes Nearby Players
     public class DefensiveTrait : ForeignTraitBase {
-        public DefensiveTrait() : base(TraitManager.HOME_FRONT, "Dislikes Nearby Players", 20){
-            generic_primary_int = 5;
+        public static string name = "Defensive";
+        public override string Name { get => name;}
+        public DefensiveTrait() : base("Dislikes Nearby Players", -12){
+            integer_storage = 5;
+            banned_traits = new List<string>(){NeighborlyTrait.name};
         }
 
         public override float GetTraitValue(Player other_player, Player player){
-            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < generic_primary_int ? value * -1 : 0;
+            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < integer_storage ? value : 0;
         }
 
         public override bool isActivated(Player other_player, Player player){
-            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < generic_primary_int;
+            return PathFinding.GetManhattanDistance(player.GetCapitalCoordinate(), other_player.GetCapitalCoordinate()) < integer_storage;
         }
     }
+
+
+    public class StabilityTrait : ForeignTraitBase {
+        public static string name = "Stability";
+        public override string Name { get => name;}
+        public StabilityTrait() : base("Prefers players with stable governments", 6){
+            integer_storage = 75;
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.GetStability() > integer_storage;
+        }
+    }
+
+
+    public class ScientificTrait : ForeignTraitBase {
+        public static string name = "Science";
+        public override string Name { get => name;}
+        public ScientificTrait() : base("Prefers players with a focus on science", 6){
+            integer_storage = 3;
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.knowledge_level > integer_storage;
+        }
+    }
+
+
+    public class ContinentalUniter : ForeignTraitBase {
+        public static string name = "Continental Uniter";
+        public override string Name { get => name;}
+        public ContinentalUniter() : base("Prefers players within his continent", 8){
+            banned_traits = new List<string>(){ContinentalClaimer.name};
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.GetCapital().hex_territory_list[0].continent_id == player.GetCapital().hex_territory_list[0].continent_id;
+        }
+    }
+
+    public class ContinentalClaimer : ForeignTraitBase {
+        public static string name = "Continental Claimer";
+        public override string Name { get => name;}
+        public ContinentalClaimer() : base("Dislikes players within his continent", -8){
+            banned_traits = new List<string>(){ContinentalUniter.name};
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.GetCapital().hex_territory_list[0].continent_id == player.GetCapital().hex_territory_list[0].continent_id;
+        }
+    }
+
+    public class WealthAdmirer : ForeignTraitBase {
+        public static string name = "Wealth Admirer";
+        public override string Name { get => name;}
+        public WealthAdmirer() : base("Prefers players with high wealth", 8){
+            integer_storage = 1500;
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.wealth > integer_storage;
+        }
+    }
+
+    public class PovertyDiscriminator : ForeignTraitBase {
+        public static string name = "Poverty Discriminator";
+        public override string Name { get => name;}
+        public PovertyDiscriminator() : base("Dislikes players with low wealth", -8){
+            integer_storage = 500;
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.wealth < integer_storage;
+        }
+    }
+
 }

@@ -10,15 +10,17 @@ using Players;
 
 namespace Character {
     public abstract class TraitBase {
-        public TraitBase(string name, string description, int value)
+        public abstract string Name { get;}
+        public TraitBase(string description, int value)
         {
-            this.name = name;
             this.description = description;
             this.value = value;
         }
 
-        public string name {get; set;}
         public string description {get; set;}
         public int value {get; set;}
+        public List<string> banned_traits = new List<string>();
+
+
     }
 }

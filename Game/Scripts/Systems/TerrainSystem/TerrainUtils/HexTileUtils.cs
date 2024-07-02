@@ -14,6 +14,7 @@ namespace Terrain
             Vector2 map_size = MapManager.GetMapSize();
 
             // Check immediate neighbors
+            hex_list.Add(HexManager.col_row_to_hex[new Vector2(i, j)]);
             if (j - 1 >= 0) hex_list.Add(HexManager.col_row_to_hex[new Vector2(i, j - 1)]);
             if (j + 1 < map_size.y) hex_list.Add(HexManager.col_row_to_hex[new Vector2(i, j + 1)]);
             if (i - 1 >= 0) hex_list.Add(HexManager.col_row_to_hex[new Vector2(i - 1, j)]);

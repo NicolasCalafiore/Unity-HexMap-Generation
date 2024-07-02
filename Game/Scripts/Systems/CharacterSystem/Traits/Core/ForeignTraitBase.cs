@@ -12,15 +12,14 @@ using static Terrain.RegionsEnums;
 
 namespace Character {
     public abstract class ForeignTraitBase : TraitBase {
-        protected HexRegion generic_region_target;
-        protected Player generic_player_target;
-        protected int generic_primary_int;
-
+        protected HexRegion region_target;
+        protected Player player_target;
+        protected int integer_storage;
         public abstract bool isActivated(Player player, Player other_player);
-
-        public ForeignTraitBase(string name, string description, int value) : base(name, description, value){}
-
+        public ForeignTraitBase(string description, int value) : base(description, value){}
         public abstract float GetTraitValue(Player player, Player known_player);
+
+
 
         public static ForeignTraitBase GetRandomForeignTrait(Player player){
 
@@ -29,12 +28,17 @@ namespace Character {
                 new GovernanceTrait(),
                 new RegionalTrait(),
                 new CulturalConflictTrait(),
-                new PeaceTrait(),
-                new WarTrait(),
+                new Rude(),
                 new DiplomatTrait(),
                 new RegionRacistTrait(),
                 new DefensiveTrait(),
-                new FriendlyTrait(),
+                new NeighborlyTrait(),
+                new WealthAdmirer(),
+                new PovertyDiscriminator(),
+                new ContinentalClaimer(),
+                new ContinentalUniter(),
+                new ScientificTrait(),
+                new StabilityTrait(),
             };
 
             //Dependent traits
@@ -46,7 +50,7 @@ namespace Character {
 
         // Add traits that require conditionals to trait_list
         public static void AddConditionalTraits(Player player, List<ForeignTraitBase> trait_list){
-            if(player.GetRandomKnownPlayerNullable() != null) trait_list.Add(new Racist(player));
+            if(player.GetRandomKnownPlayerNullable() != null) trait_list.Add(new Foe(player));
         }
 
         public  bool isSameGovernmentType(Player known_player, Player player) =>
@@ -55,6 +59,8 @@ namespace Character {
 
         public bool isSameRegionType(Player known_player, Player player) =>
             known_player.GetCapital().region_type == player.GetCapital().region_type;
+
+
         
     }
 }
