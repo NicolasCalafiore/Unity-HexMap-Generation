@@ -97,6 +97,13 @@ namespace Players {
             return production/cities.Count;
         }
 
+        public int GetPopulation(){
+            int population = 0;
+            foreach(City city in cities){
+                population += (int) city.inhabitants;
+            }
+            return population;
+        }
         internal void CalculatePriorities()
         {
             foreach(AIPriority priority in main_priorities){

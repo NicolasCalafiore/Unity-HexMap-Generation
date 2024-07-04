@@ -21,6 +21,9 @@ namespace Character {
                 new PeaceKeeper(),
                 new Financier(),
                 new ProductionExpert(),
+                new NutritionExpert(),
+                new StabilityExpert(),
+                new ScienceExpert(),
 
             };
 

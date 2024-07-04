@@ -21,7 +21,7 @@ namespace Character {
         }
 
         public override bool isActivated(Player player){
-           throw new NotImplementedException();
+           return true;
         }
 
     }
@@ -37,7 +37,52 @@ namespace Character {
         }
 
         public override bool isActivated(Player player){
-           throw new NotImplementedException();
+           return true;
+        }
+    }
+
+    public class StabilityExpert : DomesticTraitBase {
+        public static string name = "Production Expert";
+        public override string Name { get => name;}
+        public StabilityExpert() : base("Stability Production", 5){
+        }
+
+        public override float GetTraitValue(Player player){
+            throw new NotImplementedException();
+        }
+
+        public override bool isActivated(Player player){
+           return true;
+        }
+    }
+
+    public class NutritionExpert : DomesticTraitBase {
+        public static string name = "Nutrition Expert";
+        public override string Name { get => name;}
+        public NutritionExpert() : base("Increased Production", 5){
+        }
+
+        public override float GetTraitValue(Player player){
+            throw new NotImplementedException();
+        }
+
+        public override bool isActivated(Player player){
+           return true;
+        }
+    }
+
+    public class ScienceExpert : DomesticTraitBase {
+        public static string name = "Science Expert";
+        public override string Name { get => name;}
+        public ScienceExpert() : base("Increased Production", 5){
+        }
+
+        public override float GetTraitValue(Player player){
+            throw new NotImplementedException();
+        }
+
+        public override bool isActivated(Player player){
+           return true;
         }
     }
 
@@ -52,7 +97,7 @@ namespace Character {
         }
 
         public override bool isActivated(Player player){
-           throw new NotImplementedException();
+           return true;
         }
     }
 

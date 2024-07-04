@@ -36,6 +36,7 @@ namespace Character {
         public static string name = "Regional";
         public override string Name { get => name;}
         public RegionalTrait() : base("Likes Similiar Cultures", 5) {
+            isBlankEffect = true;
             banned_traits = new List<string>(){GovernanceTrait.name};
         }
         public override float GetTraitValue(Player player, Player other_player){
@@ -47,10 +48,11 @@ namespace Character {
     }
 
     // Dislikes Similiar Region Type
-    public class CulturalConflictTrait : ForeignTraitBase {
-        private static string name = "Cultural Conflict";
+    public class RegionalConflictTrait : ForeignTraitBase {
+        private static string name = "Regional Conflict";
         public override string Name { get => name;}
-        public CulturalConflictTrait() : base("Dislikes Similiar Cultures", -5) {
+        public RegionalConflictTrait() : base("Dislikes Similiar Regions", -5) {
+            isBlankEffect = true;
             banned_traits = new List<string>(){RegionalTrait.name};
         }
         public override float GetTraitValue(Player player, Player other_player){
@@ -66,6 +68,7 @@ namespace Character {
         public static string name = "Rude";
         public override string Name { get => name;}
         public Rude() : base("Rude", -7){
+            isBlankEffect = true;
             banned_traits = new List<string>(){DiplomatTrait.name};
         }
         public override float GetTraitValue(Player player, Player other_player) => value;
@@ -79,6 +82,7 @@ namespace Character {
         public static string name = "Diplomat";
         public override string Name { get => name;}
         public DiplomatTrait() : base("Very Persuasive", 7){
+            isBlankEffect = true;
             banned_traits = new List<string>(){Rude.name};
 
         }
@@ -106,6 +110,7 @@ namespace Character {
         public static string name = "Foe";
         public override string Name { get => name;}
         public Foe(Player player) : base("Discriminatory Towards a Player", -12){
+            repeatable = true;
             this.player_target = player.government.cabinet.foreign_advisor.GetRandomKnownPlayerNullable();
         }
         public override float GetTraitValue(Player other_player, Player player){
@@ -168,7 +173,6 @@ namespace Character {
         }
     }
 
-
     public class ScientificTrait : ForeignTraitBase {
         public static string name = "Science";
         public override string Name { get => name;}
@@ -186,11 +190,11 @@ namespace Character {
         }
     }
 
-
     public class ContinentalUniter : ForeignTraitBase {
         public static string name = "Continental Uniter";
         public override string Name { get => name;}
         public ContinentalUniter() : base("Prefers players within his continent", 8){
+            isBlankEffect = true;
             banned_traits = new List<string>(){ContinentalClaimer.name};
         }
 
@@ -208,6 +212,7 @@ namespace Character {
         public static string name = "Continental Claimer";
         public override string Name { get => name;}
         public ContinentalClaimer() : base("Dislikes players within his continent", -8){
+            isBlankEffect = true;
             banned_traits = new List<string>(){ContinentalUniter.name};
         }
 
@@ -252,6 +257,61 @@ namespace Character {
 
         public override bool isActivated(Player other_player, Player player){
             return other_player.wealth < integer_storage;
+        }
+    }
+
+    public class CultureClaimer : ForeignTraitBase {
+        public static string name = "Culture Claimer";
+        public override string Name { get => name;}
+        public CultureClaimer() : base("Dislikes Players with Same Culture", -12){
+            isBlankEffect = true;
+            banned_traits = new List<string>(){CultureUniter.name};
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.GetCapital().hex_territory_list[0].culture_id == player.GetCapital().hex_territory_list[0].culture_id;
+        }
+    }
+
+
+    public class CultureUniter : ForeignTraitBase {
+        public static string name = "Culture Uniter";
+        public override string Name { get => name;}
+        public CultureUniter() : base("Likes Players with Same Culture", 15){
+            isBlankEffect = true;
+            banned_traits = new List<string>(){CultureClaimer.name};
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            return 0;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.GetCapital().hex_territory_list[0].culture_id == player.GetCapital().hex_territory_list[0].culture_id;
+        }
+    }
+
+    public class CultureBias : ForeignTraitBase {
+        public static string name = "Culture Bias";
+        public override string Name { get => name;}
+        public CultureBias() : base("Dislikes Players with Different Culture", 11){
+            isBlankEffect = true;
+            banned_traits = new List<string>(){CultureUniter.name, CultureClaimer.name};
+        }
+
+        public override float GetTraitValue(Player other_player, Player player){
+            if(isActivated(other_player, player)) return value;
+            else return -value;
+        }
+
+        public override bool isActivated(Player other_player, Player player){
+            return other_player.GetCapital().hex_territory_list[0].culture_id == player.GetCapital().hex_territory_list[0].culture_id;
         }
     }
 

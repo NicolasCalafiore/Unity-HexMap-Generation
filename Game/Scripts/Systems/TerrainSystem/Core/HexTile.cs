@@ -18,6 +18,7 @@ namespace Terrain {
         public City owner_city { get; set;}
         public bool is_coast { get; set;} = false;
         public float continent_id;
+        public float culture_id;
         public virtual float MovementCost { get; set; } = 1.0f; 
         public float nourishment { get; set; }  = 0;
         public float construction { get; set; }  = 0;

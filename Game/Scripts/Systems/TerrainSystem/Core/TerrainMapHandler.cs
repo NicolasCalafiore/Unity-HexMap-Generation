@@ -24,7 +24,8 @@ namespace Terrain {
         private List<List<float>> elevation_map = new List<List<float>>();
         private List<List<float>> features_map = new List<List<float>>();
         private List<List<float>> resource_map = new List<List<float>>();
-        private List<List<float>> continents_map = new List<List<float>>();
+        private List<List<float>> culture_map = new List<List<float>>();
+        private List<List<float>> culture_id_map = new List<List<float>>();
 
         public TerrainMapHandler(){}
               
@@ -37,11 +38,42 @@ namespace Terrain {
             elevation_map = GenerateElevationMap(elevation_strategy, regions_map);
             features_map = GenerateFeaturesMap(features_strategy, regions_map, water_map);
             resource_map = GenerateResourceMap(resource_strat, ocean_map, river_map, regions_map, features_map);
-            continents_map = GenerateContinentsMap(water_map);
+            culture_map = DetectCultures(water_map);
+            culture_id_map = DetectRegions(regions_map);
 
         }
 
-        private List<List<float>> GenerateContinentsMap(List<List<float>> water_map){
+        private List<List<float>> DetectRegions(List<List<float>> regions_map)
+        {
+            int rows = regions_map.Count;
+            int cols = regions_map[0].Count;
+            List<List<float>> regions_id_map = new List<List<float>>();
+
+            // Initialize regions_id_map with zeros
+            for (int i = 0; i < rows; i++)
+            {
+                regions_id_map.Add(new List<float>(new float[cols]));
+            }
+            
+            int regionId = 1; // Start with 1 for the first region
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    // Check if the current cell is part of a region and not yet visited in regions_id_map
+                    if (regions_map[i][j] != 0 && regions_id_map[i][j] == 0)
+                    {
+                        // Use FloodFill to mark all connected cells in this region with the same regionId
+                        MapUtils.RegionsFloodFill(regions_map, regions_id_map, i, j, regionId, regions_map[i][j]);
+                        regionId++; // Increment for the next region
+                    }
+                }
+            }
+
+            return regions_id_map;
+        }
+
+        private List<List<float>> DetectCultures(List<List<float>> water_map){
                 
             int rows = water_map.Count;
             int cols = water_map[0].Count;
@@ -61,7 +93,7 @@ namespace Terrain {
                     // Check if the current cell is land and not yet visited in continents_map
                     if (water_map[i][j] == 1 && continents_map[i][j] == 0)
                     {
-                        MapUtils.FloodFill(water_map, continents_map, i, j, continentId);
+                        MapUtils.ContinentsFloodFill(water_map, continents_map, i, j, continentId);
                         continentId++;
                     }
                 }
@@ -247,7 +279,11 @@ namespace Terrain {
         }
 
         public List<List<float>> GetContinentsMap(){
-            return continents_map;
+            return culture_map;
+        }
+
+        public List<List<float>> GetRegionIdMap(){
+            return culture_id_map;
         }
 
         public Vector2 GetMapSize(){

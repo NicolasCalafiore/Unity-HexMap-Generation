@@ -20,6 +20,7 @@ namespace Character {
         public string description {get; set;}
         public int value {get; set;}
         public List<string> banned_traits = new List<string>();
+        public bool repeatable = false;
 
 
     }

@@ -36,14 +36,9 @@ namespace Character {
 
             foreach(TraitBase i in character.traits){
                 if(i is ForeignTraitBase && trait is ForeignTraitBase || i is DomesticTraitBase && trait is DomesticTraitBase){
-                    
-                    if(i == null) Debug.Log("Trait is null");
-                    if(i.banned_traits == null) Debug.Log("Banned traits is null");
-                    if(i.Name == null) Debug.Log("Name is null");
-
                     if(i.banned_traits.Contains(i.Name)) return false;
-                    
-                    if(i.Name == trait.Name) return false;
+                    if(!trait.repeatable)
+                        if(i.Name == trait.Name) return false;
                 }
             }
             return true;
@@ -53,9 +48,7 @@ namespace Character {
         // Adds random traits to the character
         public static void AddRandomTraits(AbstractCharacter character,  Player player)
         {
-            //int random_trait_amount = Random.Range(1, max_traits + 1);
-
-            for(int i = 0; i < 3; i++){
+            for(int i = 0; i < 5; i++){
                 TraitBase random_trait = GetRandomTrait(character, player);
 
                 if(!IsValidTrait(random_trait, character)){i--; continue;}

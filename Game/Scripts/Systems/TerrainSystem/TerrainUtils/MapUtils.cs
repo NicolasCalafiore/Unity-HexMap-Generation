@@ -260,19 +260,34 @@ namespace Terrain
             return false;
         }
 
-        public static void FloodFill(List<List<float>> water_map, List<List<float>> continent_map, int row, int col, int continentId)
+        public static void RegionsFloodFill(List<List<float>> regions_map, List<List<float>> regions_id_map, int x, int y, int regionId, float targetRegion)
+        {
+            if (x < 0 || x >= regions_map.Count || y < 0 || y >= regions_map[0].Count) return; // Out of bounds
+            if (regions_id_map[x][y] != 0 || regions_map[x][y] != targetRegion) return; // Already visited or not part of the target region
+
+            // Mark the current cell with the regionId
+            regions_id_map[x][y] = regionId;
+
+            // Recursively apply to all neighboring cells
+            RegionsFloodFill(regions_map, regions_id_map, x + 1, y, regionId, targetRegion);
+            RegionsFloodFill(regions_map, regions_id_map, x - 1, y, regionId, targetRegion);
+            RegionsFloodFill(regions_map, regions_id_map, x, y + 1, regionId, targetRegion);
+            RegionsFloodFill(regions_map, regions_id_map, x, y - 1, regionId, targetRegion);
+        }
+
+        public static void ContinentsFloodFill(List<List<float>> water_map, List<List<float>> continent_map, int row, int col, int continentId)
         {
             if (row < 0 || col < 0 || row >= water_map.Count || col >= water_map[0].Count) return; // Out of bounds
             if (water_map[row][col] != 1 || continent_map[row][col] != 0) return; // Not land or already visited
 
             continent_map[row][col] = continentId;
 
-            FloodFill(water_map, continent_map, row - 1, col, continentId); // Up
-            FloodFill(water_map, continent_map, row + 1, col, continentId); // Down
-            FloodFill(water_map, continent_map, row, col - 1, continentId); // Left
-            FloodFill(water_map, continent_map, row, col + 1, continentId); // Right
-            FloodFill(water_map, continent_map, row - 1, col + 1, continentId); // 
-            FloodFill(water_map, continent_map, row + 1, col - 1, continentId); // 
+            ContinentsFloodFill(water_map, continent_map, row - 1, col, continentId); // Up
+            ContinentsFloodFill(water_map, continent_map, row + 1, col, continentId); // Down
+            ContinentsFloodFill(water_map, continent_map, row, col - 1, continentId); // Left
+            ContinentsFloodFill(water_map, continent_map, row, col + 1, continentId); // Right
+            ContinentsFloodFill(water_map, continent_map, row - 1, col + 1, continentId); // 
+            ContinentsFloodFill(water_map, continent_map, row + 1, col - 1, continentId); // 
         }
 
         public static void MakeCopyOfList(List<List<float>> map, List<List<float>> copy_map){

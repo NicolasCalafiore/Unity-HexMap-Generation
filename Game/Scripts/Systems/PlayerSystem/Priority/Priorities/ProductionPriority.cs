@@ -33,7 +33,7 @@ namespace AI {
             if(player.GetProduction() < production_critical_point)
                 priority += 1;
 
-            if(player.GetAllTraitsStr().Contains(ProductionExpert.name))
+            if(player.GetAllTraitsStr().Contains(StabilityExpert.name))
                 priority += 1;
                 
                 

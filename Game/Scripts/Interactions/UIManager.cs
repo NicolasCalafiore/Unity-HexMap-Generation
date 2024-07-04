@@ -13,6 +13,7 @@ using UnityEngine.UI;
 using Character;
 using Cabinet;
 using Cities;
+using AI;
 
 
 
@@ -28,6 +29,7 @@ namespace Terrain {
         public static GameObject character_ui;
         public static GameObject dev_panel_ui;
         public static GameObject timer_ui;
+        public static GameObject summary_ui;
         public static Dictionary<Button, AbstractCharacter> character_binds = new Dictionary<Button, AbstractCharacter>();
 
         public static void InitializeUI()
@@ -40,6 +42,7 @@ namespace Terrain {
             dev_ui = GameObject.Find("DevUI");
             dev_panel_ui = GameObject.Find("DevPanelUI");
             timer_ui = GameObject.Find("TimerUI");
+            summary_ui = GameObject.Find("SummaryUI");
 
             dev_ui.SetActive(true);
             city_ui.SetActive(false);
@@ -47,6 +50,7 @@ namespace Terrain {
             character_ui.SetActive(false);
             hex_ui.SetActive(false);
             dev_panel_ui.SetActive(false);
+            summary_ui.SetActive(false);
             
         }
         public static void SetHexUI(HexTile hex){
@@ -63,6 +67,8 @@ namespace Terrain {
             hex_ui.transform.Find("Structure").GetComponent<TextMeshProUGUI>().text = hex.structure_type.ToString();
             hex_ui.transform.Find("Resource").GetComponent<TextMeshProUGUI>().text = hex.resource_type.ToString();
             hex_ui.transform.Find("Feature").GetComponent<TextMeshProUGUI>().text = hex.feature_type.ToString();
+            hex_ui.transform.Find("Culture").GetComponent<TextMeshProUGUI>().text = hex.culture_id.ToString();
+            hex_ui.transform.Find("Continent").GetComponent<TextMeshProUGUI>().text = hex.continent_id.ToString();
         }
         public static void SetPlayerName(Player player){    
 
@@ -76,8 +82,9 @@ namespace Terrain {
             Foreign foreign = player.government.cabinet.foreign_advisor;
             Leader leader = player.government.leader;
 
-            character_binds.Clear();
-
+            character_binds.Remove(cabinet_ui.transform.GetChild(2).GetComponent<Button>());
+            character_binds.Remove(cabinet_ui.transform.GetChild(1).GetComponent<Button>());
+            character_binds.Remove(cabinet_ui.transform.GetChild(0).GetComponent<Button>());
 
             character_binds.Add(cabinet_ui.transform.GetChild(2).GetComponent<Button>(), domestic);
             character_binds.Add(cabinet_ui.transform.GetChild(1).GetComponent<Button>(), foreign);
@@ -101,21 +108,26 @@ namespace Terrain {
         public static void UpdatePlayerUI(Player player){
             SetPlayerName(player);
             LoadCabinetCharacters(player);
-            LoadCharacterScreen(player.government.leader);
-            ShowCityMenu(player.GetCapital());
+            LoadCharacterScreen(player.government.leader);  
+            LoadCityMenu(player.GetCapital());
 
+        }
+
+        public static void LoadCityMenu(City city){
+            city_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = city.name;
+            city_ui.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetPopulation().ToString();
+            city_ui.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetStability().ToString();
+            city_ui.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetNutrition().ToString();
+            city_ui.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetProduction().ToString();
+            city_ui.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = city.region_type.ToString();
+            city_ui.transform.GetChild(7).GetComponent<TextMeshProUGUI>().text = city.owner_player.wealth.ToString();
+            city_ui.transform.GetChild(8).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetOfficialName()  + " (" + city.owner_player.government_type + ")";
+            city_ui.transform.GetChild(8).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetOfficialName()  + " (" + city.owner_player.government_type + ")";
         }
 
         public static void ShowCityMenu(City city){
             city_ui.SetActive(true);
-            if(city_ui == null) Debug.LogError("City UI is null");
-            city_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = city.name;
-            city_ui.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = city.inhabitants.ToString();
-            city_ui.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = city.stability.ToString();
-            city_ui.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = city.nourishment.ToString();
-            city_ui.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = city.construction.ToString();
-            city_ui.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = city.region_type.ToString();
-            city_ui.transform.GetChild(7).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = city.owner_player.GetOfficialName();
+            LoadCityMenu(city);
         }
 
         private static Color GetNumberColor(int number){
@@ -129,6 +141,9 @@ namespace Terrain {
 
         internal static void LoadCharacterScreen(AbstractCharacter character)
         {
+            character_binds.Remove(character_ui.transform.GetChild(24).GetComponent<Button>());
+            character_binds.Add(character_ui.transform.GetChild(24).GetComponent<Button>(), character);
+            
             character_ui.transform.GetChild(9+1).GetComponent<TextMeshProUGUI>().text = character.loyalty.ToString();
             character_ui.transform.GetChild(8+1).GetComponent<TextMeshProUGUI>().text = character.influence.ToString();
             character_ui.transform.GetChild(7+1).GetComponent<TextMeshProUGUI>().text = character.charisma.ToString();
@@ -149,9 +164,79 @@ namespace Terrain {
             character_ui.transform.GetChild(3+1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(character.health);
             character_ui.transform.GetChild(2+1).GetComponent<TextMeshProUGUI>().color = GetNumberColor(character.wealth);
 
-            character_ui.transform.GetChild(13).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(0) == null ? "None" : character.GetTrait(0).Name; 
+            character_ui.transform.GetChild(11).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(0) == null ? "None" : character.GetTrait(0).Name; 
             character_ui.transform.GetChild(12).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(1) == null ? "None" : character.GetTrait(1).Name; 
-            character_ui.transform.GetChild(11).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(2) == null ? "None" : character.GetTrait(2).Name; 
+            character_ui.transform.GetChild(13).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(2) == null ? "None" : character.GetTrait(2).Name; 
+            character_ui.transform.GetChild(14).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(3) == null ? "None" : character.GetTrait(3).Name; 
+            character_ui.transform.GetChild(15).GetComponent<Button>().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.GetTrait(4) == null ? "None" : character.GetTrait(4).Name; 
+        }
+
+        public static void ShowSummaryMenu(){
+            summary_ui.SetActive(true);
+
+            
+
+            string left = "";
+            string right = "";
+            if(character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()] is Leader){
+                Player owner = character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()].owner_player;
+                summary_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"The {owner.government.leader.title}'s Summary";
+        
+                left = "Priorities:\n";
+
+                foreach(AIPriority priority in owner.main_priorities)
+                    left += priority.name + ": " + priority.priority + "\n";
+            }
+
+            if(character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()] is Foreign){
+                left  = "Relationships:\n";
+                Foreign foreign = character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()] as Foreign;
+                List<TraitBase> traits = character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()].owner_player.GetAllTraits();
+                Debug.Log("t_count: " + traits.Count);
+                Player owner = character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()].owner_player;
+                summary_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"The {owner.government.cabinet.foreign_advisor.title}'s Summary";
+
+                List<TraitBase> listed_traits = new List<TraitBase>();
+
+                foreach(Player player in foreign.known_players)
+                    left += player.name + ": " + foreign.GetRelationshipFloat(player) + "\n";
+
+                right += "\nTraits:\n";
+                foreach(Player player in foreign.known_players)
+                    foreach(TraitBase trait in traits)
+                        if(listed_traits.Contains(trait) == false && trait is ForeignTraitBase && ((ForeignTraitBase) trait).isActivated(player, owner)){
+                            if(trait is ForeignTraitBase && ((ForeignTraitBase) trait).isBlankEffect == true){
+                                listed_traits.Add(trait);
+                                right += "(B) ";
+                            }
+                            else right += "(S) ";
+                            
+                            right += trait.Name + ": ";
+
+                            if(trait is ForeignTraitBase && ((ForeignTraitBase) trait).isBlankEffect == false)
+                                right += player.GetOfficialName() + "\n";
+                                else right += "\n";
+                        }
+                       
+        
+            }
+
+            if(character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()] is Domestic){
+                Foreign foreign = character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()] as Foreign;
+                List<TraitBase> traits = character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()].owner_player.GetAllTraits();
+                Player owner = character_binds[character_ui.transform.GetChild(24).GetComponent<Button>()].owner_player;
+                summary_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"The {owner.government.cabinet.domestic_advisor.title}'s Summary";
+
+                left = "Traits:\n";
+                foreach(TraitBase trait in traits)
+                    if(trait is DomesticTraitBase && ((DomesticTraitBase) trait).isActivated(owner)) left += trait.Name + "\n";
+        
+            }
+
+            summary_ui.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = right;
+            summary_ui.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = left;
+
+            
         }
 
         public static void ShowDepartmentMeny(AbstractCharacter character){
@@ -172,5 +257,7 @@ namespace Terrain {
                 else timer_ui.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = minutes.ToString();
                 timer_ui.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "00";
             }
-        }}
+        }
+        
+    }
 }

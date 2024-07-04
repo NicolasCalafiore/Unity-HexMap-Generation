@@ -30,7 +30,7 @@ namespace Terrain {
                         MapManager.terrain_map_handler.GetRegionsMap()[column][row], 
                         MapManager.terrain_map_handler.GetResourceMap()[column][row], 
                         MapManager.terrain_map_handler.GetContinentsMap()[column][row],
-                        column, row);
+                        column, row, MapManager.terrain_map_handler.GetRegionIdMap()[column][row]);
 
                     hex_list.Add(hex);
                 }
@@ -43,7 +43,7 @@ namespace Terrain {
         // Generates a hex tile based on the parameters
         // One Hex At a Time
         // Called from above loop
-        private static HexTile GenerateHex(float elevation_type, float structure_type, float feature_type, float land_type, float region_type, float resource_type, /* float owner_id, */ float continent, float col, float row){ 
+        private static HexTile GenerateHex(float elevation_type, float structure_type, float feature_type, float land_type, float region_type, float resource_type, /* float owner_id, */ float continent, float col, float row, float region_id){ 
             HexTile hex = new((int) col, (int) row);
             col_row_to_hex.Add(new Vector2(col, row), hex);
 
@@ -56,6 +56,7 @@ namespace Terrain {
             hex.region_type = RegionsEnums.GetRegionType(region_type);
             hex.resource_type = ResourceEnums.GetResourceType(resource_type);
             hex.continent_id = continent;
+            hex.culture_id = region_id;
 
             return hex;
         }

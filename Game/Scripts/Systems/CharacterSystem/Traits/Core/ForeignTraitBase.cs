@@ -15,6 +15,7 @@ namespace Character {
         protected HexRegion region_target;
         public Player player_target;
         protected int integer_storage;
+        public bool isBlankEffect = false;
         public abstract bool isActivated(Player player, Player other_player);
         public ForeignTraitBase(string description, int value) : base(description, value){}
         public abstract float GetTraitValue(Player player, Player known_player);
@@ -27,7 +28,7 @@ namespace Character {
             List<ForeignTraitBase> trait_list = new List<ForeignTraitBase>(){
                 new GovernanceTrait(),
                 new RegionalTrait(),
-                new CulturalConflictTrait(),
+                new RegionalConflictTrait(),
                 new Rude(),
                 new DiplomatTrait(),
                 new RegionRacistTrait(),
@@ -39,6 +40,9 @@ namespace Character {
                 new ContinentalUniter(),
                 new ScientificTrait(),
                 new StabilityTrait(),
+                new CultureBias(),
+                new CultureClaimer(),
+                new CultureUniter(),
             };
 
             //Dependent traits

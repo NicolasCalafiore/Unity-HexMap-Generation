@@ -53,6 +53,12 @@ public class ButtonInput : MonoBehaviour
 
     public static void CloseCharacterScreen(){
         UIManager.character_ui.SetActive(false);
+        UIManager.summary_ui.SetActive(false);
+    }
+
+    public static void OpenSummaryMenu(){
+        if(!UIManager.summary_ui.activeSelf) UIManager.ShowSummaryMenu();
+        else UIManager.summary_ui.SetActive(false);
     }
 
     public void DestroyFog(){
@@ -82,4 +88,10 @@ public class ButtonInput : MonoBehaviour
     public void ShowContinents(){
         GraphicsManager.ShowContinents();
     }
+
+    public void ShowRegions(){
+        GraphicsManager.ShowRegions();
+    }
+
+
 }
