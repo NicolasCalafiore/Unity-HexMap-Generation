@@ -20,6 +20,7 @@ namespace AI {
     public class NourishmentPriority : AIPriority
     {
         private float nourishment_critical_point = 20;
+        public override string Name { get => name; }
         public NourishmentPriority(){
             this.name = "Nourishment";
         }

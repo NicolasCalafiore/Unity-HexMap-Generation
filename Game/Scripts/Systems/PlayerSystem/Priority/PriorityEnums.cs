@@ -20,9 +20,8 @@ namespace Terrain
         }
 
 
-        public static List<MainPriority> GetPlayerPriorities(){
-            return Enum.GetValues(typeof(MainPriority)).Cast<MainPriority>().ToList();
-        }
+        public static List<MainPriority> GetPlayerPriorities() => Enum.GetValues(typeof(MainPriority)).Cast<MainPriority>().ToList();
+        
 
 
     }

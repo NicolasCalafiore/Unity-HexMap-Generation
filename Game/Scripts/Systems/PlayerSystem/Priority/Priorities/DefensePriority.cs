@@ -23,6 +23,7 @@ namespace AI {
     public class DefensePriority : AIPriority
     {
         private int defense_diameter = 5;
+        public override string Name { get => name; }
         public DefensePriority(){
             this.name = "Defense";
         }

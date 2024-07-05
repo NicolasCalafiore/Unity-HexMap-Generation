@@ -9,6 +9,7 @@ using PlayerGovernment;
 using Unity.VisualScripting;
 using Players;
 using static Terrain.RegionsEnums;
+using AI;
 
 namespace Character {
     public abstract class ForeignTraitBase : TraitBase {
@@ -24,28 +25,9 @@ namespace Character {
 
         public static ForeignTraitBase GetRandomForeignTrait(Player player){
 
-            //Non-Dependent traits
-            List<ForeignTraitBase> trait_list = new List<ForeignTraitBase>(){
-                new GovernanceTrait(),
-                new RegionalTrait(),
-                new RegionalConflictTrait(),
-                new Rude(),
-                new DiplomatTrait(),
-                new RegionRacistTrait(),
-                new DefensiveTrait(),
-                new NeighborlyTrait(),
-                new WealthAdmirer(),
-                new PovertyDiscriminator(),
-                new ContinentalClaimer(),
-                new ContinentalUniter(),
-                new ScientificTrait(),
-                new StabilityTrait(),
-                new CultureBias(),
-                new CultureClaimer(),
-                new CultureUniter(),
-            };
+            List<ForeignTraitBase> trait_list = new List<ForeignTraitBase>();
 
-            //Dependent traits
+            AddNonConditionalTraits(trait_list);
             AddConditionalTraits(player, trait_list);
             
             int random_index = Random.Range(0, trait_list.Count);
@@ -53,14 +35,33 @@ namespace Character {
         }
 
         // Add traits that require conditionals to trait_list
+        public static void AddNonConditionalTraits(List<ForeignTraitBase> trait_list){
+            trait_list.Add(new GovernanceTrait());
+            trait_list.Add(new RegionalTrait());
+            trait_list.Add(new RegionalConflictTrait());
+            trait_list.Add(new Rude());
+            trait_list.Add(new DiplomatTrait());
+            trait_list.Add(new RegionRacistTrait());
+            trait_list.Add(new DefensiveTrait());
+            trait_list.Add(new NeighborlyTrait());
+            trait_list.Add(new WealthAdmirer());
+            trait_list.Add(new ContinentalClaimer());
+            trait_list.Add(new ContinentalUniter());
+            trait_list.Add(new ScientificTrait());
+            trait_list.Add(new StabilityTrait());
+            trait_list.Add(new CultureBias());
+            trait_list.Add(new CultureClaimer());
+            trait_list.Add(new CultureUniter());
+        }
+
         public static void AddConditionalTraits(Player player, List<ForeignTraitBase> trait_list){
-            if(player.GetRandomKnownPlayerNullable() != null) trait_list.Add(new Foe(player));
+            if(!player.isIsolated()) trait_list.Add(new Foe(player));
+            if(player.wealth > ((EconomyPriority) player.GetPriority("Economy")).GetCriticalPoint()) trait_list.Add(new PovertyDiscriminator());
         }
 
         public  bool isSameGovernmentType(Player known_player, Player player) =>
             known_player.government.government_type == player.government.government_type;
         
-
         public bool isSameRegionType(Player known_player, Player player) =>
             known_player.GetCapital().region_type == player.GetCapital().region_type;
 

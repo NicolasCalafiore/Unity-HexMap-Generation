@@ -19,7 +19,7 @@ namespace Terrain {
         public static void GenerateHexList(){
             List<HexTile> hex_list = new List<HexTile>();
 
-            for(int column = 0; column < MapManager.GetMapSize().x; column++){
+            for(int column = 0; column < MapManager.GetMapSize().x; column++)
                 for(int row = 0; row < MapManager.GetMapSize().y; row++){
                     
                     HexTile hex = GenerateHex(
@@ -33,9 +33,10 @@ namespace Terrain {
                         column, row, MapManager.terrain_map_handler.GetRegionIdMap()[column][row]);
 
                     hex_list.Add(hex);
+
                 }
                 
-            }
+            
 
             HexManager.hex_list = hex_list;
         }
@@ -58,6 +59,7 @@ namespace Terrain {
             hex.continent_id = continent;
             hex.culture_id = region_id;
 
+            Debug.Log("Added: " + hex.GetColRow().x + " " + hex.GetColRow().y + " " + hex.elevation_type + " " + hex.structure_type + " " + hex.feature_type + " " + hex.land_type + " " + hex.region_type + " " + hex.resource_type + " " + hex.continent_id + " " + hex.culture_id);
             return hex;
         }
 
@@ -77,11 +79,9 @@ namespace Terrain {
         // territory_hex_list is the list of hexes to add to the player's territory
         public static void AddHexTileToPlayerTerritory(List<HexTile> territory_hex_list, Player player)   
         {
-            foreach(HexTile hex in territory_hex_list){
-                if(hex.owner_player == null){
+            foreach(HexTile hex in territory_hex_list)
+                if(hex.owner_player == null)
                     hex.owner_player = player;
-                }
-            }
         }
 
         internal static void SetHexDecorators() => hex_decorator.SetHexDecorators(hex_list);

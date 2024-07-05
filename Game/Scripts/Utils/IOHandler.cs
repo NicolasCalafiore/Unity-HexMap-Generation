@@ -8,11 +8,19 @@ using static Character.CharacterEnums;
 using static Terrain.GovernmentEnums;
 
 public static class IOHandler{
+    private static string feautures_path = "Prefab/Natural_Features/";
+    private static string city_names_path = ".\\Assets\\Game\\Resources\\Data\\CityNames.xml";
+    private static string government_prefixes_path = ".\\Assets\\Game\\Resources\\Data\\GovernmentPrefixes.xml";
+    private static string state_names_path = ".\\Assets\\Game\\Resources\\Data\\StateNames.xml";
+    private static string character_names_path = ".\\Assets\\Game\\Resources\\Data\\CharacterNames.xml";
+    private static string government_titles_path = ".\\Assets\\Game\\Resources\\Data\\GovernmentTitles.xml";
+    private static string continent_names_path = ".\\Assets\\Game\\Resources\\Data\\Continents.xml";
+
     public static List<string> ReadCityNamesRegionSpecified(HexTile hex)
     {
         string region = hex.region_type.ToString();
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\CityNames.xml";;
-        XDocument doc = XDocument.Load(filePath);
+    
+        XDocument doc = XDocument.Load(city_names_path);
         List<string> cityNames = doc.Descendants("Region")
                                     .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
                                     .Descendants("City")
@@ -25,8 +33,8 @@ public static class IOHandler{
 
     public static List<string> ReadPrefixNamesRegionSpecified(string region)
     {
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\GovernmentPrefixes.xml";
-        XDocument doc = XDocument.Load(filePath);
+
+        XDocument doc = XDocument.Load(government_prefixes_path);
     
         List<string> prefixes = doc.Descendants("Government")
                                     .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
@@ -40,8 +48,7 @@ public static class IOHandler{
     public static List<string> ReadSuffixNamesRegionSpecified(string region)
     {
 
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\GovernmentPrefixes.xml";
-        XDocument doc = XDocument.Load(filePath);
+        XDocument doc = XDocument.Load(government_prefixes_path);
         List<string> suffixes = doc.Descendants("Government")
                                     .Where(r => r.Attribute("name").Value.Equals(region, StringComparison.OrdinalIgnoreCase))
                                     .Descendants("Identifier")
@@ -55,8 +62,7 @@ public static class IOHandler{
     public static List<string> ReadStateNamesRegionSpecified(string region)
     {
     
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\StateNames.xml";
-        XDocument doc = XDocument.Load(filePath);
+        XDocument doc = XDocument.Load(state_names_path);
         List<string> countryNames = doc.Descendants("Regions")
                                     .FirstOrDefault(r => r.Attribute("name")?.Value.Equals(region, StringComparison.OrdinalIgnoreCase) == true)
                                     ?.Descendants("Country")
@@ -68,8 +74,7 @@ public static class IOHandler{
 
     public static List<string> ReadFirstNamesRegionSpecified(string region, string gender)
     {
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\CharacterNames.xml";
-        XDocument doc = XDocument.Load(filePath);
+        XDocument doc = XDocument.Load(character_names_path);
         
         var firstNames = doc.Descendants("Regions")
                                     .FirstOrDefault(r => r.Attribute("name")?.Value.Equals(region, StringComparison.OrdinalIgnoreCase) == true)
@@ -77,20 +82,16 @@ public static class IOHandler{
                                     ?.Elements("Name");
 
         if (gender != null)
-        {
             firstNames = firstNames?.Where(c => c.Attribute("gender")?.Value.Equals(gender, StringComparison.OrdinalIgnoreCase) == true);
-        }
-
+        
         List<string> first_names_final = firstNames?.Select(c => c.Value)?.ToList();
-
 
         return first_names_final ?? new List<string>(); // Return an empty list if the region is not found or no first names are available
     }
 
     public static List<string> ReadLastNamesRegionSpecified(string region)
     {
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\CharacterNames.xml";
-        XDocument doc = XDocument.Load(filePath);
+        XDocument doc = XDocument.Load(character_names_path);
         
         var lastNames = doc.Descendants("Regions")
                                     .FirstOrDefault(r => r.Attribute("name")?.Value.Equals(region, StringComparison.OrdinalIgnoreCase) == true)
@@ -106,8 +107,7 @@ public static class IOHandler{
 
     public static List<string> ReadTitles(RoleType characterType, GovernmentType governmentType)
     {
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\GovernmentTitles.xml";
-        XDocument doc = XDocument.Load(filePath);
+        XDocument doc = XDocument.Load(government_titles_path);
 
         var titles = doc.Descendants("Government")
                         .FirstOrDefault(r => r.Attribute("name")?.Value.Equals(governmentType.ToString(), StringComparison.OrdinalIgnoreCase) == true)
@@ -121,13 +121,22 @@ public static class IOHandler{
 
     public static List<string> ReadContinentNames()
     {
-        string filePath = ".\\Assets\\Game\\Resources\\Data\\Continents.xml";
-        XDocument doc = XDocument.Load(filePath);
+        XDocument doc = XDocument.Load(continent_names_path);
 
         var names = doc.Descendants("Name")
                     .Select(n => n.Value)
                     .ToList();
 
         return names;
+    }
+
+    public static GameObject LoadFeature(string feature_name)
+    {
+        return Resources.Load<GameObject>(feautures_path + feature_name);
+    }
+
+    public static GameObject LoadPrefab(string path)
+    {
+        return Resources.Load<GameObject>("Prefab/" + path);
     }
 }

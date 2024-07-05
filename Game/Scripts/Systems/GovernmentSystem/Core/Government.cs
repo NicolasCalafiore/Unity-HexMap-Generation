@@ -21,10 +21,6 @@ namespace PlayerGovernment {
             cabinet = new Cabinet.Cabinet();
         }
 
-        public List<AbstractCharacter> GetCharacterList(){
-            return new List<AbstractCharacter> {leader, cabinet.foreign_advisor, cabinet.domestic_advisor};
-        }
-        
         // Adds a character to the government
         // The character is added to the appropriate list based on the type of character
         // Dictionary is used to store the character type and the action to add the character to the appropriate list
@@ -38,5 +34,7 @@ namespace PlayerGovernment {
 
             characterAddActions[character.GetType()](character);
         }
+
+        public List<AbstractCharacter> GetCharacterList() => new List<AbstractCharacter> {leader, cabinet.foreign_advisor, cabinet.domestic_advisor};
     }
 }

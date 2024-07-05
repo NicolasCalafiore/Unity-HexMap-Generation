@@ -21,6 +21,7 @@ namespace AI {
     public class StabilityPriority : AIPriority
     {
         private int stability_critical_point = 30;
+        public override string Name { get => name; }
         public StabilityPriority(){
             this.name = "Stability";
         }

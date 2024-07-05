@@ -10,6 +10,7 @@ using Players;
 using Cities;
 using static Terrain.FogEnums;
 using System.Linq;
+using Graphics;
 
 
 
@@ -56,18 +57,19 @@ namespace Terrain {
 
         public static void SpawnHexTile(int i, int j)
         {
-            GameObject hex_go = GraphicsManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
+            Debug.Log("Spawning hex tile: " + i + " " + j);
+            GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(i, j));
             hex_go.SetActive(true);
         }
 
         public static void DespawnHexTile(int i, int j){
-            GameObject hex_go = GraphicsManager.hex_go_list[i * (int) MapManager.GetMapSize().y + j];
+            GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(i, j));
             hex_go.SetActive(false);
         }
 
         public static void ClearFog()
         {
-            foreach(GameObject hex_go in GraphicsManager.hex_go_list)
+            foreach(GameObject hex_go in HexGraphicManager.hex_go_list)
                 hex_go.SetActive(true);
         }
 

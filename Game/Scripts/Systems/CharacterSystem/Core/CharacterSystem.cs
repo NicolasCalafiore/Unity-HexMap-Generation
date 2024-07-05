@@ -28,15 +28,14 @@ namespace Character {
             foreach(Player player in player_list)
             {
                 City city = player.GetCapital();
-
+                
                 foreach (RoleType role in Enum.GetValues(typeof(RoleType)))
                 {
                     AbstractCharacter character = CharacterFactory.CreateCharacterNullable(role, regions_map, city, player);
-                    if (character != null)
-                    {
-                        player.government.AddCharacter(character);
-                        character.InitializeCharacteristics();
-                    }
+                    if (character == null) continue;
+                    
+                    player.government.AddCharacter(character);
+                    character.InitializeCharacteristics();
                 }
             }
         }

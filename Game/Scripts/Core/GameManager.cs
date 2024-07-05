@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Character;
 using Cities;
 using Diplomacy;
+using Graphics;
 using Players;
 using Terrain;
 using UnityEngine;
@@ -13,8 +14,6 @@ using UnityEngine;
 
 public class GameManagers: MonoBehaviour{
     void Start(){
-
-        Debug.Log("Game Started");
 
         GameGeneration(); 
 
@@ -63,9 +62,9 @@ public class GameManagers: MonoBehaviour{
         TraitManager.GenerateCharacterTraits();
         DiplomacyManager.GenerateStartingRelationships();
         PlayerManager.SimulateGovernments();
-        UIManager.InitializeUI();
+        UIManager.FindUIComponents();
         PlayerManager.SetPlayerView(PlayerManager.player_list[1]);
-        FogManager.ShowFogOfWar();
+        FogManager.ShowFogOfWar(); //
         GraphicsManager.SpawnAIFlags();
         TerrainManager.GenerateHexAppeal();
         PlayerManager.InitializePlayerPriorities();

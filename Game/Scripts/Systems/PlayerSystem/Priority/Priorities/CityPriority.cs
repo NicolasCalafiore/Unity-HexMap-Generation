@@ -20,6 +20,7 @@ namespace AI {
     public abstract class AIPriority
     {
         public string name;
+        public abstract string Name { get; }
         public float priority;
         public abstract MainPriority GetPriorityType();
         public abstract void CalculatePriority(Player player);

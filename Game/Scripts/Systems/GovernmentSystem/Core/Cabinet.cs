@@ -27,7 +27,6 @@ namespace Cabinet {
         // with the new players
         public void StartForeignTurn(){
 
-            foreign_advisor.GenerateStartingRelationship(foreign_advisor.known_players);
         }
 
     }

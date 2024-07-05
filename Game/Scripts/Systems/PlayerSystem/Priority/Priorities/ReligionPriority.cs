@@ -20,6 +20,7 @@ namespace AI {
     public class ReligionPriority : AIPriority
     {
         public int critical_beleif_level = 2;
+        public override string Name { get => name; }
         public ReligionPriority(){
             this.name = "Religion";
         }

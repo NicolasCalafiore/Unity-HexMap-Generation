@@ -36,7 +36,7 @@ namespace Character {
 
             foreach(TraitBase i in character.traits){
                 if(i is ForeignTraitBase && trait is ForeignTraitBase || i is DomesticTraitBase && trait is DomesticTraitBase){
-                    if(i.banned_traits.Contains(i.Name)) return false;
+                    if(i.banned_traits.Contains(trait.Name)) return false;
                     if(!trait.repeatable)
                         if(i.Name == trait.Name) return false;
                 }

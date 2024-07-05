@@ -35,13 +35,6 @@ namespace Character
             title = titles[UnityEngine.Random.Range(0, titles.Count)];
         }
 
-        // Returns the full name of the character
-        public string GetFullName() => $"{title} {first_name} {last_name}";
-
-        // Returns the name of the character
-        public string GetName() => $"{first_name} {last_name}";
-
-        // Initializes the characteristics of the character
         public void InitializeCharacteristics()
         {
             int max = 0;
@@ -49,6 +42,7 @@ namespace Character
 
             var personTypes = new List<(int min_qualifier, int maxRange, int minRange)>
             {
+            //(100 - x)% , MAX, MIN
                 (95, 100, 70), // SPECIAL PERSON
                 (85, 95, 45),  // GOOD PERSON
                 (75, 60, 20),  // BAD PERSON
@@ -81,15 +75,14 @@ namespace Character
             return baseValue + UnityEngine.Random.Range(minOffset, maxOffset);
         }
 
-
+        public string GetFullName() => $"{title} {first_name} {last_name}";
         
-        // Returns a trait at a specific index
+        public string GetName() => $"{first_name} {last_name}";
+
         public TraitBase GetTrait(int index) => index < traits.Count ? traits[index] : null;
 
-        // Returns all traits of the character
         public List<TraitBase> Traits => traits;
 
-        // Returns the rating of the character
         public int GetRating() => (charisma + intelligence + skill + loyalty + wealth + influence) / 6;
     }
 }

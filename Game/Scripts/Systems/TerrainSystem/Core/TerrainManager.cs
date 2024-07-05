@@ -48,11 +48,11 @@ namespace Terrain{
         }
 
         public static void GenerateHexDependantAppeal(){
-            foreach(HexTile hex in HexManager.hex_list){
-                foreach(HexTile hex_neighbor in hex.GetNeighbors()){
-                    if(hex_neighbor.appeal > 0) hex.appeal += Convert.ToInt32(hex_neighbor.appeal * .17);
-                }
-            }
+
+            foreach(HexTile hex in HexManager.hex_list)
+                foreach(HexTile hex_neighbor in hex.GetNeighbors())
+                    if(hex_neighbor.appeal > 0) 
+                        hex.appeal += Convert.ToInt32(hex_neighbor.appeal * .17);
         }
     }
 }

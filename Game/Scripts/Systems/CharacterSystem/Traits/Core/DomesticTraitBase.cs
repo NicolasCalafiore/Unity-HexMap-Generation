@@ -24,7 +24,6 @@ namespace Character {
                 new NutritionExpert(),
                 new StabilityExpert(),
                 new ScienceExpert(),
-
             };
 
             int random_index = Random.Range(0, trait_list.Count);

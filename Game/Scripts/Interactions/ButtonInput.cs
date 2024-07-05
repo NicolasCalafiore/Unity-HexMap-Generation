@@ -6,92 +6,63 @@ using UnityEngine.UI;
 using TMPro;
 using Players;
 using Character;
+using Graphics;
 
 public class ButtonInput : MonoBehaviour
 {
 
-    public static Player player;
+    public static void OpenDevPanel(){
 
-    public void OpenDevPanel(){
-        if(UIManager.dev_panel_ui.activeSelf) UIManager.dev_panel_ui.SetActive(false);
-        else UIManager.dev_panel_ui.SetActive(true);
+        if(UIManager.dev_panel_ui.activeSelf) 
+            UIManager.dev_panel_ui.SetActive(false);
+        else 
+            UIManager.dev_panel_ui.SetActive(true);
     }
+    public static void OpenCabinetPanel(){
 
-    public void OpenCabinet(){
-        if(UIManager.cabinet_ui.activeSelf){
+        if(UIManager.cabinet_ui.activeSelf)
             UIManager.cabinet_ui.SetActive(false);
-        }
+        
         else{
-            UIManager.cabinet_ui.SetActive(true);
             UIManager.LoadCabinetCharacters(PlayerManager.player_view);
+            UIManager.cabinet_ui.SetActive(true);
             }
     }
+    public static void OpenCharacterPanel(){
 
-    public void OpenCharacterScreen(){
         GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        AbstractCharacter character = UIManager.character_binds[button.GetComponent<Button>()];
-        UIManager.character_ui.SetActive(true);
+        AbstractCharacter character = UIManager.char_button_binds[button.GetComponent<Button>()];
+
         UIManager.LoadCharacterScreen(character);
-    
+        UIManager.character_ui.SetActive(true);
     }
+    public static void NextPlayer(){
 
-    public void CloseCity(){
-        UIManager.city_ui.SetActive(false);
-    }
-
-    public void ShowRelationships(){
-        GraphicsManager.ShowRelationships();
-    }
-
-
-    public void NextPlayer(){
         PlayerManager.NextPlayer();
-
-        UIManager.SetPlayerName(PlayerManager.player_view);
         UIManager.UpdatePlayerUI(PlayerManager.player_view);
     }
+    public static void CloseCharacterPanel(){
 
-    public static void CloseCharacterScreen(){
         UIManager.character_ui.SetActive(false);
         UIManager.summary_ui.SetActive(false);
     }
+    public static void OpenSummaryPanel(){
 
-    public static void OpenSummaryMenu(){
-        if(!UIManager.summary_ui.activeSelf) UIManager.ShowSummaryMenu();
-        else UIManager.summary_ui.SetActive(false);
+        if(!UIManager.summary_ui.activeSelf){
+            UIManager.LoadSummary();
+            UIManager.summary_ui.SetActive(true);
+        }
+        else 
+            UIManager.summary_ui.SetActive(false);
     }
-
-    public void DestroyFog(){
-        FogManager.ClearFog();
-    }
-
-    public void DefenseMap(){
-        GraphicsManager.ShowDefenseMap();
-    }
-
-    public void NourishmentMap(){
-        GraphicsManager.ShowNourishmentMap();
-    }
-
-    public void ConstructionMap(){
-        GraphicsManager.ShowConstructionMap();
-    }
-
-    public void AppealMap(){
-        GraphicsManager.ShowAppealMap();
-    }
-
-    public void ClearFog(){
-        FogManager.ClearFog();
-    }
-
-    public void ShowContinents(){
-        GraphicsManager.ShowContinents();
-    }
-
-    public void ShowRegions(){
-        GraphicsManager.ShowRegions();
-    }
-
-
+    public static void CloseCityPanel() => UIManager.city_ui.SetActive(false);
+    public static void ShowRelationships() => GraphicsManager.ShowRelationships();
+    public static void DestroyAllFog() => FogManager.ClearFog();
+    public static void DefenseMap() => GraphicsManager.ShowDefenseMap();
+    public static void NourishmentMap() => GraphicsManager.ShowNourishmentMap();
+    public static void ConstructionMap() => GraphicsManager.ShowConstructionMap();
+    public static void AppealMap() => GraphicsManager.ShowAppealMap();
+    public static void ClearFog() => FogManager.ClearFog();
+    public static void ShowContinents() => GraphicsManager.ShowContinents();
+    public static void ShowRegions() => GraphicsManager.ShowRegions();
 }

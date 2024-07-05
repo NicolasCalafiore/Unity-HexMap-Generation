@@ -53,12 +53,12 @@ namespace Cities
                 HexManager.AddHexTileToCityTerritory(city);
         }
 
-        public static List<City> GetCapitalsList() => capitals_list;
-
         public static void SetCityToHexDictionary(){
             foreach(City city in capitals_list)
                 city_to_hex.Add(city, HexManager.col_row_to_hex[city.col_row]);
         }
+
+        public static List<City> GetCapitalsList() => capitals_list;
     
     }
 }

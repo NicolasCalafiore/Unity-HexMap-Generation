@@ -10,6 +10,7 @@ using Character;
 using static Terrain.GovernmentEnums;
 using Cities;
 using Diplomacy;
+using Graphics;
 
 namespace Players {
     public class PlayerManager {
@@ -18,8 +19,15 @@ namespace Players {
         public static Player player_view; 
         private static int player_count = 100; 
 
-        // Creates players based on the player count
-        // Functional programming is used to generate the list
+        
+        public static void GeneratePlayers(){
+            CreatePlayers(0);
+            SetGovernmentTypes(0);
+            SetStateNameTitle();
+
+            player_id_to_player.Add(-1, null);  //NULL PLAYER/ID=-1 --> None/Null Player
+        }
+
         public static void CreatePlayers(int player_id){        // TO DO: EVALUATE FUNCTIONAL PROGRAMMING
             if(player_id < player_count){
                 player_list.Add(new Player("ERRL", player_id));
@@ -27,23 +35,12 @@ namespace Players {
             }
         }
 
-        public static void GeneratePlayers(){
-            CreatePlayers(0);
-            SetGovernmentTypes(0);
-            SetStatePrefix();
-
-            player_id_to_player.Add(-1, null);  //NULL PLAYER/ID=-1 --> None/Null Player
-        }
 
         public static void SimulateGovernments(){
             foreach(Player i in player_list)     
                 i.SimulateGovernment();
         }
 
-
-        //Returns a list of government types
-        //This is used to set the government type of each player
-        //Functional programming is used to generate the list
         private static void SetGovernmentTypes(int index){
             if(index >= player_list.Count) return;
 
@@ -51,9 +48,7 @@ namespace Players {
             player_list[index].government_type = GetGovernmentTypes()[random_index];
             SetGovernmentTypes(index + 1);
         }
-
-        //Sets the state's government-related prefix
-        private static void SetStatePrefix()
+        private static void SetStateNameTitle()
         {
             foreach(Player player in player_list){  //TO DO: OPTIMIZATION POINT
                 if(Random.Range(0, 100) < 50){
@@ -85,22 +80,19 @@ namespace Players {
         }
 
         public static void SetPlayerView(Player player){
+
             player_view = player;
-            DebugHandler.ClearLogConsole();
-            DebugHandler.PrintRelationships(player_view);
-            DebugHandler.PrintPlayerState(player_view);
-            
-            UIManager.SetPlayerName(player_view);
+        
+            UIManager.LoadPlayerName(player_view);
             CameraMovement.CenterCamera();
             GraphicsManager.SpawnAIFlags();
             UIManager.UpdatePlayerUI(player_view);  
-            
         }
 
         public static void NextPlayer(){
+
             if(player_view == player_list[player_list.Count - 1])
                 SetPlayerView(player_list[0]);
-            
             else
                 SetPlayerView(player_list[player_list.IndexOf(player_view) + 1]);
         }
@@ -111,9 +103,9 @@ namespace Players {
         }
 
         public static void InitializePlayerPriorities(){
-            foreach(Player player in player_list){
+            foreach(Player player in player_list)
                 player.CalculatePriorities();
-            }
+            
         }
     }
 }

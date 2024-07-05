@@ -21,6 +21,7 @@ namespace AI {
     public class ProductionPriority : AIPriority
     {
         private int production_critical_point = 20;
+        public override string Name { get => name; }
         public ProductionPriority(){
             this.name = "Production";
         }

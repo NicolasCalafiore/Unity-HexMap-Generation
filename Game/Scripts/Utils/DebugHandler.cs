@@ -92,7 +92,7 @@ public static class DebugHandler
             $"Wealth: {player_view.wealth}",
             $"Knowledge: {player_view.knowledge_level}",
             $"Belief: {player_view.belief_level}",
-            $"Heritage: {player_view.heritage_points}",
+            $"Heritage: {player_view.heritage_level}",
             $"Capital: {player_view.GetCapitalCoordinate()}",
             $"Known Players: {player_view.GetKnownPlayers().Count}",
             $"Cities: {player_view.GetCities().Count}",
@@ -106,18 +106,6 @@ public static class DebugHandler
             $"Nourishment: {player_view.main_priorities[5].priority}",
             $"Defense: {player_view.main_priorities[6].priority}",
 
-
-
-
-            /*
-            this.city_priorities.Add(new SciencePriority());
-            this.city_priorities.Add(new ReligionPriority());
-            this.city_priorities.Add(new EconomyPriority());
-            this.city_priorities.Add(new StabilityPriority());
-            this.city_priorities.Add(new ProductionPriority());
-            this.city_priorities.Add(new NourishmentPriority());
-            this.city_priorities.Add(new DefensePriority());
-            */
         };
 
         DisplayMessage(message);

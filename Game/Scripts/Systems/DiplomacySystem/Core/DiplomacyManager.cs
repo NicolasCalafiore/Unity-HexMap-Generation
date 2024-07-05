@@ -20,17 +20,19 @@ namespace Diplomacy
 
         public static void GenerateStartingRelationships(){
             foreach(Player player in PlayerManager.player_list)
-                foreach(Player known_player in player.GetKnownPlayers()){
-                    float relationship = 0;
-                    relationship += CalculateTraitRelationshipImpact(player, known_player); 
-                    relationship += CalculateTraitComparisonsImpact(player, known_player);
-                    player.government.cabinet.foreign_advisor.relations.Add(known_player, relationship);
-                }
-            
+                foreach(Player known_player in player.GetKnownPlayers())
+                    UpdateRelationship(player, known_player);
         }
-
-        public static float CalculateTraitRelationshipImpact(Player player, Player known_player){
+        private static void UpdateRelationship(Player player, Player known_player){
             float relationship = 0;
+            relationship += CalculateTraitRelationshipImpact(player, known_player); 
+            relationship += CalculateTraitComparisonsImpact(player, known_player);
+            player.government.cabinet.foreign_advisor.relations.Add(known_player, relationship);
+        }
+        public static float CalculateTraitRelationshipImpact(Player player, Player known_player){
+
+            float relationship = 0;
+
             foreach(TraitBase leader_trait in player.government.leader.traits)
                 if(leader_trait is ForeignTraitBase)
                     relationship += ((ForeignTraitBase) leader_trait).GetTraitValue(player, known_player) * Leader.TRAIT_MULTIPLIER;
@@ -38,10 +40,8 @@ namespace Diplomacy
             foreach(ForeignTraitBase foreign_trait in player.government.cabinet.foreign_advisor.traits)
                 relationship += foreign_trait.GetTraitValue(player, known_player);
             
-        
             return relationship;
         }
-
         public static float CalculateTraitComparisonsImpact(Player player, Player known_player){
             float relationship = 0;
             foreach(TraitBase player_leader_trait in player.government.leader.traits)
@@ -53,5 +53,8 @@ namespace Diplomacy
             
             return relationship;
         }
+
+
+
     }
 }

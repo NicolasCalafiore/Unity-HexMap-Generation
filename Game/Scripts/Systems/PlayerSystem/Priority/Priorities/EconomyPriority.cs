@@ -21,6 +21,7 @@ namespace AI {
     public class EconomyPriority : AIPriority
     {
         private int wealth_critical_point = 500;
+        public override string Name { get => name; }
         public EconomyPriority(){
             this.name = "Economy";
         }
@@ -40,6 +41,10 @@ namespace AI {
                 priority += 1;
 
             this.priority = priority;
+        }
+
+        public int GetCriticalPoint(){
+            return wealth_critical_point;
         }
 
     }

@@ -5,6 +5,7 @@ using Players;
 using System.Collections.Generic;
 using Character;
 using Cities;
+using Graphics;
 
 namespace Terrain {
     public class HexTile {
@@ -70,40 +71,48 @@ namespace Terrain {
             List<HexTile> neighbors = new List<HexTile>();
             
             if(this.column > 0){
-                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column - 1, row)];
-                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(column - 1, row));
+                HexTile hex = HexGraphicManager.GetHexByHexGo(hex_go);
                 neighbors.Add(hex);
             }
             if(this.column < MapManager.GetMapSize().x - 1){
-                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column + 1, row)];
-                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(column + 1, row));
+                HexTile hex = HexGraphicManager.GetHexByHexGo(hex_go);
                 neighbors.Add(hex);
             }
             if(this.row > 0){
-                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column, row - 1)];
-                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(column, row - 1));
+                HexTile hex = HexGraphicManager.GetHexByHexGo(hex_go);
                 neighbors.Add(hex);
             }
             if(this.row < MapManager.GetMapSize().y - 1){
-                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column, row + 1)];
-                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(column, row + 1));
+                HexTile hex = HexGraphicManager.GetHexByHexGo(hex_go);
                 neighbors.Add(hex);
             }
             if(this.column < MapManager.GetMapSize().x - 1 && this.row > 0){
                 // Upper-right diagonal neighbor
-                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column + 1, row - 1)];
-                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(column + 1, row - 1));
+                HexTile hex = HexGraphicManager.GetHexByHexGo(hex_go);
                 neighbors.Add(hex);
             }
 
             if(this.row < MapManager.GetMapSize().y - 1 && this.column > 0){
                 // Lower-left diagonal neighbor
-                GameObject hex_go = GraphicsManager.col_row_to_hex_go[new Vector2(column - 1, row + 1)];
-                HexTile hex = GraphicsManager.hex_go_to_hex[hex_go];
+                GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(column - 1, row + 1));
+                HexTile hex = HexGraphicManager.GetHexByHexGo(hex_go);
                 neighbors.Add(hex);
             }
             
             return neighbors;
         }
+
+        public bool HasFeature() => feature_type != FeaturesEnums.HexNaturalFeature.None;
+        public bool HasResource() => resource_type != ResourceEnums.HexResource.None;
+        public bool HasStructure() => structure_type != StructureEnums.StructureType.None;
+        public bool HasCity() => owner_city != null;
+        public bool IsLand() => land_type == LandEnums.LandType.Land;
+
+        
     }
 }

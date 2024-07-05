@@ -15,29 +15,10 @@ namespace Cabinet
 
         public List<Player> known_players = new List<Player>();
         public Dictionary<Player, float> relations = new Dictionary<Player, float>();
-        public ForeignStrategy foreign_strategy;
+
 
         public Foreign(List<string> names, CharacterEnums.CharacterGender gender, Player player, List<string> titles): base(names, gender, player, titles){}
 
-        // Sets the foreign strategy based on the strategy int
-        public void SetForeignStrategy(int strategy){
-            switch(strategy){
-                case 0:
-                    foreign_strategy = new ForeignStandard();
-                    break;
-                default:
-                    foreign_strategy = new ForeignStandard();
-                    break;
-            }
-        }
-
-        // Generates the starting relationship between the owner player and the known players
-        // The foreign strategy is used to generate the starting relationship
-        public void GenerateStartingRelationship(List<Player> known_players){
-            SetForeignStrategy(0);
-            
-
-        }
 
         // Scans the territory map and fog of war for new players
         // If a new player is found, it is added to the known players list

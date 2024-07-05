@@ -4,6 +4,7 @@ using Players;
 using Cities;
 using Terrain;
 using UnityEngine;
+using Graphics;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -62,7 +63,7 @@ public class CameraMovement : MonoBehaviour
         FogManager.ShowFogOfWar();
         Vector2 coordinates = PlayerManager.player_view.GetCapitalCoordinate();
         HexTile hexTile = HexManager.hex_list[(int) coordinates.x * (int) MapManager.GetMapSize().y + (int) coordinates.y];
-        GameObject hex = GraphicsManager.hex_to_hex_go[hexTile];
+        GameObject hex = HexGraphicManager.GetHexGoByHex(hexTile);
         Vector3 vector = hex.transform.position;
         vector.y += 5f;
         vector.z -= 5f;

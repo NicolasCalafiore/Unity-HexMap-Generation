@@ -24,7 +24,7 @@ namespace Players {
         public int id  { get; set; }
         public float wealth { get; set; }
         public int knowledge_level { get; set; }
-        public int heritage_points { get; set; }
+        public int heritage_level { get; set; }
         public int belief_level { get; set; }
         public Color team_color  { get; set; }
         public GovernmentType government_type { get; set; }
@@ -45,7 +45,7 @@ namespace Players {
 
             this.wealth = UnityEngine.Random.Range(0, 2000);
             this.knowledge_level = UnityEngine.Random.Range(0, 5);
-            this.heritage_points = UnityEngine.Random.Range(0, 5);
+            this.heritage_level = UnityEngine.Random.Range(0, 5);
             this.belief_level = UnityEngine.Random.Range(0, 5);
 
             this.main_priorities.Add(new SciencePriority());
@@ -62,17 +62,6 @@ namespace Players {
             government.cabinet.StartForeignTurn();
         }
 
-
-        public void AddCity(City city) => cities.Add(city);
-        public City GetCapital() => cities[0];
-        public string GetOfficialName() => $"{state_prefix}{name}{state_suffix}";
-        public City GetCityByIndex(int index) => cities[index];
-        public Vector2 GetCapitalCoordinate()=> cities[0].col_row;
-        public List<City> GetCities() => cities;
-        public List<List<float>> GetFogOfWarMap() => fog_of_war_map;
-        public void SetFogOfWarMap(List<List<float>> fog_of_war_map) => this.fog_of_war_map = fog_of_war_map;
-        internal Player GetRandomKnownPlayerNullable() => government.cabinet.foreign_advisor.GetRandomKnownPlayerNullable();
-        public List<Player> GetKnownPlayers() => government.cabinet.foreign_advisor.known_players;
         public int GetStability(){
             int stability = 0;
             foreach(City city in cities){
@@ -135,6 +124,7 @@ namespace Players {
                 
             return traits;
         }
+       
         public List<string> GetAllTraitsStr(){
             List<TraitBase> traits = new List<TraitBase>();
             foreach(TraitBase trait in government.leader.traits)
@@ -152,5 +142,25 @@ namespace Players {
 
             return traits_str;
         }
+    
+        public AIPriority GetPriority(string priority){
+            foreach(AIPriority p in main_priorities)
+                if(p.name == priority)
+                    return p;
+            return null;
+        }
+       
+        public void AddCity(City city) => cities.Add(city);
+        public City GetCapital() => cities[0];
+        public string GetOfficialName() => $"{state_prefix}{name}{state_suffix}";
+        public City GetCityByIndex(int index) => cities[index];
+        public Vector2 GetCapitalCoordinate()=> cities[0].col_row;
+        public List<City> GetCities() => cities;
+        public List<List<float>> GetFogOfWarMap() => fog_of_war_map;
+        public void SetFogOfWarMap(List<List<float>> fog_of_war_map) => this.fog_of_war_map = fog_of_war_map;
+        internal Player GetRandomKnownPlayerNullable() => government.cabinet.foreign_advisor.GetRandomKnownPlayerNullable();
+        public bool isIsolated() => government.cabinet.foreign_advisor.known_players.Count == 0;
+        public List<Player> GetKnownPlayers() => government.cabinet.foreign_advisor.known_players;
+
     }
 }

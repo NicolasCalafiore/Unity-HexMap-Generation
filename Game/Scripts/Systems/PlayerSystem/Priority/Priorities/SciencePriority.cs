@@ -21,6 +21,7 @@ namespace AI {
     public class SciencePriority : AIPriority
     {
         public int knowledge_critical_point = 2;
+        public override string Name { get => name; }
         public SciencePriority(){
             this.name = "Science";
         }
