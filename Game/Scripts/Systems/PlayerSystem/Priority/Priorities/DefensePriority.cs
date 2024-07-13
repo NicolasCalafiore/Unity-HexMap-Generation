@@ -20,53 +20,55 @@ using Cities;
 
 namespace AI {
 
-    public class DefensePriority : AIPriority
+    public class DefensePriority : CityPriority
     {
         private int defense_diameter = 5;
+        private int continental_conflict_diameter = 10;
         public override string Name { get => name; }
         public DefensePriority(){
             this.name = "Defense";
         }
         public override MainPriority GetPriorityType() => MainPriority.Religion;
 
-        public override void CalculatePriority(Player player)
+        public override void CalculatePriority(Player player, bool isDebug)
         {
-            int priority = 0;
-            foreach(Player neighbor in player.government.cabinet.foreign_advisor.GetKnownPlayers()){
-                Vector2 player_capital = player.GetCapitalCoordinate();
+            Rule rule = new Rule();
+
+            List<Player> neighbors = player.government.cabinet.foreign_advisor.GetKnownPlayers();
+            Vector2 player_capital = player.GetCapitalCoordinate();
+
+            foreach(Player neighbor in neighbors){
                 Vector2 neighbor_capital = neighbor.GetCapitalCoordinate();
+                int capital_distance = PathFinding.GetManhattanDistance(player_capital, neighbor_capital);
 
-                if(player.GetAllTraitsStr().Contains(ContinentalClaimer.name))
-                     foreach(Player known_players in player.government.cabinet.foreign_advisor.GetKnownPlayers())
-                        if(CityManager.city_to_hex[known_players.GetCapital()].continent_id == CityManager.city_to_hex[player.GetCapital()].continent_id)
-                            priority += 2;
+                rule.AddCondition(new List<bool>{player.HasTrait(ContinentalClaimer.name), 
+                                                PlayerUtils.HasSameCapitalContinent(player, neighbor),
+                                                PathFinding.GetManhattanDistance(player_capital, neighbor_capital) < continental_conflict_diameter,}, .10f);
 
-                if(PathFinding.GetManhattanDistance(player_capital, neighbor_capital) < defense_diameter){
+                rule.AddCondition(new List<bool>{capital_distance < defense_diameter, player.HasTrait(DefensiveTrait.name)}, 1f);
 
-                    if(player.GetAllTraitsStr().Contains(DefensiveTrait.name))
-                        priority += 1;
-
-                    if(player.GetAllTraitsStr().Contains(Foe.name))
+                    if(player.HasTrait(Foe.name))
                         foreach(TraitBase trait in player.GetAllTraits())
                             if(trait is Foe)
-                                if( (trait as Foe).player_target == neighbor)
-                                    priority += 3;
-                    
-                    if(player.government.cabinet.foreign_advisor.GetRelationshipLevel(neighbor) < RelationshipLevel.Neutral)
-                        priority += 1;
-                    
-                    if(player.government.cabinet.foreign_advisor.GetRelationshipLevel(neighbor) < RelationshipLevel.Unfriendly)
-                        priority += 1;
+                                rule.AddCondition(new List<bool>{(trait as Foe).player_target == neighbor}, 1f);
 
+                    rule.AddCondition(new List<bool>{player.HasTrait(GovernanceTrait.name), neighbor.government_type != player.government_type}, 2f);
 
-                    
+                    rule.AddCondition(new List<bool>{player.GetRelationshipLevel(neighbor) < RelationshipLevel.Neutral}, 1f);  
+                    rule.AddCondition(new List<bool>{player.GetRelationshipLevel(neighbor) < RelationshipLevel.Unfriendly}, 1f);
+                    rule.AddCondition(new List<bool>{player.GetRelationshipLevel(neighbor) < RelationshipLevel.Unfriendly}, 1f);
+
                 }
+
+                 this.priority = rule.GetSum();
                 
             }
 
-             this.priority = priority;
+       
+
+             
         }
 
 
+
     }
-}

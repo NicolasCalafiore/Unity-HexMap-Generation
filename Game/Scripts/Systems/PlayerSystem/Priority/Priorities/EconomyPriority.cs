@@ -18,7 +18,7 @@ using Character;
 
 namespace AI {
 
-    public class EconomyPriority : AIPriority
+    public class EconomyPriority : CityPriority
     {
         private int wealth_critical_point = 500;
         public override string Name { get => name; }
@@ -27,20 +27,15 @@ namespace AI {
         }
         public override MainPriority GetPriorityType() => MainPriority.Religion;
 
-        public override void CalculatePriority(Player player)
+        public override void CalculatePriority(Player player, bool isDebug)
         {
-            int priority = 0;
-            if(player.wealth < wealth_critical_point)
-                if(player.government_type == GovernmentType.Monarchy)
-                    priority += 2;
-                else
-                    priority += 1;
+            Rule rule = new Rule();
+            
+            rule.AddCondition(new List<bool>{player.wealth < wealth_critical_point, player.government_type == GovernmentType.Monarchy}, 2f);
+            rule.AddCondition(new List<bool>{player.wealth < wealth_critical_point}, 1f);
+            rule.AddCondition(new List<bool>{player.GetAllTraitsStr().Contains(WealthAdmirer.name)}, 1f);
 
-    
-            if(player.GetAllTraitsStr().Contains(WealthAdmirer.name))
-                priority += 1;
-
-            this.priority = priority;
+            this.priority = rule.GetSum();
         }
 
         public int GetCriticalPoint(){

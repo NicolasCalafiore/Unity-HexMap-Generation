@@ -39,7 +39,6 @@ public class ButtonInput : MonoBehaviour
     public static void NextPlayer(){
 
         PlayerManager.NextPlayer();
-        UIManager.UpdatePlayerUI(PlayerManager.player_view);
     }
     public static void CloseCharacterPanel(){
 

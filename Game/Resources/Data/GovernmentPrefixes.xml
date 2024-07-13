@@ -1,6 +1,6 @@
 <World>
     <Government name="Democracy">
-        <Identifier>Democratic Republic of </Identifier>
+        <Identifier loc="beg">Democratic Republic of </Identifier>
         <Identifier loc="beg">Democratic State of </Identifier>
         <Identifier loc="beg">Democratic Union of </Identifier>
         <Identifier loc="beg">Democratic Federation of </Identifier>
@@ -18,21 +18,17 @@
         <Identifier loc="beg">Federal Assembly of </Identifier>
         <Identifier loc="beg">Democratic Society of </Identifier>
         <Identifier loc="beg">People's Coalition of </Identifier>
-        <Identifier loc="end"> Democracy</Identifier>
+        <Identifier loc="end"> Democratic Assembly</Identifier>
         <Identifier loc="end"> Republic</Identifier>
         <Identifier loc="end"> Federation</Identifier>
         <Identifier loc="end"> Union</Identifier>
         <Identifier loc="end"> Confederation</Identifier>
         <Identifier loc="end"> State</Identifier>
-        <Identifier loc="end"> Commonwealth</Identifier>
         <Identifier loc="end"> Alliance</Identifier>
         <Identifier loc="end"> Coalition</Identifier>
-        <Identifier loc="end"> Syndicate</Identifier>
         <Identifier loc="end"> Assembly</Identifier>
         <Identifier loc="end"> Council</Identifier>
-        <Identifier loc="end"> Syndicate</Identifier>
         <Identifier loc="end"> Consortium</Identifier>
-        <Identifier loc="end"> Cooperative</Identifier>
         <Identifier loc="end"> League</Identifier>
         <Identifier loc="end"> Society</Identifier>
     </Government>
@@ -69,18 +65,14 @@
         <Identifier loc="end"> County</Identifier>
         <Identifier loc="end"> Barony</Identifier>
         <Identifier loc="end"> Lordship</Identifier>
-        <Identifier loc="end"> Bailiwick</Identifier>
-        <Identifier loc="end"> March</Identifier>
-        <Identifier loc="end"> Palatinate</Identifier>
-        <Identifier loc="end"> Shire</Identifier>
     </Government>
 
     <Government name="Dictatorship">
-        <Identifier loc="beg">Fascist </Identifier>
-        <Identifier loc="beg">The One Party State of </Identifier>
-        <Identifier loc="beg">The Autocratic Republic of </Identifier>
-        <Identifier loc="beg">The Totalitarian State of </Identifier>
-        <Identifier loc="beg">The Military State of </Identifier>
+        <Identifier loc="beg">Uniparty State of </Identifier>
+        <Identifier loc="beg">One Party State of </Identifier>
+        <Identifier loc="beg">Autocratic Republic of </Identifier>
+        <Identifier loc="beg">Totalitarian State of </Identifier>
+        <Identifier loc="beg">Military State of </Identifier>
         <Identifier loc="beg">Dictatorial Regime of </Identifier>
         <Identifier loc="beg">Authoritarian State of </Identifier>
         <Identifier loc="beg">Centralized State of </Identifier>
@@ -93,7 +85,7 @@
         <Identifier loc="beg">Totalitarian Rule of </Identifier>
         <Identifier loc="beg">Authoritarian Regime of </Identifier>
         <Identifier loc="beg">Despotic Dominion of </Identifier>
-        <Identifier loc="end"> National Party</Identifier>
+        <Identifier loc="end"> People's National Party</Identifier>
         <Identifier loc="end"> Regime</Identifier>
         <Identifier loc="end"> Junta</Identifier>
         <Identifier loc="end"> Autocracy</Identifier>
@@ -140,21 +132,10 @@
         <Identifier loc="end"> Papacy</Identifier>
         <Identifier loc="end"> Caliphate</Identifier>
         <Identifier loc="end"> Patriarchate</Identifier>
-        <Identifier loc="end"> Diocese</Identifier>
-        <Identifier loc="end"> Synod</Identifier>
-        <Identifier loc="end"> Ecclesiarchy</Identifier>
-        <Identifier loc="end"> Hierocracy</Identifier>
-        <Identifier loc="end"> Sacerdotalism</Identifier>
-        <Identifier loc="end"> Episcopacy</Identifier>
         <Identifier loc="end"> Presbytery</Identifier>
         <Identifier loc="end"> Vicariate</Identifier>
         <Identifier loc="end"> Prelacy</Identifier>
         <Identifier loc="end"> Primacy</Identifier>
-        <Identifier loc="end"> Rectorate</Identifier>
-        <Identifier loc="end"> Deanery</Identifier>
-        <Identifier loc="end"> Canonry</Identifier>
-        <Identifier loc="end"> Prebend</Identifier>
-        <Identifier loc="end"> Benefice</Identifier>
         <Identifier loc="end"> Curacy</Identifier>
         <Identifier loc="end"> Parsonage</Identifier>
     </Government>
@@ -174,28 +155,14 @@
         <Identifier loc="beg">Tribe of </Identifier>
         <Identifier loc="beg">Clan of </Identifier>
         <Identifier loc="beg">Tribal Federation of </Identifier>
-        <Identifier loc="beg">Kinship of </Identifier>
-        <Identifier loc="beg">Family of </Identifier>
         <Identifier loc="end"> Tribes</Identifier>
         <Identifier loc="end"> Tribe</Identifier>
         <Identifier loc="end"> Clan</Identifier>
-        <Identifier loc="end"> Band</Identifier>
-        <Identifier loc="end"> Horde</Identifier>
-        <Identifier loc="end"> Chiefdom</Identifier>
-        <Identifier loc="end"> Tribe</Identifier>
-        <Identifier loc="end"> Clan</Identifier>
-        <Identifier loc="end"> Band</Identifier>
-        <Identifier loc="end"> Horde</Identifier>
         <Identifier loc="end"> Chiefdom</Identifier>
         <Identifier loc="end"> Kinship</Identifier>
         <Identifier loc="end"> Family</Identifier>
         <Identifier loc="end"> Lineage</Identifier>
-        <Identifier loc="end"> House</Identifier>
         <Identifier loc="end"> Dynasty</Identifier>
-        <Identifier loc="end"> Sept</Identifier>
-        <Identifier loc="end"> Phratry</Identifier>
-        <Identifier loc="end"> Moiety</Identifier>
-        <Identifier loc="end"> Demesne</Identifier>
         <Identifier loc="end"> Folk</Identifier>
     </Government>
 

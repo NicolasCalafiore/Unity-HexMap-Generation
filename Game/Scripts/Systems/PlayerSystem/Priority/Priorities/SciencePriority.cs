@@ -18,7 +18,7 @@ using Character;
 
 namespace AI {
 
-    public class SciencePriority : AIPriority
+    public class SciencePriority : CityPriority
     {
         public int knowledge_critical_point = 2;
         public override string Name { get => name; }
@@ -27,20 +27,14 @@ namespace AI {
         }
         public override MainPriority GetPriorityType() => MainPriority.Religion;
 
-        public override void CalculatePriority(Player player)
+        public override void CalculatePriority(Player player, bool isDebug)
         {
-            int priority = 0;
-            
-            if(player.GetAllTraitsStr().Contains(ScientificTrait.name))
-                priority += 1;
+            Rule rule = new Rule();
 
-            if(player.knowledge_level < knowledge_critical_point)
-                if(player.government_type == GovernmentType.Democracy)
-                    priority += 2;
-                else
-                    priority += 1;
-
-            this.priority = priority;
+            rule.AddCondition(new List<bool>{player.GetAllTraitsStr().Contains(ScientificTrait.name)}, 1f);
+            rule.AddCondition(new List<bool>{player.knowledge_level < knowledge_critical_point, player.government_type == GovernmentType.Democracy}, 2f);
+            rule.AddCondition(new List<bool>{player.knowledge_level < knowledge_critical_point}, 1f);
+            this.priority = rule.GetSum();
         }
 
     }

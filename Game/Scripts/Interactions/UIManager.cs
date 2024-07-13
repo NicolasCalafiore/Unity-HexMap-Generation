@@ -131,7 +131,6 @@ namespace Terrain {
         }
         public static void LoadCharacterScreen(AbstractCharacter character)
         {
-            character_ui.SetActive(true);
             char_button_binds.Remove(character_ui.transform.GetChild(24).GetComponent<Button>());
             char_button_binds.Add(character_ui.transform.GetChild(24).GetComponent<Button>(), character);
 
@@ -196,7 +195,7 @@ namespace Terrain {
         
                 left_text_box = "Priorities:\n";
 
-                foreach(AIPriority priority in owner.main_priorities)
+                foreach(CityPriority priority in owner.main_priorities)
                     left_text_box += priority.name + ": " + priority.priority + "\n";
             }
 

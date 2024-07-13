@@ -17,7 +17,7 @@ using static Terrain.GovernmentEnums;
 
 namespace AI {
 
-    public class ReligionPriority : AIPriority
+    public class ReligionPriority : CityPriority
     {
         public int critical_beleif_level = 2;
         public override string Name { get => name; }
@@ -26,17 +26,12 @@ namespace AI {
         }
         public override MainPriority GetPriorityType() => MainPriority.Religion;
 
-        public override void CalculatePriority(Player player)
+        public override void CalculatePriority(Player player, bool isDebug)
         {
-            int priority = 0;
-            if(player.belief_level < critical_beleif_level)
-                if(player.government_type == GovernmentType.Theocracy)
-                    priority += 2;
-                    
-                else
-                    priority += 1;
-
-            this.priority = priority;
+            Rule rule = new Rule();
+            rule.AddCondition(new List<bool>{player.belief_level < critical_beleif_level, player.government_type == GovernmentType.Theocracy}, 2f);
+            rule.AddCondition(new List<bool>{player.belief_level < critical_beleif_level}, 1f);
+            this.priority = rule.GetSum();
         }
 
     }

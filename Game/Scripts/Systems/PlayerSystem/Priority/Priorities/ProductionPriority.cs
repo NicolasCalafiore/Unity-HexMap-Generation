@@ -18,7 +18,7 @@ using Character;
 
 namespace AI {
 
-    public class ProductionPriority : AIPriority
+    public class ProductionPriority : CityPriority
     {
         private int production_critical_point = 20;
         public override string Name { get => name; }
@@ -27,19 +27,12 @@ namespace AI {
         }
         public override MainPriority GetPriorityType() => MainPriority.Religion;
 
-        public override void CalculatePriority(Player player)
+        public override void CalculatePriority(Player player, bool isDebug)
         {
-            int priority = 0;
-
-            if(player.GetProduction() < production_critical_point)
-                priority += 1;
-
-            if(player.GetAllTraitsStr().Contains(StabilityExpert.name))
-                priority += 1;
-                
-                
-
-            this.priority = priority;
+            Rule rule = new Rule();
+            rule.AddCondition(new List<bool>{player.GetProduction() < production_critical_point}, 1f);
+            rule.AddCondition(new List<bool>{player.GetAllTraitsStr().Contains(StabilityExpert.name)}, 1f);
+            this.priority = rule.GetSum();
         }
 
     }

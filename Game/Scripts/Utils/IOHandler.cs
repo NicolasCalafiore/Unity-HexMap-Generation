@@ -15,6 +15,7 @@ public static class IOHandler{
     private static string character_names_path = ".\\Assets\\Game\\Resources\\Data\\CharacterNames.xml";
     private static string government_titles_path = ".\\Assets\\Game\\Resources\\Data\\GovernmentTitles.xml";
     private static string continent_names_path = ".\\Assets\\Game\\Resources\\Data\\Continents.xml";
+    private static string images_path = "Images/";
 
     public static List<string> ReadCityNamesRegionSpecified(HexTile hex)
     {
@@ -138,5 +139,11 @@ public static class IOHandler{
     public static GameObject LoadPrefab(string path)
     {
         return Resources.Load<GameObject>("Prefab/" + path);
+    }
+
+    public static Sprite LoadSprite(string path)
+    {
+        Debug.Log("Loading: " + images_path + path);
+        return Resources.Load<Sprite>(images_path + path);
     }
 }

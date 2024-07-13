@@ -13,6 +13,7 @@ using System.Linq;
 using static Terrain.RegionsEnums;
 using static Terrain.PriorityEnums;
 using AI;
+using static Terrain.ForeignEnums;
 
 
 namespace Players {
@@ -30,7 +31,7 @@ namespace Players {
         public GovernmentType government_type { get; set; }
         public Government government  { get; set; }
         public HexRegion home_region { get; set; }
-        public List<AIPriority> main_priorities = new List<AIPriority>();
+        public List<CityPriority> main_priorities = new List<CityPriority>();
         private List<City> cities = new List<City>();
         private List<List<float>> fog_of_war_map;
 
@@ -93,24 +94,27 @@ namespace Players {
             }
             return population;
         }
-        internal void CalculatePriorities()
+        internal void CalculatePriorities(bool isDebug = false)
         {
-            foreach(AIPriority priority in main_priorities){
-                priority.CalculatePriority(this);
+            foreach(CityPriority priority in main_priorities){
+                priority.CalculatePriority(this, isDebug);
             }
         }
 
-        public AIPriority GetHighestPriority()
+        public CityPriority GetHighestPriority()
         {
-            AIPriority highest_priority = null;
+            CityPriority highest_priority = null;
 
-            foreach(AIPriority priority in main_priorities)
+            foreach(CityPriority priority in main_priorities)
                 if(highest_priority == null || priority.priority > highest_priority.priority)
                     highest_priority = priority;
 
             return highest_priority;
         }
     
+        public RelationshipLevel GetRelationshipLevel(Player player){
+            return government.cabinet.foreign_advisor.GetRelationshipLevel(player);
+        }
         public List<TraitBase> GetAllTraits(){
             List<TraitBase> traits = new List<TraitBase>();
             foreach(TraitBase trait in government.leader.traits)
@@ -142,9 +146,16 @@ namespace Players {
 
             return traits_str;
         }
+
+        public bool HasTrait(string trait_name){
+            foreach(TraitBase trait in GetAllTraits())
+                if(trait.Name == trait_name)
+                    return true;
+            return false;
+        }
     
-        public AIPriority GetPriority(string priority){
-            foreach(AIPriority p in main_priorities)
+        public CityPriority GetPriority(string priority){
+            foreach(CityPriority p in main_priorities)
                 if(p.name == priority)
                     return p;
             return null;

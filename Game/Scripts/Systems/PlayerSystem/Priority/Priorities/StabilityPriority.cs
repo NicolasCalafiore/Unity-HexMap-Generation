@@ -18,7 +18,7 @@ using Character;
 
 namespace AI {
 
-    public class StabilityPriority : AIPriority
+    public class StabilityPriority : CityPriority
     {
         private int stability_critical_point = 30;
         public override string Name { get => name; }
@@ -27,25 +27,16 @@ namespace AI {
         }
         public override MainPriority GetPriorityType() => MainPriority.Stability;
 
-        public override void CalculatePriority(Player player)
+        public override void CalculatePriority(Player player, bool isDebug)
         {
-            int priority = 0;
+            Rule rule = new Rule();
 
-            
-            if(player.GetAllTraitsStr().Contains(StabilityTrait.name))
-                priority += 1;
-                
-            if(player.GetStability() < stability_critical_point)
-                if(player.government_type == GovernmentType.Dictatorship)
-                    priority += 3;
-                
-                else if (player.government_type == GovernmentType.Tribalism)
-                    priority += 2;
-                
-                else
-                    priority += 1;
-            
-            this.priority = priority;
+            rule.AddCondition(new List<bool>{player.GetAllTraitsStr().Contains(StabilityTrait.name)}, 1f);
+            rule.AddCondition(new List<bool>{player.GetStability() < stability_critical_point, player.government_type == GovernmentType.Dictatorship}, 3f);
+            rule.AddCondition(new List<bool>{player.GetStability() < stability_critical_point, player.government_type == GovernmentType.Tribalism}, 2f);
+            rule.AddCondition(new List<bool>{player.GetStability() < stability_critical_point}, 1f);
+
+            this.priority = rule.GetSum();
         }
 
     }

@@ -57,7 +57,6 @@ namespace Terrain {
 
         public static void SpawnHexTile(int i, int j)
         {
-            Debug.Log("Spawning hex tile: " + i + " " + j);
             GameObject hex_go = HexGraphicManager.GetHexGoByColRow(new Vector2(i, j));
             hex_go.SetActive(true);
         }

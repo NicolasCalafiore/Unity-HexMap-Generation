@@ -63,11 +63,12 @@ public class GameManagers: MonoBehaviour{
         DiplomacyManager.GenerateStartingRelationships();
         PlayerManager.SimulateGovernments();
         UIManager.FindUIComponents();
-        PlayerManager.SetPlayerView(PlayerManager.player_list[1]);
+        PlayerManager.SetPlayerView(PlayerManager.player_list[1]);//
         FogManager.ShowFogOfWar(); //
         GraphicsManager.SpawnAIFlags();
         TerrainManager.GenerateHexAppeal();
         PlayerManager.InitializePlayerPriorities();
+        GraphicsManager.UpdateAllPlayerUIPriorities();  //Used for cities. Will need to refactor
     }
 
     

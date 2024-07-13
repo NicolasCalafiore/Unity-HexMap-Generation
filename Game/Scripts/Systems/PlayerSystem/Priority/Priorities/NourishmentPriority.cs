@@ -11,13 +11,14 @@ using Terrain;
 using static Terrain.PriorityEnums;
 using Unity.IO.LowLevel.Unsafe;
 using static Terrain.GovernmentEnums;
+using Unity.Mathematics;
 
 
 
 
 namespace AI {
 
-    public class NourishmentPriority : AIPriority
+    public class NourishmentPriority : CityPriority
     {
         private float nourishment_critical_point = 20;
         public override string Name { get => name; }
@@ -27,18 +28,16 @@ namespace AI {
 
         public override MainPriority GetPriorityType() => MainPriority.Religion;
 
-        public override void CalculatePriority(Player player)
+        public override void CalculatePriority(Player player, bool isDebug)
         {
-            float priority = 0;
 
-            if(player.GetNutrition() < nourishment_critical_point)
-                priority += 1;
+            Rule rule = new Rule();
+            rule.AddCondition(new List<bool>{player.GetNutrition() < nourishment_critical_point, player.government_type == GovernmentType.Monarchy}, 2f);
 
             foreach(HexTile tile in player.GetCapital().GetNourishmentTerritories())
-                if(tile.upgrade_level < tile.max_level)
-                    priority += .35f;
+                rule.AddCondition(new List<bool>{tile.upgrade_level < tile.max_level}, .35f);
 
-            this.priority = priority;
+            this.priority = rule.GetSum();
         }
 
     }

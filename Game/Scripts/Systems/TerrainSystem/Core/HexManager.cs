@@ -58,8 +58,6 @@ namespace Terrain {
             hex.resource_type = ResourceEnums.GetResourceType(resource_type);
             hex.continent_id = continent;
             hex.culture_id = region_id;
-
-            Debug.Log("Added: " + hex.GetColRow().x + " " + hex.GetColRow().y + " " + hex.elevation_type + " " + hex.structure_type + " " + hex.feature_type + " " + hex.land_type + " " + hex.region_type + " " + hex.resource_type + " " + hex.continent_id + " " + hex.culture_id);
             return hex;
         }
 

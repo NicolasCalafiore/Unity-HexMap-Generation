@@ -80,9 +80,10 @@ namespace Players {
         }
 
         public static void SetPlayerView(Player player){
-
             player_view = player;
-        
+
+            DebugHandler.ClearLogConsole();
+            player.CalculatePriorities(true);       //Print for DEBUG purposes
             UIManager.LoadPlayerName(player_view);
             CameraMovement.CenterCamera();
             GraphicsManager.SpawnAIFlags();

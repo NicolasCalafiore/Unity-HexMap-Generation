@@ -128,12 +128,12 @@ namespace Graphics {
 
             structure_go.transform.SetParent(hex_object.transform);
             structure_go.transform.localPosition = new Vector3(0, 0, 0);
-            structure_go.transform.GetChild(1).GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].name;
-            structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().text = player.name;
-            structure_go.transform.GetChild(2).GetComponent<TextMeshPro>().color = player.team_color;
+            structure_go.transform.Find("CityName").GetComponent<TextMeshPro>().text = city_go_to_city[structure_go].name;
+            structure_go.transform.Find("State Name").GetComponent<TextMeshPro>().text = player.name;
+            structure_go.transform.Find("State Name").GetComponent<TextMeshPro>().color = player.team_color;
+        
 
-
-            var CapitalFlags = structure_go.transform.GetChild(3);
+            var CapitalFlags = structure_go.transform.Find("CapitalFlags");
 
             foreach (Transform child in CapitalFlags)
             {
@@ -177,6 +177,12 @@ namespace Graphics {
             alerts_go_list.Add(alert);
         }
 
+        public static void UpdateAllPlayerUIPriorities(){
+        foreach(Player player in PlayerManager.player_list){
+                GameObject structure_go = CityManager.city_to_city_go[player.GetCapital()];
+                structure_go.transform.Find("Priority").GetComponent<SpriteRenderer>().sprite = IOHandler.LoadSprite("City/" + player.GetHighestPriority().ToString());
+            }
+        }
         public static void RemoveAlerts(){
 
             if(alerts_go_list.Count == 0) return;

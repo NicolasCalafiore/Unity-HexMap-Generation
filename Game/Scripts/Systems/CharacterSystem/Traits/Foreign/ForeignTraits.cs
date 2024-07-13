@@ -26,9 +26,6 @@ namespace Character {
         }
         public override bool isActivated(Player other_player, Player player) => isSameGovernmentType(player, other_player);
 
-
-        
-        
     }
 
     // Likes Similiar Region Type

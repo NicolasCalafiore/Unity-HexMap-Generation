@@ -32,7 +32,6 @@ namespace Graphics {
             Add(hex, hex_go);
         }
         public static void Add(HexTile hex, GameObject hex_object){
-            Debug.Log("Adding hex: " + hex.GetColRow().x + " " + hex.GetColRow().y);
             
             hex_go_list.Add(hex_object);
             hex_to_hex_go.Add(hex, hex_object);
